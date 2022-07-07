@@ -1,8 +1,17 @@
 import { useTranslation } from "react-i18next"
 import { imageUrl } from "../config"
+import { api_store_GetGiftList } from "../service/store"
 
 export function Index() {
 	const { t } = useTranslation()
+
+	api_store_GetGiftList({
+		langId: "en",
+		categoryIds: [1],
+		tags: null,
+		orderByField: null,
+		desc: true,
+	})
 
 	return (
 		<>

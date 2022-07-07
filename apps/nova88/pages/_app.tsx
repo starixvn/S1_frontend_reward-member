@@ -15,8 +15,8 @@ function CustomApp({ Component, pageProps }: AppProps) {
 				<title>Reward88</title>
 			</Head>
 			<I18nextProvider i18n={i18n}>
-				<main className='app'>
-					<Component {...pageProps} test='test' />
+				<main className="app">
+					<Component {...pageProps} test="test" />
 				</main>
 			</I18nextProvider>
 		</>
