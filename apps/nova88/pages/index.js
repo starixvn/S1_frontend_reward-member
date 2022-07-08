@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 import { imageUrl } from "../config"
-import { api_store_GetGiftList } from "../service/store"
+import { api_store_GetGiftList } from "../service/api/store"
 
 export function Index() {
 	const { t } = useTranslation()
