@@ -6,14 +6,6 @@ const withNx = require("@nrwl/next/plugins/with-nx")
  **/
 
 const isDevelopment = process.env.NODE_ENV !== "production"
-const rewritesConfig = isDevelopment
-	? [
-			{
-				source: "/api/:path*",
-				destination: "https://www.n88dev.com/api/:path*",
-			},
-	  ]
-	: []
 
 const nextConfig = {
 	nx: {
@@ -21,11 +13,21 @@ const nextConfig = {
 		// See: https://github.com/gregberge/svgr
 		svgr: false,
 	},
-	images: {
-		domains: ["store.0814media.net"],
+	// Set this to true if you use CSS modules.
+	// See: https://github.com/css-modules/css-modules
+	cssModules: false,
+	async rewrites() {
+		return {
+			fallback: isDevelopment
+				? [
+						{
+							source: "/:api*",
+							destination: `https://www.n88dev.com/:api*`,
+						},
+				  ]
+				: [],
+		}
 	},
-	// reactStrictMode: true,
-	rewrites: async () => rewritesConfig,
 }
 
 module.exports = withNx(nextConfig)
