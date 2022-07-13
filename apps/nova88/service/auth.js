@@ -1,14 +1,15 @@
 import {  api_account_UserLogin, api_account_UserLogout } from "./api/account";
-import { api_accountStrict_getCustProfile } from "./api/accountStrict";
+import { api_accountStrict_GetCustProfile } from "./api/accountStrict";
 import { api_account_CheckSignIn } from "./api/site";
-
+import { setCookie } from "../components/common/common";
 
 const isBrowser = typeof window !== `undefined`;
 
-export const LOGIN = async ({ userName, password }) => {
+export const LOGIN = async ({ userName, password, langId }) => {
   if (!isBrowser) return false;
 
   let result = {};
+
   try {
     let url;
     let platform;
@@ -22,8 +23,7 @@ export const LOGIN = async ({ userName, password }) => {
       screen = `${window.screen.width}:${window.screen.height}:${window.screen.colorDepth}`;
       di = document.getElementById("__di")?.value;
     }
-
-    const res = await api_account_UserLogin({
+    const res = await api_account_UserLogin(langId, {
       UserName: userName,
       Userpwd: password,
       isPersistent: true,
@@ -33,14 +33,12 @@ export const LOGIN = async ({ userName, password }) => {
       screen,
       di
     });
-
     let errMsg = res.data.message;
     let isLogin = false;
     let userData = {};
     if (res.data.errorCode === 0) {
       const userlangId = res.data.message.replace("/", "");
-
-      const res_custInfo = await api_accountStrict_getCustProfile();
+      const res_custInfo = await api_accountStrict_GetCustProfile();
       let _loginUser = {
         userName,
         langId: userlangId,
@@ -53,6 +51,7 @@ export const LOGIN = async ({ userName, password }) => {
           ..._loginUser,
           ...data
         };
+        setCookie("nova88LangId", data.langId);
       }
 
       errMsg = "";

@@ -1,17 +1,21 @@
 import { useTranslation } from "react-i18next"
 import { imageUrl } from "../config"
 import { api_store_GetGiftList } from "../service/api/store"
+import { useEffect } from "react";
 
 export function Index() {
 	const { t } = useTranslation()
 
-	api_store_GetGiftList({
-		langId: "en",
-		categoryIds: [1],
-		tags: null,
-		orderByField: null,
-		desc: true,
-	})
+	useEffect(async ()=>{
+    const res=await api_store_GetGiftList({
+      langId: "en",
+      categoryIds: [1],
+      tags: null,
+      orderByField: null,
+      desc: true,
+    })
+    console.log('res',res)
+  },[])
 
 	return (
 		<>
