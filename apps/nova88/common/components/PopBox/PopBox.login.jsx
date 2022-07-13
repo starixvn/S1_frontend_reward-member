@@ -1,16 +1,20 @@
 import React, { useState } from "react"
-import Inputbox from "../common/inputbox"
 import { useTranslation } from "react-i18next"
-import { LOGIN } from "../../service/auth"
 import { useRouter } from "next/router"
-import { useDispatch, useSelector } from "react-redux"
-import { popBoxActions } from "../../store/popBoxSlice"
-import { userActions } from "../../store/userSlice"
+import InputBox from "../Input/InputBox"
+import { LOGIN } from "service/auth"
+import { usePopBox } from "common/hooks"
+import { useAppDispatch, useAppSelector } from "store"
+import { selectedLangId, setIsLogin } from "service/slice/auth"
+import { getCustProfileAsync } from "service/slice/auth/thunk"
 
 const PopBoxLogin = () => {
-	const langId = useSelector(state => state.user.langId)
-	const isShow = useSelector(state => state.popBox.isOpen)
-	const dispatch = useDispatch()
+	const { closePopBox } = usePopBox()
+	const dispatch = useAppDispatch()
+	const langId = useAppSelector(selectedLangId)
+
+	// const isShow = useSelector(state => state.popBox.isOpen)
+
 	const router = useRouter()
 	const [usernameVal, setUsernameVal] = useState("")
 	const [passwordVal, setPasswordVal] = useState("")
@@ -28,6 +32,8 @@ const PopBoxLogin = () => {
 			msg = col === "username" ? t("msg_UsernameReq") : t("msg_PasswordReq")
 			checked = false
 		} else if (col === "username" && (val.length < 6 || val.length > 18)) {
+			// * fix: 'msg' is assigned a value but never used.
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			msg = `${t("lbl_Username")} ${t("msg_UsernameLength")}`
 			checked = false
 		}
@@ -41,7 +47,6 @@ const PopBoxLogin = () => {
 		return checked
 	}
 	const loginHandle = async e => {
-		console.log("1")
 		e.preventDefault()
 		const isVerifyOK =
 			checkInputRule("username", usernameVal) &&
@@ -51,10 +56,12 @@ const PopBoxLogin = () => {
 				userName: usernameVal,
 				password: passwordVal,
 				langId: langId,
-			}).then(res => {
+			}).then(async res => {
 				if (res.errorCode === 0) {
-					dispatch(userActions.setUserInfo({ isLogin: res.isLogin }))
-					dispatch(popBoxActions.popClose())
+					// * 撈完初始使用者資訊之後再將登入改為 true
+					await dispatch(getCustProfileAsync())
+					dispatch(setIsLogin(res.isLogin))
+					closePopBox()
 				} else if (
 					res.errorCode === 1101 ||
 					res.errorCode === 1102 ||
@@ -72,12 +79,7 @@ const PopBoxLogin = () => {
 
 	return (
 		<div className="login-pop">
-			<div
-				className="icon icon-close"
-				onClick={() => {
-					dispatch(popBoxActions.popClose())
-				}}
-			/>
+			<div className="icon icon-close" onClick={closePopBox} />
 			<div className="loginModule">
 				<div>
 					<img src="https://store.0814media.net/img/loginbg.jpg" alt="" />
@@ -86,7 +88,7 @@ const PopBoxLogin = () => {
 					<img src="https://store.0814media.net/img/88logo.png" alt="" />
 					<div className="title">{t("Login")}</div>
 					<form onSubmit={loginHandle}>
-						<Inputbox
+						<InputBox
 							icon="icon-member"
 							value={usernameVal}
 							onBlur={checkInputRule}
@@ -104,7 +106,7 @@ const PopBoxLogin = () => {
 									  )
 							}
 						/>
-						<Inputbox
+						<InputBox
 							icon="icon-member"
 							value={passwordVal}
 							onBlur={checkInputRule}
@@ -133,7 +135,8 @@ const PopBoxLogin = () => {
 								className="btn-sign"
 								onClick={() =>
 									router.push(`https://www.nova88.net/${langId}/join`)
-								}>
+								}
+							>
 								{t("SIGN UP")}
 							</button>
 							<button className="btn-login" type="submit">

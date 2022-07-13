@@ -1,6 +1,6 @@
 import React from "react"
+import PopBox from "../PopBox"
 import Header from "./Header"
-import PopBox from "../../../components/popups/popBox"
 
 const Layout = ({ children }) => {
 	return (
