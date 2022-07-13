@@ -1,10 +1,20 @@
+import { usePopBox } from "common/hooks"
 import React from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { popBoxActions } from "../../store/popBoxSlice"
+import { useSelector } from "react-redux"
+import { selectedIsLogin } from "service/slice/auth"
+import { logoutAsync } from "service/slice/auth/thunk"
+import { useAppDispatch } from "store"
 
 const Header = () => {
-	const isLogin = useSelector(state => state.user.isLogin)
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
+	const isLogin = useSelector(selectedIsLogin)
+
+	const { setPopBoxType } = usePopBox()
+
+	const handleLogout = async () => {
+		await dispatch(logoutAsync())
+	}
+
 	const loginAfter = (
 		<>
 			<a className="icon icon-diamond">
@@ -55,9 +65,9 @@ const Header = () => {
 				<div className="icon icon-cart" />
 				<span>99+</span>
 			</div>
-			<button className="icon icon-exit" />
+			<button onClick={handleLogout} className="icon icon-exit" />
 			<a className="novaLogo">
-				<img src="https://store.0814media.net/img/novalogo.png" />
+				<img src="https://store.0814media.net/img/novalogo.png" alt="any" />
 			</a>
 		</>
 	)
@@ -98,12 +108,11 @@ const Header = () => {
 			<button
 				className="login"
 				onClick={() => {
-					dispatch(
-						popBoxActions.setPopBoxType({
-							type: "login",
-						})
-					)
-				}}>
+					setPopBoxType({
+						type: "login",
+					})
+				}}
+			>
 				LOGIN
 			</button>
 		</>

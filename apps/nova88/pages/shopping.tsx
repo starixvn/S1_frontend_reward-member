@@ -1,11 +1,24 @@
 import React, { useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
-import InputDropDown from "../common/components/Dropdown/DropDown"
 import Wrapper from "../common/components/Wrapper"
-import Layout from "../common/components/Layout/layout"
+import Layout from "common/components/Layout"
+import { DropDown } from "common/components/Dropdown"
+import { useGetGiftListQuery } from "service/api/storeApi"
 
 const Shopping = () => {
+	// * example
+	const { data: giftList, isFetching: isGetGiftListFetching } =
+		useGetGiftListQuery({
+			langId: "en",
+			categoryIds: [1],
+			tags: null,
+			orderByField: null,
+			desc: true,
+		})
+	// eslint-disable-next-line no-console
+	console.log({ giftList, isGetGiftListFetching })
+
 	const menuList = ["BEST SELLERS", "WHAT'S NEW", "SALE"]
 	const [activeMenuItem, setActiveMenuItem] = useState(menuList[0])
 	const [inputDropDownCategory, setInputDropDownCategory] = useState("")
@@ -100,7 +113,7 @@ const Shopping = () => {
 							</div>
 							<div className="select">
 								<div className="inputBox-null" />
-								<InputDropDown
+								<DropDown
 									title="Category"
 									status={inputDropDownCategory}
 									itemList={inputDropDownItemList.category}
@@ -110,7 +123,7 @@ const Shopping = () => {
 										)
 									}
 								/>
-								<InputDropDown
+								<DropDown
 									title="From"
 									status={inputDropDownFrom}
 									itemList={inputDropDownItemList.from}

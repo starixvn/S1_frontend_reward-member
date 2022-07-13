@@ -1,6 +1,18 @@
-import React from "react"
+import React, { FC } from "react"
 
-const DropDown = ({ title, status, itemList, onClickHandle }) => {
+interface IDropDownProps {
+	title: string
+	status: string
+	itemList: any[]
+	onClickHandle: () => void
+}
+
+const DropDown: FC<IDropDownProps> = ({
+	title,
+	status,
+	itemList,
+	onClickHandle,
+}) => {
 	return (
 		<div className="inputBox" onClick={onClickHandle}>
 			<div className="dropdown">

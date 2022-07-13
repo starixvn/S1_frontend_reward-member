@@ -1,6 +1,19 @@
-import React from "react"
+import React, { FC } from "react"
 
-const InputBox = ({
+interface IInputBoxProps {
+	icon: string
+	value: string
+	onBlur: (HTMLInputElement) => void
+	onChange: (HTMLInputElement) => void
+	placeHolder: string
+	iconActions: string[]
+	isShowTip: boolean
+	tipContent: string
+	hotKey: string
+	link: string
+}
+
+const InputBox: FC<IInputBoxProps> = ({
 	icon = "",
 	value = "",
 	onBlur = null,
