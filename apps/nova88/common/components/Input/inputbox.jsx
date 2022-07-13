@@ -7,13 +7,13 @@ const InputBox = ({
 	onChange = null,
 	placeHolder = "",
 	iconActions = [],
-	tipStatus = "",
+	isShowTip = "",
 	tipContent = "",
 	hotKey = "",
 	link = "",
 }) => {
 	return (
-		<>
+		<div className="inputModule">
 			<div className="inputTxt">
 				{icon && <i className={`icon ${icon}`} />}
 				<input
@@ -31,10 +31,12 @@ const InputBox = ({
 					</div>
 				)}
 			</div>
-			{tipContent && <div className={`tip ${tipStatus}`}>tipContent</div>}
-			{hotKey && <a href={link}>hotKey</a>}
-		</>
+			{tipContent && (
+				<div className={`tip ${isShowTip ? "active" : ""}`}>{tipContent}</div>
+			)}
+			{hotKey && <a href={link}>{hotKey}</a>}
+		</div>
 	)
 }
 
-export { InputBox }
+export default InputBox
