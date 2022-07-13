@@ -21,3 +21,8 @@ export const siteRequest = axios.create({
   withCredentials: true,
   baseURL: `${rootURL}/api/Site`
 });
+
+export const loginRequest = axios.create({
+  withCredentials: true,
+  baseURL: `${rootURL}/api/Site`
+});

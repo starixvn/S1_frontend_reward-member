@@ -1,38 +1,47 @@
-import { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { createContext } from "react"
-import { api_accountStrict_getCustProfile } from "../../service/api/accountStrict";
-
-export const userInfoContext = createContext({ isLogin: false })
-export const popBoxContext = createContext({})
+import { useEffect } from "react";
+import { api_accountStrict_GetCustProfile } from "../../service/api/accountStrict";
+import { setCookie } from "./common";
+import { api_store_GetGiftList } from "../../service/api/store";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../store/userSlice";
+import { giftActions } from "../../store/giftSlice";
 
 const Wrapper = ({ children }) => {
-  const { t } = useTranslation()
-  const [userInfo, setUserInfo] = useState({
-    isLogin: null,
-    langId: "en",
-    userName: t("Guest"),
-  })
-  const [popBox, setPopBox] = useState({
-    isOpen: false,
-    popBoxType: null
-  });
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const regTime = useSelector((state) => state.user.regTime);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLogin) {
+      api_accountStrict_GetCustProfile().then(res => {
+        if (res.data.errorCode === 0) {
+          const { data } = res.data;
+          setCookie("nova88LangId", data.langId);
+          dispatch(userActions.setUserInfo(data));
+        }
+      });
+    }
+  }, [isLogin, regTime]);
 
   useEffect(async () => {
-    const result = await api_accountStrict_getCustProfile()
-    const data = result.data
-    setUserInfo(prev => ({
-      ...prev, ...data
-    }))
-  }, [])
-
+    const res = await api_store_GetGiftList({
+      langId: "en",
+      categoryIds: [1],
+      tags: null,
+      orderByField: null,
+      desc: true
+    });
+    if (res.data.errorCode === 0) {
+      const { data } = res.data;
+      console.log('data',data)
+      dispatch(giftActions.addGiftList(data))
+    }
+  }, []);
   return (
-    <userInfoContext.Provider value={{ userInfo, setUserInfo }}>
-      <popBoxContext.Provider value={{popBox, setPopBox}}>
-        {children}
-      </popBoxContext.Provider>
-    </userInfoContext.Provider>
-  )
-}
+    <>
+      {children}
+    </>
+  );
+};
 
-export default Wrapper
+export default Wrapper;

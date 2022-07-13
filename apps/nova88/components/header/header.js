@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
-import { userInfoContext } from "../common/Wrapper";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { popBoxActions } from "../../store/popBoxSlice";
 
 const Header = () => {
-  const { userInfo } = useContext(userInfoContext);
-  const { isLogin } = userInfo
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const dispatch = useDispatch();
   const loginAfter = <>
     <a className="icon icon-diamond">
       <span>Reward Points</span>
@@ -31,6 +32,7 @@ const Header = () => {
         <button className="icon icon-close"></button>
       </div>
     </a>
+
     <div className="country">
       <button className={`flag ch`} />
       <div className="countryList">
@@ -59,7 +61,7 @@ const Header = () => {
       <img src="https://store.0814media.net/img/novalogo.png" />
 
     </a>
-  </>
+  </>;
   const loginBefore = <>
     <a className="icon icon-email">
       <div className="msgPop" style={{ display: "none" }}>
@@ -91,12 +93,18 @@ const Header = () => {
       <span>99+</span>
     </div>
     <a className="novaLogo">
-      <img src="https://store.0814media.net/img/novalogo.png" />
+      <img src="https://store.0814media.net/img/novalogo.png" alt=""/>
 
     </a>
-    <button className="login">LOGIN</button>
-  </>
-  const loginStatusPanel = isLogin ? loginAfter : loginBefore
+    <button className="login" onClick={() => {
+      dispatch(popBoxActions.setPopBoxType({
+        type: "login"
+      }));
+    }
+    }>LOGIN
+    </button>
+  </>;
+  const loginStatusPanel = isLogin ? loginAfter : loginBefore;
   return (
     <header id="header">
       <div className="header">

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import InputDropDown from "../components/common/inputDropDown";
@@ -7,11 +6,11 @@ import Wrapper from "../components/common/Wrapper";
 import Layout from "../components/common/layout";
 
 const Shopping = () => {
-  const { t } = useTranslation()
   const menuList = ["BEST SELLERS", "WHAT'S NEW", "SALE"]
   const [activeMenuItem, setActiveMenuItem] = useState(menuList[0])
   const [inputDropDownCategory, setInputDropDownCategory] = useState("")
   const [inputDropDownFrom, setInputDropDownFrom] = useState("")
+
   const inputDropDownItemList = {
     category: [
       "HOME APPLIANCES", "HEALTH & PERSONAL CARE", "HOME THEATRE SYSTEM & SPEAKERS", "COMPUTING & PHONE", "SPORTS APPAREL & ACCESSORIES", "LIFESTYLE & TRAVEL"

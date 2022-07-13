@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+
 
 const Inputbox = (
   {
@@ -8,14 +9,14 @@ const Inputbox = (
     onChange = null,
     placeHolder = "",
     iconActions = [],
-    tipStatus = "",
+    isShowTip = "",
     tipContent = "",
     hotKey = "",
-    link = "",
+    link = ""
   }
 ) => {
   return (
-    <>
+    <div className="inputModule">
       <div className="inputTxt">
         {icon &&
           <i className={`icon ${icon}`} />}
@@ -28,11 +29,11 @@ const Inputbox = (
           </div>}
       </div>
       {tipContent &&
-        <div className={`tip ${tipStatus}`}>
-          tipContent
+        <div className={`tip ${isShowTip ? "active" : ""}`}>
+          {tipContent}
         </div>}
-      {hotKey && <a href={link}>hotKey</a>}
-    </>
+      {hotKey && <a href={link}>{hotKey}</a>}
+    </div>
   );
 };
 
