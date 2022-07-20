@@ -1,12 +1,13 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react"
 import { axiosBaseQuery } from "service/axiosBaseQuery"
 import { baseUrl } from "service/Api"
+import { IGetGiftListArgs, IGetGiftListResponse } from "./type"
 
 const storeApi = createApi({
-	reducerPath: "storeApi",
+	reducerPath: "index",
 	baseQuery: axiosBaseQuery({ baseUrl }),
 	endpoints: builder => ({
-		getGiftList: builder.query({
+		getGiftList: builder.query<IGetGiftListResponse, IGetGiftListArgs>({
 			query: ({ langId, categoryIds, tags, orderByField, desc }) => ({
 				url: `store/GetGiftList/${langId}`,
 				method: "POST",

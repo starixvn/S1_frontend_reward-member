@@ -12,8 +12,8 @@ export interface ICustProfile {
 	areaCode?: string
 	birth_d?: string
 	birth_m?: string
-	birth_y?: string
 	country?: string
+	birth_y?: string
 	currencyId?: number
 	email?: string
 	emailReward?: number
@@ -28,4 +28,11 @@ export interface ICustProfile {
 	phoneVerified?: boolean
 	regTime?: string
 	userLevel?: number
+}
+
+interface test {
+	SiteId: number
+	Maintain: false
+	BeginTime: string
+	EndTime: string
 }

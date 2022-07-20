@@ -9,7 +9,6 @@ const Wrapper = ({ children }) => {
 	const route = useRouter()
 
 	const isLogin = useAppSelector(selectedIsLogin)
-
 	// * 當切換頁面的時候確認登入狀態
 	useEffect(() => {
 		dispatch(checkSignInAsync())

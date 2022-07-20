@@ -1,17 +1,18 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 
 import { authReducer } from "service/slice/auth"
-import storeApi from "service/api/storeApi"
+import index from "service/api/storeApi"
 
 const store = configureStore({
 	reducer: {
 		auth: authReducer,
-		[storeApi.reducerPath]: storeApi.reducer,
+
+		[index.reducerPath]: index.reducer,
 	},
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware({
 			serializableCheck: false,
-		}).concat(storeApi.middleware),
+		}).concat(index.middleware),
 })
 
 export default store
