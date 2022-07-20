@@ -23,20 +23,16 @@ export const logout = async () => {
 }
 
 // * 這邊是需要 body 的型態的範例
-/*
-export const getGiftList = async ({
-	langId,
-	categoryIds,
-	tags,
-	orderByField,
-	desc,
-}) => {
-	const response = await Api.post(`store/GetGiftList/${langId}`, {
-		CategoryIds: categoryIds,
-		Tags: tags,
-		OrderByField: orderByField,
-		Desc: desc,
-	})
+export interface IGetGiftListArgs {
+	langId: string
+	categoryIds: number[]
+	tags: number[] | null
+	orderByField: any
+	desc: boolean
+}
+
+export const getGiftList = async ({ langId, ...body }: IGetGiftListArgs) => {
+	const response = await Api.post(`store/GetGiftList/${langId}`, body)
 
 	if (response?.data?.errorCode !== 0) {
 		throw new Error(response?.data?.message)
@@ -44,4 +40,3 @@ export const getGiftList = async ({
 
 	return response?.data?.data ?? []
 }
-*/
