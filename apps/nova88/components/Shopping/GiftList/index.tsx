@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import GiftItem from "../GiftItem"
+import GiftItem from "components/Shopping/GiftItem"
 
 interface IGiftListProps {
 	filterList: {
@@ -10,6 +10,7 @@ interface IGiftListProps {
 		categoryName: string
 		giftDescription: string
 		giftPictureUrl: string
+		isFavorite: boolean
 		tagList: {
 			tagId: number
 			tagName: string
@@ -20,14 +21,24 @@ interface IGiftListProps {
 		showStock: boolean
 		stock: number
 	}[]
-	onToggle: (giftItem: object) => void
+	onToggleCart: (giftItem: object) => void
+	onToggleFavorite?: (giftItem: object) => void
 }
 
-const GiftList: FC<IGiftListProps> = ({ filterList, onToggle }) => {
+const GiftList: FC<IGiftListProps> = ({
+	filterList,
+	onToggleCart,
+	onToggleFavorite,
+}) => {
 	return (
 		<div className="product-list">
 			{filterList?.map(item => (
-				<GiftItem key={item.giftId} item={item} onToggle={onToggle} />
+				<GiftItem
+					key={item.giftId}
+					item={item}
+					onToggleCart={onToggleCart}
+					onToggleFavorite={onToggleFavorite}
+				/>
 			))}
 		</div>
 	)

@@ -1,11 +1,17 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react"
 import { axiosBaseQuery } from "service/axiosBaseQuery"
 import { baseUrl } from "service/Api"
-import { IGetGiftListArgs, IGetGiftListResponse } from "./type"
+import {
+	IGetGiftListArgs,
+	IGetGiftListResponse,
+	ISetFavoriteResponse,
+	ISetFavoriteArgs,
+} from "./type"
 
 const storeApi = createApi({
-	reducerPath: "index",
+	reducerPath: "storeApi",
 	baseQuery: axiosBaseQuery({ baseUrl }),
+	tagTypes: ["Post"],
 	endpoints: builder => ({
 		getGiftList: builder.query<IGetGiftListResponse, IGetGiftListArgs>({
 			query: ({ langId, categoryIds, tags, orderByField, desc }) => ({
@@ -18,10 +24,35 @@ const storeApi = createApi({
 					Desc: desc,
 				},
 			}),
+			providesTags: ["Post"],
+		}),
+		GetPointBalance: builder.query<null, null>({
+			query: () => ({
+				url: `store/GetPointBalance/en `,
+				method: "POST",
+				data: {},
+			}),
+			providesTags: ["Post"],
+		}),
+		SetFavorite: builder.mutation<ISetFavoriteResponse, ISetFavoriteArgs>({
+			query: ({ langId, giftId, isFavorite }) => ({
+				url: `store/SetFavorite/${langId}`,
+				method: "POST",
+				data: {
+					giftId,
+					isFavorite,
+				},
+			}),
+			invalidatesTags: ["Post"],
 		}),
 	}),
 })
 
-export const { useGetGiftListQuery } = storeApi
+export const {
+	useGetGiftListQuery,
+	useLazyGetGiftListQuery,
+	useLazyGetPointBalanceQuery,
+	useSetFavoriteMutation,
+} = storeApi
 
 export default storeApi

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import { imageUrl } from "../config"
+import { imageUrl } from "config"
 
 export function Index() {
 	const { t } = useTranslation()

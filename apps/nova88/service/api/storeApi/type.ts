@@ -1,4 +1,4 @@
-import { IAxiosResponse } from "../../axiosBaseQuery"
+import { IAxiosResponse } from "service/axiosBaseQuery"
 
 export interface giftData {
 	giftId: number
@@ -8,6 +8,7 @@ export interface giftData {
 	categoryName: string
 	giftDescription: string
 	giftPictureUrl: string
+	isFavorite: boolean
 	tagList: {
 		tagId: number
 		tagName: string
@@ -26,4 +27,11 @@ export interface IGetGiftListArgs {
 	desc: boolean
 }
 
+export interface ISetFavoriteArgs {
+	langId: string
+	giftId: null | number
+	isFavorite: boolean
+}
+
 export type IGetGiftListResponse = IAxiosResponse<giftData[]>
+export type ISetFavoriteResponse = IAxiosResponse<null>

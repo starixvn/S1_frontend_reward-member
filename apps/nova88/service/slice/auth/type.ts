@@ -29,10 +29,3 @@ export interface ICustProfile {
 	regTime?: string
 	userLevel?: number
 }
-
-interface test {
-	SiteId: number
-	Maintain: false
-	BeginTime: string
-	EndTime: string
-}

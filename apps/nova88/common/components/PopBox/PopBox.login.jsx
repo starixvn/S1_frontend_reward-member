@@ -135,8 +135,7 @@ const PopBoxLogin = () => {
 								className="btn-sign"
 								onClick={() =>
 									router.push(`https://www.nova88.net/${langId}/join`)
-								}
-							>
+								}>
 								{t("SIGN UP")}
 							</button>
 							<button className="btn-login" type="submit">

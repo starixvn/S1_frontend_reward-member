@@ -1,13 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { setCookie } from "common/utils/func"
 
-import {
-	checkSignIn,
-	getCustProfile,
-	logout,
-	getGiftList,
-	IGetGiftListArgs,
-} from "./api"
+import { checkSignIn, getCustProfile, logout } from "./api"
 
 export const checkSignInAsync = createAsyncThunk(
 	"auth/checkSignIn",

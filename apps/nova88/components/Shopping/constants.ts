@@ -9,12 +9,18 @@ export const tabList = [
 	{ id: 1, label: "HOT" },
 	{ id: 2, label: "NEW" },
 	{ id: 3, label: "FEATURED" },
+	{ id: 4, label: "FAVORITE" },
 ]
-export const fromList = ["Low → High cost", "High → Low cost", "A → Z", "Z → A"]
+export const fromList = [
+	"LowToHighCost",
+	"HighToLowCost",
+	"LowToHighLetter",
+	"HighToLowLetter",
+]
 
 export const sortType = {
-	"A → Z": { orderByField: "EnGiftName", desc: false },
-	"Z → A": { orderByField: "EnGiftName", desc: true },
-	"Low → High cost": { orderByField: "Point", desc: false },
-	"High → Low cost": { orderByField: "Point", desc: true },
+	LowToHighLetter: { orderByField: "EnGiftName", desc: false },
+	HighToLowLetter: { orderByField: "EnGiftName", desc: true },
+	LowToHighCost: { orderByField: "Point", desc: false },
+	HighToLowCost: { orderByField: "Point", desc: true },
 }
