@@ -1,6 +1,5 @@
-import Api from "../../Api"
+import Api from "service/Api"
 import { ICustProfile } from "./type"
-
 // * 是否維持登入狀態
 export const checkSignIn = async (): Promise<boolean> => {
 	const response = await Api.post(`Site/CheckSignIn`)
@@ -30,7 +29,6 @@ export interface IGetGiftListArgs {
 	orderByField: any
 	desc: boolean
 }
-
 export const getGiftList = async ({ langId, ...body }: IGetGiftListArgs) => {
 	const response = await Api.post(`store/GetGiftList/${langId}`, body)
 

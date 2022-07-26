@@ -82,6 +82,7 @@ html {
   background: #000;
   font-family: "Segoe UI", sans-serif;
   color: white;
+  position: relative;
 }
 
 main {
@@ -109,12 +110,6 @@ main {
 
 .header .icon-menu, .header .shoppingCar {
   display: none;
-}
-
-.header .logo {
-  position: absolute;
-  left: 0;
-  top: .5rem;
 }
 
 .header > div.menu {
@@ -882,6 +877,7 @@ main {
 .product-list .product {
   position: relative;
   margin: 10px 5px;
+  width: 20%;
   border: 1px solid transparent;
 }
 
@@ -914,12 +910,11 @@ main {
   text-align: center;
   color: white;
   display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  white-space: break-spaces;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.5vw;
 }
 
 .product-list .product > div.iconGroup {
@@ -1912,6 +1907,7 @@ main {
   background: #112240;
   color: #CDAE8E;
   white-space: nowrap;
+  margin-bottom: 1px;
 }
 
 .cart-page .cart-list > div.cart-head > div:nth-child(n+2) {
@@ -2012,9 +2008,7 @@ main {
 }
 
 .cart-page .cart-list > div.cart-null {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-flow: column;
@@ -2024,6 +2018,12 @@ main {
           align-items: center;
   color: #CDAE8E;
   margin: 2rem;
+}
+
+.cart-page .cart-list > div.cart-null.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .cart-page .cart-list > div.cart-null .icon-cart {
@@ -2079,11 +2079,10 @@ main {
 
 .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) > div:nth-child(1) {
   position: relative;
-  width: 50%;
 }
 
 .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) > div:nth-child(1) img {
-  width: 7.5rem;
+  width: 7rem;
   margin: auto;
 }
 
@@ -2111,8 +2110,6 @@ main {
 }
 
 .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) ul > .name, .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li > .name {
-  width: 14rem;
-  height: 4rem;
   overflow: hidden;
   color: #CDAE8E;
 }
@@ -2127,7 +2124,7 @@ main {
   -webkit-box-flex: .4;
       -ms-flex: .4;
           flex: .4;
-  margin: 0 3rem;
+  margin: 0 3vw;
 }
 
 .cart-page .cart-list > div.cart-items .cart-info .inputBox .dropdown .btn {
@@ -2465,11 +2462,16 @@ main {
 }
 
 .mobile-menu {
+  width: 100%;
   background: #112240;
   -webkit-transform: translateX(-100%);
           transform: translateX(-100%);
   -webkit-transition: .6s;
   transition: .6s;
+  position: absolute;
+  z-index: 3;
+  top: 14.5vw;
+  display: none;
 }
 
 .mobile-menu.active {
@@ -2907,6 +2909,12 @@ main {
   width: 100%;
   background: transparent;
   border: none;
+  color: #CDAE8E;
+  outline-style: none;
+}
+
+.inputModule .inputTxt input:focus-visible {
+  outline-color: #000;
 }
 
 .inputModule .inputTxt input::-webkit-input-placeholder {
@@ -3342,7 +3350,6 @@ footer.mobile-footer > a.active .circleAnimation + span {
     overflow-y: hidden;
   }
   .product-list .product {
-    width: 20%;
     min-width: 200px;
   }
   .product-list .product > div.bigPup {
@@ -3453,6 +3460,9 @@ footer.mobile-footer > a.active .circleAnimation + span {
 }
 
 @media screen and (max-width: 767px) {
+  .mobile-menu {
+    display: block;
+  }
   .loading {
     display: -webkit-box;
     display: -ms-flexbox;

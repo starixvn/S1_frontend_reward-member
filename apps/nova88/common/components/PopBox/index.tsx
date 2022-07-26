@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from "react"
 import PopBoxLogin from "./PopBox.login"
+import PopBoxWarn from "./PopBox.warn"
 import { usePopBox } from "common/hooks"
 
 const PopBox: FC = () => {
@@ -14,9 +15,8 @@ const PopBox: FC = () => {
 			case "login":
 				element = <PopBoxLogin {...props} />
 				break
-			case "error":
-				//todo:errorContent
-				element = null
+			case "warn":
+				element = <PopBoxWarn {...props} />
 				break
 			default:
 				element = null

@@ -1,4 +1,5 @@
 import React, { FC } from "react"
+import { useTranslation } from "react-i18next"
 
 interface IInputBoxProps {
 	icon: string
@@ -25,6 +26,7 @@ const InputBox: FC<IInputBoxProps> = ({
 	hotKey = "",
 	link = "",
 }) => {
+	const { t } = useTranslation()
 	return (
 		<div className="inputModule">
 			<div className="inputTxt">
@@ -33,7 +35,7 @@ const InputBox: FC<IInputBoxProps> = ({
 					onChange={onChange}
 					onBlur={onBlur}
 					value={value}
-					type="text"
+					type={placeHolder === t("PassWord") ? "password" : "text"}
 					placeholder={placeHolder}
 				/>
 				{iconActions.length > 0 && (

@@ -1,5 +1,6 @@
 import React, { FC } from "react"
 import { Dropdown } from "common/components/Dropdown"
+import { useTranslation } from "react-i18next"
 
 const { Option } = Dropdown
 
@@ -14,11 +15,12 @@ const GiftSelector: FC<IGiftSelectorProps> = ({
 	itemList,
 	onChange,
 }) => {
+	const { t } = useTranslation()
 	return (
 		<Dropdown placeholder={placeHolder} onChange={e => onChange(e)}>
 			{itemList.map((value, index) => (
 				<Option key={index} value={value}>
-					{value}
+					{t(value)}
 				</Option>
 			))}
 		</Dropdown>
