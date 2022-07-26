@@ -4,8 +4,10 @@ import { useSelector } from "react-redux"
 import { selectedIsLogin } from "service/slice/auth"
 import { logoutAsync } from "service/slice/auth/thunk"
 import { useAppDispatch } from "store"
+import { useRouter } from "next/router"
 
 const Header = () => {
+	const route = useRouter()
 	const dispatch = useAppDispatch()
 	const isLogin = useSelector(selectedIsLogin)
 
@@ -61,7 +63,7 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
-			<div className="shoppingCar">
+			<div onClick={() => route.replace("/Cart")} className="shoppingCar">
 				<div className="icon icon-cart" />
 				<span>99+</span>
 			</div>
@@ -98,7 +100,7 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
-			<div className="shoppingCar">
+			<div onClick={() => route.replace("/Cart")} className="shoppingCar">
 				<div className="icon icon-cart" />
 				<span>99+</span>
 			</div>
@@ -111,8 +113,7 @@ const Header = () => {
 					setPopBoxType({
 						type: "login",
 					})
-				}}
-			>
+				}}>
 				LOGIN
 			</button>
 		</>
@@ -123,7 +124,7 @@ const Header = () => {
 			<div className="header">
 				<button className="icon icon-menu" />
 				<div className="mobile-menu" />
-				<div className="logo">
+				<div onClick={() => route.replace("/")} className="logo">
 					<a>
 						<img src="https://store.0814media.net/img/88logo.png" alt="" />
 					</a>
