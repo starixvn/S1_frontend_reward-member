@@ -1,9 +1,10 @@
 import { useTranslation } from "react-i18next"
 import { imageUrl } from "config"
+import { useRouter } from "next/router"
 
 export function Index() {
 	const { t } = useTranslation()
-
+	const route = useRouter()
 	return (
 		<>
 			<div className="swiper-container">
@@ -98,7 +99,7 @@ export function Index() {
 					<div>Popular Category</div>
 					<div>
 						COMPUTING & PHONE
-						<button>SHOP NOW</button>
+						<button onClick={() => route.push("/Shopping")}>SHOP NOW</button>
 					</div>
 				</div>
 				<img src="https://store.0814media.net/img/saleimgbg.jpg" alt="" />
