@@ -25,6 +25,7 @@ export interface IGetGiftListArgs {
 	tags: null | number[]
 	orderByField: any
 	desc: boolean
+	pageSize: number
 }
 
 export interface ISetFavoriteArgs {

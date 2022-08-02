@@ -29,12 +29,3 @@ export interface IGetGiftListArgs {
 	orderByField: any
 	desc: boolean
 }
-export const getGiftList = async ({ langId, ...body }: IGetGiftListArgs) => {
-	const response = await Api.post(`store/GetGiftList/${langId}`, body)
-
-	if (response?.data?.errorCode !== 0) {
-		throw new Error(response?.data?.message)
-	}
-
-	return response?.data?.data ?? []
-}

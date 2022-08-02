@@ -11,7 +11,7 @@ interface IGiftTabProps {
 
 const GiftTab: FC<IGiftTabProps> = ({
 	tabList,
-	activeItem = {},
+	activeItem,
 	onChange = null,
 	onGoToMore,
 }) => {
@@ -20,9 +20,10 @@ const GiftTab: FC<IGiftTabProps> = ({
 		<div className="products-menu">
 			{tabList.map(item => (
 				<a
-					className={classNames({ active: activeItem.id === item.id })}
+					className={classNames({ active: activeItem?.id === item.id })}
 					onClick={() => onChange && onChange(item)}
-					key={item.id}>
+					key={item.id}
+				>
 					{t(item.label)}
 				</a>
 			))}

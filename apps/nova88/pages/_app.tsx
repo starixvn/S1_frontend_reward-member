@@ -10,6 +10,8 @@ import "styles/css/reset.css"
 import "styles/css/color-group.css"
 import "styles/css/font.css"
 import "styles/css/style.css"
+import "swiper/css"
+
 import { PopBoxProvider } from "common/components/PopBox/PopBoxContext"
 
 function CustomApp({ Component, pageProps }: AppProps) {
