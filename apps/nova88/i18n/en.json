@@ -1,4 +1,7 @@
 {
+	"Home": {
+		"BannerTitle": "Dear Nova88 Member"
+	},
 	"home ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"BannerTitle": "Dear Nova88 Member",
 	"BannerAdText1": "We proudly present to you this year’s collection of rewards & memorable experiences that awaits you. This is just one of many ways we want to celebrate you for being a loyal Nova88 customer.",
@@ -79,5 +82,11 @@
 	"HighToLowLetter": "Z → A",
 	"ADD_TO_CART": "ADD TO CART",
 	"ADDED_TO_CART": "ADDED TO CART",
-	"SOLD_OUT": "SOLD OUT"
+	"SOLD_OUT": "SOLD OUT",
+	"Label_Login": "Login",
+	"Label_Required": "{{key}} is required",
+	"Label_LoginUserNameInfo": "For security, we suggest that your username does not contain your real name.",
+	"Label_LoginPasswordInfo": "6-18 alphanumeric (A-Z, a-z, 0-9)characters or special characters @$*!%#?&",
+	"Label_UserNameAlphanumeric": "6-18 alphanumeric (A-Z, a-z, 0-9) characters only.",
+	"Label_PasswordAlphanumeric": "Password must be 6-15 characters, contain alphanumeric."
 }

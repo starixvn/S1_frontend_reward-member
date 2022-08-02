@@ -1,11 +1,14 @@
-import React, { FC, useMemo } from "react"
-import PopBoxLogin from "./PopBox.login"
+import React, { FC, useMemo, useRef } from "react"
 import PopBoxWarn from "./PopBox.warn"
 import { usePopBox } from "common/hooks"
+import PopBoxLogin from "./PopBoxLogin"
+import { useOnClickOutside } from "usehooks-ts"
 
 const PopBox: FC = () => {
+	const ref = useRef(null)
 	const {
 		popBoxType: { type, props = {} },
+		closePopBox,
 	} = usePopBox()
 
 	const content = useMemo(() => {
@@ -25,13 +28,17 @@ const PopBox: FC = () => {
 		return element
 	}, [props, type])
 
+	useOnClickOutside(ref, () => {
+		closePopBox()
+	})
+
 	if (!type) {
 		return null
 	}
 
 	return (
 		<div id="popup" className={type ? "active" : ""}>
-			{content}
+			<div ref={ref}>{content}</div>
 		</div>
 	)
 }
