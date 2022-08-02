@@ -39,19 +39,20 @@ const GiftItem: FC<IGiftItemProps> = ({
 	const handleItemBtnTextChange = giftItem => {
 		let text = ""
 		if (!giftItem.stock) {
-			text = "SOLD OUT"
+			text = t("SOLD_OUT")
 		} else {
 			const cartItem = cartList.find(item => item.giftId === giftItem.giftId)
 			if (cartItem) {
-				text = "ADDED TO CART"
+				text = t("ADDED_TO_CART")
 			} else {
-				text = "ADD TO CART"
+				text = t("ADD_TO_CART")
 			}
 		}
 		return text
 	}
 	const closeLargeImg = () => setIsLarge(false)
 	const openLargeImg = () => setIsLarge(true)
+
 	return (
 		<div className={classNames("product", { empty: !item.stock })}>
 			<div className="iconGroup">
@@ -62,7 +63,8 @@ const GiftItem: FC<IGiftItemProps> = ({
 							"icon-fire": tagItem.tagName === "HOT",
 							"icon-shinyblack": tagItem.tagName === "NEW",
 							"icon-percent": tagItem.tagName === "FEATURED",
-						})}>
+						})}
+					>
 						{tagItem.tagName === "FEATURED" ? t("FEAT") : t(tagItem.tagName)}
 					</div>
 				))}
@@ -97,8 +99,9 @@ const GiftItem: FC<IGiftItemProps> = ({
 					"icon-cart":
 						item.stock &&
 						!cartList.find(cartItem => cartItem.giftId === item.giftId),
-				})}>
-				{t(handleItemBtnTextChange(item))}
+				})}
+			>
+				{handleItemBtnTextChange(item)}
 			</button>
 			<div className={classNames("bigPup", { active: isLarge })}>
 				<a
@@ -118,8 +121,9 @@ const GiftItem: FC<IGiftItemProps> = ({
 						"icon-cart":
 							item.stock &&
 							!cartList.find(cartItem => cartItem.giftId === item.giftId),
-					})}>
-					{t(handleItemBtnTextChange(item))}
+					})}
+				>
+					{handleItemBtnTextChange(item)}
 				</button>
 			</div>
 		</div>

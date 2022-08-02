@@ -32,3 +32,6 @@ export const sortType = {
 	LowToHighCost: { orderByField: "Point", desc: false },
 	HighToLowCost: { orderByField: "Point", desc: true },
 }
+
+export const DEFAULT_PAGE_SIZE_COUNT = 10
+export const PAGE_SIZE_COUNT = 5

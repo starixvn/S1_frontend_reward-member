@@ -14,15 +14,10 @@ const storeApi = createApi({
 	tagTypes: ["Post"],
 	endpoints: builder => ({
 		getGiftList: builder.query<IGetGiftListResponse, IGetGiftListArgs>({
-			query: ({ langId, categoryIds, tags, orderByField, desc }) => ({
+			query: ({ langId, ...data }) => ({
 				url: `store/GetGiftList/${langId}`,
 				method: "POST",
-				data: {
-					CategoryIds: categoryIds,
-					Tags: tags,
-					OrderByField: orderByField,
-					Desc: desc,
-				},
+				data,
 			}),
 			providesTags: ["Post"],
 		}),

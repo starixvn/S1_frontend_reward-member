@@ -1,28 +1,40 @@
 import React, { useEffect, useState } from "react"
 import GiftSwiper from "./GiftSwiper"
 import GiftTab from "./GiftTab"
+import Loading from "common/components/Loading"
 import {
 	useLazyGetGiftListQuery,
 	useSetFavoriteMutation,
 } from "service/api/storeApi"
+import { useLocalStorage } from "usehooks-ts"
 import { useRouter } from "next/router"
+import { useInView, usePopBox } from "common/hooks"
+import {
+	sliderList,
+	tabList,
+	fromList,
+	sortType,
+	tabOption,
+	PAGE_SIZE_COUNT,
+	DEFAULT_PAGE_SIZE_COUNT,
+} from "./constants"
+import { IGetGiftListArgs } from "service/api/storeApi/type"
 import GiftSelector from "./GiftSelector"
 import GiftList from "./GiftList"
-import { useLocalStorage } from "usehooks-ts"
-import Loading from "common/components/Loading"
-import { sliderList, tabList, fromList, sortType, tabOption } from "./constants"
-import { IGetGiftListArgs } from "service/api/storeApi/type"
-import { usePopBox } from "common/hooks"
 
 const Shopping = () => {
 	const { setPopBoxType } = usePopBox()
-	const [args, setArgs] = useState({
+	const [inViewRef, isInView] = useInView()
+
+	const [args, setArgs] = useState<IGetGiftListArgs>({
 		langId: "en",
 		categoryIds: null,
 		tags: null,
 		orderByField: null,
 		desc: false,
+		pageSize: DEFAULT_PAGE_SIZE_COUNT,
 	})
+
 	const [categoryList, setCategoryList] = useState([])
 
 	const [
@@ -137,9 +149,23 @@ const Shopping = () => {
 	useEffect(() => {
 		handleFilter(args)
 	}, [args])
+
+	useEffect(() => {
+		const isLast = args.pageSize > giftList.length + PAGE_SIZE_COUNT
+		if (isLast || isGetGiftListFetching) return
+
+		if (isInView) {
+			setArgs(({ pageSize, ...prev }) => ({
+				...prev,
+				pageSize: pageSize + PAGE_SIZE_COUNT,
+			}))
+		}
+	}, [isInView])
+
 	const filterList = isFilterFavorite
 		? giftList.filter(obj => obj.isFavorite === true)
 		: giftList
+
 	return (
 		<main className="shopping-page">
 			<GiftSwiper sliderList={sliderList} />
@@ -171,6 +197,10 @@ const Shopping = () => {
 					/>
 				</div>
 				{isGetGiftListFetching && <Loading />}
+
+				<div ref={inViewRef} />
+
+				<br />
 			</div>
 		</main>
 	)
