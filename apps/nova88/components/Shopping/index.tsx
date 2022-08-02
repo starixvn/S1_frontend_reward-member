@@ -10,7 +10,7 @@ import GiftSelector from "./GiftSelector"
 import GiftList from "./GiftList"
 import { useLocalStorage } from "usehooks-ts"
 import Loading from "common/components/Loading"
-import { sliderList, tabList, fromList, sortType } from "./constants"
+import { sliderList, tabList, fromList, sortType, tabOption } from "./constants"
 import { IGetGiftListArgs } from "service/api/storeApi/type"
 import { usePopBox } from "common/hooks"
 
@@ -30,7 +30,7 @@ const Shopping = () => {
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
 	] = useLazyGetGiftListQuery()
 
-	const [SetFavorite] = useSetFavoriteMutation()
+	const [setFavorite] = useSetFavoriteMutation()
 
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
@@ -60,7 +60,7 @@ const Shopping = () => {
 
 	const handleFavoriteToggle = async item => {
 		try {
-			await SetFavorite({
+			await setFavorite({
 				langId: "en",
 				giftId: item.giftId,
 				isFavorite: !item.isFavorite,
@@ -101,7 +101,7 @@ const Shopping = () => {
 
 	const handleTabChange = activeTab => {
 		setActiveTabItem(activeTab)
-		if (activeTab.id === 4) {
+		if (activeTab.id === tabOption.FAVORITE) {
 			setArgs(prev => ({
 				...prev,
 				tags: null,
@@ -117,7 +117,7 @@ const Shopping = () => {
 		}
 	}
 
-	const GoToMore = () => router.push("/")
+	const goToMore = () => router.push("/")
 	const init = async () => {
 		try {
 			const data = await getGiftList(args)
@@ -149,7 +149,7 @@ const Shopping = () => {
 						tabList={tabList}
 						activeItem={activeTabItem}
 						onChange={handleTabChange}
-						onGoToMore={GoToMore}
+						onGoToMore={goToMore}
 					/>
 					<div className="select">
 						<div className="inputBox-null" />

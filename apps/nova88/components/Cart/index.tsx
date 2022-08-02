@@ -15,6 +15,7 @@ import Order from "./CartOrder"
 import { useTranslation } from "react-i18next"
 import { usePopBox } from "common/hooks"
 import { useLazyCreateRedemptionQuery } from "service/api/redemptionApi"
+import { imageUrl } from "../../config"
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -231,10 +232,7 @@ const Cart = () => {
 						{t("AffiliatesProgramTip")}
 					</div>
 					<div>
-						<img
-							src="https://store.0814media.net/img/affiliatebg-1.jpg"
-							alt="img"
-						/>
+						<img src={`${imageUrl}/img/affiliatebg-1.jpg`} alt="img" />
 					</div>
 				</div>
 				<div className="products-group col-lg-7 col-xl-7">

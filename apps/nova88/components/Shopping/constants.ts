@@ -1,15 +1,23 @@
+import { imageUrl } from "config"
 export const sliderList = [
-	{ id: 1, img: "https://store.0814media.net/img/banner.jpg" },
-	{ id: 2, img: "https://store.0814media.net/img/banner.jpg" },
-	{ id: 3, img: "https://store.0814media.net/img/banner.jpg" },
+	{ id: 1, img: `${imageUrl}/img/banner.jpg` },
+	{ id: 2, img: `${imageUrl}/img/banner.jpg` },
+	{ id: 3, img: `${imageUrl}/img/banner.jpg` },
 ]
+export enum tabOption {
+	ALL = 0,
+	HOT,
+	NEW,
+	FEATURED,
+	FAVORITE,
+}
 
 export const tabList = [
-	{ id: 0, label: "ALL" },
-	{ id: 1, label: "HOT" },
-	{ id: 2, label: "NEW" },
-	{ id: 3, label: "FEATURED" },
-	{ id: 4, label: "FAVORITE" },
+	{ id: tabOption.ALL, label: "ALL" },
+	{ id: tabOption.HOT, label: "HOT" },
+	{ id: tabOption.NEW, label: "NEW" },
+	{ id: tabOption.FEATURED, label: "FEATURED" },
+	{ id: tabOption.FAVORITE, label: "FAVORITE" },
 ]
 export const fromList = [
 	"LowToHighCost",

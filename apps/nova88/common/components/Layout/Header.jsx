@@ -5,6 +5,7 @@ import { selectedIsLogin } from "service/slice/auth"
 import { logoutAsync } from "service/slice/auth/thunk"
 import { useAppDispatch } from "store"
 import { useRouter } from "next/router"
+import { imageUrl } from "config"
 
 const Header = () => {
 	const route = useRouter()
@@ -69,7 +70,7 @@ const Header = () => {
 			</div>
 			<button onClick={handleLogout} className="icon icon-exit" />
 			<a className="novaLogo">
-				<img src="https://store.0814media.net/img/novalogo.png" alt="any" />
+				<img src={`${imageUrl}/img/novalogo.png`} alt="any" />
 			</a>
 		</>
 	)
@@ -105,7 +106,7 @@ const Header = () => {
 				<span>99+</span>
 			</div>
 			<a className="novaLogo">
-				<img src="https://store.0814media.net/img/novalogo.png" alt="" />
+				<img src={`${imageUrl}/img/novalogo.png`} alt="" />
 			</a>
 			<button
 				className="login"
@@ -126,7 +127,7 @@ const Header = () => {
 				<div className="mobile-menu" />
 				<div onClick={() => route.replace("/")} className="logo">
 					<a>
-						<img src="https://store.0814media.net/img/88logo.png" alt="" />
+						<img src={`${imageUrl}/img/88logo.png`} alt="" />
 					</a>
 				</div>
 				<div className="shoppingCar">
