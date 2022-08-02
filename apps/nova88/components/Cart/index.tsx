@@ -194,7 +194,8 @@ const Cart = () => {
 								<button
 									onClick={() => {
 										route.push("/Shopping")
-									}}>
+									}}
+								>
 									{t("EmptyText2")}
 								</button>
 							</div>

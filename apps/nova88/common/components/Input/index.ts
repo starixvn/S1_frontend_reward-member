@@ -1,1 +1,1 @@
-export * from "./InputBox"
+export * from "./Input"

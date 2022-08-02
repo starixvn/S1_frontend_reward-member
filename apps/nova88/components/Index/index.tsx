@@ -110,7 +110,8 @@ const Index = () => {
 						})
 					}}
 					id="indexLogin"
-					className="btn-login">
+					className="btn-login"
+				>
 					{t("LOGIN")}
 				</div>
 			)}

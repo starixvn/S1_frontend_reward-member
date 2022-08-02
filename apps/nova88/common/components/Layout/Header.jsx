@@ -114,7 +114,8 @@ const Header = () => {
 					setPopBoxType({
 						type: "login",
 					})
-				}}>
+				}}
+			>
 				LOGIN
 			</button>
 		</>
