@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
 import InputBox from "../Input/InputBox"
+import { imageUrl } from "config"
 import { LOGIN } from "service/auth"
 import { usePopBox } from "common/hooks"
 import { useAppDispatch, useAppSelector } from "store"
@@ -82,10 +83,10 @@ const PopBoxLogin = () => {
 			<div className="icon icon-close" onClick={closePopBox} />
 			<div className="loginModule">
 				<div>
-					<img src="https://store.0814media.net/img/loginbg.jpg" alt="" />
+					<img src={`${imageUrl}/img/loginbg.jpg`} alt="" />
 				</div>
 				<div className="loginFunction">
-					<img src="https://store.0814media.net/img/88logo.png" alt="" />
+					<img src={`${imageUrl}/img/88logo.png`} alt="" />
 					<div className="title">{t("Login")}</div>
 					<form onSubmit={loginHandle}>
 						<InputBox
