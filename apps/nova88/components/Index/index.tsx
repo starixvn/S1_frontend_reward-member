@@ -17,6 +17,7 @@ import { IGetGiftListArgs } from "service/api/storeApi/type"
 import { useSelector } from "react-redux"
 import { selectedIsLogin } from "service/slice/auth"
 import { imageUrl } from "config"
+import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
 
 const Index = () => {
 	const { setPopBoxType } = usePopBox()
@@ -26,6 +27,7 @@ const Index = () => {
 		tags: null,
 		orderByField: null,
 		desc: false,
+		pageSize: DEFAULT_PAGE_SIZE_COUNT,
 	})
 	const [
 		getGiftList,
@@ -110,8 +112,7 @@ const Index = () => {
 						})
 					}}
 					id="indexLogin"
-					className="btn-login"
-				>
+					className="btn-login">
 					{t("LOGIN")}
 				</div>
 			)}

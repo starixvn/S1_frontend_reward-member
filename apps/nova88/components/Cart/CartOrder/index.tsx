@@ -57,7 +57,7 @@ interface ICartOrderProps {
 	setIsShowTip: (isShowTip: boolean) => void
 	onGoToProfile: () => void
 	noteInput: string
-	setNoteInput: (e: string) => void
+	setNoteInput: (note: string) => void
 	isChecked: boolean
 	isShowOrderItem: boolean
 	onSubmit: () => void
@@ -120,7 +120,8 @@ const Order: FC<ICartOrderProps> = ({
 						<span>{t("SHIPPING_ADDRESS")}</span>
 						<a
 							onClick={() => setIsShowTip(!isShowTip)}
-							className="icon icon-information"></a>
+							className="icon icon-information"
+						></a>
 						<div className={classNames("cart-tip", { active: isShowTip })}>
 							{t("AddressUpdateTip")}
 						</div>
@@ -151,14 +152,15 @@ const Order: FC<ICartOrderProps> = ({
 				onChange={e => setNoteInput(e.target.value)}
 				value={noteInput}
 				type="text"
-				placeholder="Note"
+				placeholder={t("Note")}
 			/>
 			<div className="txt">{t("NoteTip")}</div>
 			<button
 				onClick={onSubmit}
 				className={classnames("btn-checkout", {
 					null: !isChecked,
-				})}>
+				})}
+			>
 				{t("CHECKOUT")}
 			</button>
 		</div>

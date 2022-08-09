@@ -6,6 +6,9 @@ import {
 	IGetGiftListResponse,
 	ISetFavoriteResponse,
 	ISetFavoriteArgs,
+	IGetMyCoinResponse,
+	IGetMyPurchesResponse,
+	IGetMyPurchesArgs,
 } from "./type"
 
 const storeApi = createApi({
@@ -40,6 +43,25 @@ const storeApi = createApi({
 			}),
 			invalidatesTags: ["Post"],
 		}),
+		getMyCoin: builder.query<IGetMyCoinResponse, null>({
+			query: () => ({
+				url: `store/GetMyCoin`,
+				method: "POST",
+				data: {},
+			}),
+			providesTags: ["Post"],
+		}),
+		getMyPurchase: builder.query<IGetMyPurchesResponse, IGetMyPurchesArgs>({
+			query: ({ PageNumber, PageSize }) => ({
+				url: `store/GetMyPurches`,
+				method: "POST",
+				data: {
+					PageNumber,
+					PageSize,
+				},
+			}),
+			providesTags: ["Post"],
+		}),
 	}),
 })
 
@@ -48,6 +70,8 @@ export const {
 	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
 	useSetFavoriteMutation,
+	useLazyGetMyCoinQuery,
+	useGetMyPurchaseQuery,
 } = storeApi
 
 export default storeApi
