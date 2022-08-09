@@ -18,3 +18,4 @@ export const tabList = [
 	{ id: tabOption.FEATURED, label: "FEATURED" },
 	{ id: tabOption.FAVORITE, label: "FAVORITE" },
 ]
+export const DEFAULT_PAGE_SIZE_COUNT = 5

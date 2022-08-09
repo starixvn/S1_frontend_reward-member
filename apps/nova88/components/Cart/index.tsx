@@ -15,7 +15,8 @@ import Order from "./CartOrder"
 import { useTranslation } from "react-i18next"
 import { usePopBox } from "common/hooks"
 import { useLazyCreateRedemptionQuery } from "service/api/redemptionApi"
-import { imageUrl } from "../../config"
+import { imageUrl } from "config"
+import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -43,6 +44,7 @@ const Cart = () => {
 		tags: [3],
 		orderByField: null,
 		desc: false,
+		pageSize: DEFAULT_PAGE_SIZE_COUNT,
 	})
 	const {
 		data: { data: giftList = [] } = {},
@@ -194,8 +196,7 @@ const Cart = () => {
 								<button
 									onClick={() => {
 										route.push("/Shopping")
-									}}
-								>
+									}}>
 									{t("EmptyText2")}
 								</button>
 							</div>

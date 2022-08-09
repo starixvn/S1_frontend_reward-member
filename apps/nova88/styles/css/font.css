@@ -7,6 +7,10 @@
   font-family: "icomoon";
 }
 
+.icon-alarm:before {
+  content: "\e913";
+}
+
 .icon-percent:before {
   content: "\e912";
 }

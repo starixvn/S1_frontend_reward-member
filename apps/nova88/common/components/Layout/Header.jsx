@@ -5,7 +5,8 @@ import { selectedIsLogin } from "service/slice/auth"
 import { logoutAsync } from "service/slice/auth/thunk"
 import { useAppDispatch } from "store"
 import { useRouter } from "next/router"
-import { imageUrl } from "config"
+import { imageUrl, image0814MediaUrl } from "config"
+import Link from "next/link"
 
 const Header = () => {
 	const route = useRouter()
@@ -27,7 +28,7 @@ const Header = () => {
 			<div className="memberFile">
 				<div className="vipAnimation">
 					<a>
-						<img src="https://image.0814media.net/VIP/img/vip06.png" alt="" />
+						<img src={`${image0814MediaUrl}/VIP/img/vip06.png`} alt="" />
 					</a>
 				</div>
 				<div className="memberID">
@@ -114,8 +115,7 @@ const Header = () => {
 					setPopBoxType({
 						type: "login",
 					})
-				}}
-			>
+				}}>
 				LOGIN
 			</button>
 		</>
@@ -143,11 +143,11 @@ const Header = () => {
 							<a href="app.html" className="icon icon-mobile" />
 						</div>
 						<div>
-							<a>SHOPPING</a>
-							<a>HOW TO EARN POINTS</a>
-							<a>FAQ/T&C</a>
-							<a>MY PURCHASE</a>
-							<a>MY POINTS</a>
+							<Link href="/shopping">SHOPPING</Link>
+							<Link href="/about/howtoearnpoints">HOW TO EARN POINTS</Link>
+							<Link href="/about/rewardfaq">FQA</Link>
+							<Link href="/about/purchase">MY PURCHASE</Link>
+							<Link href="/about/points">MY POINTS</Link>
 						</div>
 					</div>
 				</div>

@@ -33,6 +33,49 @@ export interface ISetFavoriteArgs {
 	giftId: null | number
 	isFavorite: boolean
 }
+export interface IGetMyPurchesArgs {
+	PageNumber: number
+	PageSize: number
+}
 
+export interface myCoinData {
+	custId: number
+	pointBalance: number
+	pointEarned: number
+	pointUsed: number
+	pointLocked: number
+	detail: {
+		pointType: number
+		pointTypeName: string
+		plusSummary: number
+		minusSummary: number
+		totalSummary: number
+		detailRewardCoin: null
+	}[]
+}
+export interface myPurchesData {
+	list: {
+		datas: {
+			siteId: number
+			custId: number
+			currencyId: number
+			isoCode: string
+			transId: string
+			giftId: string
+			giftName: string
+			point: number
+			status: number
+			statusName: string
+			createTime: string
+			timeZone: string
+			createTimeInCurrencyTimeZone: string
+		}[]
+		pageNumber: number
+		totalPages: number
+		rowCount: number
+	}
+}
 export type IGetGiftListResponse = IAxiosResponse<giftData[]>
 export type ISetFavoriteResponse = IAxiosResponse<null>
+export type IGetMyCoinResponse = IAxiosResponse<myCoinData>
+export type IGetMyPurchesResponse = IAxiosResponse<myPurchesData>
