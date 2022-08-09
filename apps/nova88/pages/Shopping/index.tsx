@@ -1,5 +1,5 @@
 import React from "react"
-import Shopping from "components/Shopping"
+import Shopping from "components/shopping"
 import Wrapper from "common/components/Wrapper"
 import Layout from "common/components/Layout"
 
