@@ -5,7 +5,7 @@ import HowToEarnPoints from "components/about/Howtoearnpoints"
 
 const Page = () => {
 	return (
-		<Wrapper>
+		<Wrapper authRequired={false}>
 			<Layout>
 				<HowToEarnPoints />
 			</Layout>

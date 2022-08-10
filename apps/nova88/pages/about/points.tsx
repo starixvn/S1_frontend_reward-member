@@ -5,7 +5,7 @@ import Points from "components/about/Points"
 
 const Page = () => {
 	return (
-		<Wrapper>
+		<Wrapper authRequired>
 			<Layout>
 				<Points />
 			</Layout>

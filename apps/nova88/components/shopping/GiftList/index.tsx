@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import GiftItem from "components/Shopping/GiftItem"
+import GiftItem from "components/shopping/GiftItem"
 
 interface IGiftListProps {
 	filterList: {
