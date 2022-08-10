@@ -1,10 +1,15 @@
-import { useEffect } from "react"
+import { FC, ReactNode, useEffect } from "react"
 import { useRouter } from "next/router"
 import { useAppDispatch, useAppSelector } from "store"
 import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk"
 import { selectedIsLogin } from "service/slice/auth"
 
-const Wrapper = ({ children }) => {
+interface IWrapperProps {
+	authRequired: boolean
+	children: ReactNode
+}
+
+const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 	const dispatch = useAppDispatch()
 	const route = useRouter()
 
@@ -21,6 +26,16 @@ const Wrapper = ({ children }) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLogin])
+
+	// * 如果 checkSignIn 尚未 return response
+	if (isLogin === null) {
+		return null
+	}
+
+	// * 如果需要登入且 response 為 未登入
+	if (authRequired && isLogin === false) {
+		route.push("/")
+	}
 
 	return <>{children}</>
 }

@@ -5,7 +5,7 @@ import Cart from "components/Cart"
 
 const Index = () => {
 	return (
-		<Wrapper>
+		<Wrapper authRequired={false}>
 			<Layout>
 				<Cart />
 			</Layout>

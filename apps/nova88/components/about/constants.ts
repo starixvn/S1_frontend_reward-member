@@ -1,3 +1,5 @@
+import { paths } from "common/constants"
+
 export enum AboutTabEnum {
 	POINTS = 1,
 	PURCHASE = 2,
@@ -9,26 +11,29 @@ export const mineMenuList: {
 	id: number
 	displayKey: string
 	path: string
+	authRequired?: boolean
 }[] = [
 	{
 		id: AboutTabEnum.POINTS,
 		displayKey: "MY POINTS",
-		path: "/about/points",
+		path: paths.about.sub.points.root,
+		authRequired: paths.about.sub.points.authRequired,
 	},
 	{
 		id: AboutTabEnum.PURCHASE,
 		displayKey: "MY PURCHASE",
-		path: "/about/purchase",
+		path: paths.about.sub.purchase.root,
+		authRequired: paths.about.sub.purchase.authRequired,
 	},
 	{
 		id: AboutTabEnum.HOW_TO_EARN_POINTS,
 		displayKey: "HOW TO EARN POINTS",
-		path: "/about/howtoearnpoints",
+		path: paths.about.sub.howtoearnpoints.root,
 	},
 	{
 		id: AboutTabEnum.FQA,
 		displayKey: "FQA",
-		path: "/about/rewardfaq",
+		path: paths.about.sub.rewardfaq.root,
 	},
 ]
 

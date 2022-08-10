@@ -5,7 +5,7 @@ import Purchase from "components/about/Purchase"
 
 const Page = () => {
 	return (
-		<Wrapper>
+		<Wrapper authRequired>
 			<Layout>
 				<Purchase />
 			</Layout>

@@ -5,7 +5,7 @@ import Faq from "components/about/Faq"
 
 const Page = () => {
 	return (
-		<Wrapper>
+		<Wrapper authRequired={false}>
 			<Layout>
 				<Faq />
 			</Layout>

@@ -35,11 +35,11 @@ const Points = () => {
 			})
 		}
 	}
+
 	useEffect(() => {
-		handleGetMyCoin(null)
-	}, [])
-	useEffect(() => {
-		handleGetMyCoin(null)
+		if (isLogin) {
+			handleGetMyCoin(null)
+		}
 	}, [isLogin])
 
 	const availablePoints = getAvailablePoints(coinList)

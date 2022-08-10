@@ -1,16 +1,12 @@
 import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import LeftMenu from "components/about/components/LeftMenu"
 import PurchaseRecord from "components/about/components/PurchaseRecord"
 import { useTranslation } from "react-i18next"
 import { useGetMyPurchaseQuery } from "service/api/storeApi"
-import { useAppSelector } from "store"
-import { selectedIsLogin } from "service/slice/auth"
-import { usePopBox } from "../../../common/hooks"
 
 const Purchase = () => {
 	const { pathname } = useRouter()
-	const { setPopBoxType } = usePopBox()
 	const { t } = useTranslation()
 	const [args, setArgs] = useState({
 		PageNumber: 1,
@@ -20,21 +16,9 @@ const Purchase = () => {
 		data: { data: { list: purchaseData } = {} } = {},
 		isFetching: isGetMyPurchaseFetching,
 	} = useGetMyPurchaseQuery(args, { refetchOnMountOrArgChange: true })
-	const isLogin = useAppSelector(selectedIsLogin)
+
 	const [isForwardSort, setIsForwardSort] = useState(false)
-	useEffect(() => {
-		if (isLogin) {
-			setArgs({
-				PageNumber: 1,
-				PageSize: 10,
-			})
-		} else {
-			setArgs({
-				PageNumber: 1,
-				PageSize: 0,
-			})
-		}
-	}, [isLogin, setPopBoxType])
+
 	const handlePageNumberChange = i => {
 		setArgs(prev => ({
 			...prev,
