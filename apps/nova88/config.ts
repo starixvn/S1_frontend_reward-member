@@ -1,8 +1,6 @@
 export const siteInfo = {
 	defaultLang: "en",
-	defaultLangList: ["en", "cs"],
+	defaultLangList: ["en", "cs", "my", "th", "th_en", "id", "id_en"],
 }
 
 export const imageUrl = "https://store.0814media.net"
-
-export const image0814MediaUrl = "https://image.0814media.net"

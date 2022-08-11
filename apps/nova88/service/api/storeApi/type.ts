@@ -75,7 +75,12 @@ export interface myPurchesData {
 		rowCount: number
 	}
 }
+interface pointBalance {
+	pointBalance: number
+}
+
 export type IGetGiftListResponse = IAxiosResponse<giftData[]>
 export type ISetFavoriteResponse = IAxiosResponse<null>
 export type IGetMyCoinResponse = IAxiosResponse<myCoinData>
 export type IGetMyPurchesResponse = IAxiosResponse<myPurchesData>
+export type IGetPointBalanceResponse = IAxiosResponse<pointBalance>

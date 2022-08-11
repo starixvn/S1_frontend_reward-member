@@ -9,6 +9,7 @@ import {
 	IGetMyCoinResponse,
 	IGetMyPurchesResponse,
 	IGetMyPurchesArgs,
+	IGetPointBalanceResponse,
 } from "./type"
 
 const storeApi = createApi({
@@ -24,9 +25,9 @@ const storeApi = createApi({
 			}),
 			providesTags: ["Post"],
 		}),
-		GetPointBalance: builder.query<null, null>({
+		GetPointBalance: builder.query<IGetPointBalanceResponse, null>({
 			query: () => ({
-				url: `store/GetPointBalance/en `,
+				url: `store/GetPointBalance`,
 				method: "POST",
 				data: {},
 			}),
@@ -69,6 +70,7 @@ export const {
 	useGetGiftListQuery,
 	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
+	useGetPointBalanceQuery,
 	useSetFavoriteMutation,
 	useLazyGetMyCoinQuery,
 	useGetMyPurchaseQuery,

@@ -5,7 +5,7 @@ import Layout from "common/components/Layout"
 
 const Index = () => {
 	return (
-		<Wrapper authRequired={false}>
+		<Wrapper>
 			<Layout>
 				<Shopping />
 			</Layout>
