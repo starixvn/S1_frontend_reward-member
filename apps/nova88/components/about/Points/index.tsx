@@ -8,7 +8,7 @@ import { useLazyGetMyCoinQuery } from "service/api/storeApi"
 import { usePopBox } from "common/hooks"
 import { useAppSelector } from "store"
 import { selectedIsLogin } from "service/slice/auth"
-import { image0814MediaUrl } from "config"
+import { imageUrl } from "config"
 import { getAvailablePoints, getUsedPoints } from "components/about/utils"
 
 const Points = () => {
@@ -66,10 +66,7 @@ const Points = () => {
 										</div>
 										<div className="vipAnimation">
 											<a href="">
-												<img
-													src={`${image0814MediaUrl}/VIP/img/vip06.png`}
-													alt=""
-												/>
+												<img src={`${imageUrl}/img/vip06.png`} alt="" />
 											</a>
 										</div>
 										<div className="level">{t("VINTAGE_CLUB")}</div>

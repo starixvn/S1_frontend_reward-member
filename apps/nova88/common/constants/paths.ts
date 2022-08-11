@@ -1,6 +1,8 @@
 const paths = {
 	forgetPassword: "forgetPassword",
 	join: "join",
+	appDownload: "appDownload",
+	shopping: "shopping",
 	about: {
 		root: "/about",
 		sub: {

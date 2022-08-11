@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
-import GiftSwiper from "components/Shopping/GiftSwiper"
+import GiftSwiper from "components/shopping/GiftSwiper"
 import { sliderList, tabOption } from "./constants"
 import GiftTab from "components/Shopping/GiftTab"
 import { tabList } from "./constants"
@@ -157,12 +157,12 @@ const Index = () => {
 			<div className="saleImg">
 				<div className="txt">
 					<div>
-						{t("Your_Journey_To_Rewards")}
-						<p>{t("Starts_Here")}</p>
+						{t("YourJourneyToRewards")}
+						<p>{t("StartsHere")}</p>
 					</div>
-					<div>{t("Popular_Category")}</div>
+					<div>{t("PopularCategory")}</div>
 					<div>
-						{t("COMPUTING_AND_PHONE")}
+						{t("Computing&Phone")}
 						<button onClick={() => route.push("/Shopping")}>
 							{t("SHOP_NOW")}
 						</button>
@@ -195,22 +195,22 @@ const Index = () => {
 								src={`${imageUrl}/img/novalogo.png`}
 								alt=""
 							/>
-							<div className="title">{t("SCAN_TO_DOWNLOAD")}</div>
-							{t("THE_MOST_USER_FRIENDLY_APP")}
+							<div className="title">{t("ScanToDownload").toUpperCase()}</div>
+							{t("AppBannerText").toUpperCase()}
 							<div className="qr-group">
 								<div className="qrCode">
 									<div className="icon icon-android">
 										<span>{t("Android")}</span>
 									</div>
 									<img src={`${imageUrl}/img/qrcode.svg`} alt="" />
-									<button>{t("DOWNLOAD")}</button>
+									<button>{t("Download").toUpperCase()}</button>
 								</div>
 								<div className="qrCode">
 									<div className="icon icon-appleinc">
 										<span>{t("IOS")}</span>
 									</div>
 									<img src={`${imageUrl}/img/qrcode.svg`} alt="" />
-									<button>{t("DOWNLOAD")}</button>
+									<button>{t("Download".toUpperCase())}</button>
 								</div>
 							</div>
 						</div>

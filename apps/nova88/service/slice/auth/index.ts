@@ -24,6 +24,9 @@ const authSlice = createSlice({
 		setIsLogin: (state, action) => {
 			state.isLogin = action.payload
 		},
+		setLangId: (state, action) => {
+			state.profile.langId = action.payload
+		},
 	},
 	extraReducers: build =>
 		build
@@ -51,5 +54,5 @@ export const selectedProfile = ({ auth }: RootState) => auth.profile
 export const selectedUserName = ({ auth }: RootState) => auth.profile?.userName
 export const selectedLangId = ({ auth }: RootState) => auth.profile?.langId
 
-export const { setIsLogin } = authSlice.actions
+export const { setIsLogin, setLangId } = authSlice.actions
 export const authReducer = authSlice.reducer
