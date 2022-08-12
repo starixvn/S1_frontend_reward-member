@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
-import GiftSwiper from "components/shopping/GiftSwiper"
+import GiftSwiper from "components/Shopping/GiftSwiper"
 import { sliderList, tabOption } from "./constants"
 import GiftTab from "components/Shopping/GiftTab"
 import { tabList } from "./constants"

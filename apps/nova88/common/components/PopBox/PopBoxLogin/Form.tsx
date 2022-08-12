@@ -76,12 +76,11 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 				<button
 					type="button"
 					className="btn-sign"
-					onClick={() => router.push(`/${langId}/${paths.join}`)}
-				>
-					{t("Label_SIGNUP")}
+					onClick={() => router.push(`/${langId}/${paths.join}`)}>
+					{t("SIGN_UP")}
 				</button>
 				<button className="btn-login" type="submit">
-					{t("Label_LOGIN")}
+					{t("LOGIN")}
 				</button>
 			</div>
 		</form>

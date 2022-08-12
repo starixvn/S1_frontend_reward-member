@@ -90,6 +90,7 @@
 	"ADDED_TO_CART": "ADDED TO CART",
 	"SOLD_OUT": "SOLD OUT",
 	"Label_Login": "Login",
+	"Label_Sighup": "Sighup",
 	"Label_Required": "{{key}} is required",
 	"Label_LoginUserNameInfo": "For security, we suggest that your username does not contain your real name.",
 	"Label_LoginPasswordInfo": "6-18 alphanumeric (A-Z, a-z, 0-9)characters or special characters @$*!%#?&",
