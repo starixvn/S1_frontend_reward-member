@@ -1,8 +1,10 @@
 import { useRouter } from "next/router"
 import React, { useState } from "react"
+import Link from "next/link"
 import LeftMenu from "components/about/components/LeftMenu"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
+import { paths } from "common/constants"
 
 const Faq = () => {
 	const { pathname } = useRouter()
@@ -139,9 +141,11 @@ const Faq = () => {
 									</button>
 									<div className="faq-info">
 										{t("Question7_Content")}
-										<a href="" className="blue">
-											{t("How_to_earn_88_Rewards_points")}
-										</a>
+										<Link href={paths.about.sub.howtoearnpoints.root}>
+											<a className="blue">
+												{t("How_to_earn_88_Rewards_points")}
+											</a>
+										</Link>
 									</div>
 								</div>
 								<div

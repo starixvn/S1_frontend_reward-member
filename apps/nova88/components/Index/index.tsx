@@ -18,6 +18,7 @@ import { useSelector } from "react-redux"
 import { selectedIsLogin } from "service/slice/auth"
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
+import { paths } from "common/constants"
 
 const Index = () => {
 	const { setPopBoxType } = usePopBox()
@@ -94,7 +95,7 @@ const Index = () => {
 			setIsFilterFavorite(false)
 		}
 	}
-	const goToMore = () => route.push("/Shopping")
+	const goToMore = () => route.push(paths.shopping)
 	useEffect(() => {
 		handleFilter(args)
 	}, [args])
@@ -163,7 +164,7 @@ const Index = () => {
 					<div>{t("PopularCategory")}</div>
 					<div>
 						{t("Computing&Phone")}
-						<button onClick={() => route.push("/Shopping")}>
+						<button onClick={() => route.push(paths.shopping)}>
 							{t("SHOP_NOW")}
 						</button>
 					</div>

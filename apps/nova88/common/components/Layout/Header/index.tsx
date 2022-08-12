@@ -23,7 +23,7 @@ const Header = () => {
 			<div className="header">
 				<button className="icon icon-menu" />
 				<div className="mobile-menu" />
-				<div onClick={() => route.replace("/")} className="logo">
+				<div onClick={() => route.push(paths.home)} className="logo">
 					<a>
 						<img src={`${imageUrl}/img/88logo.png`} alt="" />
 					</a>
@@ -35,7 +35,7 @@ const Header = () => {
 				<div className="menu">
 					<div className="tag">
 						<div className="home">
-							<Link href={`/${langId}`}>
+							<Link href={paths.home}>
 								<a className="icon icon-home"></a>
 							</Link>
 							<Link

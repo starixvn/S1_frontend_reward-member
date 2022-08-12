@@ -1,27 +1,34 @@
+// Site Url: {Domain}/Rewards/
+const isDevelopment = process.env.NODE_ENV !== "production"
+const root = isDevelopment ? "/" : "/Rewards"
+
 const paths = {
-	forgetPassword: "forgetPassword",
-	join: "join",
-	appDownload: "appDownload",
-	shopping: "shopping",
+	home: root,
+	shopping: `${root}/shopping`,
+	cart: `${root}/cart`,
 	about: {
-		root: "/about",
+		root: `${root}/about`,
 		sub: {
 			points: {
-				root: "/about/points",
+				root: `${root}/about/points`,
 				authRequired: true,
 			},
 			purchase: {
-				root: "/about/purchase",
+				root: `${root}/about/purchase`,
 				authRequired: true,
 			},
 			howtoearnpoints: {
-				root: "/about/howtoearnpoints",
+				root: `${root}/about/howtoearnpoints`,
 			},
 			rewardfaq: {
-				root: "/about/rewardfaq",
+				root: `${root}/about/rewardfaq`,
 			},
 		},
 	},
+	forgetPassword: "forgetPassword",
+	join: "join",
+	appDownload: "appDownload",
+	profile: "profile",
 }
 
 export { paths }
