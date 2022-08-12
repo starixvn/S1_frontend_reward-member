@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
-import GiftSwiper from "components/shopping/GiftSwiper"
+import GiftSwiper from "components/Shopping/GiftSwiper"
 import { sliderList, tabOption } from "./constants"
 import GiftTab from "components/Shopping/GiftTab"
 import { tabList } from "./constants"
@@ -51,17 +51,24 @@ const Index = () => {
 	const [activeTabItem, setActiveTabItem] = useState(tabList[0])
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
+
 	const handleFavoriteToggle = async item => {
-		try {
-			await setFavorite({
-				langId: "en",
-				giftId: item.giftId,
-				isFavorite: !item.isFavorite,
-			}).unwrap()
-		} catch (error) {
+		if (isLogin) {
+			try {
+				await setFavorite({
+					langId: "en",
+					giftId: item.giftId,
+					isFavorite: !item.isFavorite,
+				}).unwrap()
+			} catch (error) {
+				setPopBoxType({
+					type: "warn",
+					props: { content: error.message },
+				})
+			}
+		} else {
 			setPopBoxType({
-				type: "warn",
-				props: { content: error.message },
+				type: "login",
 			})
 		}
 	}
