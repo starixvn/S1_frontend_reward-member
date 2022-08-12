@@ -52,17 +52,24 @@ const Index = () => {
 	const [activeTabItem, setActiveTabItem] = useState(tabList[0])
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
+
 	const handleFavoriteToggle = async item => {
-		try {
-			await setFavorite({
-				langId: "en",
-				giftId: item.giftId,
-				isFavorite: !item.isFavorite,
-			}).unwrap()
-		} catch (error) {
+		if (isLogin) {
+			try {
+				await setFavorite({
+					langId: "en",
+					giftId: item.giftId,
+					isFavorite: !item.isFavorite,
+				}).unwrap()
+			} catch (error) {
+				setPopBoxType({
+					type: "warn",
+					props: { content: error.message },
+				})
+			}
+		} else {
 			setPopBoxType({
-				type: "warn",
-				props: { content: error.message },
+				type: "login",
 			})
 		}
 	}

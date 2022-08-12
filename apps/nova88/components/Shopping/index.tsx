@@ -21,6 +21,8 @@ import {
 import { IGetGiftListArgs } from "service/api/storeApi/type"
 import GiftSelector from "./GiftSelector"
 import GiftList from "./GiftList"
+import { useSelector } from "react-redux"
+import { selectedIsLogin } from "service/slice/auth"
 
 const Shopping = () => {
 	const { setPopBoxType } = usePopBox()
@@ -58,6 +60,7 @@ const Shopping = () => {
 	const [activeTabItem, setActiveTabItem] = useState(tabList[0])
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
+	const isLogin = useSelector(selectedIsLogin)
 	const getCategoryList = giftList => {
 		const tempList = []
 		const categoryList = []
@@ -71,16 +74,22 @@ const Shopping = () => {
 	}
 
 	const handleFavoriteToggle = async item => {
-		try {
-			await setFavorite({
-				langId: "en",
-				giftId: item.giftId,
-				isFavorite: !item.isFavorite,
-			}).unwrap()
-		} catch (error) {
+		if (isLogin) {
+			try {
+				await setFavorite({
+					langId: "en",
+					giftId: item.giftId,
+					isFavorite: !item.isFavorite,
+				}).unwrap()
+			} catch (error) {
+				setPopBoxType({
+					type: "warn",
+					props: { content: error.message },
+				})
+			}
+		} else {
 			setPopBoxType({
-				type: "warn",
-				props: { content: error.message },
+				type: "login",
 			})
 		}
 	}
