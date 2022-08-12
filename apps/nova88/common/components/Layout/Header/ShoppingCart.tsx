@@ -10,7 +10,7 @@ const ShoppingCart = () => {
 	return (
 		<div onClick={() => route.replace("/Cart")} className="shoppingCar">
 			<div className="icon icon-cart" />
-			<span>{cartCount > 99 ? "99+" : `${cartCount}`}</span>
+			<span>{cartCount > 99 ? "99+" : `+${cartCount}`}</span>
 		</div>
 	)
 }
