@@ -17,6 +17,7 @@ import { usePopBox } from "common/hooks"
 import { useLazyCreateRedemptionQuery } from "service/api/redemptionApi"
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
+import { paths } from "common/constants"
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -195,7 +196,7 @@ const Cart = () => {
 								<div>{t("EmptyText1")}</div>
 								<button
 									onClick={() => {
-										route.push("/Shopping")
+										route.push(paths.shopping)
 									}}>
 									{t("EmptyText2")}
 								</button>
@@ -216,9 +217,7 @@ const Cart = () => {
 						pointBalance={pointBalance}
 						isShowTip={isShowTip}
 						setIsShowTip={setIsShowTip}
-						onGoToProfile={() =>
-							route.replace(`https://www.nova88.net/en/profile`)
-						}
+						onGoToProfile={() => route.push(paths.profile)}
 						noteInput={noteInput}
 						setNoteInput={setNoteInput}
 						isChecked={isChecked}
@@ -241,7 +240,7 @@ const Cart = () => {
 					<div className="row">
 						<GiftTab
 							tabList={[{ id: 3, label: "FEATURED" }]}
-							onGoToMore={() => route.push("/Shopping")}
+							onGoToMore={() => route.push(paths.shopping)}
 						/>
 						<GiftList
 							filterList={giftList}

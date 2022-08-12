@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { useAppDispatch, useAppSelector } from "store"
 import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk"
 import { selectedIsLogin } from "service/slice/auth"
+import { paths } from "common/constants"
 
 interface IWrapperProps {
 	authRequired: boolean
@@ -34,7 +35,7 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 
 	// * 如果需要登入且 response 為 未登入
 	if (authRequired && isLogin === false) {
-		route.push("/")
+		route.push(paths.home)
 	}
 
 	return <>{children}</>
