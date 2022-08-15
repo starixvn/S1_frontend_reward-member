@@ -52,7 +52,7 @@ const Faq = () => {
 											<li>{t("Question2_Content4")}</li>
 											<li>{t("Question2_Content5")}</li>
 										</ul>
-										{t("Refer")} <a className="blue">{`'${t("here")}'`}</a>{" "}
+										{t("Refer")} <a className="blue">{`'${t("Here")}'`}</a>{" "}
 										{t("for_more_details")}
 										<a className="blue">{t("How_to_earn_88_Rewards_points")}</a>
 										.

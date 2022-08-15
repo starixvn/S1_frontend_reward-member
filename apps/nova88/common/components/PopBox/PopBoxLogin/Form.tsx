@@ -24,48 +24,48 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 				<Input
 					register={register}
 					label="userName"
-					placeholder={t("UserName")}
+					placeholder={t("Username")}
 					error={errors.userName}
 					prefix={<i className="icon icon-member" />}
 					rules={[
 						{
 							required: true,
-							message: t("Label_Required", { key: t("UserName") }),
+							message: t("IsRequired", { key: t("Username") }),
 						},
 						{
 							minLength: 6,
 							maxLength: 18,
 							pattern: /^[A-Za-z0-9]+$/i,
-							message: t("Label_UserNameAlphanumeric"),
+							message: t("UserNameAlphanumeric"),
 						},
 					]}
 				/>
 
-				<Input.Tip>{t("Label_LoginUserNameInfo")}</Input.Tip>
+				<Input.Tip>{t("LoginUserNameInfo")}</Input.Tip>
 			</div>
 
 			<div className="inputModule">
 				<Input
 					register={register}
 					label="password"
-					placeholder={t("PassWord")}
+					placeholder={t("Password")}
 					type="password"
 					error={errors.password}
 					prefix={<Input.Icon className="icon icon-key" />}
 					rules={[
 						{
 							required: true,
-							message: t("Label_Required", { key: t("PassWord") }),
+							message: t("IsRequired", { key: t("Password") }),
 						},
 						{
 							minLength: 6,
 							maxLength: 15,
-							message: t("Label_PasswordAlphanumeric"),
+							message: t("LoginPasswordInfo"),
 						},
 					]}
 				/>
 
-				<Input.Tip>{t("Label_LoginPasswordInfo")}</Input.Tip>
+				<Input.Tip>{t("LoginPasswordInfo")}</Input.Tip>
 
 				<Link href={`/${langId}/${paths.forgetPassword}`}>
 					{t("ForgotPassword")}
@@ -80,7 +80,7 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 					{t("SIGN_UP")}
 				</button>
 				<button className="btn-login" type="submit">
-					{t("LOGIN")}
+					{t("Login").toUpperCase()}
 				</button>
 			</div>
 		</form>

@@ -53,10 +53,10 @@ const Header = () => {
 							{isLogin && (
 								<>
 									<Link href={paths.about.sub.purchase.root}>
-										{t("My_PURCHASE")}
+										{t("MyPurchase")}
 									</Link>
 									<Link href={paths.about.sub.points.root}>
-										{t("MY_POINTS")}
+										{t("MyPoints")}
 									</Link>
 								</>
 							)}

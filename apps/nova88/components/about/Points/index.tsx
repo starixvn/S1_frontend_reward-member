@@ -1,26 +1,26 @@
 import { useRouter } from "next/router"
 import React, { useEffect } from "react"
 import LeftMenu from "components/about/components/LeftMenu"
+import { useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
 import PointRecord from "components/about/components/PointRecord"
 import Loading from "common/components/Loading"
 import { useLazyGetMyCoinQuery } from "service/api/storeApi"
 import { usePopBox } from "common/hooks"
 import { useAppSelector } from "store"
-import { selectedIsLogin } from "service/slice/auth"
+import { selectedIsLogin, selectedProfile } from "service/slice/auth"
 import { imageUrl } from "config"
 import { getAvailablePoints, getUsedPoints } from "components/about/utils"
 import { clubList } from "../constants"
 
 const Points = () => {
 	const { pathname } = useRouter()
+	const profile = useSelector(selectedProfile)
 	const { t } = useTranslation()
 	const [
 		getMyCoin,
 		{
-			data: {
-				data: { custId = "000000", pointUsed = 0, detail: coinList = [] } = {},
-			} = {},
+			data: { data: { detail: coinList = [] } = {} } = {},
 			isFetching: isGetMyCoinFetching,
 		},
 	] = useLazyGetMyCoinQuery()
@@ -47,8 +47,9 @@ const Points = () => {
 	const availablePoints = getAvailablePoints(coinList)
 	const usedPoints = getUsedPoints(coinList)
 	const balance = (Number(availablePoints) + Number(usedPoints)).toFixed(2)
-	const vipImageNumber = pointUsed > 9 ? pointUsed.toString() : `0${pointUsed}`
-	const clubText = clubList.find(item => item.id === pointUsed)?.displayKey
+	const clubText = clubList.find(
+		item => item.id === profile.userLevel
+	)?.displayKey
 
 	return (
 		<main>
@@ -59,21 +60,19 @@ const Points = () => {
 					</div>
 					<div className="col col-lg-10 col-xl-9">
 						<div className="page-content">
-							<div className="title">{t("MY_POINTS")}</div>
+							<div className="title">{t("MyPoints")}</div>
 							{!isGetMyCoinFetching ? (
 								<div className="memberFile">
 									<div className="myDocument">
 										<div className="memberID">
 											<i></i>
 											<i></i>
-											<span>
-												{t("memberID")}：{custId}
-											</span>
+											<span>{profile.userName}</span>
 										</div>
 										<div className="vipAnimation">
 											<a href="">
 												<img
-													src={`${imageUrl}/img/vip${vipImageNumber}.png`}
+													src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
 													alt=""
 												/>
 											</a>

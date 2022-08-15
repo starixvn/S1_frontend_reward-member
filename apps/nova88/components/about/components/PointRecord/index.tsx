@@ -25,8 +25,8 @@ const PointRecord: FC<IPointRecordProps> = ({
 	return (
 		<div className="coinRecord">
 			<div className="header">
-				<div>{t("CATEGORY")}</div>
-				<div>{t("POINTS_EARNED")}</div>
+				<div>{t("Category").toUpperCase()}</div>
+				<div>{t("PointsEarned")}</div>
 			</div>
 
 			<div className="coinList">
@@ -37,15 +37,15 @@ const PointRecord: FC<IPointRecordProps> = ({
 					</div>
 				))}
 				<div className="log available">
-					<div>{t("POINTS_AVAILABLE")}</div>
+					<div>{t("PointsAvailable")}</div>
 					<div className="bold">{availablePoints}</div>
 				</div>
 				<div className="log used">
-					<div>{t("POINTS_USED")}</div>
+					<div>{t("PointsUsed")}</div>
 					<div className="bold">{usedPoints}</div>
 				</div>
 				<div className="log balance">
-					<div className="bold">{t("POINTS_BALANCE")}</div>
+					<div className="bold">{t("PointsBalance")}</div>
 					<div className="bold">{balance}</div>
 				</div>
 			</div>

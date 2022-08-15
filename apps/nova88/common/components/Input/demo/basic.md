@@ -76,13 +76,13 @@ const Basic: FC = () => {
     rules={[
      {
       required: true,
-      message: t("Label_Required", { key: t("UserName") }),
+      message: t("IsRequired", { key: t("UserName") }),
      },
      {
       minLength: 6,
       maxLength: 18,
       pattern: /^[A-Za-z0-9]+$/i,
-      message: t("Label_UserNameAlphanumeric"),
+      message: t("UserNameAlphanumeric"),
      },
     ]}
    />
