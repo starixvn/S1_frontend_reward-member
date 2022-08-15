@@ -137,7 +137,6 @@ const Shopping = () => {
 		}
 	}
 
-	const goToMore = () => router.push("/")
 	const init = async () => {
 		try {
 			const data = await getGiftList(args)
@@ -183,7 +182,6 @@ const Shopping = () => {
 						tabList={tabList}
 						activeItem={activeTabItem}
 						onChange={handleTabChange}
-						onGoToMore={goToMore}
 					/>
 					<div className="select">
 						<div className="inputBox-null" />
