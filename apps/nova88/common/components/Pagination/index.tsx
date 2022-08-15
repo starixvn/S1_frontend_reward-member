@@ -69,8 +69,7 @@ const Pagination: FC<IPaginationProps> = ({
 				<a
 					key={value}
 					className={classNames({ active: value === currentPage })}
-					onClick={() => handlePageNumberChange(value)}
-				>
+					onClick={() => handlePageNumberChange(value)}>
 					{value}
 				</a>
 			))}

@@ -190,6 +190,7 @@ const Index = () => {
 						filterList={filterList}
 						onToggleCart={handleGiftItemToggle}
 						onToggleFavorite={handleFavoriteToggle}
+						activeTabItem={activeTabItem}
 					/>
 				</div>
 				{isGetGiftListFetching && <Loading />}

@@ -27,7 +27,6 @@ import { selectedIsLogin } from "service/slice/auth"
 const Shopping = () => {
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
-
 	const [args, setArgs] = useState<IGetGiftListArgs>({
 		langId: "en",
 		categoryIds: null,
@@ -157,7 +156,7 @@ const Shopping = () => {
 
 	useEffect(() => {
 		handleFilter(args)
-	}, [args])
+	}, [args, isLogin])
 
 	useEffect(() => {
 		const isLast = args.pageSize > giftList.length + PAGE_SIZE_COUNT
@@ -203,6 +202,7 @@ const Shopping = () => {
 						filterList={filterList}
 						onToggleCart={handleGiftItemToggle}
 						onToggleFavorite={handleFavoriteToggle}
+						activeTabItem={activeTabItem}
 					/>
 				</div>
 				{isGetGiftListFetching && <Loading />}

@@ -90,7 +90,7 @@
 	"Label_LoginPasswordInfo": "6-18 abjad angka (A-Z, a-z, 0-9)aksara atau aksara khas @$*!%#?&",
 	"Label_UserNameAlphanumeric": "6-18 aksara abjad angka (A-Z, a-z, 0-9) sahaja",
 	"Label_PasswordAlphanumeric": "Kata laluan mestilah 6-15 aksara, mengandungi abjad angka.",
-
+  "MyFavoritesList": "Senarai Kegemaran Saya",
   "mine ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
   "MY_POINTS": "MATA SAYA",
   "memberID": "ID ahli",
@@ -213,5 +213,7 @@
   "Question11_Content": "Tidak. Hanya pegangan yang layak atau Pusing Ganti Sah akan diberi mata ganjaran. Sebagai contoh, pertaruhan Seri/batal/seri/batalkan pertaruhan TIDAK dianggap sebagai pertaruhan yang layak/perputaran yang sah.",
   "Question12_Content": "88 Mata ganjaran tidak akan luput selagi anda mempunyai sekurang-kurangnya satu (1) deposit yang terakhir",
   "365_days": "365 hari",
-  "Question13_Content": "Anda akan menjadi ahli Nova88 Reward secara automatik selepas anda mendaftar sebagai ahli Nova88."
+  "Question13_Content": "Anda akan menjadi ahli Nova88 Reward secara automatik selepas anda mendaftar sebagai ahli Nova88.",
+  "other ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "NoData": "Tiada maklumat tersedia sekarang."
 }

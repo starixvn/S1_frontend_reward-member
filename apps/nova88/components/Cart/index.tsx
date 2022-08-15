@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import { useLocalStorage } from "usehooks-ts"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
-import { selectedProfile } from "service/slice/auth"
+import { selectedIsLogin, selectedProfile } from "service/slice/auth"
 import GiftTab from "components/Shopping/GiftTab"
 import GiftList from "components/Shopping/GiftList"
 import {
@@ -61,6 +61,7 @@ const Cart = () => {
 	const [isShowTip, setIsShowTip] = useState(false)
 	const [noteInput, setNoteInput] = useState("")
 	const [pointBalance, setPointBalance] = useState(0)
+	const isLogin = useSelector(selectedIsLogin)
 	const handleGetPointBalance = async args => {
 		try {
 			const res: { data: { pointBalance: number } } = await getPointBalance(
@@ -76,7 +77,9 @@ const Cart = () => {
 	}
 
 	useEffect(() => {
-		handleGetPointBalance(null)
+		if (isLogin) {
+			handleGetPointBalance(null)
+		}
 	}, [profile])
 
 	const handleDropDownChange = (quantity, item) => {

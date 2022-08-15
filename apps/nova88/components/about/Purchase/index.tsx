@@ -10,7 +10,7 @@ const Purchase = () => {
 	const { t } = useTranslation()
 	const [args, setArgs] = useState({
 		PageNumber: 1,
-		PageSize: 0,
+		PageSize: 10,
 	})
 	const {
 		data: { data: { list: purchaseData } = {} } = {},

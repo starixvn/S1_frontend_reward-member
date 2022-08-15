@@ -1,6 +1,6 @@
 import { IAxiosResponse } from "service/axiosBaseQuery"
 
-export interface giftData {
+export interface IGiftData {
 	giftId: number
 	giftName: string
 	enGiftName: string
@@ -38,7 +38,7 @@ export interface IGetMyPurchesArgs {
 	PageSize: number
 }
 
-export interface myCoinData {
+export interface IMyCoinDataData {
 	custId: number
 	pointBalance: number
 	pointEarned: number
@@ -53,7 +53,7 @@ export interface myCoinData {
 		detailRewardCoin: null
 	}[]
 }
-export interface myPurchesData {
+export interface IMyPurchesData {
 	list: {
 		datas: {
 			siteId: number
@@ -75,12 +75,12 @@ export interface myPurchesData {
 		rowCount: number
 	}
 }
-interface pointBalance {
+interface IPointBalance {
 	pointBalance: number
 }
 
-export type IGetGiftListResponse = IAxiosResponse<giftData[]>
+export type IGetGiftListResponse = IAxiosResponse<IGiftData[]>
 export type ISetFavoriteResponse = IAxiosResponse<null>
-export type IGetMyCoinResponse = IAxiosResponse<myCoinData>
-export type IGetMyPurchesResponse = IAxiosResponse<myPurchesData>
-export type IGetPointBalanceResponse = IAxiosResponse<pointBalance>
+export type IGetMyCoinResponse = IAxiosResponse<IMyCoinDataData>
+export type IGetMyPurchesResponse = IAxiosResponse<IMyPurchesData>
+export type IGetPointBalanceResponse = IAxiosResponse<IPointBalance>
