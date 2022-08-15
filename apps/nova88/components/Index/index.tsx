@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
 import GiftSwiper from "components/Shopping/GiftSwiper"
-import { sliderList, tabOption } from "./constants"
-import GiftTab from "components/Shopping/GiftTab"
-import { tabList } from "./constants"
+import { monthObj, sliderList } from "./constants"
 import GiftList from "components/Shopping/GiftList"
 import Loading from "common/components/Loading"
 import { useLocalStorage } from "usehooks-ts"
@@ -22,14 +20,6 @@ import { paths } from "common/constants"
 
 const Index = () => {
 	const { setPopBoxType } = usePopBox()
-	const [args, setArgs] = useState({
-		langId: "en",
-		categoryIds: null,
-		tags: null,
-		orderByField: null,
-		desc: false,
-		pageSize: DEFAULT_PAGE_SIZE_COUNT,
-	})
 	const [
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
@@ -49,10 +39,8 @@ const Index = () => {
 	}
 	const { t } = useTranslation()
 	const route = useRouter()
-	const [activeTabItem, setActiveTabItem] = useState(tabList[0])
-	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
-	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
 
+	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const handleFavoriteToggle = async item => {
 		if (isLogin) {
 			try {
@@ -85,30 +73,20 @@ const Index = () => {
 			setCartList(cartList)
 		}
 	}
-	const handleTabChange = activeTab => {
-		setActiveTabItem(activeTab)
-		if (activeTab.id === tabOption.FAVORITE) {
-			setArgs(prev => ({
-				...prev,
-				tags: null,
-			}))
 
-			setIsFilterFavorite(true)
-		} else {
-			setArgs(prev => ({
-				...prev,
-				tags: activeTab.id ? [activeTab.id] : null,
-			}))
-			setIsFilterFavorite(false)
-		}
-	}
 	const goToMore = () => route.push(paths.shopping)
 	useEffect(() => {
-		handleFilter(args)
-	}, [args])
-	const filterList = isFilterFavorite
-		? giftList.filter(obj => obj.isFavorite === true)
-		: giftList
+		handleFilter({
+			langId: "en",
+			categoryIds: null,
+			tags: null,
+			orderByField: null,
+			desc: false,
+			pageSize: DEFAULT_PAGE_SIZE_COUNT,
+		})
+	}, [])
+
+	const month = monthObj[new Date().getMonth() + 1]
 	return (
 		<main>
 			<GiftSwiper sliderList={sliderList} />
@@ -180,14 +158,15 @@ const Index = () => {
 			</div>
 			<div className="products-group container-xxl">
 				<div className="row">
-					<GiftTab
-						tabList={tabList}
-						activeItem={activeTabItem}
-						onChange={handleTabChange}
-						onGoToMore={goToMore}
-					/>
+					<div className="products-menu">
+						<a className="active">
+							{t("HotPicksForTheMonthOf")}
+							<span>{month}</span>
+						</a>
+						<button onClick={goToMore}>{t("More")}...</button>
+					</div>
 					<GiftList
-						filterList={filterList}
+						filterList={giftList}
 						onToggleCart={handleGiftItemToggle}
 						onToggleFavorite={handleFavoriteToggle}
 						activeTabItem={activeTabItem}
