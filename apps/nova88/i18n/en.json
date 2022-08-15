@@ -96,7 +96,7 @@
 	"Label_LoginPasswordInfo": "6-18 alphanumeric (A-Z, a-z, 0-9)characters or special characters @$*!%#?&",
 	"Label_UserNameAlphanumeric": "6-18 alphanumeric (A-Z, a-z, 0-9) characters only.",
 	"Label_PasswordAlphanumeric": "Password must be 6-15 characters, contain alphanumeric.",
-
+  "MyFavoritesList": "My Favorites List",
 	"mine ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"MY_POINTS": "MY POINTS",
 	"memberID": "memberID",
@@ -219,5 +219,7 @@
 	"Question11_Content": "No. Only eligible stake or Valid Turnover will be given rewards points. For instance, Tie bets/void/draw/cancel bets are NOT considered as eligible bets/ valid turnover.",
 	"Question12_Content": "88 Rewards point do not expire as long as you have at least one (1) deposit in the last",
 	"365_days": "365 days",
-	"Question13_Content": "You will be automatically become Nova88 Reward member after you registered as member of Nova88."
+	"Question13_Content": "You will be automatically become Nova88 Reward member after you registered as member of Nova88.",
+  "other ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "NoData": "No information is available now."
 }

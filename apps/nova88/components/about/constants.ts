@@ -60,3 +60,21 @@ export const howTabList = [
 		className: "icon icon-medal",
 	},
 ]
+
+export enum clubListEnum {
+	VINTAGE = 1,
+	SILVER,
+	GOLD,
+	TITANIUM,
+	DIAMOND,
+	NOVA,
+}
+
+export const clubList = [
+	{ id: clubListEnum.VINTAGE, displayKey: "VINTAGE_CLUB" },
+	{ id: clubListEnum.SILVER, displayKey: "SILVER_CLUB" },
+	{ id: clubListEnum.GOLD, displayKey: "GOLD_CLUB" },
+	{ id: clubListEnum.TITANIUM, displayKey: "TITANIUM_CLUB" },
+	{ id: clubListEnum.DIAMOND, displayKey: "DIAMOND_CLUB" },
+	{ id: clubListEnum.NOVA, displayKey: "NOVA_CLUB" },
+]

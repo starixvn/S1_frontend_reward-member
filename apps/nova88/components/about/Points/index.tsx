@@ -10,6 +10,7 @@ import { useAppSelector } from "store"
 import { selectedIsLogin } from "service/slice/auth"
 import { imageUrl } from "config"
 import { getAvailablePoints, getUsedPoints } from "components/about/utils"
+import { clubList } from "../constants"
 
 const Points = () => {
 	const { pathname } = useRouter()
@@ -17,12 +18,13 @@ const Points = () => {
 	const [
 		getMyCoin,
 		{
-			data: { data: { detail: coinList = [] } = {} } = {},
+			data: {
+				data: { custId = "000000", pointUsed = 0, detail: coinList = [] } = {},
+			} = {},
 			isFetching: isGetMyCoinFetching,
 		},
 	] = useLazyGetMyCoinQuery()
 	const { setPopBoxType } = usePopBox()
-
 	const isLogin = useAppSelector(selectedIsLogin)
 
 	const handleGetMyCoin = async args => {
@@ -45,6 +47,8 @@ const Points = () => {
 	const availablePoints = getAvailablePoints(coinList)
 	const usedPoints = getUsedPoints(coinList)
 	const balance = (Number(availablePoints) + Number(usedPoints)).toFixed(2)
+	const vipImageNumber = pointUsed > 9 ? pointUsed.toString() : `0${pointUsed}`
+	const clubText = clubList.find(item => item.id === pointUsed)?.displayKey
 
 	return (
 		<main>
@@ -62,14 +66,19 @@ const Points = () => {
 										<div className="memberID">
 											<i></i>
 											<i></i>
-											<span>{t("memberID")}</span>
+											<span>
+												{t("memberID")}：{custId}
+											</span>
 										</div>
 										<div className="vipAnimation">
 											<a href="">
-												<img src={`${imageUrl}/img/vip06.png`} alt="" />
+												<img
+													src={`${imageUrl}/img/vip${vipImageNumber}.png`}
+													alt=""
+												/>
 											</a>
 										</div>
-										<div className="level">{t("VINTAGE_CLUB")}</div>
+										<div className="level">{t(clubText)}</div>
 										<div className="icon icon-coin">{balance}</div>
 									</div>
 									<PointRecord

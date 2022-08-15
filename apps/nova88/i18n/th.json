@@ -89,5 +89,8 @@
 	"Label_LoginUserNameInfo": "For security, we suggest that your username does not contain your real name.",
 	"Label_LoginPasswordInfo": "6-18 alphanumeric (A-Z, a-z, 0-9)characters or special characters @$*!%#?&",
 	"Label_UserNameAlphanumeric": "6-18 alphanumeric (A-Z, a-z, 0-9) characters only.",
-	"Label_PasswordAlphanumeric": "Password must be 6-15 characters, contain alphanumeric."
+	"Label_PasswordAlphanumeric": "Password must be 6-15 characters, contain alphanumeric.",
+  "MyFavoritesList": "รายการโปรดของฉัน",
+  "other ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "NoData": "ไม่มีข้อมูลในขณะนี้"
 }

@@ -1,6 +1,8 @@
 import React, { FC } from "react"
 import Pagination from "common/components/Pagination"
 import classNames from "classnames"
+import { useTranslation } from "react-i18next"
+import Empty from "components/about/components/Empty"
 interface IPurchaseRecordProps {
 	purchaseList: {
 		createTime: string
@@ -32,6 +34,7 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 	isForwardSort,
 	onToggle,
 }) => {
+	const { t } = useTranslation()
 	const handlePurchaseTime = time => {
 		const pos = time.indexOf("+")
 		const tempStr = time.substring(0, pos)
@@ -69,10 +72,7 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 							</div>
 						))
 					) : (
-						<div className="noData">
-							<i className="icon icon-alarm" />
-							No information is available now.
-						</div>
+						<Empty />
 					)}
 				</div>
 				<Pagination
@@ -112,7 +112,7 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 				) : (
 					<div className="mobile-noData active">
 						<i className="icon icon-alarm" />
-						No information is available now.
+						{t("NoData")}
 					</div>
 				)}
 			</div>

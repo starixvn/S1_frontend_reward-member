@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import { useOnClickOutside } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
 import { logoutAsync } from "service/slice/auth/thunk"
-import { selectedProfile, selectedLangId } from "service/slice/auth"
+import { selectedProfile, selectedLangId, setIsLogin } from "service/slice/auth"
 import { imageUrl } from "config"
 import { useGetPointBalanceQuery } from "service/api/storeApi"
 import LangDropdown from "./LangDropdown"
@@ -26,6 +26,7 @@ const HeaderAfterLogin = () => {
 
 	const handleLogout = async () => {
 		await dispatch(logoutAsync())
+		dispatch(setIsLogin(false))
 	}
 
 	const toggleUserMenuDropdown = () => setUserMenuIsOpen(prev => !prev)

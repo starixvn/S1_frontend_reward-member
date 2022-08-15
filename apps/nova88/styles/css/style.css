@@ -870,8 +870,8 @@ main {
   padding-right: 1rem;
 }
 
-.products-group .products-menu button:hover, .products-group .products-menu button::after {
-  color: #CDAE8E;
+.products-group .products-menu button:hover {
+  background: #FF7600;
   font-weight: bold;
 }
 
@@ -3283,7 +3283,7 @@ main {
 }
 
 .btn-more {
-  width: 94%;
+  width: calc(100% - 3vw);
   display: none;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
