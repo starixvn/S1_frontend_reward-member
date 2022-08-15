@@ -51,7 +51,7 @@ const Purchase = () => {
 					<div className="col col-lg-10 col-xl-9">
 						<div className="page-content">
 							<div className="title">
-								{t("My_PURCHASE")}
+								{t("MyPurchase")}
 								<div className="time">
 									{t("Date")}
 									<i className="icon icon-arrow_drop_down" />

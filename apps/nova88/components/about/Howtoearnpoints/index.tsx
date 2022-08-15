@@ -1,9 +1,11 @@
 import { useRouter } from "next/router"
+import Link from "next/link"
 import React, { useState } from "react"
 import LeftMenu from "components/about/components/LeftMenu"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
 import { howTabList } from "components/about/constants"
+import { paths } from "common/constants"
 
 const HowToEarnPoints = () => {
 	const { pathname } = useRouter()
@@ -53,7 +55,7 @@ const HowToEarnPoints = () => {
 											</tr>
 											<tr>
 												<td>{t("DEPOSIT_AMOUNT")}</td>
-												<td>{t("POINTS_EARNED")}</td>
+												<td>{t("PointsEarned")}</td>
 											</tr>
 											<tr>
 												<td>
@@ -87,9 +89,17 @@ const HowToEarnPoints = () => {
 									<div className="info-title">{t("Any_question")}</div>
 									<div>
 										{t("Please_check")}
-										<a className="blue">{t("FAQ")}</a>
-										{t("here_or_contact_our")}
-										<a className="blue">{t("7_Customer_Support")}</a>
+										<Link href={paths.about.sub.rewardfaq.root}>
+											<a className="blue"> {t("FAQ")} </a>
+										</Link>
+										{t("here_or_contact_our")}{" "}
+										<a
+											className="blue"
+											target="_blank"
+											href="https://direct.lc.chat/11638088/"
+											rel="noreferrer">
+											{t("24/7_Customer_Support")}
+										</a>
 									</div>
 								</div>
 								<div

@@ -15,24 +15,24 @@ export const mineMenuList: {
 }[] = [
 	{
 		id: AboutTabEnum.POINTS,
-		displayKey: "MY POINTS",
+		displayKey: "MyPoints",
 		path: paths.about.sub.points.root,
 		authRequired: paths.about.sub.points.authRequired,
 	},
 	{
 		id: AboutTabEnum.PURCHASE,
-		displayKey: "MY PURCHASE",
+		displayKey: "MyPurchase",
 		path: paths.about.sub.purchase.root,
 		authRequired: paths.about.sub.purchase.authRequired,
 	},
 	{
 		id: AboutTabEnum.HOW_TO_EARN_POINTS,
-		displayKey: "HOW TO EARN POINTS",
+		displayKey: "HOW_TO_EARN_POINTS",
 		path: paths.about.sub.howtoearnpoints.root,
 	},
 	{
 		id: AboutTabEnum.FQA,
-		displayKey: "FQA",
+		displayKey: "FAQ",
 		path: paths.about.sub.rewardfaq.root,
 	},
 ]
@@ -45,17 +45,17 @@ export enum HowTabEnum {
 
 export const howTabList = [
 	{
-		displayKey: "DEPOSIT POINTS",
+		displayKey: "DEPOSIT_POINTS",
 		activeTab: HowTabEnum.DEPOSIT_POINTS,
 		className: "icon icon-coin",
 	},
 	{
-		displayKey: "TURNOVER POINTS",
+		displayKey: "TURNOVER_POINTS",
 		activeTab: HowTabEnum.TURNOVER_POINTS,
 		className: "icon icon-diamond",
 	},
 	{
-		displayKey: "VIP REWARDS POINTS",
+		displayKey: "VIP_REWARDS_POINTS",
 		activeTab: HowTabEnum.VIP_REWARDS_POINTS,
 		className: "icon icon-medal",
 	},
@@ -63,11 +63,11 @@ export const howTabList = [
 
 export enum clubListEnum {
 	VINTAGE = 1,
-	SILVER,
-	GOLD,
-	TITANIUM,
-	DIAMOND,
-	NOVA,
+	SILVER = 2,
+	GOLD = 3,
+	TITANIUM = 4,
+	DIAMOND = 5,
+	NOVA = 6,
 }
 
 export const clubList = [

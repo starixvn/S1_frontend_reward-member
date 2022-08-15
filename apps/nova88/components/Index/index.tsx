@@ -99,7 +99,7 @@ const Index = () => {
 					}}
 					id="indexLogin"
 					className="btn-login">
-					{t("LOGIN")}
+					{t("Login").toUpperCase()}
 				</div>
 			)}
 			<div className="introduce container-xxl">
@@ -197,7 +197,7 @@ const Index = () => {
 										<span>{t("IOS")}</span>
 									</div>
 									<img src={`${imageUrl}/img/qrcode.svg`} alt="" />
-									<button>{t("Download".toUpperCase())}</button>
+									<button>{t("Download").toUpperCase()}</button>
 								</div>
 							</div>
 						</div>

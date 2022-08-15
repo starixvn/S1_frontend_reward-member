@@ -82,11 +82,11 @@ const Order: FC<ICartOrderProps> = ({
 		<div className="cart-oder">
 			<div>
 				<div>
-					<span>{t("USERNUMBER")}</span>
+					<span>{t("Username")}</span>
 					<span>{profile.userName}</span>
 				</div>
 				<div>
-					<span>{t("AVAILABLE_POINTS")}</span>
+					<span>{t("AvailablePoints").toUpperCase()}</span>
 					<span className="icon icon-coin">{pointBalance}</span>
 				</div>
 			</div>
@@ -101,8 +101,8 @@ const Order: FC<ICartOrderProps> = ({
 					</div>
 				)}
 				<div>
-					<span>{t("Shipping_And_Handling")}</span>
-					<span>{t("FREE")}</span>
+					<span>{t("ShippingAndHandling")}</span>
+					<span>{t("Free").toUpperCase()}</span>
 				</div>
 				{/*+ insufficient 當points不夠時狀態*/}
 				<div className="wire"></div>
@@ -120,8 +120,7 @@ const Order: FC<ICartOrderProps> = ({
 						<span>{t("SHIPPING_ADDRESS")}</span>
 						<a
 							onClick={() => setIsShowTip(!isShowTip)}
-							className="icon icon-information"
-						></a>
+							className="icon icon-information"></a>
 						<div className={classNames("cart-tip", { active: isShowTip })}>
 							{t("AddressUpdateTip")}
 						</div>
@@ -159,9 +158,8 @@ const Order: FC<ICartOrderProps> = ({
 				onClick={onSubmit}
 				className={classnames("btn-checkout", {
 					null: !isChecked,
-				})}
-			>
-				{t("CHECKOUT")}
+				})}>
+				{t("Checkout").toUpperCase()}
 			</button>
 		</div>
 	)
