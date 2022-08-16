@@ -8,7 +8,7 @@ const redemptionApi = createApi({
 	baseQuery: axiosBaseQuery({ baseUrl }),
 	tagTypes: ["Post"],
 	endpoints: builder => ({
-		createRedemption: builder.query<
+		createRedemption: builder.mutation<
 			ICreateRedemptionResponse,
 			ICreateRedemptionArgs
 		>({
@@ -20,11 +20,11 @@ const redemptionApi = createApi({
 					Point: point,
 				},
 			}),
-			providesTags: ["Post"],
+			invalidatesTags: ["Post"],
 		}),
 	}),
 })
 
-export const { useLazyCreateRedemptionQuery } = redemptionApi
+export const { useCreateRedemptionMutation } = redemptionApi
 
 export default redemptionApi

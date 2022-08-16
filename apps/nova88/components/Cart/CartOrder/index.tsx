@@ -153,7 +153,7 @@ const Order: FC<ICartOrderProps> = ({
 				type="text"
 				placeholder={t("Note")}
 			/>
-			<div className="txt">{t("NoteTip")}</div>
+			<div className="txt"></div>
 			<button
 				onClick={onSubmit}
 				className={classnames("btn-checkout", {

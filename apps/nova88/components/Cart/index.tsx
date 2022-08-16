@@ -14,7 +14,7 @@ import CartList from "./CartList"
 import Order from "./CartOrder"
 import { useTranslation } from "react-i18next"
 import { usePopBox } from "common/hooks"
-import { useLazyCreateRedemptionQuery } from "service/api/redemptionApi"
+import { useCreateRedemptionMutation } from "service/api/redemptionApi"
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
 import { paths } from "common/constants"
@@ -52,7 +52,7 @@ const Cart = () => {
 		isFetching: isGetGiftListFetching,
 	} = useGetGiftListQuery(giftListQuery)
 	const [getPointBalance] = useLazyGetPointBalanceQuery()
-	const [createRedemption] = useLazyCreateRedemptionQuery()
+	const [createRedemption] = useCreateRedemptionMutation()
 	const [cartState, setCartState] = useLocalStorage("nova88Cart", [])
 	const [cartList, setCartList] = useState([])
 	const route = useRouter()
@@ -75,7 +75,6 @@ const Cart = () => {
 			})
 		}
 	}
-
 	useEffect(() => {
 		if (isLogin) {
 			handleGetPointBalance(null)
@@ -140,6 +139,15 @@ const Cart = () => {
 					giftId: checkedItem.giftId,
 					point: checkedItem.point * checkedItem.number,
 				})
+					.unwrap()
+					.then(res => {
+						if (res.errorCode === 0) {
+							setPopBoxType({
+								type: "default",
+								props: { content: t("NoteTip") },
+							})
+						}
+					})
 				const newList = cartState.filter(obj => {
 					return obj.giftId !== checkedItem.giftId
 				})
@@ -241,10 +249,7 @@ const Cart = () => {
 				</div>
 				<div className="products-group col-lg-7 col-xl-7">
 					<div className="row">
-						<GiftTab
-							tabList={[{ id: 3, label: "FEATURED" }]}
-							onGoToMore={() => route.push(paths.shopping)}
-						/>
+						<GiftTab tabList={[{ id: 3, label: "FEATURED" }]} />
 						<GiftList
 							filterList={giftList}
 							onToggleCart={handleGiftItemToggle}
