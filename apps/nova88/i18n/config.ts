@@ -18,7 +18,6 @@ const resources = {
 }
 
 i18next.use(initReactI18next).init({
-	lng: siteInfo.defaultLang,
 	fallbackLng: siteInfo.defaultLang,
 	supportedLngs: siteInfo.defaultLangList,
 	debug: process.env.NODE_ENV === "development",

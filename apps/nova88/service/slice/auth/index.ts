@@ -51,6 +51,8 @@ const authSlice = createSlice({
 // * RootState 可以讓我們知道 state 的 interface
 export const selectedIsLogin = ({ auth }: RootState) => auth.isLogin
 export const selectedProfile = ({ auth }: RootState) => auth.profile
+export const selectedCurrencyId = ({ auth }: RootState) =>
+	auth.profile?.currencyId
 export const selectedUserName = ({ auth }: RootState) => auth.profile?.userName
 export const selectedLangId = ({ auth }: RootState) => auth.profile?.langId
 
