@@ -65,9 +65,11 @@ const LangDropdown = () => {
 	})
 
 	const flagIcon =
-		defLangOptions.find(el =>
-			el.lang.find(lang => lang.value === i18n.language)
-		)?.flag ?? ""
+		isLogin && currencyId
+			? langOptions[0].flag
+			: defLangOptions.find(el =>
+					el.lang.find(lang => lang.value === i18n.language)
+			  )?.flag ?? ""
 
 	return (
 		<div className="country" ref={wrapper}>
