@@ -3,6 +3,7 @@ import PopBoxWarn from "./PopBox.warn"
 import { usePopBox } from "common/hooks"
 import PopBoxLogin from "./PopBoxLogin"
 import { useOnClickOutside } from "usehooks-ts"
+import PopBoxDefault from "./PopBox.default"
 
 const PopBox: FC = () => {
 	const ref = useRef(null)
@@ -20,6 +21,9 @@ const PopBox: FC = () => {
 				break
 			case "warn":
 				element = <PopBoxWarn {...props} />
+				break
+			case "default":
+				element = <PopBoxDefault {...props} />
 				break
 			default:
 				element = null

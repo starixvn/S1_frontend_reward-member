@@ -1,6 +1,6 @@
 import { Dispatch } from "react"
 
-export type PopBoxType = "login" | "warn" | ""
+export type PopBoxType = "login" | "warn" | "default" | ""
 
 export interface PopBoxInterface {
 	type: PopBoxType
