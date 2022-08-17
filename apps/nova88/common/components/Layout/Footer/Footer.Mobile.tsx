@@ -7,14 +7,26 @@ import { useReadLocalStorage } from "usehooks-ts"
 import { useRouter } from "next/router"
 import { paths } from "common/constants"
 import { selectedIsLogin } from "service/slice/auth"
+import { usePopBox } from "common/hooks"
 
 const MobileFooter = () => {
 	const { t } = useTranslation()
 	const isLogin = useSelector(selectedIsLogin)
+	const { setPopBoxType } = usePopBox()
 	const router = useRouter()
 	const { pathname } = router
 	const cartData: null | any[] = useReadLocalStorage("nova88Cart")
 	const cartCount = cartData?.length ?? 0
+
+	const clickCartBtn = () => {
+		if (!isLogin) {
+			setPopBoxType({
+				type: "login",
+			})
+		} else {
+			router.push(paths.cart)
+		}
+	}
 
 	return (
 		<footer className="mobile-footer">
@@ -55,7 +67,7 @@ const MobileFooter = () => {
 				<div className="circleAnimation"></div>
 				<span>{t("LiveChat")}</span>
 			</a>
-			<Link href={paths.cart}>
+			<button onClick={clickCartBtn}>
 				<a
 					className={classnames("icon icon-cart", {
 						active: pathname === paths.cart,
@@ -64,7 +76,7 @@ const MobileFooter = () => {
 					<div className="circleAnimation"></div>
 					<span>{t("ShoppingCart")}</span>
 				</a>
-			</Link>
+			</button>
 		</footer>
 	)
 }
