@@ -62,7 +62,7 @@ const Index = () => {
 		}
 	}
 	const handleGiftItemToggle = giftItem => {
-		if (!giftItem.stock) return
+		if (!giftItem.stock && giftItem.showStock) return
 		const item = cartList.find(item => item.giftId === giftItem.giftId)
 		if (item) {
 			let tempList = []
