@@ -22,7 +22,6 @@ interface ICartItemProps {
 		stock: number
 		tagList: object[]
 	}
-	quantityList: number[]
 	checkedItem: {
 		categoryId?: number
 		categoryName?: string
@@ -40,25 +39,21 @@ interface ICartItemProps {
 		tagList?: object[]
 	}
 	onToggle: (e: React.MouseEvent<HTMLInputElement>, item: object) => void
-	onChange: (quantity: number, item: object) => void
 	onRemove: (item: object) => void
 }
 
 const CartItem: FC<ICartItemProps> = ({
 	item,
-	quantityList,
 	checkedItem,
 	onToggle,
-	onChange,
 	onRemove,
 }) => {
-	const { Option } = Dropdown
 	const { t } = useTranslation()
 	return (
 		<div
 			key={item.giftId}
 			className={classNames("cart-items", {
-				soldOut: !item.stock && item.showStock,
+				soldOut: !item.stock,
 			})}>
 			<div className="cart-check">
 				<input
@@ -86,15 +81,7 @@ const CartItem: FC<ICartItemProps> = ({
 						</ul>
 					</div>
 				</div>
-				<Dropdown
-					placeholder={item.number ? item.number?.toString() : "1"}
-					onChange={quantity => onChange(quantity, item)}>
-					{quantityList.map((value, index) => (
-						<Option key={index} value={value}>
-							{value}
-						</Option>
-					))}
-				</Dropdown>
+				<div>1</div>
 				<div className="icon icon-coin">
 					{numberFormat(item.point * (item.number ? item.number : 1))}
 				</div>

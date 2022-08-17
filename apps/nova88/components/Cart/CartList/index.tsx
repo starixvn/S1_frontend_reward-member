@@ -43,7 +43,6 @@ interface ICartListProps {
 		}[]
 	}
 	onToggle: (e: React.MouseEvent<HTMLInputElement>, item: object) => void
-	onChange: (quantity: number, item: object) => void
 	onRemove: (item: object) => void
 }
 
@@ -51,25 +50,19 @@ const CartList: FC<ICartListProps> = ({
 	cartList,
 	checkedItem,
 	onToggle,
-	onChange,
 	onRemove,
 }) => {
 	return (
 		<>
-			{cartList.map(item => {
-				const quantityList = Array.from({ length: item.stock }, (v, i) => i + 1)
-				return (
-					<CartItem
-						key={item.giftId}
-						item={item}
-						quantityList={quantityList}
-						checkedItem={checkedItem}
-						onToggle={onToggle}
-						onChange={onChange}
-						onRemove={onRemove}
-					/>
-				)
-			})}
+			{cartList.map(item => (
+				<CartItem
+					key={item.giftId}
+					item={item}
+					checkedItem={checkedItem}
+					onToggle={onToggle}
+					onRemove={onRemove}
+				/>
+			))}
 		</>
 	)
 }

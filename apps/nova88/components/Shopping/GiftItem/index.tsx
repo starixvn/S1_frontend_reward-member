@@ -57,6 +57,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 		<div
 			className={classNames("product", {
 				empty: !item.stock && item.showStock,
+				"non-qty": !item.showStock,
 			})}>
 			<div className="iconGroup">
 				{item.tagList.map((tagItem, index) => (

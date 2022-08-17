@@ -54,8 +54,11 @@ const Faq = () => {
 										</ul>
 										{t("Refer")} <a className="blue">{`'${t("Here")}'`}</a>{" "}
 										{t("for_more_details")}
-										<a className="blue">{t("How_to_earn_88_Rewards_points")}</a>
-										.
+										<Link href={paths.about.sub.howtoearnpoints.root}>
+											<a className="blue">
+												{t("How_to_earn_88_Rewards_points")}
+											</a>
+										</Link>
 									</div>
 								</div>
 								<div
@@ -104,8 +107,10 @@ const Faq = () => {
 										{t("Question4_title")}
 									</button>
 									<div className="faq-info">
-										{t("Please_refer_to")}{" "}
-										<a className="blue">{t("88_Rewards_Store")}</a>.
+										{t("Please_refer_to")}
+										<Link href={paths.shopping}>
+											<a className="blue">{t("88_Rewards_Store")}</a>
+										</Link>
 									</div>
 								</div>
 								<div

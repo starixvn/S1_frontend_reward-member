@@ -66,7 +66,6 @@ header {
   position: fixed;
   background: #121212;
   width: 100%;
-  height: 85px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -86,7 +85,7 @@ html {
 }
 
 main {
-  padding-top: 120px;
+  padding-top: 110px;
 }
 
 .swiper-container {
@@ -102,6 +101,7 @@ main {
   display: -ms-flexbox;
   display: flex;
   width: 1400px;
+  height: 70px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   position: relative;
@@ -131,7 +131,7 @@ main {
   background: #112240;
   position: fixed;
   left: 0;
-  top: 80px;
+  top: 70px;
   height: 40px;
   width: 100%;
   white-space: nowrap;
@@ -888,6 +888,13 @@ main {
   margin: 10px 5px;
   width: 20%;
   border: 1px solid transparent;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .product-list .product:hover {
@@ -1019,17 +1026,22 @@ main {
           justify-content: space-between;
   width: 60px;
   margin: auto;
+  border: 0;
 }
 
 .product-list .product > div.btn .icon {
   color: #999;
 }
 
-.product-list .product > div.btn .icon:hover.icon-heart-fill, .product-list .product > div.btn .icon.active.icon-heart-fill {
+.product-list .product > div.btn .icon:hover.icon-arrows-fullscreen {
+  color: #CDAE8E;
+}
+
+.product-list .product > div.btn .icon.active.icon-heart-fill {
   color: #E10F2C;
 }
 
-.product-list .product > div.btn .icon:hover.icon-arrows-fullscreen, .product-list .product > div.btn .icon.active.icon-arrows-fullscreen {
+.product-list .product > div.btn .icon.active.icon-arrows-fullscreen {
   color: #CDAE8E;
 }
 
@@ -1174,7 +1186,7 @@ main {
 
 .product-list .product > button.icon {
   display: none;
-  margin: auto;
+  margin: 0;
 }
 
 .product-list .product > button.icon.icon-checkmark {
@@ -1228,6 +1240,14 @@ main {
 
 .product-list .product.empty > div.btn .icon.icon-arrows-fullscreen {
   pointer-events: none;
+}
+
+.product-list .product.non-qty button.icon {
+  margin-top: 1.75rem;
+}
+
+.product-list .product.non-qty .btn {
+  margin-bottom: .5rem;
 }
 
 .appDownload .row {
@@ -2051,6 +2071,14 @@ main {
           align-items: center;
 }
 
+@media (max-width: 420px) {
+  .cart-page .cart-list > div > div.cart-check input[type=checkbox]:checked::after {
+    width: 1rem;
+    height: 1rem;
+    font-size: 3vw;
+  }
+}
+
 .cart-page .cart-list > div > div.cart-info {
   -webkit-box-flex: 15;
       -ms-flex: 15;
@@ -2199,21 +2227,28 @@ main {
   color: #838383;
 }
 
-.cart-page .cart-list > div.cart-items .cart-info .inputBox {
-  display: inline-block;
-  height: 2rem;
-  -webkit-box-flex: .4;
-      -ms-flex: .4;
-          flex: .4;
-  margin: 0 3vw;
+.cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li:last-child {
+  display: none;
 }
 
-.cart-page .cart-list > div.cart-items .cart-info .inputBox .dropdown .btn {
-  padding: 0 .5rem;
+.cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li:last-child .icon-coin {
+  display: none;
 }
 
-.cart-page .cart-list > div.cart-items .cart-info .inputBox .dropdown .btn::after {
-  right: 0;
+@media (max-width: 767px) {
+  .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li:last-child {
+    display: block;
+  }
+  .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li:last-child .icon-coin {
+    display: block;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .cart-page .cart-list > div.cart-items .cart-info .qty {
+    display: none;
+  }
 }
 
 .cart-page .cart-list > div.cart-items .cart-info .icon-coin {
@@ -2224,6 +2259,12 @@ main {
 .cart-page .cart-list > div.cart-items .cart-info .icon-coin::before {
   font-weight: normal;
   margin-right: .5rem;
+}
+
+@media (max-width: 767px) {
+  .cart-page .cart-list > div.cart-items .cart-info .icon-coin {
+    display: none;
+  }
 }
 
 .cart-page .cart-list > div.cart-items.later, .cart-page .cart-list > div.cart-items.soldOut {
@@ -3114,30 +3155,16 @@ main {
           box-shadow: 0 0 5px 5px #112240;
 }
 
-.accordion > div a.countryGroup,
-.accordion > div button.countryGroup,
-.accordion > div div.countryGroup {
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column;
-          flex-flow: column;
-  display: none;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+.accordion > div a.country,
+.accordion > div button.country,
+.accordion > div div.country {
   background: #121212;
 }
 
-.accordion > div a.countryGroup > div,
-.accordion > div button.countryGroup > div,
-.accordion > div div.countryGroup > div {
+.accordion > div a.country > div,
+.accordion > div button.country > div,
+.accordion > div div.country > div {
   background: transparent;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3146,9 +3173,9 @@ main {
   padding: 1vw 0 1vw 3vw;
 }
 
-.accordion > div a.countryGroup > div .countryName,
-.accordion > div button.countryGroup > div .countryName,
-.accordion > div div.countryGroup > div .countryName {
+.accordion > div a.country > div .countryName,
+.accordion > div button.country > div .countryName,
+.accordion > div div.country > div .countryName {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3157,18 +3184,15 @@ main {
       -ms-flex-flow: wrap column;
           flex-flow: wrap column;
   padding: 0;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 17vw;
+  width: 100%;
   background: transparent;
   font-weight: normal;
   color: #666;
 }
 
-.accordion > div a.countryGroup > div > button,
-.accordion > div button.countryGroup > div > button,
-.accordion > div div.countryGroup > div > button {
+.accordion > div a.country > div button,
+.accordion > div button.country > div button,
+.accordion > div div.country > div button {
   display: block;
   color: #999;
   border-right: 1px solid #999;
@@ -3177,38 +3201,44 @@ main {
   margin-top: 1rem;
 }
 
-.accordion > div a.countryGroup > div > button:last-child,
-.accordion > div button.countryGroup > div > button:last-child,
-.accordion > div div.countryGroup > div > button:last-child {
+.accordion > div a.country > div button:last-child,
+.accordion > div button.country > div button:last-child,
+.accordion > div div.country > div button:last-child {
   border: 0;
 }
 
-.accordion > div a.countryGroup > div img,
-.accordion > div button.countryGroup > div img,
-.accordion > div div.countryGroup > div img {
+.accordion > div a.country > div img,
+.accordion > div button.country > div img,
+.accordion > div div.country > div img {
   width: 10vw;
   height: 10vw;
   margin: 2vw;
   border-radius: 100%;
 }
 
-.accordion > div a.countryGroup > div.active,
-.accordion > div button.countryGroup > div.active,
-.accordion > div div.countryGroup > div.active {
+.accordion > div a.country > div.active,
+.accordion > div button.country > div.active,
+.accordion > div div.country > div.active {
   font-weight: bold;
 }
 
-.accordion > div a.countryGroup > div.active > button.active,
-.accordion > div button.countryGroup > div.active > button.active,
-.accordion > div div.countryGroup > div.active > button.active {
+.accordion > div a.country > div.active > button.active,
+.accordion > div button.country > div.active > button.active,
+.accordion > div div.country > div.active > button.active {
   color: #CDAE8E;
 }
 
-.accordion > div a.countryGroup > div.active img,
-.accordion > div button.countryGroup > div.active img,
-.accordion > div div.countryGroup > div.active img {
+.accordion > div a.country > div.active img,
+.accordion > div button.country > div.active img,
+.accordion > div div.country > div.active img {
   -webkit-box-shadow: 0 0 5px 5px #121212;
           box-shadow: 0 0 5px 5px #121212;
+}
+
+.accordion > div a.country .flag:before,
+.accordion > div button.country .flag:before,
+.accordion > div div.country .flag:before {
+  width: 8vw;
 }
 
 .accordion > div a,
@@ -3619,7 +3649,11 @@ footer.mobile-footer {
   z-index: 2;
 }
 
-footer.mobile-footer > a {
+footer.mobile-footer .icon::before {
+  font-size: 4vw;
+}
+
+footer.mobile-footer a, footer.mobile-footer button {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -3641,13 +3675,14 @@ footer.mobile-footer > a {
   -webkit-transition: 0.6s;
   transition: 0.6s;
   color: #CDAE8E;
+  font-size: 3vw;
 }
 
-footer.mobile-footer > a.icon-menu {
+footer.mobile-footer a.icon-menu, footer.mobile-footer button.icon-menu {
   position: relative;
 }
 
-footer.mobile-footer > a:before {
+footer.mobile-footer a:before, footer.mobile-footer button:before {
   top: 1vw;
   position: absolute;
   border-radius: 100%;
@@ -3667,11 +3702,11 @@ footer.mobile-footer > a:before {
   font-size: 3.5vw;
 }
 
-footer.mobile-footer > a:last-child {
+footer.mobile-footer a:last-child, footer.mobile-footer button:last-child {
   border-right: 0;
 }
 
-footer.mobile-footer > a .qty {
+footer.mobile-footer a .qty, footer.mobile-footer button .qty {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3692,20 +3727,20 @@ footer.mobile-footer > a .qty {
   right: 3vw;
 }
 
-footer.mobile-footer > a span {
+footer.mobile-footer a span, footer.mobile-footer button span {
   white-space: nowrap;
   position: absolute;
   bottom: 1vw;
 }
 
-footer.mobile-footer > a.active {
+footer.mobile-footer a.active, footer.mobile-footer button.active {
   border-bottom: 2px solid #E2C79E;
   color: #fff;
   -webkit-transition: 0.6s;
   transition: 0.6s;
 }
 
-footer.mobile-footer > a.active:before {
+footer.mobile-footer a.active:before, footer.mobile-footer button.active:before {
   color: #fff;
   top: -4.5vw;
   -webkit-transition: 0.6s;
@@ -3713,7 +3748,7 @@ footer.mobile-footer > a.active:before {
   background: #FF5E00;
 }
 
-footer.mobile-footer > a.active .circleAnimation {
+footer.mobile-footer a.active .circleAnimation, footer.mobile-footer button.active .circleAnimation {
   background: url(https://store.0814media.net/img/footerActive.svg) no-repeat top center/100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3725,7 +3760,7 @@ footer.mobile-footer > a.active .circleAnimation {
   z-index: -1;
 }
 
-footer.mobile-footer > a.active .circleAnimation + span {
+footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer button.active .circleAnimation + span {
   color: #fff;
 }
 
@@ -4175,7 +4210,7 @@ footer.mobile-footer > a.active .circleAnimation + span {
     display: none;
   }
   .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li.name {
-    height: 6rem;
+    margin-bottom: 1rem;
   }
   .tAndC-content .btnGroup {
     width: 100%;
@@ -4249,14 +4284,6 @@ footer.mobile-footer > a.active .circleAnimation + span {
   }
   .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) > div:nth-child(1) img {
     width: 100%;
-  }
-  .cart-page .cart-list > div.cart-items .cart-info > div:last-child {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: end;
-        -ms-flex-pack: end;
-            justify-content: end;
   }
   .cart-page .cart-list > div.cart-items .cart-info .inputBox {
     margin: 0;
@@ -4422,5 +4449,219 @@ footer.mobile-footer > a.active .circleAnimation + span {
 
 ::-webkit-scrollbar-button {
   display: none;
+}
+
+.quickLinkNew1, .quickLinkNew2, .quickLinkNew3, .quickLinkNew4 {
+  position: fixed;
+  right: 0;
+  top: 110px;
+  z-index: 1;
+  -webkit-transition: 1s;
+  transition: 1s;
+  padding: 20px;
+  cursor: pointer;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(60%, rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 60%, rgba(255, 255, 255, 0) 100%);
+  color: #212121;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 150px;
+  width: 20px;
+}
+
+.quickLinkNew1 i, .quickLinkNew2 i, .quickLinkNew3 i, .quickLinkNew4 i {
+  position: absolute;
+  top: 10px;
+}
+
+.quickLinkNew1 i::before, .quickLinkNew2 i::before, .quickLinkNew3 i::before, .quickLinkNew4 i::before {
+  margin: 0;
+}
+
+.quickLinkNew1 > div, .quickLinkNew2 > div, .quickLinkNew3 > div, .quickLinkNew4 > div {
+  letter-spacing: 1px;
+  height: 24px;
+  width: 100px;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.quickLinkNew1.active, .quickLinkNew2.active, .quickLinkNew3.active, .quickLinkNew4.active {
+  -webkit-transform: translateX(40px);
+          transform: translateX(40px);
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+@media screen and (max-width: 768px) {
+  .quickLinkNew1, .quickLinkNew2, .quickLinkNew3, .quickLinkNew4 {
+    display: none;
+  }
+}
+
+.quickLinkNew2, .quickLinkNew4 {
+  background: white;
+  height: calc(100% - 180px);
+  padding: 35px 2px 0;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  width: auto;
+}
+
+.quickLinkNew2 i::before, .quickLinkNew4 i::before {
+  color: #212121;
+}
+
+.quickLinkNew2 a, .quickLinkNew2 button, .quickLinkNew4 a, .quickLinkNew4 button {
+  border-top: 1px dotted #999;
+  color: #999;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  font-size: 20px;
+}
+
+.quickLinkNew2 a:not(.icon-chat), .quickLinkNew2 button:not(.icon-chat), .quickLinkNew4 a:not(.icon-chat), .quickLinkNew4 button:not(.icon-chat) {
+  font-weight: normal;
+  font-size: 22px;
+}
+
+.quickLinkNew2 a.active, .quickLinkNew2 button.active, .quickLinkNew4 a.active, .quickLinkNew4 button.active {
+  color: #212121;
+}
+
+.quickLinkNew2 a.active > div, .quickLinkNew2 button.active > div, .quickLinkNew4 a.active > div, .quickLinkNew4 button.active > div {
+  display: block;
+}
+
+.quickLinkNew2 a > div, .quickLinkNew2 button > div, .quickLinkNew4 a > div, .quickLinkNew4 button > div {
+  display: none;
+  position: absolute;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  white-space: nowrap;
+  font-size: 12px;
+  top: 0;
+  background: white;
+  padding: 10px;
+  text-align: left;
+}
+
+.quickLinkNew2 a > div img, .quickLinkNew2 a > div svg, .quickLinkNew2 button > div img, .quickLinkNew2 button > div svg, .quickLinkNew4 a > div img, .quickLinkNew4 a > div svg, .quickLinkNew4 button > div img, .quickLinkNew4 button > div svg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  width: 110px;
+  height: 110px;
+}
+
+.quickLinkNew2 a img, .quickLinkNew2 button img, .quickLinkNew4 a img, .quickLinkNew4 button img {
+  margin: 0 auto;
+  width: 25px;
+}
+
+.quickLinkNew2 a.icon-line:before, .quickLinkNew2 a.icon-whatsapp:before, .quickLinkNew2 button.icon-line:before, .quickLinkNew2 button.icon-whatsapp:before {
+  color: #07b802;
+}
+
+.quickLinkNew2 a.icon-twitter, .quickLinkNew2 a.icon-telegram, .quickLinkNew2 button.icon-twitter, .quickLinkNew2 button.icon-telegram {
+  color: #1c99e6;
+}
+
+.quickLinkNew2 a.icon-facebook2, .quickLinkNew2 button.icon-facebook2 {
+  color: #7591c1;
+}
+
+.quickLinkNew2 a.icon-instagram, .quickLinkNew2 button.icon-instagram {
+  color: #cf0404;
+}
+
+.quickLinkNew2 a.icon-envelope, .quickLinkNew2 button.icon-envelope {
+  color: #f77900;
+}
+
+.quickLinkNew3 {
+  right: auto;
+  left: 0;
+}
+
+.quickLinkNew3.active {
+  -webkit-transform: translateX(-40px);
+          transform: translateX(-40px);
+}
+
+.quickLinkNew4 {
+  width: 123px;
+  right: auto;
+  left: 0;
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+}
+
+.quickLinkNew4 i {
+  left: 10px;
+}
+
+.quickLinkNew4 a, .quickLinkNew4 button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+      flex-flow: wrap;
+  padding: 10px 0 10px 5px;
+}
+
+.quickLinkNew4 a.icon-android:before, .quickLinkNew4 button.icon-android:before {
+  color: #4bad30;
+}
+
+.quickLinkNew4 a > div, .quickLinkNew4 button > div {
+  position: unset;
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  display: block;
+  float: right;
+  padding: 0;
+}
+
+.quickLinkNew4 a > div img, .quickLinkNew4 button > div img {
+  margin-left: -3px;
+}
+
+.quickLinkNew4 a:not(.icon-chat), .quickLinkNew4 button:not(.icon-chat) {
+  font-size: 14px;
+}
+
+.quickLinkNew4 a::before, .quickLinkNew4 button::before {
+  display: block;
+}
+
+.quickLinkNew4.active {
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
 }
 /*# sourceMappingURL=style.css.map */
