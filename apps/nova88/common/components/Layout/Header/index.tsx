@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC } from "react"
 import { useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
 import { selectedIsLogin } from "service/slice/auth"
@@ -12,17 +12,22 @@ import ShoppingCart from "./ShoppingCart"
 import { imageUrl } from "../../../../config"
 import { paths } from "common/constants"
 
-const Header = () => {
+interface IHeaderProps {
+	setSubmenuOpen: (prev) => void
+}
+
+const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 	const { t } = useTranslation()
 	const route = useRouter()
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
 
+	const toggleSubmenu = () => setSubmenuOpen((prev: boolean) => !prev)
+
 	return (
 		<header id="header">
 			<div className="header">
-				<button className="icon icon-menu" />
-				<div className="mobile-menu" />
+				<button className="icon icon-menu" onClick={toggleSubmenu} />
 				<div onClick={() => route.push(paths.home)} className="logo">
 					<a>
 						<img src={`${imageUrl}/img/88logo.png`} alt="" />

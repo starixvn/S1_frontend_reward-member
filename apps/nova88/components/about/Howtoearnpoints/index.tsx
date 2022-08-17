@@ -186,9 +186,18 @@ const HowToEarnPoints = () => {
 									</div>
 									<div className="info-title">{t("Any_question")}</div>
 									<div>
-										{t("Please_check")} <a className="blue">{t("FAQ")}</a>{" "}
+										{t("Please_check")}{" "}
+										<Link href={paths.about.sub.rewardfaq.root}>
+											<a className="blue"> {t("FAQ")} </a>
+										</Link>{" "}
 										{t("here_or_contact_our")}{" "}
-										<a className="blue">{t("24/7_Customer_Support")}</a>
+										<a
+											className="blue"
+											target="_blank"
+											href="https://direct.lc.chat/11638088/"
+											rel="noreferrer">
+											{t("24/7_Customer_Support")}
+										</a>
 									</div>
 								</div>
 								<div
@@ -263,10 +272,18 @@ const HowToEarnPoints = () => {
 									</div>
 									<div className="info-title">{t("Any_question")}</div>
 									<div>
-										{t("Please_check")}
-										<a className="blue">{t("FAQ")}</a>
-										{t("here_or_contact_our")}
-										<a className="blue">{t("24/7_Customer_Support")}</a>
+										{t("Please_check")}{" "}
+										<Link href={paths.about.sub.rewardfaq.root}>
+											<a className="blue"> {t("FAQ")} </a>
+										</Link>{" "}
+										{t("here_or_contact_our")}{" "}
+										<a
+											className="blue"
+											target="_blank"
+											href="https://direct.lc.chat/11638088/"
+											rel="noreferrer">
+											{t("24/7_Customer_Support")}
+										</a>
 									</div>
 								</div>
 							</div>

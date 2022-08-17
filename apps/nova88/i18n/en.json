@@ -217,6 +217,14 @@
 	"Question12_Content": "88 Rewards point do not expire as long as you have at least one (1) deposit in the last",
 	"365_days": "365 days",
 	"Question13_Content": "You will be automatically become Nova88 Reward member after you registered as member of Nova88.",
+
 	"other ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
-	"NoData": "No information is available now."
+	"NoData": "No information is available now.",
+
+	"footer ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+	"Home": "Home",
+	"LiveChat": "Live Chat",
+
+	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+	"Logout": "Logout"
 }
