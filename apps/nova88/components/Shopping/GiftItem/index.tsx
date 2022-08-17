@@ -39,7 +39,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 	const [cartList] = useLocalStorage("nova88Cart", [])
 	const handleItemBtnTextChange = giftItem => {
 		let text = ""
-		if (!giftItem.stock) {
+		if (!giftItem.stock && giftItem.showStock) {
 			text = t("SoldOut")
 		} else {
 			const cartItem = cartList.find(item => item.giftId === giftItem.giftId)
@@ -53,9 +53,11 @@ const GiftItem: FC<IGiftItemProps> = ({
 	}
 	const closeLargeImg = () => setIsLarge(false)
 	const openLargeImg = () => setIsLarge(true)
-
 	return (
-		<div className={classNames("product", { empty: !item.stock })}>
+		<div
+			className={classNames("product", {
+				empty: !item.stock && item.showStock,
+			})}>
 			<div className="iconGroup">
 				{item.tagList.map((tagItem, index) => (
 					<div
@@ -86,18 +88,16 @@ const GiftItem: FC<IGiftItemProps> = ({
 			</div>
 			<div className="icon icon-coin">{numberFormat(item.point)}</div>
 			<div className="product-name">{item.giftName}</div>
-			<div className="qty">
-				{t("Qty")}:{item.stock}
-			</div>
+			<div className="qty">{item.showStock && `${t("Qty")}:${item.stock}`}</div>
 			<button
 				onClick={() => onToggleCart(item)}
 				className={classNames("icon", "active", {
-					"icon-ban": !item.stock,
+					"icon-ban": !item.stock && item.showStock,
 					"icon-checkmark":
-						item.stock &&
+						(item.stock || !item.showStock) &&
 						cartList.find(cartItem => cartItem.giftId === item.giftId),
 					"icon-cart":
-						item.stock &&
+						(item.stock || !item.showStock) &&
 						!cartList.find(cartItem => cartItem.giftId === item.giftId),
 				})}>
 				{handleItemBtnTextChange(item)}
@@ -113,12 +113,12 @@ const GiftItem: FC<IGiftItemProps> = ({
 				<button
 					onClick={() => onToggleCart(item)}
 					className={classNames("icon", "active", {
-						"icon-ban": !item.stock,
+						"icon-ban": !item.stock && item.showStock,
 						"icon-checkmark":
 							item.stock &&
 							cartList.find(cartItem => cartItem.giftId === item.giftId),
 						"icon-cart":
-							item.stock &&
+							(item.stock || !item.showStock) &&
 							!cartList.find(cartItem => cartItem.giftId === item.giftId),
 					})}>
 					{handleItemBtnTextChange(item)}

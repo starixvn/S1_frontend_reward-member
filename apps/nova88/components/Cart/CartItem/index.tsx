@@ -58,7 +58,7 @@ const CartItem: FC<ICartItemProps> = ({
 		<div
 			key={item.giftId}
 			className={classNames("cart-items", {
-				soldOut: !item.stock,
+				soldOut: !item.stock && item.showStock,
 			})}>
 			<div className="cart-check">
 				<input
@@ -70,7 +70,9 @@ const CartItem: FC<ICartItemProps> = ({
 			<div className="cart-info">
 				<div>
 					<div>
-						{!item.stock && <div className="sold-out active">SOLD OUT</div>}
+						{!item.stock && item.showStock && (
+							<div className="sold-out active">{t("SoldOut")}</div>
+						)}
 						<img src={`${imageUrl}${item.giftPictureUrl}`} alt="any" />
 					</div>
 					<div>
@@ -80,14 +82,12 @@ const CartItem: FC<ICartItemProps> = ({
 							<li>
 								{t("ItemCode")}:{item.giftId}
 							</li>
-							<li>
-								{t("Qty")}:{item.stock}
-							</li>
+							<li>{item.showStock && `${t("Qty")}:${item.stock}`}</li>
 						</ul>
 					</div>
 				</div>
 				<Dropdown
-					placeholder={item.number ? item.number.toString() : "1"}
+					placeholder={item.number ? item.number?.toString() : "1"}
 					onChange={quantity => onChange(quantity, item)}>
 					{quantityList.map((value, index) => (
 						<Option key={index} value={value}>

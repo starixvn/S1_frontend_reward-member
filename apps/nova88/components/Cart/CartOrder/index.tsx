@@ -84,7 +84,7 @@ const Order: FC<ICartOrderProps> = ({
 			<div>
 				<div>
 					<span>{t("Username")}</span>
-					<span>{profile.userName}</span>
+					<span>{profile?.userName}</span>
 				</div>
 				<div>
 					<span>{t("AvailablePoints").toUpperCase()}</span>
@@ -117,7 +117,7 @@ const Order: FC<ICartOrderProps> = ({
 					<div className="tip active">{t("InsufficientPointsTip")}</div>
 				)}
 			</div>
-			{profile.addressCity ? (
+			{profile?.addressCity ? (
 				<div>
 					<div className="cart-address">
 						<span>{t("SHIPPING_ADDRESS")}</span>
