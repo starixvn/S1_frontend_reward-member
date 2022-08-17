@@ -81,17 +81,6 @@ const Cart = () => {
 		}
 	}, [profile])
 
-	const handleDropDownChange = (quantity, item) => {
-		const cartListTarget = cartList?.find(obj => obj.giftId === item.giftId)
-		cartListTarget.number = quantity
-		if (checkedItem?.giftId === item.giftId) {
-			setCheckedItem(prev => ({
-				...prev,
-				number: quantity,
-			}))
-		}
-		setCartState(cartList)
-	}
 	const handleCheckBoxToggle = (e, item) => {
 		if (!item.number) {
 			item["number"] = 1
@@ -198,7 +187,6 @@ const Cart = () => {
 								cartList={cartList}
 								checkedItem={checkedItem}
 								onToggle={handleCheckBoxToggle}
-								onChange={handleDropDownChange}
 								onRemove={handleCartItemRemove}
 							/>
 						) : (

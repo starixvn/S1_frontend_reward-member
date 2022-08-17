@@ -15,6 +15,25 @@ export const setCookie = ({
 	}
 }
 
-export const numberFormat = number => {
-	return number?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+export const numberFormat = value => {
+	if (value) {
+		const valueStr = value.toString()
+		const dotIdex = valueStr.indexOf(".")
+		let intValue = valueStr
+		let floatValue = ""
+		if (dotIdex !== -1) {
+			intValue = valueStr.substr(0, dotIdex)
+			floatValue = valueStr.substr(dotIdex + 1)
+		}
+		let newIntValue = ""
+		for (let index = 0; index < intValue.length; index++) {
+			const item = intValue[intValue.length - index - 1]
+			if (index !== 0 && index % 3 === 0) {
+				newIntValue = item + "," + newIntValue
+			} else {
+				newIntValue = item + newIntValue
+			}
+		}
+		return floatValue ? newIntValue + "." + floatValue : newIntValue
+	}
 }

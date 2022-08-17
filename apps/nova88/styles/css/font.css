@@ -679,4 +679,8 @@
 .icon-approve:before {
   content: "\e936";
 }
+
+.icon-chat:before {
+  content: "\e914";
+}
 /*# sourceMappingURL=font.css.map */
