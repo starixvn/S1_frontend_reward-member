@@ -12,15 +12,6 @@ const ShoppingCart = () => {
 	const { setPopBoxType } = usePopBox()
 	const cartData: null | any[] = useReadLocalStorage("nova88Cart")
 	const cartCount = cartData?.length ?? 0
-	// onClick={() => {
-	//   if (item.authRequired && !isLogin) {
-	//     setPopBoxType({
-	//       type: "login",
-	//     })
-	//   } else {
-	//     route.push(item.path)
-	//   }
-	// }}
 	return (
 		<div
 			onClick={() => {
@@ -34,7 +25,8 @@ const ShoppingCart = () => {
 			}}
 			className="shoppingCar">
 			<div className="icon icon-cart" />
-			<span>{cartCount > 99 ? "99+" : `+${isLogin ? cartCount : 0}`}</span>
+			{/*todo:等api做好需調整isLogin等於true返回值(0的位置）*/}
+			<span>{cartCount > 99 ? "99+" : `+${isLogin ? 0 : cartCount}`}</span>
 		</div>
 	)
 }

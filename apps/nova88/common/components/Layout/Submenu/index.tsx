@@ -14,6 +14,7 @@ import { imageUrl } from "../../../../config"
 import { useGetPointBalanceQuery } from "service/api/storeApi"
 import { paths } from "common/constants"
 import { usePopBox } from "common/hooks"
+import { numberFormat } from "common/utils/func"
 
 interface ISubmenuProps {
 	isSubmenuOpen: boolean
@@ -61,7 +62,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						<Link href={paths.about.sub.points.root}>
 							<a className="icon icon-diamond">
 								{t("RewardPoints")}
-								<span>{pointBalance ?? 0}</span>
+								<span>{numberFormat(pointBalance) ?? 0}</span>
 							</a>
 						</Link>
 					</div>

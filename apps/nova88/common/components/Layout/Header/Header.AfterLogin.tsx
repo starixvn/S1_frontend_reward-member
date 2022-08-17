@@ -13,6 +13,7 @@ import LangDropdown from "./LangDropdown"
 import ShoppingCart from "./ShoppingCart"
 import { paths } from "common/constants"
 import { REWARD88_LANG } from "common/constants/localStorage"
+import { numberFormat } from "common/utils/func"
 
 const HeaderAfterLogin = () => {
 	const { t, i18n } = useTranslation()
@@ -51,7 +52,7 @@ const HeaderAfterLogin = () => {
 			<Link href={paths.about.sub.points.root}>
 				<a className="icon icon-diamond">
 					<span>{t("RewardPoints")}</span>
-					{pointBalance ?? 0}
+					{numberFormat(pointBalance) ?? 0}
 				</a>
 			</Link>
 			<div
