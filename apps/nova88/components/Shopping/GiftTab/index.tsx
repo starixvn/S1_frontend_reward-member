@@ -3,8 +3,8 @@ import classNames from "classnames"
 import { useTranslation } from "react-i18next"
 
 interface IGiftTabProps {
-	tabList: { id: number; label: string }[]
-	activeItem?: { id: number; label: string }
+	tabList: { lang: string; tagId: number; tagName: string }[]
+	activeItem?: { lang?: string; tagId?: number; tagName?: string }
 	onChange?: (obj) => void
 }
 
@@ -16,12 +16,12 @@ const GiftTab: FC<IGiftTabProps> = ({
 	const { t } = useTranslation()
 	return (
 		<div className="products-menu">
-			{tabList.map(item => (
+			{tabList?.map(item => (
 				<a
-					className={classNames({ active: activeItem?.id === item.id })}
+					className={classNames({ active: activeItem?.tagId === item.tagId })}
 					onClick={() => onChange && onChange(item)}
-					key={item.id}>
-					{t(item.label)}
+					key={item.tagId}>
+					{t(item.tagName)}
 				</a>
 			))}
 		</div>

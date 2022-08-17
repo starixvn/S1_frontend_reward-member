@@ -249,10 +249,15 @@ const Cart = () => {
 				</div>
 				<div className="products-group col-lg-7 col-xl-7">
 					<div className="row">
-						<GiftTab
-							tabList={[{ id: 3, label: "FEATURED" }]}
-							onChange={() => route.push(paths.shopping)}
-						/>
+						<div className="products-menu">
+							<a>{t("FEATURED")}</a>
+							<button
+								onClick={() => {
+									route.push(paths.shopping)
+								}}>
+								{t("More")}...
+							</button>
+						</div>
 						<GiftList
 							filterList={giftList}
 							onToggleCart={handleGiftItemToggle}

@@ -79,8 +79,15 @@ interface IPointBalance {
 	pointBalance: number
 }
 
+interface IGiftTagsData {
+	lang: string
+	tagId: number
+	tagName: string
+}
+
 export type IGetGiftListResponse = IAxiosResponse<IGiftData[]>
 export type ISetFavoriteResponse = IAxiosResponse<null>
 export type IGetMyCoinResponse = IAxiosResponse<IMyCoinDataData>
 export type IGetMyPurchesResponse = IAxiosResponse<IMyPurchesData>
 export type IGetPointBalanceResponse = IAxiosResponse<IPointBalance>
+export type IGetGiftTagsResponse = IAxiosResponse<IGiftTagsData[]>

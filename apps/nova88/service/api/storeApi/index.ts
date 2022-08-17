@@ -10,6 +10,7 @@ import {
 	IGetMyPurchesResponse,
 	IGetMyPurchesArgs,
 	IGetPointBalanceResponse,
+	IGetGiftTagsResponse,
 } from "./type"
 
 const storeApi = createApi({
@@ -63,6 +64,14 @@ const storeApi = createApi({
 			}),
 			providesTags: ["Post"],
 		}),
+		getGiftTags: builder.query<IGetGiftTagsResponse, null>({
+			query: () => ({
+				url: `store/getgifttags`,
+				method: "POST",
+				data: {},
+			}),
+			providesTags: ["Post"],
+		}),
 	}),
 })
 
@@ -74,6 +83,7 @@ export const {
 	useSetFavoriteMutation,
 	useLazyGetMyCoinQuery,
 	useGetMyPurchaseQuery,
+	useGetGiftTagsQuery,
 } = storeApi
 
 export default storeApi
