@@ -3,15 +3,14 @@ import GiftTab from "./GiftTab"
 import GiftSwiper from "./GiftSwiper"
 import Loading from "common/components/Loading"
 import {
+	useGetGiftTagsQuery,
 	useLazyGetGiftListQuery,
 	useSetFavoriteMutation,
 } from "service/api/storeApi"
 import { useLocalStorage } from "usehooks-ts"
-import { useRouter } from "next/router"
 import { useInView, usePopBox } from "common/hooks"
 import {
 	sliderList,
-	tabList,
 	fromList,
 	sortType,
 	tabOption,
@@ -38,6 +37,24 @@ const Shopping = () => {
 
 	const [categoryList, setCategoryList] = useState([])
 
+	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
+		useGetGiftTagsQuery(null)
+
+	const giftTabList = giftTabs &&
+		giftTabs.length > 0 && [
+			{
+				lang: giftTabs[0].lang,
+				tagId: 0,
+				tagName: "ALL",
+			},
+			...giftTabs,
+			{
+				lang: giftTabs[0].lang,
+				tagId: 999,
+				tagName: "FAVORITE",
+			},
+		]
+
 	const [
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
@@ -55,8 +72,7 @@ const Shopping = () => {
 			})
 		}
 	}
-	const router = useRouter()
-	const [activeTabItem, setActiveTabItem] = useState(tabList[0])
+	const [activeTabItem, setActiveTabItem] = useState({})
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
 	const isLogin = useSelector(selectedIsLogin)
@@ -71,7 +87,11 @@ const Shopping = () => {
 		})
 		return categoryList
 	}
-
+	useEffect(() => {
+		if (giftTabList && giftTabList.length > 0) {
+			setActiveTabItem(giftTabList[0])
+		}
+	}, [isGetGiftTabsFetching])
 	const handleFavoriteToggle = async item => {
 		if (isLogin) {
 			try {
@@ -121,7 +141,7 @@ const Shopping = () => {
 
 	const handleTabChange = activeTab => {
 		setActiveTabItem(activeTab)
-		if (activeTab.id === tabOption.FAVORITE) {
+		if (activeTab.tagId === tabOption.FAVORITE) {
 			setArgs(prev => ({
 				...prev,
 				tags: null,
@@ -131,7 +151,7 @@ const Shopping = () => {
 		} else {
 			setArgs(prev => ({
 				...prev,
-				tags: activeTab.id ? [activeTab.id] : null,
+				tags: activeTab.tagId ? [activeTab.tagId] : null,
 			}))
 			setIsFilterFavorite(false)
 		}
@@ -179,7 +199,7 @@ const Shopping = () => {
 			<div className="products-group container-xxl">
 				<div className="row">
 					<GiftTab
-						tabList={tabList}
+						tabList={giftTabList}
 						activeItem={activeTabItem}
 						onChange={handleTabChange}
 					/>

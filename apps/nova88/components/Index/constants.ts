@@ -6,18 +6,8 @@ export const sliderList = [
 ]
 export enum tabOption {
 	ALL = 0,
-	HOT,
-	NEW,
-	FEATURED,
-	FAVORITE,
+	FAVORITE = 999,
 }
-export const tabList = [
-	{ id: tabOption.ALL, label: "ALL" },
-	{ id: tabOption.HOT, label: "HOT" },
-	{ id: tabOption.NEW, label: "NEW" },
-	{ id: tabOption.FEATURED, label: "FEATURED" },
-	{ id: tabOption.FAVORITE, label: "FAVORITE" },
-]
 export const DEFAULT_PAGE_SIZE_COUNT = 5
 
 export const monthObj = {

@@ -25,7 +25,7 @@ interface IGiftListProps {
 	}[]
 	onToggleCart: (giftItem: object) => void
 	onToggleFavorite?: (giftItem: object) => void
-	activeTabItem?: { id: number; label: string }
+	activeTabItem?: { lang?: string; tagId?: number; tagName?: string }
 }
 
 const GiftList: FC<IGiftListProps> = ({
@@ -48,7 +48,7 @@ const GiftList: FC<IGiftListProps> = ({
 					))}
 				</div>
 			) : (
-				<Empty isFavorite={activeTabItem?.id === tabOption.FAVORITE} />
+				<Empty isFavorite={activeTabItem?.tagId === tabOption.FAVORITE} />
 			)}
 		</>
 	)
