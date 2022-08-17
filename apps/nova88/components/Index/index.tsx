@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import QRCode from "qrcode.react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
 import GiftSwiper from "components/Shopping/GiftSwiper"
@@ -17,6 +18,8 @@ import { selectedIsLogin } from "service/slice/auth"
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
 import { paths } from "common/constants"
+import { useGetAppLinkQuery } from "service/api/playerApi"
+import { defAppType } from "service/api/playerApi/def"
 
 const Index = () => {
 	const { setPopBoxType } = usePopBox()
@@ -41,6 +44,10 @@ const Index = () => {
 	const route = useRouter()
 
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
+	const getAppLink = (type: number) =>
+		appLinks?.find(el => el.appType === type)?.downloadLink
+
 	const handleFavoriteToggle = async item => {
 		if (isLogin) {
 			try {
@@ -189,15 +196,25 @@ const Index = () => {
 									<div className="icon icon-android">
 										<span>{t("Android")}</span>
 									</div>
-									<img src={`${imageUrl}/img/qrcode.svg`} alt="" />
-									<button>{t("Download").toUpperCase()}</button>
+									<QRCode
+										value={getAppLink(defAppType.Andriod)}
+										renderAs="svg"
+										size={80}
+										includeMargin={true}
+									/>
+									{/* <button>{t("Download").toUpperCase()}</button> */}
 								</div>
 								<div className="qrCode">
 									<div className="icon icon-appleinc">
 										<span>{t("IOS")}</span>
 									</div>
-									<img src={`${imageUrl}/img/qrcode.svg`} alt="" />
-									<button>{t("Download").toUpperCase()}</button>
+									<QRCode
+										value={getAppLink(defAppType.IOS)}
+										renderAs="svg"
+										size={80}
+										includeMargin={true}
+									/>
+									{/* <button>{t("Download").toUpperCase()}</button> */}
 								</div>
 							</div>
 						</div>
