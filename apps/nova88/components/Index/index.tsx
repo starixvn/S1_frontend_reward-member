@@ -202,7 +202,12 @@ const Index = () => {
 										size={80}
 										includeMargin={true}
 									/>
-									{/* <button>{t("Download").toUpperCase()}</button> */}
+									<a
+										href={getAppLink(defAppType.Andriod)}
+										target="_blank"
+										rel="noreferrer noopener">
+										<button>{t("Download").toUpperCase()}</button>
+									</a>
 								</div>
 								<div className="qrCode">
 									<div className="icon icon-appleinc">
@@ -214,7 +219,12 @@ const Index = () => {
 										size={80}
 										includeMargin={true}
 									/>
-									{/* <button>{t("Download").toUpperCase()}</button> */}
+									<a
+										href={getAppLink(defAppType.IOS)}
+										target="_blank"
+										rel="noreferrer noopener">
+										<button>{t("Download").toUpperCase()}</button>
+									</a>
 								</div>
 							</div>
 						</div>
