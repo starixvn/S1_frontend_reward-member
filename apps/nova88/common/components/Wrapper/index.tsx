@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "store"
 import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk"
 import { selectedIsLogin } from "service/slice/auth"
 import { paths } from "common/constants"
+import { useInitI18nLanguageEffect } from "common/hooks/useInitI18nLanguageEffect"
 
 interface IWrapperProps {
 	authRequired: boolean
@@ -15,6 +16,9 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 	const route = useRouter()
 
 	const isLogin = useAppSelector(selectedIsLogin)
+
+	useInitI18nLanguageEffect()
+
 	// * 當切換頁面的時候確認登入狀態
 	useEffect(() => {
 		dispatch(checkSignInAsync())

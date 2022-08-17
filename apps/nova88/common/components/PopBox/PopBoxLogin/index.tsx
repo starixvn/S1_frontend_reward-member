@@ -5,16 +5,23 @@ import { usePopBox } from "common/hooks"
 import { useTranslation } from "react-i18next"
 import { useAppDispatch, useAppSelector } from "store"
 import { selectedLangId, setIsLogin } from "service/slice/auth"
-import { imageUrl } from "config"
+import { imageUrl, siteInfo } from "config"
 import { getCustProfileAsync } from "service/slice/auth/thunk"
 import { IFormValues } from "./type"
 import Form from "./Form"
+import { useLocalStorage } from "usehooks-ts"
+import { REWARD88_LANG } from "common/constants/localStorage"
 
 const PopBoxLogin: FC = () => {
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 	const { closePopBox, setPopBoxType } = usePopBox()
 	const dispatch = useAppDispatch()
 	const langId = useAppSelector(selectedLangId)
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
+		REWARD88_LANG,
+		null
+	)
 
 	const {
 		register,
@@ -40,6 +47,10 @@ const PopBoxLogin: FC = () => {
 				await dispatch(getCustProfileAsync())
 				dispatch(setIsLogin(isLogin))
 				closePopBox()
+
+				// * 登入及登出後重置語系
+				i18n.changeLanguage(siteInfo.defaultLang)
+				setLocalStorageLangId(null)
 			} else if ([1101].includes(errorCode)) {
 				setError("password", { type: "custom", message })
 			} else if ([1102, 9000].includes(errorCode)) {

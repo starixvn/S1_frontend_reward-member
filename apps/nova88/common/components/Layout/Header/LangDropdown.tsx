@@ -1,40 +1,36 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useMemo } from "react"
 import { useOnClickOutside, useLocalStorage } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import classnames from "classnames"
 import { useAppDispatch, useAppSelector } from "store"
 import {
-	selectedLangId,
 	setLangId as setUserLangId,
 	selectedIsLogin,
+	selectedCurrencyId,
 } from "service/slice/auth"
 import { defLangOptions } from "./LangDropdown.def"
-import { siteInfo } from "../../../../config"
+import some from "lodash/some"
+import { filter } from "lodash"
+import { REWARD88_LANG } from "common/constants/localStorage"
 
 const LangDropdown = () => {
 	const { i18n } = useTranslation()
 	const dispatch = useAppDispatch()
-	const userLangId = useAppSelector(selectedLangId)
+	const currencyId = useAppSelector(selectedCurrencyId)
 	const wrapper = useRef()
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const isLogin = useSelector(selectedIsLogin)
-	const [langId, setLangId] = useLocalStorage(
-		"reward88-lang",
-		siteInfo.defaultLang
+	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
+		REWARD88_LANG,
+		null
 	)
-
-	useEffect(() => {
-		if (isLogin) {
-			setLangId(userLangId)
-		}
-	}, [])
 
 	const toggleLangDropdown = () => setIsOpen(prev => !prev)
 
 	const clickLang = (newLangId: string) => {
-		if (langId !== newLangId) {
-			setLangId(newLangId)
+		if (localStorageLangId !== newLangId) {
+			setLocalStorageLangId(newLangId)
 			i18n.changeLanguage(newLangId)
 			if (isLogin) {
 				dispatch(setUserLangId(newLangId))
@@ -49,7 +45,11 @@ const LangDropdown = () => {
 
 	useOnClickOutside(wrapper, handleClickOutside)
 
-	const countryOptions = defLangOptions.map(langData => {
+	const langOptions = some(defLangOptions, { currencyId })
+		? filter(defLangOptions, { currencyId })
+		: defLangOptions
+
+	const countryOptions = langOptions.map(langData => {
 		const langOptions = langData.lang.map(el => (
 			<button key={el.value} onClick={() => clickLang(el.value)}>
 				{el.displayText}
@@ -65,8 +65,9 @@ const LangDropdown = () => {
 	})
 
 	const flagIcon =
-		defLangOptions.find(el => el.lang.find(lang => lang.value === langId))
-			?.flag ?? ""
+		defLangOptions.find(el =>
+			el.lang.find(lang => lang.value === i18n.language)
+		)?.flag ?? ""
 
 	return (
 		<div className="country" ref={wrapper}>

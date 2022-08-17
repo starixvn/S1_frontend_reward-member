@@ -3,30 +3,39 @@ import classnames from "classnames"
 import Link from "next/link"
 import { useAppDispatch, useAppSelector } from "store"
 import { useSelector } from "react-redux"
-import { useOnClickOutside } from "usehooks-ts"
+import { useLocalStorage, useOnClickOutside } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
 import { logoutAsync } from "service/slice/auth/thunk"
 import { selectedProfile, selectedLangId, setIsLogin } from "service/slice/auth"
-import { imageUrl } from "config"
+import { imageUrl, siteInfo } from "config"
 import { useGetPointBalanceQuery } from "service/api/storeApi"
 import LangDropdown from "./LangDropdown"
 import ShoppingCart from "./ShoppingCart"
 import { paths } from "common/constants"
+import { REWARD88_LANG } from "common/constants/localStorage"
 
 const HeaderAfterLogin = () => {
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 	const profile = useSelector(selectedProfile)
 	const dispatch = useAppDispatch()
 	const langId = useAppSelector(selectedLangId)
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
+		REWARD88_LANG,
+		null
+	)
 	const { data: { data: { pointBalance } = {} } = {} } =
 		useGetPointBalanceQuery(null)
-
 	const userMenuWrapper = useRef()
 	const [isUserMenuOpen, setUserMenuIsOpen] = useState<boolean>(false)
 
 	const handleLogout = async () => {
 		await dispatch(logoutAsync())
 		dispatch(setIsLogin(false))
+
+		// * 登入及登出後重置語系
+		i18n.changeLanguage(siteInfo.defaultLang)
+		setLocalStorageLangId(null)
 	}
 
 	const toggleUserMenuDropdown = () => setUserMenuIsOpen(prev => !prev)
