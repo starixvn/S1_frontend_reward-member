@@ -3,6 +3,7 @@ import { imageUrl } from "config"
 import classNames from "classnames"
 import { useLocalStorage } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
+import { numberFormat } from "common/utils/func"
 
 interface IGiftItemProps {
 	item: {
@@ -83,7 +84,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 					className="icon icon-arrows-fullscreen"
 				/>
 			</div>
-			<div className="icon icon-coin">{item.point}</div>
+			<div className="icon icon-coin">{numberFormat(item.point)}</div>
 			<div className="product-name">{item.giftName}</div>
 			<div className="qty">
 				{t("Qty")}:{item.stock}

@@ -14,3 +14,7 @@ export const setCookie = ({
 		document.cookie = `${cookieName}=${cookieValue};${expires};path=/`
 	}
 }
+
+export const numberFormat = number => {
+	return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+}

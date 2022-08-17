@@ -2,6 +2,7 @@ import React, { FC } from "react"
 import classNames from "classnames"
 import classnames from "classnames"
 import { useTranslation } from "react-i18next"
+import { numberFormat } from "common/utils/func"
 
 interface ICartOrderProps {
 	profile: {
@@ -87,7 +88,7 @@ const Order: FC<ICartOrderProps> = ({
 				</div>
 				<div>
 					<span>{t("AvailablePoints").toUpperCase()}</span>
-					<span className="icon icon-coin">{pointBalance}</span>
+					<span className="icon icon-coin">{numberFormat(pointBalance)}</span>
 				</div>
 			</div>
 			<div>
@@ -95,8 +96,10 @@ const Order: FC<ICartOrderProps> = ({
 					<div>
 						<span>{checkedItem.giftName}</span>
 						<span className="icon icon-coin minus">
-							{checkedItem.point *
-								(checkedItem.number ? checkedItem.number : 1)}
+							{numberFormat(
+								checkedItem.point *
+									(checkedItem.number ? checkedItem.number : 1)
+							)}
 						</span>
 					</div>
 				)}
@@ -108,7 +111,7 @@ const Order: FC<ICartOrderProps> = ({
 				<div className="wire"></div>
 				<div className="total null">
 					<span>{t("GRAND_TOTAL")}</span>
-					<span className="icon icon-coin">{totalCal}</span>
+					<span className="icon icon-coin">{numberFormat(totalCal)}</span>
 				</div>
 				{totalCal < 0 && (
 					<div className="tip active">{t("InsufficientPointsTip")}</div>
