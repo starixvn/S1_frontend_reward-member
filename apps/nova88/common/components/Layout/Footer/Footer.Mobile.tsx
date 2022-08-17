@@ -14,7 +14,7 @@ const MobileFooter = () => {
 	const isLogin = useSelector(selectedIsLogin)
 	const { setPopBoxType } = usePopBox()
 	const router = useRouter()
-	const { pathname } = router
+	const { asPath } = router
 	const cartData: null | any[] = useReadLocalStorage("nova88Cart")
 	const cartCount = cartData?.length ?? 0
 
@@ -33,7 +33,7 @@ const MobileFooter = () => {
 			<Link href={paths.home}>
 				<a
 					className={classnames("icon icon-home", {
-						active: pathname === paths.home,
+						active: asPath === `${paths.home}/`,
 					})}>
 					<div className="circleAnimation"></div>
 					<span>{t("Home")}</span>
@@ -42,7 +42,7 @@ const MobileFooter = () => {
 			<Link href={paths.shopping}>
 				<a
 					className={classnames("icon icon-shop", {
-						active: pathname === paths.shopping,
+						active: asPath === paths.shopping,
 					})}>
 					<div className="circleAnimation"></div>
 					<span>{t("Shopping")}</span>
@@ -52,7 +52,7 @@ const MobileFooter = () => {
 				<Link href={paths.about.sub.points.root}>
 					<a
 						className={classnames("icon icon-coin", {
-							active: pathname === paths.about.sub.points.root,
+							active: asPath === paths.about.sub.points.root,
 						})}>
 						<div className="circleAnimation"></div>
 						<span>{t("MyPoints")}</span>
@@ -70,7 +70,7 @@ const MobileFooter = () => {
 			<button onClick={clickCartBtn}>
 				<a
 					className={classnames("icon icon-cart", {
-						active: pathname === paths.cart,
+						active: asPath === paths.cart,
 					})}>
 					<div className="qty">{cartCount > 99 ? "99+" : `+${cartCount}`}</div>
 					<div className="circleAnimation"></div>
