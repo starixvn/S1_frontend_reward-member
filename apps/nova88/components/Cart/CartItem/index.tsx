@@ -3,6 +3,7 @@ import classNames from "classnames"
 import { imageUrl } from "config"
 import { Dropdown } from "common/components/Dropdown"
 import { useTranslation } from "react-i18next"
+import { numberFormat } from "common/utils/func"
 
 interface ICartItemProps {
 	item: {
@@ -86,9 +87,7 @@ const CartItem: FC<ICartItemProps> = ({
 					</div>
 				</div>
 				<Dropdown
-					placeholder={
-						item.number ? item.number.toString() : quantityList[0].toString()
-					}
+					placeholder={item.number ? item.number.toString() : "1"}
 					onChange={quantity => onChange(quantity, item)}>
 					{quantityList.map((value, index) => (
 						<Option key={index} value={value}>
@@ -97,7 +96,7 @@ const CartItem: FC<ICartItemProps> = ({
 					))}
 				</Dropdown>
 				<div className="icon icon-coin">
-					{item.point * (item.number ? item.number : 1)}
+					{numberFormat(item.point * (item.number ? item.number : 1))}
 				</div>
 			</div>
 			<div className="cart-del">

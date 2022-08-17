@@ -12,6 +12,7 @@ import { selectedIsLogin, selectedProfile } from "service/slice/auth"
 import { imageUrl } from "config"
 import { getAvailablePoints, getUsedPoints } from "components/about/utils"
 import { clubList } from "../constants"
+import { numberFormat } from "common/utils/func"
 
 const Points = () => {
 	const { pathname } = useRouter()
@@ -48,7 +49,7 @@ const Points = () => {
 	const usedPoints = getUsedPoints(coinList)
 	const balance = (Number(availablePoints) + Number(usedPoints)).toFixed(2)
 	const clubText = clubList.find(
-		item => item.id === profile.userLevel
+		item => item.id === profile?.userLevel
 	)?.displayKey
 
 	return (
@@ -67,18 +68,20 @@ const Points = () => {
 										<div className="memberID">
 											<i></i>
 											<i></i>
-											<span>{profile.userName}</span>
+											<span>{profile?.userName}</span>
 										</div>
 										<div className="vipAnimation">
 											<a href="">
 												<img
-													src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
+													src={`${imageUrl}/img/vip0${profile?.userLevel}.png`}
 													alt=""
 												/>
 											</a>
 										</div>
 										<div className="level">{t(clubText)}</div>
-										<div className="icon icon-coin">{balance}</div>
+										<div className="icon icon-coin">
+											{numberFormat(balance)}
+										</div>
 									</div>
 									<PointRecord
 										coinList={coinList}
