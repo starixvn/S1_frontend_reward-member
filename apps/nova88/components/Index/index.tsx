@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import QRCode from "qrcode.react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
@@ -9,10 +9,10 @@ import Loading from "common/components/Loading"
 import { useLocalStorage } from "usehooks-ts"
 import { usePopBox } from "common/hooks"
 import {
-	useLazyGetGiftListQuery,
+	useGetGiftListQuery,
 	useSetFavoriteMutation,
 } from "service/api/storeApi"
-import { IGetGiftListArgs } from "service/api/storeApi/type"
+import { IGetGiftListResponse } from "service/api/storeApi/type"
 import { useSelector } from "react-redux"
 import { selectedIsLogin } from "service/slice/auth"
 import { imageUrl } from "config"
@@ -22,29 +22,28 @@ import { useGetAppLinkQuery } from "service/api/playerApi"
 import { defAppType } from "service/api/playerApi/def"
 
 const Index = () => {
-	const { setPopBoxType } = usePopBox()
-	const [
-		getGiftList,
-		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
-	] = useLazyGetGiftListQuery()
-
-	const [setFavorite] = useSetFavoriteMutation()
-	const isLogin = useSelector(selectedIsLogin)
-	const handleFilter = async (args: IGetGiftListArgs) => {
-		try {
-			await getGiftList(args).unwrap()
-		} catch (error) {
-			setPopBoxType({
-				type: "warn",
-				props: { content: error.message },
-			})
-		}
-	}
 	const { t } = useTranslation()
 	const route = useRouter()
-
+	const { setPopBoxType } = usePopBox()
+	const isLogin = useSelector(selectedIsLogin)
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+
 	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
+
+	const {
+		data: { data: giftList = [] } = {} as IGetGiftListResponse,
+		isFetching: isGetGiftListFetching,
+	} = useGetGiftListQuery({
+		langId: "en",
+		categoryIds: null,
+		tags: null,
+		orderByField: null,
+		desc: false,
+		pageSize: DEFAULT_PAGE_SIZE_COUNT,
+	})
+
+	const [setFavorite] = useSetFavoriteMutation()
+
 	const getAppLink = (type: number) =>
 		appLinks?.find(el => el.appType === type)?.downloadLink
 
@@ -82,16 +81,6 @@ const Index = () => {
 	}
 
 	const goToMore = () => route.push(paths.shopping)
-	useEffect(() => {
-		handleFilter({
-			langId: "en",
-			categoryIds: null,
-			tags: null,
-			orderByField: null,
-			desc: false,
-			pageSize: DEFAULT_PAGE_SIZE_COUNT,
-		})
-	}, [])
 
 	const month = monthObj[new Date().getMonth() + 1]
 	return (
@@ -180,6 +169,11 @@ const Index = () => {
 				</div>
 				{isGetGiftListFetching && <Loading />}
 			</div>
+
+			<button className="btn-more" onClick={goToMore}>
+				{t("More")}...
+			</button>
+
 			<div className="appDownload container-xxl">
 				<div className="row">
 					<div className="col-md-7 col-xl-7">

@@ -8,7 +8,7 @@ export enum tabOption {
 	ALL = 0,
 	FAVORITE = 999,
 }
-export const DEFAULT_PAGE_SIZE_COUNT = 5
+export const DEFAULT_PAGE_SIZE_COUNT = 6
 
 export const monthObj = {
 	1: "JANUARY",
