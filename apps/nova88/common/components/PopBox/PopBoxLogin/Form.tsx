@@ -65,8 +65,6 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 					]}
 				/>
 
-				<Input.Tip>{t("LoginPasswordInfo")}</Input.Tip>
-
 				<Link href={`/${langId}/${paths.forgetPassword}`}>
 					{t("ForgotPassword")}
 				</Link>
