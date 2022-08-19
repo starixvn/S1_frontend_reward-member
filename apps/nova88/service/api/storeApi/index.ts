@@ -84,6 +84,7 @@ export const {
 	useLazyGetMyCoinQuery,
 	useGetMyPurchaseQuery,
 	useGetGiftTagsQuery,
+	useLazyGetGiftTagsQuery,
 } = storeApi
 
 export default storeApi

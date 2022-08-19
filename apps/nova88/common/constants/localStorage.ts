@@ -1,1 +1,1 @@
-export const REWARD88_LANG = "reward88-lang"
+export const REWARD88_LANG = "reward88-lang";

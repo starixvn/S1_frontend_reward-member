@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import QRCode from "qrcode.react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
@@ -20,14 +20,59 @@ import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
 import { paths } from "common/constants"
 import { useGetAppLinkQuery } from "service/api/playerApi"
 import { defAppType } from "service/api/playerApi/def"
+import { useSetShoppingCartMutation } from "service/api/redemptionApi"
+import { setCartNumber } from "../../service/slice/cart"
+import { useAppDispatch } from "../../store"
+import classNames from "classnames"
+
+interface IGetCarListArgs {
+  giftId?: number
+  giftName?: string
+  enGiftName?: string
+  categoryId?: number
+  categoryName?: string
+  giftDescription?: string
+  pictureUrl?: string
+  isFavorite?: boolean
+  tagList?: {
+    tagId: number
+    tagName: string
+    lang: string
+  }[]
+  point?: number
+  priceWorth?: number
+  showStock?: boolean
+  stock?: number
+}
 
 const Index = () => {
+  const dispatch = useAppDispatch()
+  const { i18n } = useTranslation()
+	const { setPopBoxType } = usePopBox()
+
+  const [setShoppingCart] = useSetShoppingCartMutation()
+	const [setFavorite] = useSetFavoriteMutation()
+	const isLogin = useSelector(selectedIsLogin)
+
+  const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
+  const getCartList = async args => {
+    try {
+      await setShoppingCart(args)
+        .unwrap()
+        .then(res => {
+          setRealCartList(res.data)
+          dispatch(setCartNumber(res.data.length))
+        })
+    } catch (error) {
+      setPopBoxType({
+        type: "warn",
+        props: { content: error.message },
+      })
+    }
+  }
 	const { t } = useTranslation()
 	const route = useRouter()
-	const { setPopBoxType } = usePopBox()
-	const isLogin = useSelector(selectedIsLogin)
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
-
 	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
 
 	const {
@@ -41,8 +86,6 @@ const Index = () => {
 		desc: false,
 		pageSize: DEFAULT_PAGE_SIZE_COUNT,
 	})
-
-	const [setFavorite] = useSetFavoriteMutation()
 
 	const getAppLink = (type: number) =>
 		appLinks?.find(el => el.appType === type)?.downloadLink
@@ -67,24 +110,50 @@ const Index = () => {
 			})
 		}
 	}
-	const handleGiftItemToggle = giftItem => {
+	const handleGiftItemToggle = async giftItem => {
 		if (!giftItem.stock && giftItem.showStock) return
-		const item = cartList.find(item => item.giftId === giftItem.giftId)
-		if (item) {
-			let tempList = []
-			tempList = cartList.filter(item => item.giftId !== giftItem.giftId)
-			setCartList(tempList)
+		if (isLogin) {
+			const item = realCartList?.find(item => item.giftId === giftItem.giftId)
+			if (item) {
+				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 0 })
+					.unwrap()
+					.then(res => {
+						setRealCartList(res.data)
+						dispatch(setCartNumber(res.data.length))
+					})
+			} else {
+				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 1 })
+					.unwrap()
+					.then(res => {
+						setRealCartList(res.data)
+						dispatch(setCartNumber(res.data.length))
+					})
+			}
 		} else {
-			cartList.push(giftItem)
-			setCartList(cartList)
+			const item = cartList.find(item => item.giftId === giftItem.giftId)
+			if (item) {
+				let tempList = []
+				tempList = cartList.filter(item => item.giftId !== giftItem.giftId)
+				setCartList(tempList)
+			} else {
+				cartList.push(giftItem)
+				setCartList(cartList)
+			}
 		}
 	}
 
 	const goToMore = () => route.push(paths.shopping)
 
+  useEffect(() => {
+    if (isLogin) {
+      getCartList({ giftIds: [], isAdd: 0 })
+    }
+  }, [isLogin])
 	const month = monthObj[new Date().getMonth() + 1]
 	return (
-		<main>
+		<main className={classNames({
+      "other-layout": i18n.language !== "en",
+    })}>
 			<GiftSwiper />
 			{!isLogin && (
 				<div
@@ -165,6 +234,7 @@ const Index = () => {
 						filterList={giftList}
 						onToggleCart={handleGiftItemToggle}
 						onToggleFavorite={handleFavoriteToggle}
+						realCartList={realCartList}
 					/>
 				</div>
 				{isGetGiftListFetching && <Loading />}
@@ -205,7 +275,7 @@ const Index = () => {
 								</div>
 								<div className="qrCode">
 									<div className="icon icon-appleinc">
-										<span>{t("IOS")}</span>
+										<span>{t("iOS")}</span>
 									</div>
 									<QRCode
 										value={getAppLink(defAppType.IOS)}

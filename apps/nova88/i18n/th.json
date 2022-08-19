@@ -225,9 +225,13 @@
 
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "ออกจากระบบ",
-	"Label_RedeemTime": "เวลาแลกรับ",
-	"Label_ProductName": "ชื่อผลิตภัณฑ์",
-	"Label_PointsUsed": "เหรียญที่ใช้",
-	"Label_Status": "สถานะ",
-	"Languages": "ภาษา"
+  "Label_RedeemTime": "เวลาแลกรับ",
+  "Label_ProductName": "ชื่อผลิตภัณฑ์",
+  "Label_PointsUsed": "เหรียญที่ใช้",
+  "Label_Status": "สถานะ",
+  "Languages": "ภาษา",
+  "quickLink ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "ContactUs": "ติดต่อเรา",
+  "IOS": "IOS",
+  "ANDROID": "ANDROID"
 }

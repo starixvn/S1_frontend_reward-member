@@ -1,9 +1,9 @@
-import { useContext } from "react"
-import { PopBoxContext } from "common/components/PopBox/PopBoxContext"
-import { PopBoxContextInterface } from "common/components/PopBox/type"
+import { useContext } from "react";
+import { PopBoxContext } from "common/components/PopBox/PopBoxContext";
+import { PopBoxContextInterface } from "common/components/PopBox/type";
 
 const usePopBox = (): PopBoxContextInterface => {
-	return useContext(PopBoxContext)
-}
+  return useContext(PopBoxContext);
+};
 
-export { usePopBox }
+export { usePopBox };

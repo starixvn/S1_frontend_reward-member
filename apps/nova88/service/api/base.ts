@@ -1,8 +1,8 @@
-import axios from "axios"
+import axios from "axios";
 
-const rootURL = ""
+const rootURL = "";
 
 export const loginRequest = axios.create({
-	withCredentials: true,
-	baseURL: `${rootURL}/api/Site`,
-})
+  withCredentials: true,
+  baseURL: `${rootURL}/api/Site`
+});

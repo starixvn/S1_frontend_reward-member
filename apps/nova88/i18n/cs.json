@@ -226,9 +226,13 @@
 
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "登出",
-	"Label_RedeemTime": "兑换时间",
-	"Label_ProductName": "产品名字",
-	"Label_PointsUsed": "已用金币",
-	"Label_Status": "状态",
-	"Languages": "语系"
+  "Label_RedeemTime": "兑换时间",
+  "Label_ProductName": "产品名字",
+  "Label_PointsUsed": "已用金币",
+  "Label_Status": "状态",
+  "Languages": "语系",
+  "quickLink ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "ContactUs": "联系我们",
+  "IOS": "IOS",
+  "ANDROID": "ANDROID"
 }

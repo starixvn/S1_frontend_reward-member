@@ -88,7 +88,9 @@ const Order: FC<ICartOrderProps> = ({
 				</div>
 				<div>
 					<span>{t("AvailablePoints").toUpperCase()}</span>
-					<span className="icon icon-coin">{numberFormat(pointBalance)}</span>
+					<span className="icon icon-coin">
+						{numberFormat(pointBalance, 2)}
+					</span>
 				</div>
 			</div>
 			<div>
@@ -98,7 +100,8 @@ const Order: FC<ICartOrderProps> = ({
 						<span className="icon icon-coin minus">
 							{numberFormat(
 								checkedItem.point *
-									(checkedItem.number ? checkedItem.number : 1)
+									(checkedItem.number ? checkedItem.number : 1),
+								2
 							)}
 						</span>
 					</div>
@@ -111,7 +114,13 @@ const Order: FC<ICartOrderProps> = ({
 				<div className="wire"></div>
 				<div className="total null">
 					<span>{t("GRAND_TOTAL")}</span>
-					<span className="icon icon-coin">{numberFormat(totalCal)}</span>
+
+					<span
+						className={classNames("icon", "icon-coin", {
+							minus: totalCal < 0,
+						})}>
+						{numberFormat(totalCal, 2, false)}
+					</span>
 				</div>
 				{totalCal < 0 && (
 					<div className="tip active">{t("InsufficientPointsTip")}</div>

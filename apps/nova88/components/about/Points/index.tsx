@@ -47,7 +47,7 @@ const Points = () => {
 
 	const availablePoints = getAvailablePoints(coinList)
 	const usedPoints = getUsedPoints(coinList)
-	const balance = (Number(availablePoints) + Number(usedPoints)).toFixed(2)
+	const balance = Number(availablePoints) + Number(usedPoints)
 	const clubText = clubList.find(
 		item => item.id === profile?.userLevel
 	)?.displayKey
@@ -80,7 +80,7 @@ const Points = () => {
 										</div>
 										<div className="level">{t(clubText)}</div>
 										<div className="icon icon-coin">
-											{numberFormat(balance)}
+											{numberFormat(balance, 2)}
 										</div>
 									</div>
 									<PointRecord

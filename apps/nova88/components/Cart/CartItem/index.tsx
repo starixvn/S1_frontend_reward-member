@@ -7,36 +7,46 @@ import { numberFormat } from "common/utils/func"
 
 interface ICartItemProps {
 	item: {
-		categoryId: number
-		categoryName: string
-		enGiftName: string
-		giftDescription: string
-		giftId: number
-		giftName: string
-		giftPictureUrl: string
-		isFavorite: boolean
-		number: number
-		point: number
-		priceWorth: number
-		showStock: boolean
-		stock: number
-		tagList: object[]
+		categoryId?: number
+		currencyId?: number
+		description?: string
+		giftId?: number
+		giftName?: string
+		isoCode?: string
+		lang?: string
+		lastUpdateTime?: string
+		lastUpdater?: string
+		pictureUrl?: string
+		point?: number
+		priceWorth?: number
+		showStock?: true
+		siteId?: number
+		siteName?: string
+		sort?: number
+		status?: number
+		stock?: number
+		tags?: object[]
 	}
 	checkedItem: {
 		categoryId?: number
-		categoryName?: string
-		enGiftName?: string
-		giftDescription?: string
+		currencyId?: number
+		description?: string
 		giftId?: number
 		giftName?: string
-		giftPictureUrl?: string
-		isFavorite?: boolean
-		number?: number
+		isoCode?: string
+		lang?: string
+		lastUpdateTime?: string
+		lastUpdater?: string
+		pictureUrl?: string
 		point?: number
 		priceWorth?: number
-		showStock?: boolean
+		showStock?: true
+		siteId?: number
+		siteName?: string
+		sort?: number
+		status?: number
 		stock?: number
-		tagList?: object[]
+		tags?: object[]
 	}
 	onToggle: (e: React.MouseEvent<HTMLInputElement>, item: object) => void
 	onRemove: (item: object) => void
@@ -53,7 +63,8 @@ const CartItem: FC<ICartItemProps> = ({
 		<div
 			key={item.giftId}
 			className={classNames("cart-items", {
-				soldOut: !item.stock,
+				soldOut: !item.stock && item.showStock,
+				later: !item.stock && !item.showStock,
 			})}>
 			<div className="cart-check">
 				<input
@@ -65,14 +76,14 @@ const CartItem: FC<ICartItemProps> = ({
 			<div className="cart-info">
 				<div>
 					<div>
-						{!item.stock && item.showStock && (
+						{!item.stock && (
 							<div className="sold-out active">{t("SoldOut")}</div>
 						)}
-						<img src={`${imageUrl}${item.giftPictureUrl}`} alt="any" />
+						<img src={`${imageUrl}${item.pictureUrl}`} alt="any" />
 					</div>
 					<div>
 						<ul>
-							<li>{item.categoryName}</li>
+							<li></li>
 							<li className="name">{item.giftName}</li>
 							<li>
 								{t("ItemCode")}:{item.giftId}
@@ -82,9 +93,7 @@ const CartItem: FC<ICartItemProps> = ({
 					</div>
 				</div>
 				<div>1</div>
-				<div className="icon icon-coin">
-					{numberFormat(item.point * (item.number ? item.number : 1))}
-				</div>
+				<div className="icon icon-coin">{numberFormat(item.point, 2)}</div>
 			</div>
 			<div className="cart-del">
 				<button

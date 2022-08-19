@@ -1,2 +1,2 @@
-export * from "./usePopBox"
-export * from "./useInView"
+export * from "./usePopBox";
+export * from "./useInView";

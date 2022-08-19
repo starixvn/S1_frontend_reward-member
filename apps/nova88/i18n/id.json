@@ -220,9 +220,13 @@
 
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "Logout",
-	"Label_RedeemTime": "Tebus Waktu",
-	"Label_ProductName": "Nama Produk",
-	"Label_PointsUsed": "POIN DIGUNAKAN",
-	"Label_Status": "Status",
-	"Languages": "Bahasa"
+  "Label_RedeemTime": "Tebus Waktu",
+  "Label_ProductName": "Nama Produk",
+  "Label_PointsUsed": "POIN DIGUNAKAN",
+  "Label_Status": "Status",
+  "Languages": "Bahasa",
+  "quickLink ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "ContactUs": "Hubungi kami",
+  "IOS": "IOS",
+  "ANDROID": "ANDROID"
 }

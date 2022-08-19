@@ -4,6 +4,8 @@ import classNames from "classnames"
 import { useLocalStorage } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
 import { numberFormat } from "common/utils/func"
+import { useAppSelector } from "store"
+import { selectedIsLogin } from "service/slice/auth"
 
 interface IGiftItemProps {
 	item: {
@@ -27,26 +29,58 @@ interface IGiftItemProps {
 	}
 	onToggleCart: (giftItem: object) => void
 	onToggleFavorite: (giftItem: object) => void
+	realCartList?: {
+		giftId?: number
+		giftName?: string
+		enGiftName?: string
+		categoryId?: number
+		categoryName?: string
+		giftDescription?: string
+		giftPictureUrl?: string
+		isFavorite?: boolean
+		tagList?: {
+			tagId: number
+			tagName: string
+			lang: string
+		}[]
+		point?: number
+		priceWorth?: number
+		showStock?: boolean
+		stock?: number
+	}[]
 }
 
 const GiftItem: FC<IGiftItemProps> = ({
 	item,
 	onToggleCart,
 	onToggleFavorite,
+	realCartList,
 }) => {
 	const { t } = useTranslation()
 	const [isLarge, setIsLarge] = useState(false)
 	const [cartList] = useLocalStorage("nova88Cart", [])
+	const isLogin = useAppSelector(selectedIsLogin)
 	const handleItemBtnTextChange = giftItem => {
 		let text = ""
 		if (!giftItem.stock && giftItem.showStock) {
 			text = t("SoldOut")
 		} else {
-			const cartItem = cartList.find(item => item.giftId === giftItem.giftId)
-			if (cartItem) {
-				text = t("AddedToCart")
+			if (isLogin) {
+				const cartItem = realCartList?.find(
+					item => item.giftId === giftItem.giftId
+				)
+				if (cartItem) {
+					text = t("AddedToCart")
+				} else {
+					text = t("AddToCart")
+				}
 			} else {
-				text = t("AddToCart")
+				const cartItem = cartList.find(item => item.giftId === giftItem.giftId)
+				if (cartItem) {
+					text = t("AddedToCart")
+				} else {
+					text = t("AddToCart")
+				}
 			}
 		}
 		return text
@@ -57,7 +91,6 @@ const GiftItem: FC<IGiftItemProps> = ({
 		<div
 			className={classNames("product", {
 				empty: !item.stock && item.showStock,
-				"non-qty": !item.showStock,
 			})}>
 			<div className="iconGroup">
 				{item.tagList.map((tagItem, index) => (
@@ -68,7 +101,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 							"icon-shinyblack": tagItem.tagName === "NEW",
 							"icon-percent": tagItem.tagName === "FEATURED",
 						})}>
-						{tagItem.tagName === "FEATURED" ? t("FEAT") : t(tagItem.tagName)}
+						{tagItem.tagName === "FEATURED" ? "FEAT" : tagItem.tagName}
 					</div>
 				))}
 			</div>
@@ -87,7 +120,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 					className="icon icon-arrows-fullscreen"
 				/>
 			</div>
-			<div className="icon icon-coin">{numberFormat(item.point)}</div>
+			<div className="icon icon-coin">&nbsp;{numberFormat(item.point, 2)}</div>
 			<div className="product-name">{item.giftName}</div>
 			<div className="qty">{item.showStock && `${t("Qty")}:${item.stock}`}</div>
 			<button
@@ -96,10 +129,14 @@ const GiftItem: FC<IGiftItemProps> = ({
 					"icon-ban": !item.stock && item.showStock,
 					"icon-checkmark":
 						(item.stock || !item.showStock) &&
-						cartList.find(cartItem => cartItem.giftId === item.giftId),
+						(isLogin ? realCartList : cartList)?.find(
+							cartItem => cartItem.giftId === item.giftId
+						),
 					"icon-cart":
 						(item.stock || !item.showStock) &&
-						!cartList.find(cartItem => cartItem.giftId === item.giftId),
+						!(isLogin ? realCartList : cartList)?.find(
+							cartItem => cartItem.giftId === item.giftId
+						),
 				})}>
 				{handleItemBtnTextChange(item)}
 			</button>
@@ -117,10 +154,14 @@ const GiftItem: FC<IGiftItemProps> = ({
 						"icon-ban": !item.stock && item.showStock,
 						"icon-checkmark":
 							item.stock &&
-							cartList.find(cartItem => cartItem.giftId === item.giftId),
+							(isLogin ? realCartList : cartList)?.find(
+								cartItem => cartItem.giftId === item.giftId
+							),
 						"icon-cart":
 							(item.stock || !item.showStock) &&
-							!cartList.find(cartItem => cartItem.giftId === item.giftId),
+							!(isLogin ? realCartList : cartList)?.find(
+								cartItem => cartItem.giftId === item.giftId
+							),
 					})}>
 					{handleItemBtnTextChange(item)}
 				</button>

@@ -1,3 +1,5 @@
+import { retry } from "@reduxjs/toolkit/query"
+
 export const setCookie = ({
 	cookieName,
 	cookieValue,
@@ -15,25 +17,28 @@ export const setCookie = ({
 	}
 }
 
-export const numberFormat = value => {
-	if (value) {
-		const valueStr = value.toString()
-		const dotIdex = valueStr.indexOf(".")
-		let intValue = valueStr
-		let floatValue = ""
-		if (dotIdex !== -1) {
-			intValue = valueStr.substr(0, dotIdex)
-			floatValue = valueStr.substr(dotIdex + 1)
+export const numberFormat = (num, decimalPlaces, isShowSign = true) => {
+	let sign = ""
+	const getDecimal = decimalPlaces => {
+		let decimal = ""
+
+		for (let i = 0; i < decimalPlaces; i++) {
+			decimal += "0"
 		}
-		let newIntValue = ""
-		for (let index = 0; index < intValue.length; index++) {
-			const item = intValue[intValue.length - index - 1]
-			if (index !== 0 && index % 3 === 0) {
-				newIntValue = item + "," + newIntValue
-			} else {
-				newIntValue = item + newIntValue
-			}
-		}
-		return floatValue ? newIntValue + "." + floatValue : newIntValue
+		return decimal
 	}
+	if (num < 0) {
+		num = num.toString().replace("-", "")
+		sign = isShowSign ? "-" : ""
+	}
+	return (
+		sign +
+		String(num)
+			.split("")
+			.reverse()
+			.reduce((prev, next, index) => {
+				return (index % 3 ? next : next + ",") + prev
+			}) +
+		`.${getDecimal(decimalPlaces)}`
+	)
 }
