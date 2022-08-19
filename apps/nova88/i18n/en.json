@@ -230,5 +230,6 @@
 	"Label_RedeemTime": "Redeem Time",
 	"Label_ProductName": "Product Name",
 	"Label_PointsUsed": "Points Used",
-	"Label_Status": "Status"
+	"Label_Status": "Status",
+	"Languages": "Languages"
 }

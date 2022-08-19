@@ -69,7 +69,7 @@ const PopBoxLogin: FC = () => {
 			<div className="icon icon-close" onClick={closePopBox} />
 			<div className="loginModule">
 				<div>
-					<img src={`${imageUrl}/img/loginbg.jpg`} alt="" />
+					<img src={`${imageUrl}/img/login_${i18n.language}.jpg`} alt="" />
 				</div>
 				<div className="loginFunction">
 					<img src={`${imageUrl}/img/88logo.png`} alt="" />

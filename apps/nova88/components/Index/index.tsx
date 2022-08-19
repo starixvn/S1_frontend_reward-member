@@ -3,7 +3,7 @@ import QRCode from "qrcode.react"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
 import GiftSwiper from "components/Shopping/GiftSwiper"
-import { monthObj, sliderList } from "./constants"
+import { monthObj } from "./constants"
 import GiftList from "components/Shopping/GiftList"
 import Loading from "common/components/Loading"
 import { useLocalStorage } from "usehooks-ts"
@@ -85,7 +85,7 @@ const Index = () => {
 	const month = monthObj[new Date().getMonth() + 1]
 	return (
 		<main>
-			<GiftSwiper sliderList={sliderList} />
+			<GiftSwiper />
 			{!isLogin && (
 				<div
 					onClick={() => {

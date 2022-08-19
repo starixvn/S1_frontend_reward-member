@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react"
+import React, { useState, useRef } from "react"
 import { useOnClickOutside, useLocalStorage } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
