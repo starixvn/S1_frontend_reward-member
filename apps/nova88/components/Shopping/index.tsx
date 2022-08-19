@@ -3,7 +3,6 @@ import GiftTab from "./GiftTab"
 import GiftSwiper from "./GiftSwiper"
 import Loading from "common/components/Loading"
 import {
-	useGetGiftTagsQuery,
 	useLazyGetGiftListQuery,
 	useLazyGetGiftTagsQuery,
 	useSetFavoriteMutation,
@@ -11,7 +10,6 @@ import {
 import { useLocalStorage } from "usehooks-ts"
 import { useInView, usePopBox } from "common/hooks"
 import {
-	sliderList,
 	fromList,
 	sortType,
 	tabOption,

@@ -1,7 +1,6 @@
 import React, { FC } from "react"
 import classNames from "classnames"
 import { imageUrl } from "config"
-import { Dropdown } from "common/components/Dropdown"
 import { useTranslation } from "react-i18next"
 import { numberFormat } from "common/utils/func"
 
@@ -19,7 +18,7 @@ interface ICartItemProps {
 		pictureUrl?: string
 		point?: number
 		priceWorth?: number
-		showStock?: true
+		showStock?: boolean
 		siteId?: number
 		siteName?: string
 		sort?: number
@@ -40,7 +39,7 @@ interface ICartItemProps {
 		pictureUrl?: string
 		point?: number
 		priceWorth?: number
-		showStock?: true
+		showStock?: boolean
 		siteId?: number
 		siteName?: string
 		sort?: number
