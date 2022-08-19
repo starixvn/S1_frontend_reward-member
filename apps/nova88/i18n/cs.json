@@ -225,5 +225,9 @@
 	"LiveChat": "线上客服",
 
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
-	"Logout": "登出"
+	"Logout": "登出",
+	"Label_RedeemTime": "兑换时间",
+	"Label_ProductName": "产品名字",
+	"Label_PointsUsed": "已用金币",
+	"Label_Status": "Status"
 }

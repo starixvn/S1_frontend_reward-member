@@ -8,3 +8,11 @@ export enum Currencies {
 	BDT = 74,
 	USDT = 96,
 }
+
+export const Time_Zone_By_Currencies: {
+	[currencyId: number]: string
+} = {
+	[Currencies.MYR]: "+8",
+	[Currencies.IDR]: "+7",
+	[Currencies.THB]: "+7",
+}

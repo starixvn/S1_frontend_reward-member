@@ -3,6 +3,10 @@ import Pagination from "common/components/Pagination"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
 import Empty from "components/about/components/Empty"
+import { selectedProfile } from "service/slice/auth"
+import { useSelector } from "react-redux"
+import { Time_Zone_By_Currencies } from "common/constants"
+
 interface IPurchaseRecordProps {
 	purchaseList: {
 		createTime: string
@@ -35,6 +39,9 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 	onToggle,
 }) => {
 	const { t } = useTranslation()
+	const profile = useSelector(selectedProfile)
+	const timeZoneByCurrencyId = Time_Zone_By_Currencies[profile?.currencyId]
+
 	const handlePurchaseTime = time => {
 		const pos = time.indexOf("+")
 		const tempStr = time.substring(0, pos)
@@ -46,17 +53,19 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 			<div className="coinRecord-group">
 				<div className="header">
 					<div onClick={() => onToggle()} className="time">
-						Redeem Time(GMT+8)
+						{`${t("Label_RedeemTime")}(GMT${timeZoneByCurrencyId})`}
+
 						<i
 							className={classNames("icon", "icon-arrow_drop_down", {
 								active: isForwardSort,
 							})}
 						/>
 					</div>
-					<div className="item">Item Code</div>
-					<div className="name">Product Name</div>
-					<div>Points Used</div>
-					<div>Status</div>
+
+					<div className="item">{t("ItemCode")}</div>
+					<div className="name">{t("Label_ProductName")}</div>
+					<div>{t("Label_PointsUsed")}</div>
+					<div>{t("Label_Status")}</div>
 				</div>
 				<div className="coinList">
 					{purchaseList && purchaseList.length > 0 ? (
