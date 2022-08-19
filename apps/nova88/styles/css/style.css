@@ -3514,7 +3514,6 @@ input:-webkit-autofill:active {
 }
 
 #popup > div {
-  max-width: calc(100% - 5rem);
   background: #112240;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -3526,6 +3525,8 @@ input:-webkit-autofill:active {
   position: relative;
   padding: 3rem;
   color: #CDAE8E;
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 767px) {

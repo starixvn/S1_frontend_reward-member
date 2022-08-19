@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useState } from "react"
 import Link from "next/link"
 import classnames from "classnames"
 import { useSelector } from "react-redux"
@@ -16,26 +16,32 @@ import { paths } from "common/constants"
 import { usePopBox } from "common/hooks"
 import { numberFormat } from "common/utils/func"
 import LangDropdown from "../Header/LangDropdown"
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts"
 interface ISubmenuProps {
 	isSubmenuOpen: boolean
 }
 
 const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
-  const { t } = useTranslation();
-  const isLogin = useSelector(selectedIsLogin);
-  const profile = useSelector(selectedProfile);
-  const dispatch = useAppDispatch();
-  const { setPopBoxType } = usePopBox();
-  const [cartList, setCartList] = useLocalStorage("nova88Cart", []);
-  const { data: { data: { pointBalance } = {} } = {} } =
-    useGetPointBalanceQuery(null);
+	const { t } = useTranslation()
+	const isLogin = useSelector(selectedIsLogin)
+	const profile = useSelector(selectedProfile)
+	const dispatch = useAppDispatch()
+	const { setPopBoxType } = usePopBox()
+	const [isLangDropOpen, setLangDropOpen] = useState<boolean>(true)
+	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 
-  const handleLogout = async () => {
-    await dispatch(logoutAsync());
-    dispatch(setIsLogin(false));
-    setCartList([]);
-  };
+	const { data: { data: { pointBalance } = {} } = {} } =
+		useGetPointBalanceQuery(null)
+
+	const toggleLangDrop = () => {
+		setLangDropOpen(prev => !prev)
+	}
+
+	const handleLogout = async () => {
+		await dispatch(logoutAsync())
+		dispatch(setIsLogin(false))
+		setCartList([])
+	}
 
 	return (
 		<div className={classnames("mobile-menu", { active: isSubmenuOpen })}>
@@ -65,7 +71,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						<Link href={paths.about.sub.points.root}>
 							<a className="icon icon-diamond">
 								{t("RewardPoints")}
-								<span>{numberFormat(pointBalance,2) ?? 0}</span>
+								<span>{numberFormat(pointBalance, 2) ?? 0}</span>
 							</a>
 						</Link>
 					</div>
@@ -109,10 +115,17 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 					</>
 				)}
 
-        <div>
-          <button className="title icon icon-sphere active">Languages</button>
-          <LangDropdown />
-        </div>
+				<div>
+					<button
+						className={classnames("title icon icon-sphere", {
+							active: isLangDropOpen,
+						})}
+						onClick={toggleLangDrop}>
+						{t("Languages")}
+						<i className="icon icon-keyboard_arrow_down" />
+					</button>
+					<LangDropdown />
+				</div>
 				<div>
 					<a
 						className="title icon icon-livechat1"
