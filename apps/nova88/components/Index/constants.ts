@@ -1,9 +1,3 @@
-import { imageUrl } from "config"
-export const sliderList = [
-	{ id: 1, img: `${imageUrl}/img/banner.jpg` },
-	{ id: 2, img: `${imageUrl}/img/banner.jpg` },
-	{ id: 3, img: `${imageUrl}/img/banner.jpg` },
-]
 export enum tabOption {
 	ALL = 0,
 	FAVORITE = 999,

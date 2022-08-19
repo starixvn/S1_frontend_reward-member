@@ -86,6 +86,15 @@ html {
 
 main {
   padding-top: 110px;
+  margin-bottom: 2rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
+  -webkit-text-fill-color: #ffffff;
 }
 
 .swiper-container {
@@ -112,6 +121,12 @@ main {
 
 .header .icon-menu, .header .shoppingCar {
   display: none;
+}
+
+@media (max-width: 767px) {
+  .header {
+    height: 14.5vw;
+  }
 }
 
 .header > div.menu {
@@ -922,7 +937,7 @@ main {
 }
 
 .product-list .product > div.product-name {
-  height: 48px;
+  height: 47px;
   text-align: center;
   color: white;
   display: -webkit-box;
@@ -1003,9 +1018,9 @@ main {
 }
 
 .product-list .product > div.iconGroup + div {
-  height: 16rem;
+  height: 13rem;
   overflow: hidden;
-  margin: auto;
+  margin: 3rem auto auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1027,6 +1042,7 @@ main {
   width: 60px;
   margin: auto;
   border: 0;
+  border-radius: 0;
 }
 
 .product-list .product > div.btn .icon {
@@ -1047,6 +1063,7 @@ main {
 
 .product-list .product > div.qty {
   color: #999;
+  height: 26px;
 }
 
 .product-list .product > div.bigPup {
@@ -1242,14 +1259,6 @@ main {
   pointer-events: none;
 }
 
-.product-list .product.non-qty button.icon {
-  margin-top: 1.75rem;
-}
-
-.product-list .product.non-qty .btn {
-  margin-bottom: .5rem;
-}
-
 .appDownload .row {
   margin-top: 1vw;
 }
@@ -1327,9 +1336,21 @@ main {
   color: #a4c639;
 }
 
-.appDownload .row .download-txt .qr-group .qrCode button {
-  width: 100%;
-  font-size: 14px;
+.appDownload .row .download-txt .qr-group .qrCode svg {
+  width: 90px;
+  background: #fff;
+}
+
+@media (max-width: 767px) {
+  .appDownload .row .download-txt .qr-group .qrCode svg {
+    display: none;
+  }
+}
+
+.appDownload .row .download-txt .qr-group .qrCode a, .appDownload .row .download-txt .qr-group .qrCode button {
+  width: 90px;
+  display: block;
+  font-size: 12px;
   padding: .3vw .5vw;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(35%, #E2C79E), color-stop(80%, #CDAE8E));
   background: linear-gradient(#E2C79E 35%, #CDAE8E 80%);
@@ -1436,6 +1457,8 @@ main {
   width: 100%;
   padding: .2rem .5rem;
   text-align: left;
+  border: 0;
+  border-radius: 0;
 }
 
 .inputBox .dropdown .btn::after, .inputBox-null .dropdown .btn::after {
@@ -1450,6 +1473,10 @@ main {
   display: inline-block;
 }
 
+.inputBox .dropdown .btn.active, .inputBox-null .dropdown .btn.active {
+  color: #121212;
+}
+
 .inputBox .dropdown .btn.active:after, .inputBox-null .dropdown .btn.active:after {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
@@ -1457,12 +1484,16 @@ main {
   transition: .6s;
 }
 
+.inputBox .dropdown .btn:hover, .inputBox-null .dropdown .btn:hover {
+  color: #121212;
+}
+
 .inputBox .dropdown .dropdown-container, .inputBox-null .dropdown .dropdown-container {
   display: none;
   position: absolute;
   width: calc(100% + .4rem);
   height: auto;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   z-index: 2;
   right: -.2rem;
 }
@@ -2237,11 +2268,12 @@ main {
 
 @media (max-width: 767px) {
   .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li:last-child {
+    margin-top: 1rem;
     display: block;
   }
   .cart-page .cart-list > div.cart-items .cart-info > div:nth-child(1) li:last-child .icon-coin {
+    margin-top: .25rem;
     display: block;
-    margin-top: 1rem;
   }
 }
 
@@ -2914,8 +2946,9 @@ main {
           transform: translateX(-100%);
   -webkit-transition: .6s;
   transition: .6s;
-  position: absolute;
-  z-index: 2;
+  position: fixed;
+  overflow: scroll;
+  z-index: 3;
   top: 14.5vw;
   display: none;
 }
@@ -3621,6 +3654,11 @@ main {
 }
 
 footer.copyright {
+  position: fixed;
+  bottom: 0;
+  height: 2rem;
+  width: 100%;
+  background: #000;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3989,9 +4027,6 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-  }
-  #header {
-    height: 14.5vw;
   }
   #header .header {
     background: #112240;

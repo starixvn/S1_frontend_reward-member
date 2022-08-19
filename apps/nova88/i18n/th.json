@@ -228,5 +228,6 @@
 	"Label_RedeemTime": "เวลาแลกรับ",
 	"Label_ProductName": "ชื่อผลิตภัณฑ์",
 	"Label_PointsUsed": "เหรียญที่ใช้",
-	"Label_Status": "Status"
+	"Label_Status": "สถานะ",
+	"Languages": "ภาษา"
 }

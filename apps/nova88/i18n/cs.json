@@ -229,5 +229,6 @@
 	"Label_RedeemTime": "兑换时间",
 	"Label_ProductName": "产品名字",
 	"Label_PointsUsed": "已用金币",
-	"Label_Status": "Status"
+	"Label_Status": "状态",
+	"Languages": "语系"
 }

@@ -15,6 +15,7 @@ import { useGetPointBalanceQuery } from "service/api/storeApi"
 import { paths } from "common/constants"
 import { usePopBox } from "common/hooks"
 import { numberFormat } from "common/utils/func"
+import LangDropdown from "../Header/LangDropdown"
 
 interface ISubmenuProps {
 	isSubmenuOpen: boolean
@@ -105,38 +106,11 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						</div>
 					</>
 				)}
-				{/* <div>
-					<button className="title icon icon-sphere active">
-						Languages<i className="icon icon-keyboard_arrow_down"></i>
-					</button>
-					<div className="countryGroup">
-						<div>
-							<div className="countryName">
-								Malaysia
-								<img src="https://banner.0814media.net/h5/img/ch.jpg" />
-							</div>
-							<button>English</button>
-							<button>简体中文</button>
-							<button>Malay</button>
-						</div>
-						<div className="active">
-							<div className="countryName">
-								Thailand
-								<img src="https://banner.0814media.net/h5/img/th.jpg" />
-							</div>
-							<button>English</button>
-							<button>ไทย</button>
-						</div>
-						<div>
-							<div className="countryName">
-								Indonesia
-								<img src="https://banner.0814media.net/h5/img/id.jpg" />
-							</div>
-							<button>English</button>
-							<button className="active">Bhs Indonesia</button>
-						</div>
-					</div>
-				</div> */}
+
+				<div>
+					<button className="title icon icon-sphere active">Languages</button>
+					<LangDropdown />
+				</div>
 				<div>
 					<a
 						className="title icon icon-livechat1"
