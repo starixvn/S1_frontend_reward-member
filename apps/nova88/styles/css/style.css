@@ -3452,6 +3452,10 @@ input:-webkit-autofill:active {
   padding: .25rem .5rem;
 }
 
+.inputModule .inputTxt i {
+  margin-right: 5px;
+}
+
 .inputModule .inputTxt input {
   width: 100%;
   background: transparent;
@@ -3514,6 +3518,7 @@ input:-webkit-autofill:active {
 }
 
 #popup > div {
+  max-width: calc(100% - 5rem);
   background: #112240;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -3525,13 +3530,12 @@ input:-webkit-autofill:active {
   position: relative;
   padding: 3rem;
   color: #CDAE8E;
-  width: 100%;
-  height: 100%;
 }
 
 @media (max-width: 767px) {
   #popup > div {
     max-width: 100%;
+    width: 100%;
     height: 100%;
   }
 }
@@ -3622,14 +3626,16 @@ input:-webkit-autofill:active {
   border: 1px solid #5574A7;
 }
 
+#popup > div .loginModule .inputModule {
+  position: relative;
+}
+
 #popup > div .loginModule a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: end;
+  position: absolute;
+  right: 0;
+  bottom: -25px;
   text-decoration: underline;
+  width: 126px;
 }
 
 #popup > div .loginModule a:hover {
@@ -3662,7 +3668,7 @@ input:-webkit-autofill:active {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 2.4rem;
 }
 
 #popup > div .btnGroup button {
