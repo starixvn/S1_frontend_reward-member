@@ -3,33 +3,32 @@ import { useTranslation } from "react-i18next"
 import classNames from "classnames"
 import {
 	buttonTypeList,
+	defCurrencyList,
 	defDisplayPage,
 	defLinkType,
+	langMapping,
 	sideBarIconName,
 } from "../constants"
 import { useGetSocialChannelMutation } from "service/api/siteApi"
-import { useLocalStorage } from "usehooks-ts"
-import { REWARD88_LANG } from "common/constants/localStorage"
-import { defLangOptions } from "common/components/Layout/Header/LangDropdown.def"
 import QRCode from "qrcode.react"
 import { useGetAppLinkQuery } from "service/api/playerApi"
 import { usePopBox } from "common/hooks"
+import { useAppSelector } from "../../../store"
+import { selectedIsLogin, selectedProfile } from "../../../service/slice/auth"
+import { useSelector } from "react-redux"
 
 const QuickLink = () => {
+	const { t, i18n } = useTranslation()
+	const profile = useSelector(selectedProfile)
 	const [getSocialChannelQuery] = useGetSocialChannelMutation()
 	const [tabStatus, setTabStatus] = useState({
 		isOpenDownload: false,
 		isOpenContactUs: false,
 	})
 	const [socialChannelList, setSocialChannelList] = useState([])
-	const [localStorageLangId] = useLocalStorage(REWARD88_LANG, null)
 	const [activeIcon, setActiveIcon] = useState(null)
+	const isLogin = useAppSelector(selectedIsLogin)
 	const { setPopBoxType } = usePopBox()
-	const currencyId = defLangOptions.find(item =>
-		item.lang.find(obj => {
-			return obj.value === localStorageLangId
-		})
-	)?.currencyId
 
 	const switchIconActive = _mouseOverIcon => {
 		setActiveIcon(_mouseOverIcon)
@@ -42,8 +41,10 @@ const QuickLink = () => {
 	const showContactList = async () => {
 		try {
 			await getSocialChannelQuery({
-				langId: localStorageLangId,
-				currencyId: currencyId,
+				langId: isLogin ? profile.langId : i18n.language,
+				currencyId: isLogin
+					? profile.currencyId
+					: defCurrencyList[langMapping[i18n.language]],
 				displayPage: defDisplayPage.ContactUs,
 			})
 				.unwrap()
@@ -103,8 +104,6 @@ const QuickLink = () => {
 			</a>
 		)
 	})
-
-	const { t } = useTranslation()
 	return (
 		<>
 			<div
