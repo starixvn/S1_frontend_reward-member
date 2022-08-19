@@ -227,9 +227,13 @@
 
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "Logout",
-	"Label_RedeemTime": "Redeem Time",
-	"Label_ProductName": "Product Name",
-	"Label_PointsUsed": "Points Used",
-	"Label_Status": "Status",
-	"Languages": "Languages"
+  "Label_RedeemTime": "Redeem Time",
+  "Label_ProductName": "Product Name",
+  "Label_PointsUsed": "Points Used",
+  "Label_Status": "Status",
+  "Languages": "Languages",
+  "quickLink ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "ContactUs": "Contact Us",
+  "IOS": "IOS",
+  "ANDROID": "ANDROID"
 }

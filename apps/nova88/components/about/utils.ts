@@ -3,7 +3,7 @@ export const getAvailablePoints = coinList => {
 	coinList?.forEach(item => {
 		return item.totalSummary > 0 ? (availablePoints += item.totalSummary) : null
 	})
-	return availablePoints.toFixed(2)
+	return availablePoints
 }
 
 export const getUsedPoints = coinList => {
@@ -11,5 +11,5 @@ export const getUsedPoints = coinList => {
 	coinList?.forEach(item => {
 		return item.totalSummary < 0 ? (usedPoints += item.totalSummary) : null
 	})
-	return usedPoints.toFixed(2)
+	return usedPoints
 }

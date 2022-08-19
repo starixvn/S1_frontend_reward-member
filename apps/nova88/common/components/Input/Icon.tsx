@@ -1,15 +1,15 @@
-import React, { FC } from "react"
+import React, { FC } from "react";
 
 type IconType =
-	| "icon icon-warning"
-	| "icon icon-member"
-	| "icon icon-key"
-	| "icon icon-information"
+  | "icon icon-warning"
+  | "icon icon-member"
+  | "icon icon-key"
+  | "icon icon-information"
 
 interface IIconProps {
-	className: IconType
+  className: IconType;
 }
 
-const Icon: FC<IIconProps> = ({ className }) => <i className={className} />
+const Icon: FC<IIconProps> = ({ className }) => <i className={className} />;
 
-export default Icon
+export default Icon;

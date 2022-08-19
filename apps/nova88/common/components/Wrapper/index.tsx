@@ -1,48 +1,73 @@
-import { FC, ReactNode, useEffect } from "react"
-import { useRouter } from "next/router"
-import { useAppDispatch, useAppSelector } from "store"
-import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk"
-import { selectedIsLogin } from "service/slice/auth"
-import { paths } from "common/constants"
-import { useInitI18nLanguageEffect } from "common/hooks/useInitI18nLanguageEffect"
+import { FC, ReactNode, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "store";
+import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk";
+import { selectedIsLogin } from "service/slice/auth";
+import { paths } from "common/constants";
+import { useInitI18nLanguageEffect } from "common/hooks/useInitI18nLanguageEffect";
+import { useLocalStorage } from "usehooks-ts";
+import { useSetShoppingCartMutation } from "../../../service/api/redemptionApi";
+import { usePopBox } from "../../hooks";
 
 interface IWrapperProps {
-	authRequired: boolean
-	children: ReactNode
+  authRequired: boolean;
+  children: ReactNode;
 }
 
 const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
-	const dispatch = useAppDispatch()
-	const route = useRouter()
+  const dispatch = useAppDispatch();
+  const route = useRouter();
+  const [cartList] = useLocalStorage("nova88Cart", []);
+  const isLogin = useAppSelector(selectedIsLogin);
+  const [setShoppingCart] = useSetShoppingCartMutation();
+  const { setPopBoxType } = usePopBox();
+  const [realCartList, setRealCartList] = useState([]);
+  useInitI18nLanguageEffect();
 
-	const isLogin = useAppSelector(selectedIsLogin)
+  const getCartList = async args => {
+    try {
+      await setShoppingCart(args)
+        .unwrap()
+        .then(res => {
+          setRealCartList(prev => [...prev, res.data]);
+        });
+    } catch (error) {
+      setPopBoxType({
+        type: "warn",
+        props: { content: error.message }
+      });
+    }
+  };
 
-	useInitI18nLanguageEffect()
+  // * 當切換頁面的時候確認登入狀態
+  useEffect(() => {
+    dispatch(checkSignInAsync());
+  }, [route.pathname]);
 
-	// * 當切換頁面的時候確認登入狀態
-	useEffect(() => {
-		dispatch(checkSignInAsync())
-	}, [route.pathname])
+  // * 當登入後撈取使用者資訊
+  useEffect(() => {
+    if (isLogin) {
+      dispatch(getCustProfileAsync());
+      const giftIdList = [];
+      cartList.forEach(item => {
+        giftIdList.push(item.giftId);
+      });
+      getCartList({ giftIds: giftIdList, isAdd: 1 });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLogin]);
 
-	// * 當登入後撈取使用者資訊
-	useEffect(() => {
-		if (isLogin) {
-			dispatch(getCustProfileAsync())
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLogin])
+  // * 如果 checkSignIn 尚未 return response
+  if (isLogin === null) {
+    return null;
+  }
 
-	// * 如果 checkSignIn 尚未 return response
-	if (isLogin === null) {
-		return null
-	}
+  // * 如果需要登入且 response 為 未登入
+  if (authRequired && isLogin === false) {
+    route.push(paths.home);
+  }
 
-	// * 如果需要登入且 response 為 未登入
-	if (authRequired && isLogin === false) {
-		route.push(paths.home)
-	}
+  return <>{children}</>;
+};
 
-	return <>{children}</>
-}
-
-export default Wrapper
+export default Wrapper;

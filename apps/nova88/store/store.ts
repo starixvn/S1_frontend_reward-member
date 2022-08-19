@@ -1,12 +1,14 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 
 import { authReducer } from "service/slice/auth"
+import { cartReducer } from "service/slice/cart"
 import index from "service/api/storeApi"
 import playerApi from "service/api/playerApi"
 
 const store = configureStore({
 	reducer: {
 		auth: authReducer,
+		cart: cartReducer,
 		[index.reducerPath]: index.reducer,
 		[playerApi.reducerPath]: playerApi.reducer,
 	},

@@ -221,9 +221,13 @@
 
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "Log keluar",
-	"Label_RedeemTime": "Tebus Masa",
-	"Label_ProductName": "Nama Produk",
-	"Label_PointsUsed": "MATA TERGUNA",
-	"Label_Status": "Status",
-	"Languages": "Bahasa"
+  "Label_RedeemTime": "Tebus Masa",
+  "Label_ProductName": "Nama Produk",
+  "Label_PointsUsed": "MATA TERGUNA",
+  "Label_Status": "Status",
+  "Languages": "Bahasa",
+  "quickLink ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
+  "ContactUs": "Hubungi Kami",
+  "IOS": "IOS",
+  "ANDROID": "ANDROID"
 }

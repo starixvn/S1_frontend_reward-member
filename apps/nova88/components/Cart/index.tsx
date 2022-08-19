@@ -3,10 +3,10 @@ import { useLocalStorage } from "usehooks-ts"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import { selectedIsLogin, selectedProfile } from "service/slice/auth"
-import GiftTab from "components/Shopping/GiftTab"
 import GiftList from "components/Shopping/GiftList"
 import {
 	useGetGiftListQuery,
+	useGetGiftTagsQuery,
 	useLazyGetPointBalanceQuery,
 } from "service/api/storeApi"
 import Loading from "common/components/Loading"
@@ -14,10 +14,15 @@ import CartList from "./CartList"
 import Order from "./CartOrder"
 import { useTranslation } from "react-i18next"
 import { usePopBox } from "common/hooks"
-import { useCreateRedemptionMutation } from "service/api/redemptionApi"
+import {
+	useCreateRedemptionMutation,
+	useSetShoppingCartMutation,
+} from "service/api/redemptionApi"
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
 import { paths } from "common/constants"
+import { selectedCartNumber, setCartNumber } from "../../service/slice/cart"
+import { useAppDispatch, useAppSelector } from "../../store"
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -35,18 +40,32 @@ interface ICheckOutArgs {
 	stock?: number
 	tagList?: object[]
 }
-
+interface IGetCarListArgs {
+	giftId?: number
+	giftName?: string
+	enGiftName?: string
+	categoryId?: number
+	categoryName?: string
+	giftDescription?: string
+	giftPictureUrl?: string
+	isFavorite?: boolean
+	tagList?: {
+		tagId: number
+		tagName: string
+		lang: string
+	}[]
+	point?: number
+	priceWorth?: number
+	showStock?: boolean
+	stock?: number
+}
 const Cart = () => {
-	const { t } = useTranslation()
+	const dispatch = useAppDispatch()
+	const { t, i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
-	const [giftListQuery] = useState({
-		langId: "en",
-		categoryIds: null,
-		tags: [3],
-		orderByField: null,
-		desc: false,
-		pageSize: DEFAULT_PAGE_SIZE_COUNT,
-	})
+	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
+		useGetGiftTagsQuery(null)
+	const [giftListQuery, setGiftListQuery] = useState({})
 	const {
 		data: { data: giftList = [] } = {},
 		isFetching: isGetGiftListFetching,
@@ -62,6 +81,7 @@ const Cart = () => {
 	const [noteInput, setNoteInput] = useState("")
 	const [pointBalance, setPointBalance] = useState(0)
 	const isLogin = useSelector(selectedIsLogin)
+	const cartNumber = useAppSelector(selectedCartNumber)
 	const handleGetPointBalance = async args => {
 		try {
 			const res: { data: { pointBalance: number } } = await getPointBalance(
@@ -75,11 +95,47 @@ const Cart = () => {
 			})
 		}
 	}
+	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
+	const [setShoppingCart] = useSetShoppingCartMutation()
+
 	useEffect(() => {
 		if (isLogin) {
 			handleGetPointBalance(null)
 		}
 	}, [profile])
+	const getCartList = async args => {
+		try {
+			await setShoppingCart(args)
+				.unwrap()
+				.then(res => {
+					setRealCartList(res.data)
+					dispatch(setCartNumber(res.data.length))
+				})
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
+	useEffect(() => {
+		if (isLogin) {
+			getCartList({ giftIds: [], isAdd: 0 })
+		}
+	}, [isLogin])
+	useEffect(() => {
+		if (giftTabs && giftTabs.length > 0) {
+			const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
+			setGiftListQuery({
+				langId: targetTab.lang,
+				categoryIds: null,
+				tags: [targetTab.tagId],
+				orderByField: null,
+				desc: false,
+				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+			})
+		}
+	}, [isGetGiftTabsFetching])
 
 	const handleCheckBoxToggle = (e, item) => {
 		if (!item.number) {
@@ -89,7 +145,9 @@ const Cart = () => {
 	}
 	const isShowOrderItem =
 		checkedItem.giftId &&
-		cartList.find(obj => obj.giftId === checkedItem.giftId)
+		(isLogin ? realCartList : cartList).find(
+			obj => obj.giftId === checkedItem.giftId
+		)
 
 	const totalCal = useMemo(() => {
 		const userReward = pointBalance
@@ -103,21 +161,50 @@ const Cart = () => {
 	const isChecked = Boolean(
 		checkedItem.giftId && totalCal >= 0 && profile.addressCity
 	)
-	const handleCartItemRemove = item => {
-		const newList = cartList.filter(obj => obj.giftId !== item.giftId)
-		item.giftId === checkedItem.giftId && setCheckedItem({})
-		setCartState(newList)
+	const handleCartItemRemove = async item => {
+		if (isLogin) {
+			await setShoppingCart({ giftIds: [item.giftId], isAdd: 0 })
+				.unwrap()
+				.then(res => {
+					setRealCartList(res.data)
+					dispatch(setCartNumber(res.data.length))
+				})
+		} else {
+			const newList = cartList.filter(obj => obj.giftId !== item.giftId)
+			item.giftId === checkedItem.giftId && setCheckedItem({})
+			setCartState(newList)
+		}
 	}
 
-	const handleGiftItemToggle = giftItem => {
+	const handleGiftItemToggle = async giftItem => {
 		if (!giftItem.stock && giftItem.showStock) return
-		const item = cartList.find(item => item.giftId === giftItem.giftId)
-		if (item) {
-			const tempList = cartList.filter(item => item.giftId !== giftItem.giftId)
-			setCartState(tempList)
+		if (isLogin) {
+			const item = realCartList?.find(item => item.giftId === giftItem.giftId)
+			if (item) {
+				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 0 })
+					.unwrap()
+					.then(res => {
+						setRealCartList(res.data)
+						dispatch(setCartNumber(res.data.length))
+					})
+			} else {
+				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 1 })
+					.unwrap()
+					.then(res => {
+						setRealCartList(res.data)
+						dispatch(setCartNumber(res.data.length))
+					})
+			}
 		} else {
-			cartList.push(giftItem)
-			setCartState(cartList)
+			const item = cartList.find(item => item.giftId === giftItem.giftId)
+			if (item) {
+				let tempList = []
+				tempList = cartList.filter(item => item.giftId !== giftItem.giftId)
+				setCartList(tempList)
+			} else {
+				cartList.push(giftItem)
+				setCartList(cartList)
+			}
 		}
 	}
 
@@ -137,10 +224,10 @@ const Cart = () => {
 							})
 						}
 					})
-				const newList = cartState.filter(obj => {
+				const newList = (isLogin ? realCartList : cartState).filter(obj => {
 					return obj.giftId !== checkedItem.giftId
 				})
-				setCartState(newList)
+				isLogin ? setRealCartList(newList) : setCartState(newList)
 				setCheckedItem({})
 				setNoteInput("")
 				handleGetPointBalance(null)
@@ -156,6 +243,7 @@ const Cart = () => {
 	useEffect(() => {
 		setCartList(cartState)
 	}, [cartState])
+
 	return (
 		<main className="cart-page container-xxl">
 			<div className="row">
@@ -165,7 +253,7 @@ const Cart = () => {
 						<div className="title">
 							{t("ShoppingCart")}
 							<span>
-								{cartList.length} {t("Items1")}
+								{isLogin ? cartNumber : cartList.length} {t("Items1")}
 							</span>
 						</div>
 						<div>{t("ShoppingCartTip")}</div>
@@ -182,9 +270,9 @@ const Cart = () => {
 							</div>
 							<div className="cart-del"></div>
 						</div>
-						{cartList.length > 0 ? (
+						{(isLogin ? realCartList : cartList)?.length > 0 ? (
 							<CartList
-								cartList={cartList}
+								cartList={isLogin ? realCartList : cartList}
 								checkedItem={checkedItem}
 								onToggle={handleCheckBoxToggle}
 								onRemove={handleCartItemRemove}
@@ -249,6 +337,7 @@ const Cart = () => {
 						<GiftList
 							filterList={giftList}
 							onToggleCart={handleGiftItemToggle}
+							realCartList={realCartList}
 						/>
 						{isGetGiftListFetching && <Loading />}
 					</div>

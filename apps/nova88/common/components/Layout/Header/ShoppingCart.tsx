@@ -5,13 +5,16 @@ import { paths } from "common/constants"
 import { useAppSelector } from "store"
 import { selectedIsLogin } from "service/slice/auth"
 import { usePopBox } from "common/hooks"
+import { selectedCartNumber } from "service/slice/cart"
 
 const ShoppingCart = () => {
 	const route = useRouter()
 	const isLogin = useAppSelector(selectedIsLogin)
 	const { setPopBoxType } = usePopBox()
 	const cartData: null | any[] = useReadLocalStorage("nova88Cart")
+	const cartNumber = useAppSelector(selectedCartNumber)
 	const cartCount = cartData?.length ?? 0
+
 	return (
 		<div
 			onClick={() => {
@@ -25,8 +28,9 @@ const ShoppingCart = () => {
 			}}
 			className="shoppingCar">
 			<div className="icon icon-cart" />
-			{/*todo:等api做好需調整isLogin等於true返回值(0的位置）*/}
-			<span>{cartCount > 99 ? "99+" : `+${isLogin ? 0 : cartCount}`}</span>
+			<span>
+				{cartCount > 99 ? "99+" : `+${isLogin ? cartNumber : cartCount}`}
+			</span>
 		</div>
 	)
 }

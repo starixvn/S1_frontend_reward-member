@@ -1,4 +1,4 @@
 export const defAppType = {
-	Andriod: 1,
-	IOS: 2,
-}
+  Andriod: 1,
+  IOS: 2
+};
