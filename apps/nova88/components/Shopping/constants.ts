@@ -1,19 +1,20 @@
-import { imageUrl } from "config"
-export const sliderList = [
-	{ id: 1, img: `${imageUrl}/img/banner.jpg` },
-	{ id: 2, img: `${imageUrl}/img/banner.jpg` },
-	{ id: 3, img: `${imageUrl}/img/banner.jpg` },
-]
 export enum tabOption {
 	ALL = 0,
 	FAVORITE = 999,
 }
 
+export enum fromEnum {
+	LOW_TO_HIGH_COST = 1,
+	HIGH_TO_LOW_COST,
+	LOW_TO_HIGH_LETTER,
+	HIGH_TO_LOW_LETTER,
+}
+
 export const fromList = [
-	"LowToHighCost",
-	"HighToLowCost",
-	"LowToHighLetter",
-	"HighToLowLetter",
+	{ categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: "LowToHighCost" },
+	{ categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: "HighToLowCost" },
+	{ categoryId: fromEnum.LOW_TO_HIGH_LETTER, categoryName: "LowToHighLetter" },
+	{ categoryId: fromEnum.HIGH_TO_LOW_LETTER, categoryName: "HighToLowLetter" },
 ]
 
 export const sortType = {
