@@ -33,7 +33,7 @@
 	"Login": "Log masuk",
 	"Username": "Nama Pengguna",
 	"Password": "Kata Laluan",
-	"ForgotPassword": "Lupa kata laluan",
+	"ForgetPassword": "Terlupa kata laluan",
 	"SIGN_UP": "DAFTAR",
 	"Guest": "tetamu",
 
@@ -220,7 +220,7 @@
 	"footer ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Home": "Halaman Utama",
 	"LiveChat": "Sembang Langsung",
-  "Shopping": "Membeli-belah",
+	"Shopping": "Membeli-belah",
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "Log keluar",
 	"Label_RedeemTime": "Tebus Masa",

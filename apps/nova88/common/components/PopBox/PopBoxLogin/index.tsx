@@ -38,7 +38,6 @@ const PopBoxLogin: FC = () => {
 			const { errorCode, message } = await Api.login({
 				userName,
 				password,
-				langId,
 			})
 			const isLogin = errorCode === 0
 
@@ -51,7 +50,7 @@ const PopBoxLogin: FC = () => {
 				// * 登入及登出後重置語系
 				i18n.changeLanguage(siteInfo.defaultLang)
 				setLocalStorageLangId(null)
-			} else if ([1101].includes(errorCode)) {
+			} else if ([1101, 1001].includes(errorCode)) {
 				setError("password", { type: "custom", message })
 			} else if ([1102, 9000].includes(errorCode)) {
 				setError("userName", { type: "custom", message })

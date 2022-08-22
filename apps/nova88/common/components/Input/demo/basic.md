@@ -47,7 +47,6 @@ const Basic: FC = () => {
    const { errorCode, message } = await Api.login({
     userName,
     password,
-    langId: "en",
    })
    const isLogin = errorCode === 0
 

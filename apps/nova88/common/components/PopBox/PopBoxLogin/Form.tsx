@@ -32,12 +32,6 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 							required: true,
 							message: t("IsRequired", { key: t("Username") }),
 						},
-						{
-							minLength: 6,
-							maxLength: 18,
-							pattern: /^[A-Za-z0-9]+$/i,
-							message: t("UserNameAlphanumeric"),
-						},
 					]}
 				/>
 
@@ -57,16 +51,11 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 							required: true,
 							message: t("IsRequired", { key: t("Password") }),
 						},
-						{
-							minLength: 6,
-							maxLength: 15,
-							message: t("LoginPasswordInfo"),
-						},
 					]}
 				/>
 
 				<Link href={`/${langId}/${paths.forgetPassword}`}>
-					{t("ForgotPassword")}
+					{t("ForgetPassword")}
 				</Link>
 			</div>
 

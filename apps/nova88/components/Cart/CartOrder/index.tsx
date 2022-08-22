@@ -1,8 +1,9 @@
 import React, { FC } from "react"
-import classNames from "classnames"
+import Link from "next/link"
 import classnames from "classnames"
 import { useTranslation } from "react-i18next"
 import { numberFormat } from "common/utils/func"
+import { paths } from "common/constants"
 
 interface ICartOrderProps {
 	profile: {
@@ -56,7 +57,6 @@ interface ICartOrderProps {
 	pointBalance: number
 	isShowTip: boolean
 	setIsShowTip: (isShowTip: boolean) => void
-	onGoToProfile: () => void
 	noteInput: string
 	setNoteInput: (note: string) => void
 	isChecked: boolean
@@ -71,7 +71,6 @@ const Order: FC<ICartOrderProps> = ({
 	pointBalance,
 	isShowTip,
 	setIsShowTip,
-	onGoToProfile,
 	noteInput,
 	setNoteInput,
 	isChecked,
@@ -116,7 +115,7 @@ const Order: FC<ICartOrderProps> = ({
 					<span>{t("GRAND_TOTAL")}</span>
 
 					<span
-						className={classNames("icon", "icon-coin", {
+						className={classnames("icon", "icon-coin", {
 							minus: totalCal < 0,
 						})}>
 						{numberFormat(totalCal, 2, false)}
@@ -133,7 +132,7 @@ const Order: FC<ICartOrderProps> = ({
 						<a
 							onClick={() => setIsShowTip(!isShowTip)}
 							className="icon icon-information"></a>
-						<div className={classNames("cart-tip", { active: isShowTip })}>
+						<div className={classnames("cart-tip", { active: isShowTip })}>
 							{t("AddressUpdateTip")}
 						</div>
 					</div>
@@ -153,9 +152,9 @@ const Order: FC<ICartOrderProps> = ({
 				</div>
 			) : (
 				<div>
-					<button onClick={onGoToProfile} className="btn-add">
-						{t("ADD_ADDRESS")}
-					</button>
+					<Link href={`/${profile?.langId}/${paths.profile}`}>
+						<button className="btn-add">{t("ADD_ADDRESS")}</button>
+					</Link>
 				</div>
 			)}
 
