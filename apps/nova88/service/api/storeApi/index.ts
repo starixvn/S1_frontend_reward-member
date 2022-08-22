@@ -66,7 +66,7 @@ const storeApi = createApi({
 		}),
 		getGiftTags: builder.query<IGetGiftTagsResponse, null>({
 			query: () => ({
-				url: `store/getgifttags`,
+				url: `store/GetGiftTags/en`,
 				method: "POST",
 				data: {},
 			}),

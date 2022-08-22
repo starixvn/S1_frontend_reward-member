@@ -61,7 +61,7 @@ interface IGetCarListArgs {
 }
 const Cart = () => {
 	const dispatch = useAppDispatch()
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
 		useGetGiftTagsQuery(null)
@@ -112,7 +112,8 @@ const Cart = () => {
 		if (isLogin) {
 			handleGetPointBalance(null)
 		}
-	}, [profile])
+	}, [])
+
 	const getCartList = async args => {
 		try {
 			await setShoppingCart(args)
@@ -128,18 +129,21 @@ const Cart = () => {
 			})
 		}
 	}
+
 	useEffect(() => {
 		if (isLogin) {
 			getCartList({ giftIds: [], isAdd: 0 })
 		}
 	}, [isLogin])
+
 	useEffect(() => {
 		if (giftTabs && giftTabs.length > 0) {
 			const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
+
 			setGiftListQuery({
-				langId: targetTab.lang,
+				langId: i18n.language,
 				categoryIds: null,
-				tags: [targetTab.tagId],
+				tags: [targetTab?.tagId],
 				orderByField: null,
 				desc: false,
 				pageSize: DEFAULT_PAGE_SIZE_COUNT,
@@ -318,7 +322,6 @@ const Cart = () => {
 						pointBalance={pointBalance}
 						isShowTip={isShowTip}
 						setIsShowTip={setIsShowTip}
-						onGoToProfile={() => route.push(paths.profile)}
 						noteInput={noteInput}
 						setNoteInput={setNoteInput}
 						isChecked={isChecked}

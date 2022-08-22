@@ -32,7 +32,7 @@
 	"Login": "Login",
 	"Username": "Nama pengguna",
 	"Password": "Kata Sandi",
-	"ForgotPassword": "Lupa Password",
+	"ForgetPassword": "Lupa Password",
 	"SIGN_UP": "Gabung Sekarang",
 	"Guest": "Tamu",
 
@@ -219,7 +219,7 @@
 	"footer ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Home": "Beranda",
 	"LiveChat": "Obrolan Langsung",
-  "Shopping": "Belanja",
+	"Shopping": "Belanja",
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "Logout",
 	"Label_RedeemTime": "Tebus Waktu",
