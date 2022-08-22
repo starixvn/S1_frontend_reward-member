@@ -137,10 +137,14 @@ const Shopping = () => {
 		const tempList = []
 		const categoryList = []
 		giftList?.forEach(obj => {
-			tempList.push(obj.categoryName)
+			tempList.push({
+				categoryName: obj.categoryName,
+				categoryId: obj.categoryId,
+			})
 		})
-		tempList.forEach(e => {
-			!categoryList.includes(e) && categoryList.push(e)
+		tempList.forEach(item => {
+			const found = categoryList.find(obj => obj.categoryId === item.categoryId)
+			!found && categoryList.push(item)
 		})
 		return categoryList
 	}
@@ -176,7 +180,9 @@ const Shopping = () => {
 		if (selectorType === "category") {
 			setArgs(prev => ({
 				...prev,
-				categoryIds: [categoryList.indexOf(label) + 1],
+				categoryIds: [
+					categoryList.find(e => e.categoryName === label).categoryId,
+				],
 			}))
 		} else if (selectorType === "from") {
 			setArgs(prev => ({
