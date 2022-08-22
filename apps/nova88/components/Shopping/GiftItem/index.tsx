@@ -65,22 +65,13 @@ const GiftItem: FC<IGiftItemProps> = ({
 		if (!giftItem.stock && giftItem.showStock) {
 			text = t("SoldOut")
 		} else {
-			if (isLogin) {
-				const cartItem = realCartList?.find(
-					item => item.giftId === giftItem.giftId
-				)
-				if (cartItem) {
-					text = t("AddedToCart")
-				} else {
-					text = t("AddToCart")
-				}
+			const cartItem = (isLogin ? realCartList : cartList)?.find(
+				item => item.giftId === giftItem.giftId
+			)
+			if (cartItem) {
+				text = t("AddedToCart")
 			} else {
-				const cartItem = cartList.find(item => item.giftId === giftItem.giftId)
-				if (cartItem) {
-					text = t("AddedToCart")
-				} else {
-					text = t("AddToCart")
-				}
+				text = t("AddToCart")
 			}
 		}
 		return text
