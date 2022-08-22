@@ -21,8 +21,8 @@ import {
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
 import { paths } from "common/constants"
-import { selectedCartNumber, setCartNumber } from "../../service/slice/cart"
-import { useAppDispatch, useAppSelector } from "../../store"
+import { selectedCartNumber, setCartNumber } from "service/slice/cart"
+import { useAppDispatch, useAppSelector } from "store"
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -61,7 +61,7 @@ interface IGetCarListArgs {
 }
 const Cart = () => {
 	const dispatch = useAppDispatch()
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
 		useGetGiftTagsQuery(null)
@@ -222,6 +222,7 @@ const Cart = () => {
 								type: "default",
 								props: { content: t("NoteTip") },
 							})
+							dispatch(setCartNumber(cartNumber - 1))
 						}
 					})
 				const newList = (isLogin ? realCartList : cartState).filter(obj => {
