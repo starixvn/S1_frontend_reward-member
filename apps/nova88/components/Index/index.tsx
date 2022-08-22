@@ -79,7 +79,7 @@ const Index = () => {
 		data: { data: giftList = [] } = {} as IGetGiftListResponse,
 		isFetching: isGetGiftListFetching,
 	} = useGetGiftListQuery({
-		langId: "en",
+		langId: i18n.language,
 		categoryIds: null,
 		tags: null,
 		orderByField: null,
@@ -94,7 +94,7 @@ const Index = () => {
 		if (isLogin) {
 			try {
 				await setFavorite({
-					langId: "en",
+					langId: i18n.language,
 					giftId: item.giftId,
 					isFavorite: !item.isFavorite,
 				}).unwrap()

@@ -96,23 +96,25 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 						<div key={item.transId} className="mobile-log">
 							<ul>
 								<li>
-									<span>Redeem Time(GMT+8)</span>
+									<span>
+										{`${t("Label_RedeemTime")}(GMT${timeZoneByCurrencyId})`}
+									</span>
 									{handlePurchaseTime(item.createTimeInCurrencyTimeZone)}
 								</li>
 								<li>
-									<span>Item Code</span>
+									<span>{t("ItemCode")}</span>
 									{item.giftId}
 								</li>
 								<li className="name">
-									<span>Product Name</span>
+									<span>{t("Label_ProductName")}</span>
 									{item.giftName}
 								</li>
 								<li>
-									<span>Points Used</span>
+									<span>{t("Label_PointsUsed")}</span>
 									{item.point}
 								</li>
 								<li>
-									<span>Status</span>
+									<span>{t("Label_Status")}</span>
 									{item.statusName}
 								</li>
 							</ul>

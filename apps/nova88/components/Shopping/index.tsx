@@ -53,7 +53,7 @@ const Shopping = () => {
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
 	const [args, setArgs] = useState<IGetGiftListArgs>({
-		langId: "en",
+		langId: i18n.language,
 		categoryIds: null,
 		tags: null,
 		orderByField: null,
@@ -160,7 +160,7 @@ const Shopping = () => {
 		if (isLogin) {
 			try {
 				await setFavorite({
-					langId: "en",
+					langId: i18n.language,
 					giftId: item.giftId,
 					isFavorite: !item.isFavorite,
 				}).unwrap()
