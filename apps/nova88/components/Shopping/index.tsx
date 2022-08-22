@@ -46,25 +46,19 @@ interface IGetCarListArgs {
 	showStock?: boolean
 	stock?: number
 }
-
 const Shopping = () => {
 	const dispatch = useAppDispatch()
 	const { i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
-	const [args, setArgs] = useState<IGetGiftListArgs>({
-		langId: i18n.language,
+	const [args, setArgs] = useState({
 		categoryIds: null,
 		tags: null,
 		orderByField: null,
 		desc: false,
 		pageSize: DEFAULT_PAGE_SIZE_COUNT,
 	})
-
 	const [categoryList, setCategoryList] = useState([])
-
-	// const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
-	// 	useGetGiftTagsQuery(null)
 	const [
 		getGiftTags,
 		{ data: { data: giftTabs = [] } = {}, isFetching: isGetGiftTabsFetching },
@@ -99,7 +93,6 @@ const Shopping = () => {
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
 	] = useLazyGetGiftListQuery()
-
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
 
@@ -148,26 +141,7 @@ const Shopping = () => {
 		})
 		return categoryList
 	}
-	useEffect(() => {
-		if (giftTabList && giftTabList.length > 0) {
-			setActiveTabItem(giftTabList[0])
-		}
-	}, [isGetGiftTabsFetching])
-	useEffect(() => {
-		getGiftTabsList()
-		if (isLogin) {
-			getCartList({ giftIds: [], isAdd: 0 })
-			handleFilter({
-				langId: i18n.language,
-				categoryIds: null,
-				tags: null,
-				orderByField: null,
-				desc: false,
-				pageSize: args.pageSize,
-			})
-			setIsFilterFavorite(false)
-		}
-	}, [isLogin])
+
 	const handleFavoriteToggle = async item => {
 		if (isLogin) {
 			try {
@@ -188,22 +162,41 @@ const Shopping = () => {
 			})
 		}
 	}
+
 	const handleSelectorItemChange = (selectorType, label) => {
 		if (selectorType === "category") {
+			handleFilter({
+				...args,
+				categoryIds: [
+					categoryList.find(e => e.categoryName === label).categoryId,
+				],
+				langId: i18n.language,
+			})
 			setArgs(prev => ({
 				...prev,
 				categoryIds: [
 					categoryList.find(e => e.categoryName === label).categoryId,
 				],
+				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				langId: i18n.language,
 			}))
 		} else if (selectorType === "from") {
+			handleFilter({
+				...args,
+				orderByField: sortType[label].orderByField,
+				desc: sortType[label].desc,
+				langId: i18n.language,
+			})
 			setArgs(prev => ({
 				...prev,
 				orderByField: sortType[label].orderByField,
 				desc: sortType[label].desc,
+				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				langId: i18n.language,
 			}))
 		}
 	}
+
 	const handleGiftItemToggle = async giftItem => {
 		if (!giftItem.stock && giftItem.showStock) return
 		if (isLogin) {
@@ -239,16 +232,25 @@ const Shopping = () => {
 	const handleTabChange = activeTab => {
 		setActiveTabItem(activeTab)
 		if (activeTab.tagId === tabOption.FAVORITE) {
+			handleFilter({ ...args, tags: null, langId: i18n.language })
 			setArgs(prev => ({
 				...prev,
 				tags: null,
+				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				langId: i18n.language,
 			}))
-
 			setIsFilterFavorite(true)
 		} else {
+			handleFilter({
+				...args,
+				tags: activeTab.tagId ? [activeTab.tagId] : null,
+				langId: i18n.language,
+			})
 			setArgs(prev => ({
 				...prev,
 				tags: activeTab.tagId ? [activeTab.tagId] : null,
+				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				langId: i18n.language,
 			}))
 			setIsFilterFavorite(false)
 		}
@@ -256,7 +258,7 @@ const Shopping = () => {
 
 	const init = async () => {
 		try {
-			const data = await getGiftList(args)
+			const data = await getGiftList({ ...args, langId: i18n.language })
 			const giftList = data.data.data
 			setCategoryList(getCategoryList(giftList))
 		} catch (error) {
@@ -266,13 +268,36 @@ const Shopping = () => {
 			})
 		}
 	}
+
 	useEffect(() => {
 		init()
 	}, [])
 
 	useEffect(() => {
-		handleFilter(args)
-	}, [args])
+		if (giftTabList && giftTabList.length > 0) {
+			setActiveTabItem(giftTabList[0])
+		}
+	}, [isGetGiftTabsFetching])
+
+	useEffect(() => {
+		getGiftTabsList()
+		if (isLogin) {
+			getCartList({ giftIds: [], isAdd: 0 })
+			handleFilter({
+				langId: i18n.language,
+				categoryIds: null,
+				tags: null,
+				orderByField: null,
+				desc: false,
+				pageSize: args.pageSize,
+			})
+			setIsFilterFavorite(false)
+		}
+	}, [isLogin])
+
+	useEffect(() => {
+		handleFilter({ ...args, langId: i18n.language })
+	}, [i18n.language])
 
 	useEffect(() => {
 		const isLast = args.pageSize > giftList.length + PAGE_SIZE_COUNT
