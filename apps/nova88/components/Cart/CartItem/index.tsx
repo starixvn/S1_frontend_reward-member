@@ -62,8 +62,8 @@ const CartItem: FC<ICartItemProps> = ({
 		<div
 			key={item.giftId}
 			className={classNames("cart-items", {
-				soldOut: !item.stock && item.showStock,
-				later: !item.stock && !item.showStock,
+				soldOut: !item.stock,
+				// later: !item.stock && !item.showStock,
 			})}>
 			<div className="cart-check">
 				<input

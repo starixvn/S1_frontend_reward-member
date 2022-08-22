@@ -10,11 +10,15 @@ import { useLocalStorage } from "usehooks-ts"
 import { usePopBox } from "common/hooks"
 import {
 	useGetGiftListQuery,
+	useLazyGetGiftListQuery,
 	useSetFavoriteMutation,
 } from "service/api/storeApi"
-import { IGetGiftListResponse } from "service/api/storeApi/type"
+import {
+	IGetGiftListArgs,
+	IGetGiftListResponse,
+} from "service/api/storeApi/type"
 import { useSelector } from "react-redux"
-import { selectedIsLogin } from "service/slice/auth"
+import { selectedIsLogin, selectedProfile } from "service/slice/auth"
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
 import { paths } from "common/constants"
@@ -53,6 +57,14 @@ const Index = () => {
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
 	const isLogin = useSelector(selectedIsLogin)
+	const [giftListArgs, setGiftListArgs] = useState({
+		langId: i18n.language,
+		categoryIds: null,
+		tags: null,
+		orderByField: null,
+		desc: false,
+		pageSize: DEFAULT_PAGE_SIZE_COUNT,
+	})
 
 	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
 	const getCartList = async args => {
@@ -73,19 +85,24 @@ const Index = () => {
 	const { t } = useTranslation()
 	const route = useRouter()
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+	const profile = useSelector(selectedProfile)
 	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
 
-	const {
-		data: { data: giftList = [] } = {} as IGetGiftListResponse,
-		isFetching: isGetGiftListFetching,
-	} = useGetGiftListQuery({
-		langId: i18n.language,
-		categoryIds: null,
-		tags: null,
-		orderByField: null,
-		desc: false,
-		pageSize: DEFAULT_PAGE_SIZE_COUNT,
-	})
+	const [
+		getGiftList,
+		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
+	] = useLazyGetGiftListQuery()
+
+	const handleFilter = async (args: IGetGiftListArgs) => {
+		try {
+			await getGiftList(args).unwrap()
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
 
 	const getAppLink = (type: number) =>
 		appLinks?.find(el => el.appType === type)?.downloadLink
@@ -149,6 +166,9 @@ const Index = () => {
 			getCartList({ giftIds: [], isAdd: 0 })
 		}
 	}, [isLogin])
+	useEffect(() => {
+		handleFilter(giftListArgs)
+	}, [giftListArgs, isLogin])
 	const month = monthObj[new Date().getMonth() + 1]
 	return (
 		<main

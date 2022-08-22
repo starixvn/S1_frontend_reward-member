@@ -155,6 +155,18 @@ const Shopping = () => {
 	}, [isGetGiftTabsFetching])
 	useEffect(() => {
 		getGiftTabsList()
+		if (isLogin) {
+			getCartList({ giftIds: [], isAdd: 0 })
+			handleFilter({
+				langId: i18n.language,
+				categoryIds: null,
+				tags: null,
+				orderByField: null,
+				desc: false,
+				pageSize: args.pageSize,
+			})
+			setIsFilterFavorite(false)
+		}
 	}, [isLogin])
 	const handleFavoriteToggle = async item => {
 		if (isLogin) {
@@ -260,14 +272,11 @@ const Shopping = () => {
 
 	useEffect(() => {
 		handleFilter(args)
-	}, [args, isLogin])
-	useEffect(() => {
-		if (isLogin) {
-			getCartList({ giftIds: [], isAdd: 0 })
-		}
-	}, [isLogin])
+	}, [args])
+
 	useEffect(() => {
 		const isLast = args.pageSize > giftList.length + PAGE_SIZE_COUNT
+
 		if (isLast || isGetGiftListFetching) return
 
 		if (isInView) {
