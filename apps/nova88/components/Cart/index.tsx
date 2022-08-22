@@ -97,6 +97,16 @@ const Cart = () => {
 	}
 	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
 	const [setShoppingCart] = useSetShoppingCartMutation()
+	const getFilterGiftList = () => {
+		const filterList = []
+		giftList.forEach((obj, index) => {
+			if (index < 4) {
+				filterList.push(obj)
+			}
+		})
+		return filterList
+	}
+	const filterList = getFilterGiftList()
 
 	useEffect(() => {
 		if (isLogin) {
@@ -159,7 +169,10 @@ const Cart = () => {
 	}, [pointBalance, checkedItem, isShowOrderItem])
 
 	const isChecked = Boolean(
-		checkedItem.giftId && totalCal >= 0 && profile.addressCity
+		checkedItem.giftId &&
+			totalCal >= 0 &&
+			profile.addressCity &&
+			checkedItem.stock > 0
 	)
 	const handleCartItemRemove = async item => {
 		if (isLogin) {
@@ -336,7 +349,7 @@ const Cart = () => {
 							</button>
 						</div>
 						<GiftList
-							filterList={giftList}
+							filterList={filterList}
 							onToggleCart={handleGiftItemToggle}
 							realCartList={realCartList}
 						/>

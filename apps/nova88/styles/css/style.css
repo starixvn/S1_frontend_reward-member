@@ -86,7 +86,7 @@ html {
 
 main {
   padding-top: 110px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
 }
 
 @media (max-width: 840px) {
@@ -1256,7 +1256,7 @@ input:-webkit-autofill:active {
 
 .product-list .product > button.icon.icon-ban:before {
   color: #112240;
-  font-size: 18px;
+  font-size: 14px;
   padding: 0;
 }
 
@@ -1778,7 +1778,7 @@ input:-webkit-autofill:active {
   font-weight: normal;
 }
 
-.myCoins-page .page-content .noData, .myCoins-page .page-content .mobile-noData, .myPurchase .page-content .noData, .myPurchase .page-content .mobile-noData, .tAndC .page-content .noData, .tAndC .page-content .mobile-noData {
+.noData, .mobile-noData {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1797,11 +1797,11 @@ input:-webkit-autofill:active {
   padding: 2rem;
 }
 
-.myCoins-page .page-content .noData .icon-alarm, .myCoins-page .page-content .mobile-noData .icon-alarm, .myPurchase .page-content .noData .icon-alarm, .myPurchase .page-content .mobile-noData .icon-alarm, .tAndC .page-content .noData .icon-alarm, .tAndC .page-content .mobile-noData .icon-alarm {
+.noData .icon-alarm, .mobile-noData .icon-alarm {
   font-size: 2rem;
 }
 
-.myCoins-page .page-content .mobile-noData, .myPurchase .page-content .mobile-noData, .tAndC .page-content .mobile-noData {
+.mobile-noData {
   display: none;
 }
 
@@ -2585,6 +2585,28 @@ input:-webkit-autofill:active {
           justify-content: space-between;
 }
 
+.recommend .product-list .product {
+  width: calc(25% - 10px);
+  margin: 0 5px;
+}
+
+.recommend .product-list .product:first-child {
+  margin-left: 0;
+}
+
+.recommend .product-list .product:last-child {
+  margin-right: 0;
+}
+
+@media (max-width: 767px) {
+  .recommend .product-list .product:nth-child(even) {
+    margin-right: 0;
+  }
+  .recommend .product-list .product:nth-child(odd) {
+    margin-left: 0;
+  }
+}
+
 .recommend .product-list .product .btn {
   display: none;
 }
@@ -2592,6 +2614,8 @@ input:-webkit-autofill:active {
 .recommend .product-list .product .amount {
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .recommend .product-list .product .amount span {
@@ -2601,23 +2625,98 @@ input:-webkit-autofill:active {
 
 .recommend .product-list .product .amount .qty {
   color: #999;
+  display: block;
 }
 
 .recommend .product-list .product .amount .icon-coin {
   color: #CDAE8E;
   font-weight: bold;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 767px) {
+  .recommend .product-list .product .amount .icon-coin {
+    margin-bottom: 10px;
+  }
 }
 
 .recommend .product-list .product .amount .icon-coin::before {
   font-weight: normal;
 }
 
-.recommend .product-list .product:nth-of-type(n+4) {
-  display: none;
+@media (max-width: 1050px) {
+  .recommend .product-list .product .amount {
+    font-size: 0.75rem;
+  }
 }
 
-.recommend .product-list .product.wider {
-  width: 33%;
+@media (max-width: 767px) {
+  .recommend .product-list .product .amount {
+    font-size: 1rem;
+  }
+}
+
+.recommend .product-list .product > div.iconGroup + div {
+  margin-top: 2.5rem;
+  height: 10.25rem;
+}
+
+@media (max-width: 1324px) {
+  .recommend .product-list .product > div.iconGroup + div {
+    height: 9rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .recommend .product-list .product > div.iconGroup + div {
+    height: 8rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .recommend .product-list .product > div.iconGroup + div {
+    height: 7rem;
+  }
+}
+
+@media (max-width: 1050px) {
+  .recommend .product-list .product > div.iconGroup + div {
+    height: 6rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .recommend .product-list .product > div.iconGroup + div {
+    height: 13rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .recommend .product-list .product > div.iconGroup + div {
+    height: 18rem;
+  }
+}
+
+@media (max-width: 524px) {
+  .recommend .product-list .product > div.iconGroup + div {
+    height: 50vw;
+  }
+}
+
+.recommend .product-list .product button {
+  font-size: .75rem;
+}
+
+@media (max-width: 1050px) {
+  .recommend .product-list .product .icon-coin, .recommend .product-list .product .product-name {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .recommend .product-list .product .icon-coin, .recommend .product-list .product .product-name {
+    font-size: 1rem;
+  }
 }
 
 .tAndC-content {
@@ -4110,9 +4209,6 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
   }
-  .product-list .product {
-    min-width: calc(33.333% - 10px);
-  }
   .product-list .product > div.bigPup {
     top: 3rem;
   }
@@ -4179,9 +4275,6 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
   .recommend .products-group {
     width: 100%;
   }
-  .recommend .products-group .product-list .product:nth-of-type(n+4) {
-    display: block;
-  }
 }
 
 @media screen and (max-width: 840px) {
@@ -4215,14 +4308,14 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
   .myCoins-page .page-content .memberFile .icon-coin, .myPurchase .page-content .memberFile .icon-coin, .tAndC .page-content .memberFile .icon-coin {
     position: relative;
   }
-  .myCoins-page .page-content .mobile-noData, .myPurchase .page-content .mobile-noData, .tAndC .page-content .mobile-noData {
+  .mobile-noData {
     font-size: .85rem;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     margin-bottom: 1rem;
   }
-  .myCoins-page .page-content .select + .mobile-noData, .myPurchase .page-content .select + .mobile-noData, .tAndC .page-content .select + .mobile-noData {
+  .select + .mobile-noData {
     margin: 0 1rem 1rem 1rem;
   }
   .product-list .product > div.bigPup {
@@ -4367,7 +4460,7 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    padding: 0 1rem;
+    padding: 0 .65rem;
     white-space: nowrap;
     overflow-X: auto;
     overflow-y: hidden;
@@ -4435,7 +4528,7 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
     display: none;
   }
   .appDownload .row .download-txt .qr-group .qrCode button {
-    height: 5vw;
+    height: 6vw;
     font-size: 2.5vw;
   }
   .appDownload .row .affiliate-txt {
@@ -4599,9 +4692,6 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-  }
-  .cart-page .recommend .product.wider {
-    width: 100%;
   }
   .faq-content .faqGroup button {
     padding-right: 2rem;
