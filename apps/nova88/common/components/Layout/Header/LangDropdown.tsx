@@ -13,6 +13,7 @@ import { defLangOptions } from "./LangDropdown.def"
 import some from "lodash/some"
 import { filter } from "lodash"
 import { REWARD88_LANG } from "common/constants/localStorage"
+import { setCookie } from "../../../utils/func"
 
 const LangDropdown = () => {
 	const { i18n } = useTranslation()
@@ -37,6 +38,10 @@ const LangDropdown = () => {
 			}
 		}
 		setIsOpen(false)
+		setCookie({
+			cookieName: "nova88LangId",
+			cookieValue: newLangId,
+		})
 	}
 
 	const handleClickOutside = () => {
