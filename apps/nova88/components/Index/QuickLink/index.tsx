@@ -214,7 +214,7 @@ export const IconBar = ({
 				<button
 					className="icon icon-android"
 					onClick={() => showQRcode(andriodDownLoadUrl)}>
-					{t("ANDROID")?.toUpperCase()}
+					{t("Android")?.toUpperCase()}
 					<div>
 						<QRCode
 							value={andriodDownLoadUrl}

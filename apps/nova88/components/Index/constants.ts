@@ -45,10 +45,13 @@ export const defLinkType = {
 }
 
 export const langMapping = {
-	cs: "MYR",
 	en: "MYR",
+	cs: "MYR",
+	my: "MYR",
 	id: "IDR",
+	id_en: "IDR",
 	th: "THB",
+	th_en: "THB",
 }
 export const defCurrencyList = {
 	MYR: 2,

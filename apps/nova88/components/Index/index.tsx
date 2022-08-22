@@ -26,50 +26,50 @@ import { useAppDispatch } from "../../store"
 import classNames from "classnames"
 
 interface IGetCarListArgs {
-  giftId?: number
-  giftName?: string
-  enGiftName?: string
-  categoryId?: number
-  categoryName?: string
-  giftDescription?: string
-  pictureUrl?: string
-  isFavorite?: boolean
-  tagList?: {
-    tagId: number
-    tagName: string
-    lang: string
-  }[]
-  point?: number
-  priceWorth?: number
-  showStock?: boolean
-  stock?: number
+	giftId?: number
+	giftName?: string
+	enGiftName?: string
+	categoryId?: number
+	categoryName?: string
+	giftDescription?: string
+	pictureUrl?: string
+	isFavorite?: boolean
+	tagList?: {
+		tagId: number
+		tagName: string
+		lang: string
+	}[]
+	point?: number
+	priceWorth?: number
+	showStock?: boolean
+	stock?: number
 }
 
 const Index = () => {
-  const dispatch = useAppDispatch()
-  const { i18n } = useTranslation()
+	const dispatch = useAppDispatch()
+	const { i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 
-  const [setShoppingCart] = useSetShoppingCartMutation()
+	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
 	const isLogin = useSelector(selectedIsLogin)
 
-  const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
-  const getCartList = async args => {
-    try {
-      await setShoppingCart(args)
-        .unwrap()
-        .then(res => {
-          setRealCartList(res.data)
-          dispatch(setCartNumber(res.data.length))
-        })
-    } catch (error) {
-      setPopBoxType({
-        type: "warn",
-        props: { content: error.message },
-      })
-    }
-  }
+	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
+	const getCartList = async args => {
+		try {
+			await setShoppingCart(args)
+				.unwrap()
+				.then(res => {
+					setRealCartList(res.data)
+					dispatch(setCartNumber(res.data.length))
+				})
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
 	const { t } = useTranslation()
 	const route = useRouter()
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
@@ -144,16 +144,17 @@ const Index = () => {
 
 	const goToMore = () => route.push(paths.shopping)
 
-  useEffect(() => {
-    if (isLogin) {
-      getCartList({ giftIds: [], isAdd: 0 })
-    }
-  }, [isLogin])
+	useEffect(() => {
+		if (isLogin) {
+			getCartList({ giftIds: [], isAdd: 0 })
+		}
+	}, [isLogin])
 	const month = monthObj[new Date().getMonth() + 1]
 	return (
-		<main className={classNames({
-      "other-layout": i18n.language !== "en",
-    })}>
+		<main
+			className={classNames({
+				"other-layout": i18n.language !== "en",
+			})}>
 			<GiftSwiper />
 			{!isLogin && (
 				<div
@@ -275,7 +276,7 @@ const Index = () => {
 								</div>
 								<div className="qrCode">
 									<div className="icon icon-appleinc">
-										<span>{t("iOS")}</span>
+										<span>{t("IOS")}</span>
 									</div>
 									<QRCode
 										value={getAppLink(defAppType.IOS)}
