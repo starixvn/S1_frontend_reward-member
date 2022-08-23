@@ -683,4 +683,8 @@
 .icon-chat:before {
   content: "\e914";
 }
+
+.icon-thumb:before {
+  content: "\e915";
+}
 /*# sourceMappingURL=font.css.map */

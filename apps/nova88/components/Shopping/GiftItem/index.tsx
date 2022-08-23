@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { FC } from "react"
 import { imageUrl } from "config"
 import classNames from "classnames"
 import { useLocalStorage } from "usehooks-ts"
@@ -57,7 +57,6 @@ const GiftItem: FC<IGiftItemProps> = ({
 	realCartList,
 }) => {
 	const { t } = useTranslation()
-	const [isLarge, setIsLarge] = useState(false)
 	const [cartList] = useLocalStorage("nova88Cart", [])
 	const isLogin = useAppSelector(selectedIsLogin)
 	const handleItemBtnTextChange = giftItem => {
@@ -76,8 +75,6 @@ const GiftItem: FC<IGiftItemProps> = ({
 		}
 		return text
 	}
-	const closeLargeImg = () => setIsLarge(false)
-	const openLargeImg = () => setIsLarge(true)
 	return (
 		<div
 			className={classNames("product", {
@@ -90,9 +87,9 @@ const GiftItem: FC<IGiftItemProps> = ({
 						className={classNames("active", "icon", {
 							"icon-fire": tagItem.tagName === "HOT",
 							"icon-shinyblack": tagItem.tagName === "NEW",
-							"icon-percent": tagItem.tagName === "FEATURED",
+							"icon-thumb": tagItem.tagName === "FEATURED",
 						})}>
-						{tagItem.tagName === "FEATURED" ? "FEAT" : tagItem.tagName}
+						{tagItem.tagName === "FEATURED" ? "FEA" : tagItem.tagName}
 					</div>
 				))}
 			</div>
@@ -106,13 +103,11 @@ const GiftItem: FC<IGiftItemProps> = ({
 						active: item.isFavorite,
 					})}
 				/>
-				<button
-					onClick={openLargeImg}
-					className="icon icon-arrows-fullscreen"
-				/>
 			</div>
-			<div className="icon icon-coin">&nbsp;{numberFormat(item.point, 2)}</div>
 			<div className="product-name">{item.giftName}</div>
+			<div className="product-description">{item.giftDescription}</div>
+			<div className="icon icon-coin">&nbsp;{numberFormat(item.point, 2)}</div>
+
 			<div className="qty">{item.showStock && `${t("Qty")}:${item.stock}`}</div>
 			<button
 				onClick={() => onToggleCart(item)}
@@ -131,32 +126,6 @@ const GiftItem: FC<IGiftItemProps> = ({
 				})}>
 				{handleItemBtnTextChange(item)}
 			</button>
-			<div className={classNames("bigPup", { active: isLarge })}>
-				<a
-					onClick={closeLargeImg}
-					className="icon icon-arrows-angle-contract"
-				/>
-				<div>
-					<img src={`${imageUrl}${item.giftPictureUrl}`} alt="any" />
-				</div>
-				<button
-					onClick={() => onToggleCart(item)}
-					className={classNames("icon", "active", {
-						"icon-ban": !item.stock && item.showStock,
-						"icon-checkmark":
-							item.stock &&
-							(isLogin ? realCartList : cartList)?.find(
-								cartItem => cartItem.giftId === item.giftId
-							),
-						"icon-cart":
-							(item.stock || !item.showStock) &&
-							!(isLogin ? realCartList : cartList)?.find(
-								cartItem => cartItem.giftId === item.giftId
-							),
-					})}>
-					{handleItemBtnTextChange(item)}
-				</button>
-			</div>
 		</div>
 	)
 }

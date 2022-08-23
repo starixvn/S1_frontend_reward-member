@@ -95,6 +95,12 @@ main {
   }
 }
 
+a:hover {
+  -webkit-transition: .3s;
+  transition: .3s;
+  color: #E2C79E;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -176,11 +182,29 @@ input:-webkit-autofill:active {
 
 .header > div.menu > .tag .home {
   font-size: 1.2rem;
+  margin-left: 1.25rem;
+}
+
+.header > div.menu > .tag .home + div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .header > div.menu > .tag a {
   color: #fff;
   padding: 0 5px;
+  margin: 0 10px 0 0;
+  font-weight: bold;
+}
+
+.header > div.menu > .tag a:last-child {
+  margin-right: 0;
+}
+
+.header > div.menu > .tag a.icon-mobile {
+  font-weight: normal;
+  font-size: 1.2rem;
 }
 
 .header > div.menu > .tag a:hover, .header > div.menu > .tag a:active {
@@ -234,6 +258,10 @@ input:-webkit-autofill:active {
 
 .header > div.function > a > span {
   margin: 5px;
+}
+
+.header > div.function > a:hover {
+  color: #FF7600;
 }
 
 .header > div.function > div {
@@ -298,6 +326,7 @@ input:-webkit-autofill:active {
 .header > div.function .memberFile {
   position: relative;
   color: #CDAE8E;
+  margin-right: 1.75rem;
 }
 
 .header > div.function .memberFile .memberID {
@@ -354,9 +383,14 @@ input:-webkit-autofill:active {
   transition: .6s;
 }
 
+.header > div.function .memberFile + .icon-exit {
+  margin-right: .75rem;
+}
+
 .header > div.function .novaLogo {
   margin-right: 0;
   margin-left: 1rem;
+  width: 100px;
 }
 
 .header > div.function .shoppingCar {
@@ -371,7 +405,7 @@ input:-webkit-autofill:active {
           justify-content: space-between;
   background: #CDAE8E;
   border-radius: 5rem;
-  width: 6rem;
+  width: 5rem;
   height: 2rem;
   padding-right: .5rem;
   font-size: 1rem;
@@ -947,6 +981,8 @@ input:-webkit-autofill:active {
 
 .product-list .product:hover {
   border: 1px solid #CDAE8E;
+  -webkit-transition: .3s;
+  transition: .3s;
 }
 
 .product-list .product:nth-of-type(n+6) {
@@ -969,17 +1005,22 @@ input:-webkit-autofill:active {
   line-height: 1rem;
 }
 
-.product-list .product > div.product-name {
-  height: 47px;
+.product-list .product > div.product-name, .product-list .product > div.product-description {
+  height: 22px;
   text-align: center;
   color: white;
   display: -webkit-box;
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-height: 1.2;
+  font-size: .95rem;
+}
+
+.product-list .product > div.product-description {
+  color: #999;
 }
 
 .product-list .product > div.iconGroup {
@@ -1030,9 +1071,8 @@ input:-webkit-autofill:active {
   background: #f77900;
 }
 
-.product-list .product > div.iconGroup > div.icon-percent, .product-list .product > div.iconGroup > div.icon-medal {
+.product-list .product > div.iconGroup > div.icon-percent, .product-list .product > div.iconGroup > div.icon-medal, .product-list .product > div.iconGroup > div.icon-thumb {
   background: #CDAE8E;
-  color: #121212;
 }
 
 .product-list .product > div.iconGroup > div.icon-coin {
@@ -1066,20 +1106,18 @@ input:-webkit-autofill:active {
 }
 
 .product-list .product > div.btn {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 60px;
-  margin: auto;
+  width: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
   border: 0;
   border-radius: 0;
+  padding: 5px;
 }
 
 .product-list .product > div.btn .icon {
   color: #999;
+  padding: .75rem;
 }
 
 .product-list .product > div.btn .icon:hover.icon-arrows-fullscreen {
@@ -1097,6 +1135,8 @@ input:-webkit-autofill:active {
 .product-list .product > div.qty {
   color: #999;
   height: 26px;
+  font-size: .85rem;
+  margin-bottom: .5rem;
 }
 
 .product-list .product > div.bigPup {
@@ -1296,6 +1336,17 @@ input:-webkit-autofill:active {
 
 .product-list .product.empty > div.btn .icon.icon-arrows-fullscreen {
   pointer-events: none;
+}
+
+.product-list .product .icon-coin {
+  color: #CDAE8E;
+  font-weight: bold;
+  margin-top: .5rem;
+}
+
+.product-list .product .icon-coin::before {
+  margin-right: 2px;
+  font-weight: normal;
 }
 
 .appDownload .row {
@@ -1642,6 +1693,7 @@ input:-webkit-autofill:active {
   font-weight: bold;
   margin: 0 1rem;
   position: relative;
+  text-transform: uppercase;
 }
 
 .myCoins-page .page-content .title .time, .myPurchase .page-content .title .time, .tAndC .page-content .title .time {
@@ -2086,6 +2138,8 @@ input:-webkit-autofill:active {
   color: #CDAE8E;
   white-space: nowrap;
   margin-bottom: 1px;
+  font-weight: bold;
+  font-weight: bold;
 }
 
 .cart-page .cart-list > div.cart-head > div:nth-child(n+2) {
@@ -2410,6 +2464,10 @@ input:-webkit-autofill:active {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+.cart-page .cart-oder > div > div span:first-child {
+  font-weight: bold;
 }
 
 .cart-page .cart-oder > div > div span:last-child {
@@ -2805,13 +2863,21 @@ input:-webkit-autofill:active {
   vertical-align: middle;
 }
 
+.tAndC-content .tAndC-info .medal tr td span {
+  font-weight: bold;
+  font-size: .95rem;
+}
+
 .tAndC-content .tAndC-info .medal tr:nth-child(1) {
   font-weight: bold;
+  font-size: 1.15rem;
 }
 
 .tAndC-content .tAndC-info .medal tr:nth-child(2) {
   background: #CDAE8E;
   color: #000;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .tAndC-content .tAndC-info .medal tr:nth-child(n+3) {
@@ -2822,6 +2888,8 @@ input:-webkit-autofill:active {
 .tAndC-content .tAndC-info .medal tr > .head {
   background: rgba(205, 174, 142, 0.5);
   font-weight: 500;
+  font-weight: bold;
+  font-size: .9rem;
 }
 
 .tAndC-content .tAndC-info ul {
@@ -2999,6 +3067,7 @@ input:-webkit-autofill:active {
 .products-empty > .animation > i {
   z-index: 1;
   position: absolute;
+  color: #E10F2C;
 }
 
 .products-empty .icon {
@@ -4165,32 +4234,76 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
 }
 
 @media (max-width: 1366px) {
-  .other-layout .product-list .product button.icon {
+  .other-layout .product-list .product button:not(.icon-heart-fill) {
     font-size: .85rem;
   }
 }
 
 @media (max-width: 1200px) {
-  .other-layout .product-list .product button.icon {
+  .other-layout .product-list .product button:not(.icon-heart-fill) {
     font-size: .75rem;
   }
 }
 
 @media (max-width: 1024px) {
-  .other-layout .product-list .product button.icon {
+  .other-layout .product-list .product button:not(.icon-heart-fill) {
     font-size: .75rem;
   }
 }
 
 @media (max-width: 900px) {
-  .other-layout .product-list .product button.icon {
+  .other-layout .product-list .product button:not(.icon-heart-fill) {
     font-size: .55rem;
   }
 }
 
 @media (max-width: 767px) {
-  .other-layout .product-list .product button.icon {
+  .other-layout .product-list .product button:not(.icon-heart-fill) {
     font-size: .6rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .product-list .product div.iconGroup > div {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}
+
+@media (max-width: 1366px) {
+  .product-list .product button.icon-heart-fill {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .product-list .product button.icon-heart-fill {
+    font-size: .95rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .product-list .product button.icon-heart-fill {
+    font-size: .85rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .product-list .product button.icon-heart-fill {
+    font-size: .75rem;
+  }
+}
+
+@media (max-width: 867px) {
+  .product-list .product button.icon-heart-fill {
+    font-size: .65rem;
+    padding: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-list .product button.icon-heart-fill {
+    font-size: 1rem;
   }
 }
 
@@ -4980,7 +5093,7 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
 }
 
 .quickLinkNew2 a.icon-facebook2, .quickLinkNew2 button.icon-facebook2 {
-  color: #7591c1;
+  color: #3462B5;
 }
 
 .quickLinkNew2 a.icon-instagram, .quickLinkNew2 button.icon-instagram {
@@ -4989,6 +5102,14 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
 
 .quickLinkNew2 a.icon-envelope, .quickLinkNew2 button.icon-envelope {
   color: #f77900;
+}
+
+.quickLinkNew2 a.icon-youtube, .quickLinkNew2 button.icon-youtube {
+  color: #FF0000;
+}
+
+.quickLinkNew2 a.icon-chat, .quickLinkNew2 button.icon-chat {
+  color: #FF7600;
 }
 
 .quickLinkNew3 {

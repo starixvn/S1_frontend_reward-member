@@ -2,28 +2,29 @@ import React, { useEffect, useMemo, useState } from "react"
 import { useLocalStorage } from "usehooks-ts"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
-import { selectedIsLogin, selectedProfile } from "service/slice/auth"
+import { useTranslation } from "react-i18next"
 import GiftList from "components/Shopping/GiftList"
+import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
+import CartList from "./CartList"
+import Order from "./CartOrder"
+import { imageUrl } from "config"
+import { useAppDispatch, useAppSelector } from "store"
+import Loading from "common/components/Loading"
+import { usePopBox } from "common/hooks"
+import { paths } from "common/constants"
 import {
 	useGetGiftTagsQuery,
 	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
 } from "service/api/storeApi"
-import Loading from "common/components/Loading"
-import CartList from "./CartList"
-import Order from "./CartOrder"
-import { useTranslation } from "react-i18next"
-import { usePopBox } from "common/hooks"
 import {
 	useCreateRedemptionMutation,
 	useSetShoppingCartMutation,
 } from "service/api/redemptionApi"
-import { imageUrl } from "config"
-import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
-import { paths } from "common/constants"
+import { selectedIsLogin, selectedProfile } from "service/slice/auth"
 import { selectedCartNumber, setCartNumber } from "service/slice/cart"
-import { useAppDispatch, useAppSelector } from "store"
-import { IGetGiftListArgs } from "../../service/api/storeApi/type"
+import { IGetGiftListArgs } from "service/api/storeApi/type"
+import { ISetShoppingCarData } from "service/api/redemptionApi/type"
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -41,43 +42,32 @@ interface ICheckOutArgs {
 	stock?: number
 	tagList?: object[]
 }
-interface IGetCarListArgs {
-	giftId?: number
-	giftName?: string
-	enGiftName?: string
-	categoryId?: number
-	categoryName?: string
-	giftDescription?: string
-	giftPictureUrl?: string
-	isFavorite?: boolean
-	tagList?: {
-		tagId: number
-		tagName: string
-		lang: string
-	}[]
-	point?: number
-	priceWorth?: number
-	showStock?: boolean
-	stock?: number
-}
+
 const Cart = () => {
 	const dispatch = useAppDispatch()
+	const cartNumber = useAppSelector(selectedCartNumber)
+	const profile = useSelector(selectedProfile)
+	const isLogin = useSelector(selectedIsLogin)
 	const { t, i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
+	const route = useRouter()
+	const [cartState, setCartState] = useLocalStorage("nova88Cart", [])
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
 		useGetGiftTagsQuery(null)
 	const [getPointBalance] = useLazyGetPointBalanceQuery()
 	const [createRedemption] = useCreateRedemptionMutation()
-	const [cartState, setCartState] = useLocalStorage("nova88Cart", [])
+	const [setShoppingCart] = useSetShoppingCartMutation()
+	const [
+		getGiftList,
+		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
+	] = useLazyGetGiftListQuery()
 	const [cartList, setCartList] = useState([])
-	const route = useRouter()
-	const profile = useSelector(selectedProfile)
 	const [checkedItem, setCheckedItem] = useState<ICheckOutArgs>({})
 	const [isShowTip, setIsShowTip] = useState(false)
 	const [noteInput, setNoteInput] = useState("")
 	const [pointBalance, setPointBalance] = useState(0)
-	const isLogin = useSelector(selectedIsLogin)
-	const cartNumber = useAppSelector(selectedCartNumber)
+	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
+
 	const handleGetPointBalance = async args => {
 		try {
 			const res: { data: { pointBalance: number } } = await getPointBalance(
@@ -91,12 +81,6 @@ const Cart = () => {
 			})
 		}
 	}
-	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
-	const [setShoppingCart] = useSetShoppingCartMutation()
-	const [
-		getGiftList,
-		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
-	] = useLazyGetGiftListQuery()
 
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
@@ -108,22 +92,6 @@ const Cart = () => {
 			})
 		}
 	}
-	const getFilterGiftList = () => {
-		const filterList = []
-		giftList.forEach((obj, index) => {
-			if (index < 4) {
-				filterList.push(obj)
-			}
-		})
-		return filterList
-	}
-	const filterList = getFilterGiftList()
-
-	useEffect(() => {
-		if (isLogin) {
-			handleGetPointBalance(null)
-		}
-	}, [])
 
 	const getCartList = async args => {
 		try {
@@ -141,40 +109,17 @@ const Cart = () => {
 		}
 	}
 
-	useEffect(() => {
-		if (isLogin) {
-			getCartList({ giftIds: [], isAdd: 0 })
-			if (giftTabs && giftTabs.length > 0) {
-				const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
-				handleFilter({
-					...{
-						categoryIds: null,
-						tags: [targetTab?.tagId],
-						orderByField: null,
-						desc: false,
-						pageSize: DEFAULT_PAGE_SIZE_COUNT,
-					},
-					langId: i18n.language,
-				})
+	const getFilterGiftList = () => {
+		const filterList = []
+		giftList.forEach((obj, index) => {
+			if (index < 4) {
+				filterList.push(obj)
 			}
-		}
-	}, [isLogin])
+		})
+		return filterList
+	}
 
-	useEffect(() => {
-		if (giftTabs && giftTabs.length > 0) {
-			const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
-			handleFilter({
-				...{
-					categoryIds: null,
-					tags: [targetTab?.tagId],
-					orderByField: null,
-					desc: false,
-					pageSize: DEFAULT_PAGE_SIZE_COUNT,
-				},
-				langId: i18n.language,
-			})
-		}
-	}, [isGetGiftTabsFetching, i18n.language])
+	const filterList = getFilterGiftList()
 
 	const handleCheckBoxToggle = (e, item) => {
 		if (!item.number) {
@@ -182,6 +127,7 @@ const Cart = () => {
 		}
 		setCheckedItem(item)
 	}
+
 	const isShowOrderItem =
 		checkedItem.giftId &&
 		(isLogin ? realCartList : cartList).find(
@@ -282,6 +228,47 @@ const Cart = () => {
 			}
 		}
 	}
+
+	useEffect(() => {
+		if (isLogin) {
+			handleGetPointBalance(null)
+		}
+	}, [])
+
+	useEffect(() => {
+		if (isLogin) {
+			getCartList({ giftIds: [], isAdd: 0 })
+			if (giftTabs && giftTabs.length > 0) {
+				const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
+				handleFilter({
+					...{
+						categoryIds: null,
+						tags: [targetTab?.tagId],
+						orderByField: null,
+						desc: false,
+						pageSize: DEFAULT_PAGE_SIZE_COUNT,
+					},
+					langId: i18n.language,
+				})
+			}
+		}
+	}, [isLogin])
+
+	useEffect(() => {
+		if (giftTabs && giftTabs.length > 0) {
+			const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
+			handleFilter({
+				...{
+					categoryIds: null,
+					tags: [targetTab?.tagId],
+					orderByField: null,
+					desc: false,
+					pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				},
+				langId: i18n.language,
+			})
+		}
+	}, [isGetGiftTabsFetching, i18n.language])
 
 	useEffect(() => {
 		setCartList(cartState)
