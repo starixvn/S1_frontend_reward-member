@@ -9,16 +9,12 @@ import Loading from "common/components/Loading"
 import { useLocalStorage } from "usehooks-ts"
 import { usePopBox } from "common/hooks"
 import {
-	useGetGiftListQuery,
 	useLazyGetGiftListQuery,
 	useSetFavoriteMutation,
 } from "service/api/storeApi"
-import {
-	IGetGiftListArgs,
-	IGetGiftListResponse,
-} from "service/api/storeApi/type"
+import { IGetGiftListArgs } from "service/api/storeApi/type"
 import { useSelector } from "react-redux"
-import { selectedIsLogin, selectedProfile } from "service/slice/auth"
+import { selectedIsLogin } from "service/slice/auth"
 import { imageUrl } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
 import { paths } from "common/constants"
@@ -53,19 +49,9 @@ const Index = () => {
 	const dispatch = useAppDispatch()
 	const { i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
-
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
 	const isLogin = useSelector(selectedIsLogin)
-	const [giftListArgs, setGiftListArgs] = useState({
-		langId: i18n.language,
-		categoryIds: null,
-		tags: null,
-		orderByField: null,
-		desc: false,
-		pageSize: DEFAULT_PAGE_SIZE_COUNT,
-	})
-
 	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
 	const getCartList = async args => {
 		try {
@@ -85,7 +71,6 @@ const Index = () => {
 	const { t } = useTranslation()
 	const route = useRouter()
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
-	const profile = useSelector(selectedProfile)
 	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
 
 	const [
@@ -164,11 +149,30 @@ const Index = () => {
 	useEffect(() => {
 		if (isLogin) {
 			getCartList({ giftIds: [], isAdd: 0 })
+			handleFilter({
+				...{
+					categoryIds: null,
+					tags: null,
+					orderByField: null,
+					desc: false,
+					pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				},
+				langId: i18n.language,
+			})
 		}
 	}, [isLogin])
 	useEffect(() => {
-		handleFilter(giftListArgs)
-	}, [giftListArgs, isLogin])
+		handleFilter({
+			...{
+				categoryIds: null,
+				tags: null,
+				orderByField: null,
+				desc: false,
+				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+			},
+			langId: i18n.language,
+		})
+	}, [i18n.language])
 	const month = monthObj[new Date().getMonth() + 1]
 	return (
 		<main

@@ -73,7 +73,7 @@ const HowToEarnPoints = () => {
 									<div>
 										{t("VIP_REWARDS_TEXT")}{" "}
 										<span className="orange">{t("88_Rewards")}</span>{" "}
-										{t("account")}
+										{t("accountApi")}
 									</div>
 									<div>
 										<ul>

@@ -5,8 +5,8 @@ import { useRouter } from "next/router"
 import { selectedIsLogin, selectedProfile } from "service/slice/auth"
 import GiftList from "components/Shopping/GiftList"
 import {
-	useGetGiftListQuery,
 	useGetGiftTagsQuery,
+	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
 } from "service/api/storeApi"
 import Loading from "common/components/Loading"
@@ -23,6 +23,7 @@ import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
 import { paths } from "common/constants"
 import { selectedCartNumber, setCartNumber } from "service/slice/cart"
 import { useAppDispatch, useAppSelector } from "store"
+import { IGetGiftListArgs } from "../../service/api/storeApi/type"
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -65,11 +66,6 @@ const Cart = () => {
 	const { setPopBoxType } = usePopBox()
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
 		useGetGiftTagsQuery(null)
-	const [giftListQuery, setGiftListQuery] = useState({})
-	const {
-		data: { data: giftList = [] } = {},
-		isFetching: isGetGiftListFetching,
-	} = useGetGiftListQuery(giftListQuery)
 	const [getPointBalance] = useLazyGetPointBalanceQuery()
 	const [createRedemption] = useCreateRedemptionMutation()
 	const [cartState, setCartState] = useLocalStorage("nova88Cart", [])
@@ -97,6 +93,21 @@ const Cart = () => {
 	}
 	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
 	const [setShoppingCart] = useSetShoppingCartMutation()
+	const [
+		getGiftList,
+		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
+	] = useLazyGetGiftListQuery()
+
+	const handleFilter = async (args: IGetGiftListArgs) => {
+		try {
+			await getGiftList(args).unwrap()
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
 	const getFilterGiftList = () => {
 		const filterList = []
 		giftList.forEach((obj, index) => {
@@ -133,23 +144,37 @@ const Cart = () => {
 	useEffect(() => {
 		if (isLogin) {
 			getCartList({ giftIds: [], isAdd: 0 })
+			if (giftTabs && giftTabs.length > 0) {
+				const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
+				handleFilter({
+					...{
+						categoryIds: null,
+						tags: [targetTab?.tagId],
+						orderByField: null,
+						desc: false,
+						pageSize: DEFAULT_PAGE_SIZE_COUNT,
+					},
+					langId: i18n.language,
+				})
+			}
 		}
 	}, [isLogin])
 
 	useEffect(() => {
 		if (giftTabs && giftTabs.length > 0) {
 			const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
-
-			setGiftListQuery({
+			handleFilter({
+				...{
+					categoryIds: null,
+					tags: [targetTab?.tagId],
+					orderByField: null,
+					desc: false,
+					pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				},
 				langId: i18n.language,
-				categoryIds: null,
-				tags: [targetTab?.tagId],
-				orderByField: null,
-				desc: false,
-				pageSize: DEFAULT_PAGE_SIZE_COUNT,
 			})
 		}
-	}, [isGetGiftTabsFetching])
+	}, [isGetGiftTabsFetching, i18n.language])
 
 	const handleCheckBoxToggle = (e, item) => {
 		if (!item.number) {
