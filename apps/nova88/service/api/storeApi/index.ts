@@ -76,7 +76,6 @@ const storeApi = createApi({
 })
 
 export const {
-	useGetGiftListQuery,
 	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
 	useGetPointBalanceQuery,

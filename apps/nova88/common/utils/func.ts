@@ -1,5 +1,3 @@
-import { retry } from "@reduxjs/toolkit/query"
-
 export const setCookie = ({
 	cookieName,
 	cookieValue,
@@ -15,6 +13,12 @@ export const setCookie = ({
 	if (typeof document !== `undefined`) {
 		document.cookie = `${cookieName}=${cookieValue};${expires};path=/`
 	}
+}
+
+export const getCookie = name => {
+	const value = `; ${document.cookie}`
+	const parts = value.split(`; ${name}=`)
+	if (parts.length === 2) return parts.pop().split(";").shift()
 }
 
 export const numberFormat = (num, decimalPlaces, isShowSign = true) => {

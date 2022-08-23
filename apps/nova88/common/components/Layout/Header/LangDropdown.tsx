@@ -13,7 +13,9 @@ import { defLangOptions } from "./LangDropdown.def"
 import some from "lodash/some"
 import { filter } from "lodash"
 import { REWARD88_LANG } from "common/constants/localStorage"
-import { setCookie } from "../../../utils/func"
+import { setCookie } from "common/utils/func"
+import { useSetLanguageMutation } from "service/api/accountApi"
+import { usePopBox } from "common/hooks"
 
 const LangDropdown = () => {
 	const { i18n } = useTranslation()
@@ -26,6 +28,19 @@ const LangDropdown = () => {
 		REWARD88_LANG,
 		null
 	)
+	const { setPopBoxType } = usePopBox()
+	const [setLanguage] = useSetLanguageMutation()
+
+	const handleSetLanguage = async langId => {
+		try {
+			await setLanguage({ langId }).unwrap()
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
 
 	const toggleLangDropdown = () => setIsOpen(prev => !prev)
 
@@ -42,6 +57,9 @@ const LangDropdown = () => {
 			cookieName: "nova88LangId",
 			cookieValue: newLangId,
 		})
+		if (isLogin) {
+			handleSetLanguage(newLangId)
+		}
 	}
 
 	const handleClickOutside = () => {

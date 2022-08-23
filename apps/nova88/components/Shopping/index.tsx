@@ -284,12 +284,14 @@ const Shopping = () => {
 		if (isLogin) {
 			getCartList({ giftIds: [], isAdd: 0 })
 			handleFilter({
+				...{
+					categoryIds: null,
+					tags: null,
+					orderByField: null,
+					desc: false,
+					pageSize: args.pageSize,
+				},
 				langId: i18n.language,
-				categoryIds: null,
-				tags: null,
-				orderByField: null,
-				desc: false,
-				pageSize: args.pageSize,
 			})
 			setIsFilterFavorite(false)
 		}
