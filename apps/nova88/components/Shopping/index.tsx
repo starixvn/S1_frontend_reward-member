@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { useTranslation } from "react-i18next"
+import { useLocalStorage } from "usehooks-ts"
+import classNames from "classnames"
 import GiftTab from "./GiftTab"
 import GiftSwiper from "./GiftSwiper"
+import GiftSelector from "./GiftSelector"
+import GiftList from "./GiftList"
 import Loading from "common/components/Loading"
-import {
-	useLazyGetGiftListQuery,
-	useLazyGetGiftTagsQuery,
-	useSetFavoriteMutation,
-} from "service/api/storeApi"
-import { useLocalStorage } from "usehooks-ts"
 import { useInView, usePopBox } from "common/hooks"
+import { useAppDispatch } from "store"
+import { selectedIsLogin } from "service/slice/auth"
+import { setCartNumber } from "service/slice/cart"
 import {
 	fromList,
 	sortType,
@@ -17,40 +20,21 @@ import {
 	DEFAULT_PAGE_SIZE_COUNT,
 } from "./constants"
 import { IGetGiftListArgs } from "service/api/storeApi/type"
-import GiftSelector from "./GiftSelector"
-import GiftList from "./GiftList"
-import { useSelector } from "react-redux"
-import { selectedIsLogin } from "service/slice/auth"
+import { ISetShoppingCarData } from "service/api/redemptionApi/type"
+import {
+	useLazyGetGiftListQuery,
+	useLazyGetGiftTagsQuery,
+	useSetFavoriteMutation,
+} from "service/api/storeApi"
 import { useSetShoppingCartMutation } from "service/api/redemptionApi"
-import { useAppDispatch } from "store"
-import { setCartNumber } from "service/slice/cart"
-import { useTranslation } from "react-i18next"
-import classNames from "classnames"
 
-interface IGetCarListArgs {
-	giftId?: number
-	giftName?: string
-	enGiftName?: string
-	categoryId?: number
-	categoryName?: string
-	giftDescription?: string
-	giftPictureUrl?: string
-	isFavorite?: boolean
-	tagList?: {
-		tagId: number
-		tagName: string
-		lang: string
-	}[]
-	point?: number
-	priceWorth?: number
-	showStock?: boolean
-	stock?: number
-}
 const Shopping = () => {
 	const dispatch = useAppDispatch()
+	const isLogin = useSelector(selectedIsLogin)
 	const { i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
+	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const [args, setArgs] = useState({
 		categoryIds: null,
 		tags: null,
@@ -59,10 +43,20 @@ const Shopping = () => {
 		pageSize: DEFAULT_PAGE_SIZE_COUNT,
 	})
 	const [categoryList, setCategoryList] = useState([])
+	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
+	const [activeTabItem, setActiveTabItem] = useState({})
+	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
 	const [
 		getGiftTags,
-		{ data: { data: giftTabs = [] } = {}, isFetching: isGetGiftTabsFetching },
+		{ data: { data: giftTabs = [] } = {}, isLoading: isGetGiftTabsLoading },
 	] = useLazyGetGiftTagsQuery()
+	const [
+		getGiftList,
+		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
+	] = useLazyGetGiftListQuery()
+	const [setShoppingCart] = useSetShoppingCartMutation()
+	const [setFavorite] = useSetFavoriteMutation()
+
 	const getGiftTabsList = async () => {
 		try {
 			await getGiftTags(null).unwrap()
@@ -73,6 +67,7 @@ const Shopping = () => {
 			})
 		}
 	}
+
 	const giftTabList =
 		giftTabs && giftTabs.length > 0
 			? [
@@ -88,14 +83,18 @@ const Shopping = () => {
 						tagName: "FAVORITE",
 					},
 			  ]
-			: null
-	const [
-		getGiftList,
-		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
-	] = useLazyGetGiftListQuery()
-	const [setShoppingCart] = useSetShoppingCartMutation()
-	const [setFavorite] = useSetFavoriteMutation()
-
+			: [
+					{
+						lang: i18n.language,
+						tagId: 0,
+						tagName: "ALL",
+					},
+					{
+						lang: i18n.language,
+						tagId: 999,
+						tagName: "FAVORITE",
+					},
+			  ]
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
 			await getGiftList(args).unwrap()
@@ -106,7 +105,7 @@ const Shopping = () => {
 			})
 		}
 	}
-	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
+
 	const getCartList = async args => {
 		try {
 			await setShoppingCart(args)
@@ -122,10 +121,7 @@ const Shopping = () => {
 			})
 		}
 	}
-	const [activeTabItem, setActiveTabItem] = useState({})
-	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
-	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
-	const isLogin = useSelector(selectedIsLogin)
+
 	const getCategoryList = giftList => {
 		const tempList = []
 		const categoryList = []
@@ -267,17 +263,18 @@ const Shopping = () => {
 				props: { content: error.message },
 			})
 		}
+		if (giftTabList && giftTabList.length > 0) {
+			setActiveTabItem(giftTabList[0])
+		}
 	}
+
+	const filterList = isFilterFavorite
+		? giftList.filter(obj => obj.isFavorite === true)
+		: giftList
 
 	useEffect(() => {
 		init()
 	}, [])
-
-	useEffect(() => {
-		if (giftTabList && giftTabList.length > 0) {
-			setActiveTabItem(giftTabList[0])
-		}
-	}, [isGetGiftTabsFetching])
 
 	useEffect(() => {
 		getGiftTabsList()
@@ -294,8 +291,11 @@ const Shopping = () => {
 				langId: i18n.language,
 			})
 			setIsFilterFavorite(false)
+			if (giftTabList && giftTabList.length > 0) {
+				setActiveTabItem(giftTabList[0])
+			}
 		}
-	}, [isLogin])
+	}, [isLogin, isGetGiftTabsLoading])
 
 	useEffect(() => {
 		handleFilter({ ...args, langId: i18n.language })
@@ -314,9 +314,6 @@ const Shopping = () => {
 		}
 	}, [isInView])
 
-	const filterList = isFilterFavorite
-		? giftList.filter(obj => obj.isFavorite === true)
-		: giftList
 	return (
 		<main
 			className={classNames("shopping-page", {
@@ -325,11 +322,16 @@ const Shopping = () => {
 			<GiftSwiper />
 			<div className="products-group container-xxl">
 				<div className="row">
-					<GiftTab
-						tabList={giftTabList}
-						activeItem={activeTabItem}
-						onChange={handleTabChange}
-					/>
+					{isGetGiftTabsLoading ? (
+						<Loading />
+					) : (
+						<GiftTab
+							tabList={giftTabList}
+							activeItem={activeTabItem}
+							onChange={handleTabChange}
+						/>
+					)}
+
 					<div className="select">
 						<div className="inputBox-null" />
 						<GiftSelector
@@ -343,18 +345,19 @@ const Shopping = () => {
 							onChange={label => handleSelectorItemChange("from", label)}
 						/>
 					</div>
-					<GiftList
-						filterList={filterList}
-						onToggleCart={handleGiftItemToggle}
-						onToggleFavorite={handleFavoriteToggle}
-						activeTabItem={activeTabItem}
-						realCartList={realCartList}
-					/>
+					{isGetGiftListFetching ? (
+						<Loading />
+					) : (
+						<GiftList
+							filterList={filterList}
+							onToggleCart={handleGiftItemToggle}
+							onToggleFavorite={handleFavoriteToggle}
+							activeTabItem={activeTabItem}
+							realCartList={realCartList}
+						/>
+					)}
 				</div>
-				{isGetGiftListFetching && <Loading />}
-
 				<div ref={inViewRef} />
-
 				<br />
 			</div>
 		</main>

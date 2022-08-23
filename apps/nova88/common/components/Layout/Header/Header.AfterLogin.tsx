@@ -1,97 +1,101 @@
-import React, { useState, useRef } from "react";
-import classnames from "classnames";
-import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "store";
-import { useSelector } from "react-redux";
-import { useLocalStorage, useOnClickOutside } from "usehooks-ts";
-import { useTranslation } from "react-i18next";
-import { logoutAsync } from "service/slice/auth/thunk";
-import { selectedProfile, selectedLangId, setIsLogin } from "service/slice/auth";
-import { imageUrl, siteInfo } from "config";
-import { useGetPointBalanceQuery } from "service/api/storeApi";
-import LangDropdown from "./LangDropdown";
-import ShoppingCart from "./ShoppingCart";
-import { paths } from "common/constants";
-import { REWARD88_LANG } from "common/constants/localStorage";
-import { numberFormat } from "common/utils/func";
+import React, { useState, useRef } from "react"
+import classnames from "classnames"
+import Link from "next/link"
+import { useAppDispatch, useAppSelector } from "store"
+import { useSelector } from "react-redux"
+import { useLocalStorage, useOnClickOutside } from "usehooks-ts"
+import { useTranslation } from "react-i18next"
+import { logoutAsync } from "service/slice/auth/thunk"
+import { selectedProfile, selectedLangId, setIsLogin } from "service/slice/auth"
+import { imageUrl, siteInfo } from "config"
+import { useGetPointBalanceQuery } from "service/api/storeApi"
+import LangDropdown from "./LangDropdown"
+import ShoppingCart from "./ShoppingCart"
+import { paths } from "common/constants"
+import { REWARD88_LANG } from "common/constants/localStorage"
+import { numberFormat } from "common/utils/func"
 
 const HeaderAfterLogin = () => {
-  const { t, i18n } = useTranslation();
-  const profile = useSelector(selectedProfile);
-  const dispatch = useAppDispatch();
-  const [cartList, setCartList] = useLocalStorage("nova88Cart", []);
-  const langId = useAppSelector(selectedLangId);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
-    REWARD88_LANG,
-    null
-  );
-  const { data: { data: { pointBalance } = {} } = {} } =
-    useGetPointBalanceQuery(null);
-  const userMenuWrapper = useRef();
-  const [isUserMenuOpen, setUserMenuIsOpen] = useState<boolean>(false);
+	const { t, i18n } = useTranslation()
+	const profile = useSelector(selectedProfile)
+	const dispatch = useAppDispatch()
+	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+	const langId = useAppSelector(selectedLangId)
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
+		REWARD88_LANG,
+		null
+	)
+	const { data: { data: { pointBalance } = {} } = {} } =
+		useGetPointBalanceQuery(null)
+	const userMenuWrapper = useRef()
+	const [isUserMenuOpen, setUserMenuIsOpen] = useState<boolean>(false)
 
-  const handleLogout = async () => {
-    await dispatch(logoutAsync());
-    dispatch(setIsLogin(false));
-    setCartList([]);
-    // * 登入及登出後重置語系
-    i18n.changeLanguage(siteInfo.defaultLang);
-    setLocalStorageLangId(null);
-  };
+	const handleLogout = async () => {
+		await dispatch(logoutAsync())
+		dispatch(setIsLogin(false))
+		setCartList([])
+		// * 登入及登出後重置語系
+		i18n.changeLanguage(siteInfo.defaultLang)
+		setLocalStorageLangId(null)
+	}
 
-  const toggleUserMenuDropdown = () => setUserMenuIsOpen(prev => !prev);
+	const toggleUserMenuDropdown = () => setUserMenuIsOpen(prev => !prev)
 
-  const handleClickOutside = () => {
-    setUserMenuIsOpen(false);
-  };
+	const handleClickOutside = () => {
+		setUserMenuIsOpen(false)
+	}
 
-  useOnClickOutside(userMenuWrapper, handleClickOutside);
+	useOnClickOutside(userMenuWrapper, handleClickOutside)
 
-  return (
-    <>
-      <Link href={paths.about.sub.points.root}>
-        <a className="icon icon-diamond">
-          <span>{t("RewardPoints")}</span>
-          {numberFormat(pointBalance, 2) ?? 0}
-        </a>
-      </Link>
-      <div
-        className="memberFile"
-        onClick={toggleUserMenuDropdown}
-        ref={userMenuWrapper}>
-        <div className="vipAnimation">
-          <a>
-            <img
-              src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
-              alt="vip"
-            />
-          </a>
-        </div>
-        <div className="memberID">
-          <button className="icon-keyboard_arrow_down">
-            {profile.userName}
-          </button>
-          <div className={classnames("submenu", { active: isUserMenuOpen })}>
-            <Link href={paths.about.sub.points.root}>{t("MyPoints")}</Link>
-            <Link href={paths.about.sub.purchase.root}>{t("MyPurchase")}</Link>
-          </div>
-        </div>
-      </div>
-      <a className="icon icon-email">
-        <div className="msgPop" style={{ display: "none" }}>
-          <div>{t("WeeklyRetentionBonus")}</div>
-          <button className="icon icon-close"></button>
-        </div>
-      </a>
-      <LangDropdown />
-      <ShoppingCart />
-      <button onClick={handleLogout} className="icon icon-exit" />
-      <Link href={`/${langId}`} className="novaLogo">
-        <img src={`${imageUrl}/img/novalogo.png`} alt="any" />
-      </Link>
-    </>
-  );
-};
+	return (
+		<>
+			<Link href={paths.about.sub.points.root}>
+				<a className="icon icon-diamond">
+					<span>{t("RewardPoints")}</span>
+					{numberFormat(pointBalance, 2) ?? 0}
+				</a>
+			</Link>
+			<div
+				className="memberFile"
+				onClick={toggleUserMenuDropdown}
+				ref={userMenuWrapper}>
+				<div className="vipAnimation">
+					<a>
+						<img
+							src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
+							alt="vip"
+						/>
+					</a>
+				</div>
+				<div className="memberID">
+					<button className="icon-keyboard_arrow_down">
+						{profile.userName}
+					</button>
+					<div className={classnames("submenu", { active: isUserMenuOpen })}>
+						<Link href={paths.about.sub.points.root}>{t("MyPoints")}</Link>
+						<Link href={paths.about.sub.purchase.root}>{t("MyPurchase")}</Link>
+					</div>
+				</div>
+			</div>
+			<a className="icon icon-email">
+				<div className="msgPop" style={{ display: "none" }}>
+					<div>{t("WeeklyRetentionBonus")}</div>
+					<button className="icon icon-close"></button>
+				</div>
+			</a>
+			<LangDropdown />
+			<ShoppingCart />
+			<button onClick={handleLogout} className="icon icon-exit" />
+			<a
+				href={`/${langId}`}
+				target="_blank"
+				rel="noreferrer"
+				className="novaLogo">
+				<img src={`${imageUrl}/img/novalogo.png`} alt="any" />
+			</a>
+		</>
+	)
+}
 
-export default HeaderAfterLogin;
+export default HeaderAfterLogin

@@ -96,7 +96,7 @@ const Order: FC<ICartOrderProps> = ({
 				{isShowOrderItem && (
 					<div>
 						<span>{checkedItem.giftName}</span>
-						<span className="icon icon-coin minus">
+						<span className="icon icon-coin">
 							{numberFormat(
 								checkedItem.point *
 									(checkedItem.number ? checkedItem.number : 1),
@@ -114,11 +114,11 @@ const Order: FC<ICartOrderProps> = ({
 				<div className="total null">
 					<span>{t("GRAND_TOTAL")}</span>
 
-					<span
-						className={classnames("icon", "icon-coin", {
-							minus: totalCal < 0,
-						})}>
-						{numberFormat(totalCal, 2, false)}
+					<span className={classnames("icon", "icon-coin")}>
+						{numberFormat(
+							checkedItem.point * (checkedItem.number ? checkedItem.number : 1),
+							2
+						)}
 					</span>
 				</div>
 				{totalCal < 0 && (

@@ -131,7 +131,9 @@ const DepositPointInfo = ({ currency }) => {
 					</tr>
 					<tr>
 						<td>
-							{currency} {depositPointReward[currency]}
+							<span>
+								{currency} {depositPointReward[currency]}
+							</span>
 							<p>({t("AllDepositType")})</p>
 						</td>
 						<td>x 1.0</td>

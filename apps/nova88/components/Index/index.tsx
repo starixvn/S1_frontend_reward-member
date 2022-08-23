@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import QRCode from "qrcode.react"
+import classNames from "classnames"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
 import GiftSwiper from "components/Shopping/GiftSwiper"
@@ -14,45 +15,35 @@ import {
 } from "service/api/storeApi"
 import { IGetGiftListArgs } from "service/api/storeApi/type"
 import { useSelector } from "react-redux"
-import { selectedIsLogin } from "service/slice/auth"
-import { imageUrl } from "config"
+import { selectedIsLogin, selectedLangId } from "service/slice/auth"
+import { imageUrl, siteInfo } from "config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
 import { paths } from "common/constants"
 import { useGetAppLinkQuery } from "service/api/playerApi"
 import { defAppType } from "service/api/playerApi/def"
 import { useSetShoppingCartMutation } from "service/api/redemptionApi"
-import { setCartNumber } from "../../service/slice/cart"
-import { useAppDispatch } from "../../store"
-import classNames from "classnames"
-
-interface IGetCarListArgs {
-	giftId?: number
-	giftName?: string
-	enGiftName?: string
-	categoryId?: number
-	categoryName?: string
-	giftDescription?: string
-	pictureUrl?: string
-	isFavorite?: boolean
-	tagList?: {
-		tagId: number
-		tagName: string
-		lang: string
-	}[]
-	point?: number
-	priceWorth?: number
-	showStock?: boolean
-	stock?: number
-}
+import { setCartNumber } from "service/slice/cart"
+import { useAppDispatch, useAppSelector } from "store"
+import { ISetShoppingCarData } from "service/api/redemptionApi/type"
 
 const Index = () => {
 	const dispatch = useAppDispatch()
-	const { i18n } = useTranslation()
+	const { i18n, t } = useTranslation()
+	const route = useRouter()
 	const { setPopBoxType } = usePopBox()
+	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+	const isLogin = useSelector(selectedIsLogin)
+	const langId = useAppSelector(selectedLangId)
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
-	const isLogin = useSelector(selectedIsLogin)
-	const [realCartList, setRealCartList] = useState<IGetCarListArgs[]>([])
+	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
+	const [
+		getGiftList,
+		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
+	] = useLazyGetGiftListQuery()
+
+	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
+
 	const getCartList = async args => {
 		try {
 			await setShoppingCart(args)
@@ -68,15 +59,9 @@ const Index = () => {
 			})
 		}
 	}
-	const { t } = useTranslation()
-	const route = useRouter()
-	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
-	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
 
-	const [
-		getGiftList,
-		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
-	] = useLazyGetGiftListQuery()
+	const getAppLink = (type: number) =>
+		appLinks?.find(el => el.appType === type)?.downloadLink
 
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
@@ -88,9 +73,6 @@ const Index = () => {
 			})
 		}
 	}
-
-	const getAppLink = (type: number) =>
-		appLinks?.find(el => el.appType === type)?.downloadLink
 
 	const handleFavoriteToggle = async item => {
 		if (isLogin) {
@@ -112,6 +94,7 @@ const Index = () => {
 			})
 		}
 	}
+
 	const handleGiftItemToggle = async giftItem => {
 		if (!giftItem.stock && giftItem.showStock) return
 		if (isLogin) {
@@ -146,6 +129,8 @@ const Index = () => {
 
 	const goToMore = () => route.push(paths.shopping)
 
+	const month = monthObj[new Date().getMonth() + 1]
+
 	useEffect(() => {
 		if (isLogin) {
 			getCartList({ giftIds: [], isAdd: 0 })
@@ -161,6 +146,7 @@ const Index = () => {
 			})
 		}
 	}, [isLogin])
+
 	useEffect(() => {
 		handleFilter({
 			...{
@@ -173,7 +159,7 @@ const Index = () => {
 			langId: i18n.language,
 		})
 	}, [i18n.language])
-	const month = monthObj[new Date().getMonth() + 1]
+
 	return (
 		<main
 			className={classNames({
@@ -214,7 +200,13 @@ const Index = () => {
 					<div className="col-xl-5">
 						<div className="info">
 							<div>{t("imgAdText1")}</div>
-							<img src={`${imageUrl}/img/rewardimg.jpg`} alt="" />
+							<img
+								onClick={() => {
+									route.push(paths.shopping)
+								}}
+								src={`${imageUrl}/img/rewardimg.jpg`}
+								alt=""
+							/>
 						</div>
 						<div className="info">
 							<div>{t("imgAdText2")}</div>
@@ -321,7 +313,13 @@ const Index = () => {
 					</div>
 					<div className="col-md-5 col-xl-5">
 						<div className="affiliate-txt">
-							<div className="title">{t("DownloadBgText1")}</div>
+							<a
+								href={`${siteInfo.affiliateLink}/?lang=${langId}`}
+								target="_blank"
+								rel="noreferrer"
+								className="title">
+								{t("DownloadBgText1")}
+							</a>
 							{t("DownloadBgText2")}
 						</div>
 						<img src={`${imageUrl}/img/affiliatebg.jpg`} alt="" />
