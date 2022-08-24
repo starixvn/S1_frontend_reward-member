@@ -56,7 +56,6 @@ const Shopping = () => {
 	] = useLazyGetGiftListQuery()
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
-
 	const getGiftTabsList = async () => {
 		try {
 			await getGiftTags(null).unwrap()
@@ -345,17 +344,13 @@ const Shopping = () => {
 							onChange={label => handleSelectorItemChange("from", label)}
 						/>
 					</div>
-					{isGetGiftListFetching ? (
-						<Loading />
-					) : (
-						<GiftList
-							filterList={filterList}
-							onToggleCart={handleGiftItemToggle}
-							onToggleFavorite={handleFavoriteToggle}
-							activeTabItem={activeTabItem}
-							realCartList={realCartList}
-						/>
-					)}
+					<GiftList
+						filterList={filterList}
+						onToggleCart={handleGiftItemToggle}
+						onToggleFavorite={handleFavoriteToggle}
+						activeTabItem={activeTabItem}
+						realCartList={realCartList}
+					/>
 				</div>
 				<div ref={inViewRef} />
 				<br />

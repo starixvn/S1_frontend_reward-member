@@ -56,19 +56,18 @@ const HeaderAfterLogin = () => {
 					{numberFormat(pointBalance, 2) ?? 0}
 				</a>
 			</Link>
-			<div
-				className="memberFile"
-				onClick={toggleUserMenuDropdown}
-				ref={userMenuWrapper}>
-				<div className="vipAnimation">
-					<a>
-						<img
-							src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
-							alt="vip"
-						/>
-					</a>
-				</div>
-				<div className="memberID">
+			<div className="memberFile" ref={userMenuWrapper}>
+				<Link href={paths.about.sub.points.root}>
+					<div className="vipAnimation">
+						<a>
+							<img
+								src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
+								alt="vip"
+							/>
+						</a>
+					</div>
+				</Link>
+				<div onClick={toggleUserMenuDropdown} className="memberID">
 					<button className="icon-keyboard_arrow_down">
 						{profile.userName}
 					</button>
@@ -78,15 +77,11 @@ const HeaderAfterLogin = () => {
 					</div>
 				</div>
 			</div>
-			<a className="icon icon-email">
-				<div className="msgPop" style={{ display: "none" }}>
-					<div>{t("WeeklyRetentionBonus")}</div>
-					<button className="icon icon-close"></button>
-				</div>
-			</a>
+			<button onClick={handleLogout} className="icon icon-exit" />
+
 			<LangDropdown />
 			<ShoppingCart />
-			<button onClick={handleLogout} className="icon icon-exit" />
+
 			<a
 				href={`/${langId}`}
 				target="_blank"

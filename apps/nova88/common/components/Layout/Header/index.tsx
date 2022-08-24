@@ -43,30 +43,28 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 							<Link href={paths.home}>
 								<a className="icon icon-home"></a>
 							</Link>
-							<Link
-								href={`/${langId}/${paths.appDownload}`}
-								className="icon icon-mobile">
-								<a className="icon icon-mobile"></a>
-							</Link>
 						</div>
 						<div>
-							<Link href={paths.shopping}>{t("Shopping").toUpperCase()}</Link>
+							<Link href={paths.shopping}>{t("88_Store").toUpperCase()}</Link>
+							{isLogin && (
+								<>
+									<Link href={paths.about.sub.points.root}>
+										{t("MyPoints").toUpperCase()}
+									</Link>
+									<Link href={paths.about.sub.purchase.root}>
+										{t("MyPurchase").toUpperCase()}
+									</Link>
+								</>
+							)}
 							<Link href={paths.about.sub.howtoearnpoints.root}>
 								{t("HOW_TO_EARN_POINTS").toUpperCase()}
 							</Link>
 							<Link href={paths.about.sub.rewardfaq.root}>
 								{t("FAQ").toUpperCase()}
 							</Link>
-							{isLogin && (
-								<>
-									<Link href={paths.about.sub.purchase.root}>
-										{t("MyPurchase").toUpperCase()}
-									</Link>
-									<Link href={paths.about.sub.points.root}>
-										{t("MyPoints").toUpperCase()}
-									</Link>
-								</>
-							)}
+							<Link href={`/${langId}/${paths.appDownload}`}>
+								<a className="icon icon-mobile"></a>
+							</Link>
 						</div>
 					</div>
 				</div>

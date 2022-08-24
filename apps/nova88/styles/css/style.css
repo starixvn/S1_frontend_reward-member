@@ -317,6 +317,7 @@ input:-webkit-autofill:active {
 
 .header > div.function > div .countryList .countryName {
   margin: .5rem 0;
+  font-weight: bold;
 }
 
 .header > div.function > div .countryList.active {
@@ -784,6 +785,7 @@ input:-webkit-autofill:active {
 
 .indexImg .txt > div p, .saleImg .txt > div p {
   font-size: 4vw;
+  white-space: nowrap;
 }
 
 .indexImg .txt > div:nth-child(1), .saleImg .txt > div:nth-child(1) {
@@ -1408,18 +1410,23 @@ input:-webkit-autofill:active {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
   padding: .5vw 0;
 }
 
 .appDownload .row .download-txt .qr-group .qrCode .icon::before {
-  font-size: 1.5vw;
+  font-size: 1.5rem;
+  margin-right: 5px;
 }
 
 .appDownload .row .download-txt .qr-group .qrCode .icon span {
   font-weight: bold;
+  line-height: 0.9;
 }
 
 .appDownload .row .download-txt .qr-group .qrCode .icon-android::before {
@@ -1427,8 +1434,9 @@ input:-webkit-autofill:active {
 }
 
 .appDownload .row .download-txt .qr-group .qrCode svg {
-  width: 90px;
+  width: 95px;
   background: #fff;
+  height: 95px;
 }
 
 @media (max-width: 767px) {
@@ -1438,7 +1446,7 @@ input:-webkit-autofill:active {
 }
 
 .appDownload .row .download-txt .qr-group .qrCode a {
-  width: 90px;
+  width: 95px;
   display: block;
   font-size: 12px;
   padding: .3vw .5vw;
@@ -1449,7 +1457,7 @@ input:-webkit-autofill:active {
 
 @media (max-width: 767px) {
   .appDownload .row .download-txt .qr-group .qrCode a {
-    width: 20vw;
+    width: 25vw;
   }
 }
 
@@ -3436,6 +3444,7 @@ input:-webkit-autofill:active {
 .accordion > div a.country > div .countryName,
 .accordion > div button.country > div .countryName,
 .accordion > div div.country > div .countryName {
+  font-weight: bold !important;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3447,7 +3456,7 @@ input:-webkit-autofill:active {
   width: 100%;
   background: transparent;
   font-weight: normal;
-  color: #666;
+  color: #CDAE8E;
 }
 
 .accordion > div a.country > div button,
@@ -4606,13 +4615,15 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
   .appDownload .row .download-txt {
     top: 6vw;
     left: 2vw;
-    font-size: 2.5vw;
+    font-size: 2vw;
+    width: 45%;
   }
   .appDownload .row .download-txt .logo {
     width: 15vw;
   }
   .appDownload .row .download-txt .title {
-    font-size: 3.5vw;
+    font-size: 3vw;
+    white-space: nowrap;
   }
   .appDownload .row .download-txt .qr-group {
     display: -webkit-box;
