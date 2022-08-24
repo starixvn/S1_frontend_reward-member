@@ -104,7 +104,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 					})}
 				/>
 			</div>
-			<div className="product-name">{item.giftName}</div>
+			<div className="product-name">{item.giftName ?? item.enGiftName}</div>
 			<div className="product-description">{item.giftDescription}</div>
 			<div className="icon icon-coin">&nbsp;{numberFormat(item.point, 2)}</div>
 

@@ -85,7 +85,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 				</div>
 				<div>
 					<Link href={paths.shopping}>
-						<a className="title icon icon-shop">{t("Shopping")}</a>
+						<a className="title icon icon-shop">{t("88_Store")}</a>
 					</Link>
 				</div>
 				<div>

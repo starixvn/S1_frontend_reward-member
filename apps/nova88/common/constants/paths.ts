@@ -29,7 +29,6 @@ const paths = {
 	join: "join",
 	appDownload: "appDownload",
 	profile: "profile",
-	referral: "referral",
 }
 
 export { paths }

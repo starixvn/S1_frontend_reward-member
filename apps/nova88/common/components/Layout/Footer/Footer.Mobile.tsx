@@ -48,7 +48,7 @@ const MobileFooter = () => {
 						active: asPath === paths.shopping,
 					})}>
 					<div className="circleAnimation"></div>
-					<span>{t("Shopping")}</span>
+					<span>{t("88_Store")}</span>
 				</a>
 			</Link>
 			{isLogin && (
