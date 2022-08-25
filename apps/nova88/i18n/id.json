@@ -38,6 +38,7 @@
 
 	"cart ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"ShoppingCart": "Kereta Belanja",
+  "ShoppingCart_Short": "Keranjang",
 	"Items1": "items",
 	"ShoppingCartTip": "Item disimpan ke tas Anda, tetapi ketersediaan tidak dijamin.",
 	"CheckoutLater": "Checkout Nanti",
@@ -90,7 +91,7 @@
 	"MyFavoritesList": "Daftar Favorit Saya",
 
 	"mine ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
-	"MyPoints": "POIN SAYA",
+	"MyPoints": "Point Saya",
 	"VINTAGE_CLUB": "VINTAGE CLUB",
 	"PointsEarned": "POIN YANG DIPEROLEH",
 	"Deposit": "Setoran",
@@ -218,9 +219,9 @@
 
 	"footer ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Home": "Beranda",
-	"LiveChat": "Obrolan Langsung",
+	"LiveChat": "Live Chat",
 	"Shopping": "Belanja",
-  "88_Store": "88 Toko",
+  "88_Store": "88 Store",
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "Logout",
 	"Label_RedeemTime": "Tebus Waktu",

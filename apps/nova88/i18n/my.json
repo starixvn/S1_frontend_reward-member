@@ -39,6 +39,7 @@
 
 	"cart ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"ShoppingCart": "Karta Beli Belah",
+  "ShoppingCart_Short": "Troli",
 	"Items1": "Item",
 	"ShoppingCartTip": "Item disimpan ke dalam beg anda, tetapi ketersediaan tidak dijamin.",
 	"CheckoutLater": "Semak Nanti",
@@ -91,7 +92,7 @@
 	"MyFavoritesList": "Senarai Kegemaran Saya",
 
 	"mine ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
-	"MyPoints": "MATA SAYA",
+	"MyPoints": "Mata Saya",
 	"VINTAGE_CLUB": "KELAB VINTAGE",
 	"PointsEarned": "MATA TERKUMPUL",
 	"Deposit": "Deposit",
@@ -218,10 +219,10 @@
 	"NoData": "Tiada maklumat tersedia sekarang.",
 
 	"footer ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
-	"Home": "Halaman Utama",
-	"LiveChat": "Sembang Langsung",
+	"Home": "Laman Utama",
+	"LiveChat": "Live Chat",
 	"Shopping": "Membeli-belah",
-  "88_Store": "Kedai 88",
+  "88_Store": "88 Store",
 	"submenu ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"Logout": "Log keluar",
 	"Label_RedeemTime": "Tebus Masa",

@@ -1,12 +1,11 @@
 import React from "react"
-import Link from "next/link"
 import { useTranslation } from "react-i18next"
 import { usePopBox } from "common/hooks"
 import { useAppSelector } from "store"
 import { selectedLangId } from "service/slice/auth"
 import LangDropdown from "./LangDropdown"
 import ShoppingCart from "./ShoppingCart"
-import { imageUrl } from "../../../../config"
+import { imageUrl } from "config"
 
 const HeaderBeforeLogin = () => {
 	const { t } = useTranslation()

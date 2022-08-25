@@ -39,6 +39,7 @@
 
 	"cart ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"ShoppingCart": "购物车",
+  "ShoppingCart_Short": "购物车",
 	"Items1": "商品",
 	"ShoppingCartTip": "物品已保存到您的包中，但不保证可用性。",
 	"CheckoutLater": "稍后结帐",

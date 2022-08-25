@@ -71,7 +71,9 @@ const HeaderAfterLogin = () => {
 						{profile.userName}
 					</button>
 					<div className={classnames("submenu", { active: isUserMenuOpen })}>
-						<Link href={paths.about.sub.points.root}>{t("MyPoints")}</Link>
+						<Link href={paths.about.sub.points.root}>
+							{t("MyPoints").toUpperCase()}
+						</Link>
 						<Link href={paths.about.sub.purchase.root}>{t("MyPurchase")}</Link>
 					</div>
 				</div>
