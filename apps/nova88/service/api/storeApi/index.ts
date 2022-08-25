@@ -32,7 +32,6 @@ const storeApi = createApi({
 				method: "POST",
 				data: {},
 			}),
-			providesTags: ["Post"],
 		}),
 		SetFavorite: builder.mutation<ISetFavoriteResponse, ISetFavoriteArgs>({
 			query: ({ langId, giftId, isFavorite }) => ({
@@ -51,7 +50,6 @@ const storeApi = createApi({
 				method: "POST",
 				data: {},
 			}),
-			providesTags: ["Post"],
 		}),
 		getMyPurchase: builder.query<IGetMyPurchesResponse, IGetMyPurchesArgs>({
 			query: ({ PageNumber, PageSize }) => ({
@@ -62,7 +60,6 @@ const storeApi = createApi({
 					PageSize,
 				},
 			}),
-			providesTags: ["Post"],
 		}),
 		getGiftTags: builder.query<IGetGiftTagsResponse, null>({
 			query: () => ({
@@ -70,7 +67,6 @@ const storeApi = createApi({
 				method: "POST",
 				data: {},
 			}),
-			providesTags: ["Post"],
 		}),
 	}),
 })
@@ -78,7 +74,6 @@ const storeApi = createApi({
 export const {
 	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
-	useGetPointBalanceQuery,
 	useSetFavoriteMutation,
 	useLazyGetMyCoinQuery,
 	useGetMyPurchaseQuery,

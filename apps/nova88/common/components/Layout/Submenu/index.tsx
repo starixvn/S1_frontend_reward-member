@@ -9,14 +9,14 @@ import {
 	setIsLogin,
 } from "service/slice/auth"
 import { logoutAsync } from "service/slice/auth/thunk"
-import { useAppDispatch } from "store"
+import { useAppDispatch, useAppSelector } from "store"
 import { imageUrl } from "config"
-import { useGetPointBalanceQuery } from "service/api/storeApi"
 import { paths } from "common/constants"
 import { usePopBox } from "common/hooks"
 import { numberFormat } from "common/utils/func"
 import LangDropdown from "../Header/LangDropdown"
 import { useLocalStorage } from "usehooks-ts"
+import { selectedPointBalance } from "service/slice/cart"
 interface ISubmenuProps {
 	isSubmenuOpen: boolean
 }
@@ -29,10 +29,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 	const { setPopBoxType } = usePopBox()
 	const [isLangDropOpen, setLangDropOpen] = useState<boolean>(true)
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
-
-	const { data: { data: { pointBalance } = {} } = {} } =
-		useGetPointBalanceQuery(null)
-
+	const pointBalance = useAppSelector(selectedPointBalance)
 	const toggleLangDrop = () => {
 		setLangDropOpen(prev => !prev)
 	}

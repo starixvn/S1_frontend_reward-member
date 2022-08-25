@@ -8,12 +8,12 @@ import { useTranslation } from "react-i18next"
 import { logoutAsync } from "service/slice/auth/thunk"
 import { selectedProfile, selectedLangId, setIsLogin } from "service/slice/auth"
 import { imageUrl, siteInfo } from "config"
-import { useGetPointBalanceQuery } from "service/api/storeApi"
 import LangDropdown from "./LangDropdown"
 import ShoppingCart from "./ShoppingCart"
 import { paths } from "common/constants"
 import { REWARD88_LANG } from "common/constants/localStorage"
 import { numberFormat } from "common/utils/func"
+import { selectedPointBalance } from "service/slice/cart"
 
 const HeaderAfterLogin = () => {
 	const { t, i18n } = useTranslation()
@@ -21,13 +21,12 @@ const HeaderAfterLogin = () => {
 	const dispatch = useAppDispatch()
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const langId = useAppSelector(selectedLangId)
+	const pointBalance = useAppSelector(selectedPointBalance)
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
 		REWARD88_LANG,
 		null
 	)
-	const { data: { data: { pointBalance } = {} } = {} } =
-		useGetPointBalanceQuery(null)
 	const userMenuWrapper = useRef()
 	const [isUserMenuOpen, setUserMenuIsOpen] = useState<boolean>(false)
 

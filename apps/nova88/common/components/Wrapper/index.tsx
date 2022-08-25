@@ -6,8 +6,9 @@ import { selectedIsLogin } from "service/slice/auth"
 import { paths } from "common/constants"
 import { useInitI18nLanguageEffect } from "common/hooks/useInitI18nLanguageEffect"
 import { useLocalStorage } from "usehooks-ts"
-import { useSetShoppingCartMutation } from "../../../service/api/redemptionApi"
-import { usePopBox } from "../../hooks"
+import { useSetShoppingCartMutation } from "service/api/redemptionApi"
+import { usePopBox } from "common/hooks"
+import { getPointBalanceAsync } from "service/slice/cart/thunk"
 
 interface IWrapperProps {
 	authRequired: boolean
@@ -62,6 +63,7 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 	useEffect(() => {
 		if (isLogin) {
 			dispatch(getCustProfileAsync())
+			dispatch(getPointBalanceAsync())
 			const giftIdList = []
 			cartList.forEach(item => {
 				giftIdList.push(item.giftId)

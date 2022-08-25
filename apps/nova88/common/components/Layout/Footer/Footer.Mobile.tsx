@@ -76,7 +76,7 @@ const MobileFooter = () => {
 						active: asPath === paths.cart,
 					})}>
 					<div className="qty">
-						{cartCount > 99 ? "99+" : `+${isLogin ? cartNumber : cartCount}`}
+						{cartCount > 99 ? "99+" : `${isLogin ? cartNumber : cartCount}`}
 					</div>
 					<div className="circleAnimation"></div>
 					<span>{t("ShoppingCart")}</span>

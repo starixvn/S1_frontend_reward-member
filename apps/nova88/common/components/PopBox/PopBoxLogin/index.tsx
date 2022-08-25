@@ -1,16 +1,17 @@
 import React, { FC } from "react"
-import Api from "service/Api"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { usePopBox } from "common/hooks"
 import { useTranslation } from "react-i18next"
-import { useAppDispatch, useAppSelector } from "store"
-import { selectedLangId, setIsLogin } from "service/slice/auth"
-import { imageUrl, siteInfo } from "config"
-import { getCustProfileAsync } from "service/slice/auth/thunk"
-import { IFormValues } from "./type"
-import Form from "./Form"
 import { useLocalStorage } from "usehooks-ts"
+import { useAppDispatch, useAppSelector } from "store"
+import { imageUrl, siteInfo } from "config"
+import Api from "service/Api"
+import { selectedLangId, setIsLogin } from "service/slice/auth"
+import { getCustProfileAsync } from "service/slice/auth/thunk"
+import { getPointBalanceAsync } from "service/slice/cart/thunk"
+import { usePopBox } from "common/hooks"
 import { REWARD88_LANG } from "common/constants/localStorage"
+import Form from "./Form"
+import { IFormValues } from "./type"
 
 const PopBoxLogin: FC = () => {
 	const { t, i18n } = useTranslation()
@@ -45,6 +46,7 @@ const PopBoxLogin: FC = () => {
 				// * 撈完初始使用者資訊之後再將登入改為 true
 				await dispatch(getCustProfileAsync())
 				dispatch(setIsLogin(isLogin))
+				await dispatch(getPointBalanceAsync())
 				closePopBox()
 
 				// * 登入及登出後重置語系
