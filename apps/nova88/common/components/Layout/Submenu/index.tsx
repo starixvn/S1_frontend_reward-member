@@ -77,24 +77,26 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 			<div className="accordion">
 				<div>
 					<Link href={paths.home}>
-						<a className="title icon icon-home">{t("Home")}</a>
+						<a className="title icon icon-home">{t("Home").toUpperCase()}</a>
 					</Link>
 				</div>
 				<div>
 					<Link href={paths.shopping}>
-						<a className="title icon icon-shop">{t("88_Store")}</a>
+						<a className="title icon icon-shop">
+							{t("88_Store").toUpperCase()}
+						</a>
 					</Link>
 				</div>
 				<div>
 					<Link href={paths.about.sub.howtoearnpoints.root}>
 						<a className="title icon icon-question">
-							{t("HOW_TO_EARN_POINTS")}
+							{t("HOW_TO_EARN_POINTS").toUpperCase()}
 						</a>
 					</Link>
 				</div>
 				<div>
 					<Link href={paths.about.sub.rewardfaq.root}>
-						<a className="title icon icon-faq">{t("FAQ")}</a>
+						<a className="title icon icon-faq">{t("FAQ").toUpperCase()}</a>
 					</Link>
 				</div>
 				{isLogin && (
@@ -106,7 +108,9 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						</div>
 						<div>
 							<Link href={paths.about.sub.points.root}>
-								<a className="title icon icon-coin">{t("MyPoints")}</a>
+								<a className="title icon icon-coin">
+									{t("MyPoints").toUpperCase()}
+								</a>
 							</Link>
 						</div>
 					</>
@@ -118,7 +122,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 							active: isLangDropOpen,
 						})}
 						onClick={toggleLangDrop}>
-						{t("Languages")}
+						{t("Languages").toUpperCase()}
 						<i className="icon icon-keyboard_arrow_down" />
 					</button>
 					<LangDropdown />
@@ -129,13 +133,13 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						href="https://direct.lc.chat/11638088/"
 						target="_blank"
 						rel="noreferrer">
-						{t("LiveChat")}
+						{t("LiveChat").toUpperCase()}
 					</a>
 				</div>
 				{isLogin && (
 					<div>
 						<button className="title icon icon-exit" onClick={handleLogout}>
-							{t("Logout")}
+							{t("Logout").toUpperCase()}
 						</button>
 					</div>
 				)}

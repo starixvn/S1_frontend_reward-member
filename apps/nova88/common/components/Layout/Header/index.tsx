@@ -9,7 +9,7 @@ import { selectedLangId } from "service/slice/auth"
 import HeaderBeforeLogin from "./Header.BeforeLogin"
 import HeaderAfterLogin from "./Header.AfterLogin"
 import ShoppingCart from "./ShoppingCart"
-import { imageUrl } from "../../../../config"
+import { imageUrl } from "config"
 import { paths } from "common/constants"
 
 interface IHeaderProps {

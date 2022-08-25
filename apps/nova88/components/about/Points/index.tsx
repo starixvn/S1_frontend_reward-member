@@ -61,7 +61,7 @@ const Points = () => {
 					</div>
 					<div className="col col-lg-10 col-xl-9">
 						<div className="page-content">
-							<div className="title">{t("MyPoints")}</div>
+							<div className="title">{t("MyPoints").toUpperCase()}</div>
 							{!isGetMyCoinFetching ? (
 								<div className="memberFile">
 									<div className="myDocument">

@@ -79,7 +79,7 @@ const MobileFooter = () => {
 						{cartCount > 99 ? "99+" : `${isLogin ? cartNumber : cartCount}`}
 					</div>
 					<div className="circleAnimation"></div>
-					<span>{t("ShoppingCart")}</span>
+					<span>{t("ShoppingCart_Short")}</span>
 				</a>
 			</button>
 		</footer>

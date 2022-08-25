@@ -3974,6 +3974,12 @@ footer.mobile-footer a, footer.mobile-footer button {
   font-size: 3vw;
 }
 
+@media (max-width: 320px) {
+  footer.mobile-footer a, footer.mobile-footer button {
+    font-size: 2.5vw;
+  }
+}
+
 footer.mobile-footer a.icon-menu, footer.mobile-footer button.icon-menu {
   position: relative;
 }

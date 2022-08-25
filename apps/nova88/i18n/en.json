@@ -44,6 +44,7 @@
 
 	"cart ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
 	"ShoppingCart": "Shopping Cart",
+  "ShoppingCart_Short": "Shopping Cart",
 	"Items1": "items",
 	"ShoppingCartTip": "Item saved to your bag, but availability is not guaranteed.",
 	"CheckoutLater": "CheckoutLater",
@@ -97,7 +98,7 @@
 	"MyFavoritesList": "My Favorites List",
 
 	"mine ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■": "",
-	"MyPoints": "MY POINTS",
+	"MyPoints": "My Points",
 	"VINTAGE_CLUB": "VINTAGE CLUB",
 	"PointsEarned": "POINTS EARNED",
 	"Deposit": "Deposit",
