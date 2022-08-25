@@ -1094,6 +1094,7 @@ input:-webkit-autofill:active {
 
 .product-list .product > div.iconGroup + div {
   height: 13rem;
+  width: 13rem;
   overflow: hidden;
   margin: 3rem auto auto;
   display: -webkit-box;
@@ -1105,6 +1106,7 @@ input:-webkit-autofill:active {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  cursor: pointer;
 }
 
 .product-list .product > div.btn {
@@ -4331,8 +4333,19 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
   }
+  .product-list .product {
+    width: calc(25% - 10px);
+  }
   .product-list .product > div.bigPup {
     top: 3rem;
+  }
+  .shopping-page .product-list .product {
+    width: calc(25% - 10px);
+  }
+  .shopping-page .loading {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
   .appDownload .row .download-txt {
     top: 2vw;

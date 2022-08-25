@@ -1,7 +1,7 @@
-import React, { FC } from "react"
+import React, { FC, useRef, useState } from "react"
 import { imageUrl } from "config"
 import classNames from "classnames"
-import { useLocalStorage } from "usehooks-ts"
+import { useLocalStorage, useOnClickOutside } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
 import { numberFormat } from "common/utils/func"
 import { useAppSelector } from "store"
@@ -57,8 +57,14 @@ const GiftItem: FC<IGiftItemProps> = ({
 	realCartList,
 }) => {
 	const { t } = useTranslation()
+	const [isLarge, setIsLarge] = useState(false)
 	const [cartList] = useLocalStorage("nova88Cart", [])
 	const isLogin = useAppSelector(selectedIsLogin)
+	const giftItemRef = useRef()
+	const handleClickOutside = () => {
+		setIsLarge(false)
+	}
+	useOnClickOutside(giftItemRef, handleClickOutside)
 	const handleItemBtnTextChange = giftItem => {
 		let text = ""
 		if (!giftItem.stock && giftItem.showStock) {
@@ -75,8 +81,28 @@ const GiftItem: FC<IGiftItemProps> = ({
 		}
 		return text
 	}
+	const showGiftItemBtn = () => (
+		<button
+			onClick={() => onToggleCart(item)}
+			className={classNames("icon", "active", {
+				"icon-ban": !item.stock && item.showStock,
+				"icon-checkmark":
+					(item.stock || !item.showStock) &&
+					(isLogin ? realCartList : cartList)?.find(
+						cartItem => cartItem.giftId === item.giftId
+					),
+				"icon-cart":
+					(item.stock || !item.showStock) &&
+					!(isLogin ? realCartList : cartList)?.find(
+						cartItem => cartItem.giftId === item.giftId
+					),
+			})}>
+			{handleItemBtnTextChange(item)}
+		</button>
+	)
 	return (
 		<div
+			ref={giftItemRef}
 			className={classNames("product", {
 				empty: !item.stock && item.showStock,
 			})}>
@@ -94,7 +120,11 @@ const GiftItem: FC<IGiftItemProps> = ({
 				))}
 			</div>
 			<div>
-				<img src={`${imageUrl}${item.giftPictureUrl}`} alt="any" />
+				<img
+					onClick={() => setIsLarge(true)}
+					src={`${imageUrl}${item.giftPictureUrl}`}
+					alt="any"
+				/>
 			</div>
 			<div className="btn">
 				<button
@@ -109,23 +139,13 @@ const GiftItem: FC<IGiftItemProps> = ({
 			<div className="icon icon-coin">&nbsp;{numberFormat(item.point, 2)}</div>
 
 			<div className="qty">{item.showStock && `${t("Qty")}:${item.stock}`}</div>
-			<button
-				onClick={() => onToggleCart(item)}
-				className={classNames("icon", "active", {
-					"icon-ban": !item.stock && item.showStock,
-					"icon-checkmark":
-						(item.stock || !item.showStock) &&
-						(isLogin ? realCartList : cartList)?.find(
-							cartItem => cartItem.giftId === item.giftId
-						),
-					"icon-cart":
-						(item.stock || !item.showStock) &&
-						!(isLogin ? realCartList : cartList)?.find(
-							cartItem => cartItem.giftId === item.giftId
-						),
-				})}>
-				{handleItemBtnTextChange(item)}
-			</button>
+			{showGiftItemBtn()}
+			<div className={classNames("bigPup", { active: isLarge })}>
+				<div>
+					<img src={`${imageUrl}${item.giftPictureUrl}`} alt="any" />
+				</div>
+				{showGiftItemBtn()}
+			</div>
 		</div>
 	)
 }

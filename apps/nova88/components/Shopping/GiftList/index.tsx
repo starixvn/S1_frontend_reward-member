@@ -45,6 +45,8 @@ interface IGiftListProps {
 		showStock?: boolean
 		stock?: number
 	}[]
+	isLargeImg?: boolean
+	onToggleLargeImg?: () => void
 }
 
 const GiftList: FC<IGiftListProps> = ({

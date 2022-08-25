@@ -22,7 +22,12 @@ import {
 	useSetShoppingCartMutation,
 } from "service/api/redemptionApi"
 import { selectedIsLogin, selectedProfile } from "service/slice/auth"
-import { selectedCartNumber, setCartNumber } from "service/slice/cart"
+import {
+	selectedCartNumber,
+	selectedPointBalance,
+	setCartNumber,
+	setPointBalance,
+} from "service/slice/cart"
 import { IGetGiftListArgs } from "service/api/storeApi/type"
 import { ISetShoppingCarData } from "service/api/redemptionApi/type"
 
@@ -46,6 +51,7 @@ interface ICheckOutArgs {
 const Cart = () => {
 	const dispatch = useAppDispatch()
 	const cartNumber = useAppSelector(selectedCartNumber)
+	const pointBalance = useAppSelector(selectedPointBalance)
 	const profile = useSelector(selectedProfile)
 	const isLogin = useSelector(selectedIsLogin)
 	const { t, i18n } = useTranslation()
@@ -65,15 +71,14 @@ const Cart = () => {
 	const [checkedItem, setCheckedItem] = useState<ICheckOutArgs>({})
 	const [isShowTip, setIsShowTip] = useState(false)
 	const [noteInput, setNoteInput] = useState("")
-	const [pointBalance, setPointBalance] = useState(0)
 	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
 
-	const handleGetPointBalance = async args => {
+	const handleGetPointBalance = async () => {
 		try {
 			const res: { data: { pointBalance: number } } = await getPointBalance(
-				args
+				null
 			).unwrap()
-			setPointBalance(res.data.pointBalance)
+			dispatch(setPointBalance(res.data.pointBalance))
 		} catch (error) {
 			setPopBoxType({
 				type: "warn",
@@ -219,7 +224,7 @@ const Cart = () => {
 				isLogin ? setRealCartList(newList) : setCartState(newList)
 				setCheckedItem({})
 				setNoteInput("")
-				handleGetPointBalance(null)
+				handleGetPointBalance()
 			} catch (error) {
 				setPopBoxType({
 					type: "warn",
@@ -228,12 +233,6 @@ const Cart = () => {
 			}
 		}
 	}
-
-	useEffect(() => {
-		if (isLogin) {
-			handleGetPointBalance(null)
-		}
-	}, [])
 
 	useEffect(() => {
 		if (isLogin) {
