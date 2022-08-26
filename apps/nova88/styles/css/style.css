@@ -4034,18 +4034,23 @@ footer.mobile-footer a .qty, footer.mobile-footer button .qty {
       -ms-flex-align: center;
           align-items: center;
   color: #fff;
-  width: 4vw;
-  height: 4vw;
+  width: 6vw;
+  height: 6vw;
   font-size: 3vw;
   border-radius: 100%;
   background: #FF7600;
   position: absolute;
   top: 1vw;
   right: 3vw;
-  padding: 0;
   line-height: 1;
   text-align: center;
-  margin: auto;
+  padding: 0 0 0.15vw 0;
+  line-height: 1;
+  text-align: center;
+  margin: -1vw 0 0;
+  border: 0;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
 }
 
 footer.mobile-footer a span, footer.mobile-footer button span {

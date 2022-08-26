@@ -17,12 +17,12 @@ export const fromList = [
 	{ categoryId: fromEnum.HIGH_TO_LOW_LETTER, categoryName: "HighToLowLetter" },
 ]
 
-export const sortType = {
-	LowToHighLetter: { orderByField: "EnGiftName", desc: false },
-	HighToLowLetter: { orderByField: "EnGiftName", desc: true },
-	LowToHighCost: { orderByField: "Point", desc: false },
-	HighToLowCost: { orderByField: "Point", desc: true },
-}
+export const sortType = [
+	{ orderByField: "Point", desc: false },
+	{ orderByField: "Point", desc: true },
+	{ orderByField: "EnGiftName", desc: false },
+	{ orderByField: "EnGiftName", desc: true },
+]
 
 export const DEFAULT_PAGE_SIZE_COUNT = 10
 export const PAGE_SIZE_COUNT = 5
