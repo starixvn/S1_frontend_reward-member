@@ -13,11 +13,11 @@ import { useAppDispatch } from "store"
 import { selectedIsLogin } from "service/slice/auth"
 import { setCartNumber } from "service/slice/cart"
 import {
-	fromList,
 	sortType,
 	tabOption,
 	PAGE_SIZE_COUNT,
 	DEFAULT_PAGE_SIZE_COUNT,
+	fromEnum,
 } from "./constants"
 import { IGetGiftListArgs } from "service/api/storeApi/type"
 import { ISetShoppingCarData } from "service/api/redemptionApi/type"
@@ -46,6 +46,20 @@ const Shopping = () => {
 	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
 	const [activeTabItem, setActiveTabItem] = useState({})
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
+	const [currentLangId, setCurrentLangId] = useState("")
+	const fromList = [
+		{ categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t("LowToHighCost") },
+		{ categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: t("HighToLowCost") },
+		{
+			categoryId: fromEnum.LOW_TO_HIGH_LETTER,
+			categoryName: t("LowToHighLetter"),
+		},
+		{
+			categoryId: fromEnum.HIGH_TO_LOW_LETTER,
+			categoryName: t("HighToLowLetter"),
+		},
+	]
+	const [sortFromList, setSortFromList] = useState(fromList)
 	const [
 		getGiftTags,
 		{ data: { data: giftTabs = [] } = {}, isLoading: isGetGiftTabsLoading },
@@ -183,16 +197,28 @@ const Shopping = () => {
 				langId: i18n.language,
 			}))
 		} else if (selectorType === "from") {
+			const getOrderByFieldValue = () => {
+				const res = sortFromList.find(
+					e => t(e.categoryName) === label
+				).categoryId
+				return sortType[res - 1].orderByField
+			}
+			const getDescValue = () => {
+				const res = sortFromList.find(
+					e => t(e.categoryName) === label
+				).categoryId
+				return sortType[res - 1].desc
+			}
 			handleFilter({
 				...args,
-				orderByField: sortType[label].orderByField,
-				desc: sortType[label].desc,
+				orderByField: getOrderByFieldValue(),
+				desc: getDescValue(),
 				langId: i18n.language,
 			})
 			setArgs(prev => ({
 				...prev,
-				orderByField: sortType[label].orderByField,
-				desc: sortType[label].desc,
+				orderByField: getOrderByFieldValue(),
+				desc: getDescValue(),
 				pageSize: DEFAULT_PAGE_SIZE_COUNT,
 				langId: i18n.language,
 			}))
@@ -272,11 +298,19 @@ const Shopping = () => {
 		if (giftTabList && giftTabList.length > 0) {
 			setActiveTabItem(giftTabList[0])
 		}
+		setCurrentLangId(i18n.language)
 	}
 
 	const filterList = isFilterFavorite
 		? giftList.filter(obj => obj.isFavorite === true)
 		: giftList
+
+	const handleFromList = () => {
+		for (let i = 0; i < sortFromList.length; i++) {
+			sortFromList[i].categoryName = t(fromList[i].categoryName)
+		}
+		setSortFromList(sortFromList)
+	}
 
 	useEffect(() => {
 		init()
@@ -306,6 +340,18 @@ const Shopping = () => {
 	useEffect(() => {
 		handleFilter({ ...args, langId: i18n.language })
 	}, [i18n.language, args])
+
+	useEffect(() => {
+		if (currentLangId !== i18n.language) {
+			handleFilter({ ...args, langId: i18n.language, categoryIds: null }).then(
+				() => {
+					setCategoryList(getCategoryList(giftList))
+					setCurrentLangId(i18n.language)
+					handleFromList()
+				}
+			)
+		}
+	}, [isGetGiftListFetching])
 
 	useEffect(() => {
 		const isLast = args.pageSize > giftList.length + PAGE_SIZE_COUNT
@@ -341,13 +387,13 @@ const Shopping = () => {
 					<div className="select">
 						<div className="inputBox-null" />
 						<GiftSelector
-							placeHolder="Category"
+							placeHolder={t("Category")}
 							itemList={categoryList}
 							onChange={label => handleSelectorItemChange("category", label)}
 						/>
 						<GiftSelector
-							placeHolder="From"
-							itemList={fromList}
+							placeHolder={t("From")}
+							itemList={sortFromList}
 							onChange={label => handleSelectorItemChange("from", label)}
 						/>
 					</div>
