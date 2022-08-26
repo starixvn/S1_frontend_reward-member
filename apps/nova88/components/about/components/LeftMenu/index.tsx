@@ -16,6 +16,7 @@ const LeftMenu: FC<ILeftMenuProps> = ({ activePath }) => {
 	const route = useRouter()
 	const isLogin = useAppSelector(selectedIsLogin)
 	const { setPopBoxType } = usePopBox()
+
 	return (
 		<div className="leftMenu">
 			<div className="leftMenu">
@@ -32,7 +33,7 @@ const LeftMenu: FC<ILeftMenuProps> = ({ activePath }) => {
 						}}
 						key={item.id}
 						className={classNames("item", {
-							active: activePath === item.path,
+							active: `/${activePath}` === item.path,
 						})}>
 						<span>{t(item.displayKey).toUpperCase()}</span>
 					</a>

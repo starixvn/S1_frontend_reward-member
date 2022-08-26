@@ -29,7 +29,7 @@ export const numberFormat = (num, decimalPlaces, isShowSign = true) => {
 		for (let i = 0; i < decimalPlaces; i++) {
 			decimal += "0"
 		}
-		return decimal
+		return `${decimalPlaces > 0 ? "." : ""}${decimal}`
 	}
 	if (num < 0) {
 		num = num.toString().replace("-", "")
@@ -43,6 +43,6 @@ export const numberFormat = (num, decimalPlaces, isShowSign = true) => {
 			.reduce((prev, next, index) => {
 				return (index % 3 ? next : next + ",") + prev
 			}) +
-		`.${getDecimal(decimalPlaces)}`
+		getDecimal(decimalPlaces)
 	)
 }

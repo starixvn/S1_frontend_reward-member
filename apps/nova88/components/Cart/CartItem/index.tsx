@@ -91,14 +91,16 @@ const CartItem: FC<ICartItemProps> = ({
 							<li>
 								{t("Qty")}:1
 								<div className="icon icon-coin">
-									{numberFormat(item.point, 2)}
+									{numberFormat(item.point, 0, false)}
 								</div>
 							</li>
 						</ul>
 					</div>
 				</div>
 				<div className="qty">1</div>
-				<div className="icon icon-coin">{numberFormat(item.point, 2)}</div>
+				<div className="icon icon-coin">
+					{numberFormat(item.point, 0, false)}
+				</div>
 			</div>
 			<div className="cart-del">
 				<button

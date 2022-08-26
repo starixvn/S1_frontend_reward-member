@@ -2,8 +2,8 @@ import React, { FC } from "react"
 import Link from "next/link"
 import classnames from "classnames"
 import { useTranslation } from "react-i18next"
-import { numberFormat } from "common/utils/func"
 import { paths } from "common/constants"
+import { numberFormat } from "common/utils/func"
 
 interface ICartOrderProps {
 	profile: {
@@ -88,7 +88,7 @@ const Order: FC<ICartOrderProps> = ({
 				<div>
 					<span>{t("AvailablePoints").toUpperCase()}</span>
 					<span className="icon icon-coin">
-						{numberFormat(pointBalance, 2)}
+						{numberFormat(pointBalance, 0, false)}
 					</span>
 				</div>
 			</div>
@@ -100,7 +100,8 @@ const Order: FC<ICartOrderProps> = ({
 							{numberFormat(
 								checkedItem.point *
 									(checkedItem.number ? checkedItem.number : 1),
-								2
+								0,
+								false
 							)}
 						</span>
 					</div>
@@ -115,10 +116,16 @@ const Order: FC<ICartOrderProps> = ({
 					<span>{t("GRAND_TOTAL")}</span>
 
 					<span className={classnames("icon", "icon-coin")}>
-						{numberFormat(
-							checkedItem.point * (checkedItem.number ? checkedItem.number : 1),
-							2
-						)}
+						{isNaN(
+							checkedItem.point * (checkedItem.number ? checkedItem.number : 1)
+						)
+							? "N/A"
+							: numberFormat(
+									checkedItem.point *
+										(checkedItem.number ? checkedItem.number : 1),
+									0,
+									false
+							  )}
 					</span>
 				</div>
 				{totalCal < 0 && (

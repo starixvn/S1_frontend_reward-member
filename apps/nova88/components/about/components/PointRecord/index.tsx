@@ -34,20 +34,20 @@ const PointRecord: FC<IPointRecordProps> = ({
 				{coinList?.map(item => (
 					<div key={item.pointType} className="log">
 						<div>{t(item.pointTypeName)}</div>
-						<div>{numberFormat(item.totalSummary, 2)}</div>
+						<div>{numberFormat(item.totalSummary, 0, true)}</div>
 					</div>
 				))}
 				<div className="log available">
 					<div>{t("PointsAvailable")}</div>
-					<div className="bold">{numberFormat(availablePoints, 2)}</div>
+					<div className="bold">{numberFormat(availablePoints, 0, true)}</div>
 				</div>
 				<div className="log used">
 					<div>{t("PointsUsed")}</div>
-					<div className="bold">{numberFormat(usedPoints, 2)}</div>
+					<div className="bold">{numberFormat(usedPoints, 0, true)}</div>
 				</div>
 				<div className="log balance">
 					<div className="bold">{t("PointsBalance")}</div>
-					<div className="bold">{numberFormat(balance, 2)}</div>
+					<div className="bold">{numberFormat(balance, 0, true)}</div>
 				</div>
 			</div>
 		</div>

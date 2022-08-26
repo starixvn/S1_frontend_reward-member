@@ -80,7 +80,7 @@ const Points = () => {
 										</div>
 										<div className="level">{t(clubText)}</div>
 										<div className="icon icon-coin">
-											{numberFormat(balance, 2)}
+											{numberFormat(balance, 0, true)}
 										</div>
 									</div>
 									<PointRecord

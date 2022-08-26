@@ -3,9 +3,9 @@ import { imageUrl } from "config"
 import classNames from "classnames"
 import { useLocalStorage, useOnClickOutside } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
-import { numberFormat } from "common/utils/func"
 import { useAppSelector } from "store"
 import { selectedIsLogin } from "service/slice/auth"
+import { numberFormat } from "common/utils/func"
 
 interface IGiftItemProps {
 	item: {
@@ -136,7 +136,9 @@ const GiftItem: FC<IGiftItemProps> = ({
 			</div>
 			<div className="product-name">{item.giftName ?? item.enGiftName}</div>
 			<div className="product-description">{item.giftDescription}</div>
-			<div className="icon icon-coin">&nbsp;{numberFormat(item.point, 2)}</div>
+			<div className="icon icon-coin">
+				&nbsp;{numberFormat(item.point, 0, false)}
+			</div>
 
 			<div className="qty">{item.showStock && `${t("Qty")}:${item.stock}`}</div>
 			{showGiftItemBtn()}

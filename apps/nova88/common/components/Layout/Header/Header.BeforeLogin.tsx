@@ -22,12 +22,8 @@ const HeaderBeforeLogin = () => {
 			</a>
 			<LangDropdown />
 			<ShoppingCart />
-			<a
-				className="novaLogo"
-				href={`/${langId}`}
-				target="_blank"
-				rel="noreferrer">
-				<img src={`${imageUrl}/img/novalogo.png`} alt="" />
+			<a href={`/${langId}`} target="_blank" rel="noreferrer">
+				<img className="novaLogo" src={`${imageUrl}/img/novalogo.png`} alt="" />
 			</a>
 			<button
 				className="login"
