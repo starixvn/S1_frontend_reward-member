@@ -12,8 +12,8 @@ import LangDropdown from "./LangDropdown"
 import ShoppingCart from "./ShoppingCart"
 import { paths } from "common/constants"
 import { REWARD88_LANG } from "common/constants/localStorage"
-import { numberFormat } from "common/utils/func"
 import { selectedPointBalance } from "service/slice/cart"
+import { numberFormat } from "common/utils/func"
 
 const HeaderAfterLogin = () => {
 	const { t, i18n } = useTranslation()
@@ -52,7 +52,7 @@ const HeaderAfterLogin = () => {
 			<Link href={paths.about.sub.points.root}>
 				<a className="icon icon-diamond">
 					<span>{t("RewardPoints")}</span>
-					{numberFormat(pointBalance, 2) ?? 0}
+					{numberFormat(pointBalance ?? 0, 0, false)}
 				</a>
 			</Link>
 			<div className="memberFile" ref={userMenuWrapper}>
@@ -83,12 +83,12 @@ const HeaderAfterLogin = () => {
 			<LangDropdown />
 			<ShoppingCart />
 
-			<a
-				href={`/${langId}`}
-				target="_blank"
-				rel="noreferrer"
-				className="novaLogo">
-				<img src={`${imageUrl}/img/novalogo.png`} alt="any" />
+			<a href={`/${langId}`} target="_blank" rel="noreferrer">
+				<img
+					className="novaLogo"
+					src={`${imageUrl}/img/novalogo.png`}
+					alt="any"
+				/>
 			</a>
 		</>
 	)

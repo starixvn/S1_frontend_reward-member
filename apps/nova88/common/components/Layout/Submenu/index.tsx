@@ -13,10 +13,10 @@ import { useAppDispatch, useAppSelector } from "store"
 import { imageUrl } from "config"
 import { paths } from "common/constants"
 import { usePopBox } from "common/hooks"
-import { numberFormat } from "common/utils/func"
 import LangDropdown from "../Header/LangDropdown"
 import { useLocalStorage } from "usehooks-ts"
 import { selectedPointBalance } from "service/slice/cart"
+import { numberFormat } from "common/utils/func"
 interface ISubmenuProps {
 	isSubmenuOpen: boolean
 }
@@ -68,7 +68,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						<Link href={paths.about.sub.points.root}>
 							<a className="icon icon-diamond">
 								{t("RewardPoints")}
-								<span>{numberFormat(pointBalance, 2) ?? 0}</span>
+								<span>{numberFormat(pointBalance ?? 0, 0, false)}</span>
 							</a>
 						</Link>
 					</div>
@@ -87,6 +87,22 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						</a>
 					</Link>
 				</div>
+				{isLogin && (
+					<>
+						<div>
+							<Link href={paths.about.sub.points.root}>
+								<a className="title icon icon-coin">
+									{t("MyPoints").toUpperCase()}
+								</a>
+							</Link>
+						</div>
+						<div>
+							<Link href={paths.about.sub.purchase.root}>
+								<a className="title icon icon-book-open">{t("MyPurchase")}</a>
+							</Link>
+						</div>
+					</>
+				)}
 				<div>
 					<Link href={paths.about.sub.howtoearnpoints.root}>
 						<a className="title icon icon-question">
@@ -99,22 +115,6 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						<a className="title icon icon-faq">{t("FAQ").toUpperCase()}</a>
 					</Link>
 				</div>
-				{isLogin && (
-					<>
-						<div>
-							<Link href={paths.about.sub.purchase.root}>
-								<a className="title icon icon-book-open">{t("MyPurchase")}</a>
-							</Link>
-						</div>
-						<div>
-							<Link href={paths.about.sub.points.root}>
-								<a className="title icon icon-coin">
-									{t("MyPoints").toUpperCase()}
-								</a>
-							</Link>
-						</div>
-					</>
-				)}
 
 				<div>
 					<button

@@ -34,6 +34,7 @@ const Index = () => {
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
+	const [isShowAllText, setIsShowAllText] = useState(false)
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
 	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
@@ -180,21 +181,30 @@ const Index = () => {
 			)}
 			<div className="introduce container-xxl">
 				<div className="row">
-					<div className="dearMember col-xl-7">
+					<div
+						className={classNames("dearMember col-xl-7", {
+							active: isShowAllText,
+						})}>
 						<div className="txt">
 							<p>{t("BannerTitle")}</p>
 							<div>{t("BannerAdText1")}</div>
-							<button className="seeMore" type="button">
+							<button
+								onClick={() => setIsShowAllText(true)}
+								className="seeMore"
+								type="button">
 								{t("More")}
 							</button>
 							<div>{t("BannerAdText2")}</div>
 							<div>{t("BannerAdText3")}</div>
 							<div>{t("BannerAdText4")}</div>
-							<button className="close" type="button">
+							<button
+								onClick={() => setIsShowAllText(false)}
+								className="close"
+								type="button">
 								{t("Close")}..
 							</button>
 						</div>
-						<img src={`${imageUrl}/img/introducebg.jpg`} alt="" />
+
 						<img className="npc" src={`${imageUrl}/img/introduce.png`} alt="" />
 					</div>
 					<div className="col-xl-5">

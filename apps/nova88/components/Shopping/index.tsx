@@ -31,7 +31,7 @@ import { useSetShoppingCartMutation } from "service/api/redemptionApi"
 const Shopping = () => {
 	const dispatch = useAppDispatch()
 	const isLogin = useSelector(selectedIsLogin)
-	const { i18n } = useTranslation()
+	const { i18n, t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
@@ -123,7 +123,12 @@ const Shopping = () => {
 
 	const getCategoryList = giftList => {
 		const tempList = []
-		const categoryList = []
+		const categoryList = [
+			{
+				categoryName: t("ALL"),
+				categoryId: null,
+			},
+		]
 		giftList?.forEach(obj => {
 			tempList.push({
 				categoryName: obj.categoryName,
@@ -162,16 +167,18 @@ const Shopping = () => {
 		if (selectorType === "category") {
 			handleFilter({
 				...args,
-				categoryIds: [
-					categoryList.find(e => e.categoryName === label).categoryId,
-				],
+				categoryIds:
+					categoryList.find(e => e.categoryName === label).categoryId !== null
+						? [categoryList.find(e => e.categoryName === label).categoryId]
+						: null,
 				langId: i18n.language,
 			})
 			setArgs(prev => ({
 				...prev,
-				categoryIds: [
-					categoryList.find(e => e.categoryName === label).categoryId,
-				],
+				categoryIds:
+					categoryList.find(e => e.categoryName === label).categoryId !== null
+						? [categoryList.find(e => e.categoryName === label).categoryId]
+						: null,
 				pageSize: DEFAULT_PAGE_SIZE_COUNT,
 				langId: i18n.language,
 			}))
@@ -298,7 +305,7 @@ const Shopping = () => {
 
 	useEffect(() => {
 		handleFilter({ ...args, langId: i18n.language })
-	}, [i18n.language])
+	}, [i18n.language, args])
 
 	useEffect(() => {
 		const isLast = args.pageSize > giftList.length + PAGE_SIZE_COUNT

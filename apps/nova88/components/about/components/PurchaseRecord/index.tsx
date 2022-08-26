@@ -6,6 +6,7 @@ import Empty from "components/about/components/Empty"
 import { selectedProfile } from "service/slice/auth"
 import { useSelector } from "react-redux"
 import { Time_Zone_By_Currencies } from "common/constants"
+import { numberFormat } from "common/utils/func"
 
 interface IPurchaseRecordProps {
 	purchaseList: {
@@ -76,7 +77,7 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 								</div>
 								<div className="item">{item.giftId}</div>
 								<div className="name">{item.giftName}</div>
-								<div>{item.point.toFixed(2)}</div>
+								<div>{numberFormat(item.point, 0, true)}</div>
 								<div className="whiteBold">{item.statusName}</div>
 							</div>
 						))
