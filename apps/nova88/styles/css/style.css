@@ -562,6 +562,10 @@ input:-webkit-autofill:active {
   position: relative;
 }
 
+.introduce .row > div .info:nth-child(1), .introduce .row .dearMember .info:nth-child(1) {
+  cursor: pointer;
+}
+
 .introduce .row > div .info > div, .introduce .row .dearMember .info > div {
   position: absolute;
   color: #CDAE8E;
@@ -2903,6 +2907,25 @@ input:-webkit-autofill:active {
   color: #000;
   font-weight: bold;
   font-size: 1rem;
+}
+
+@media (max-width: 425px) {
+  .tAndC-content .tAndC-info .medal tr:nth-child(2) {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .tAndC-content .tAndC-info .medal tr:nth-child(2) {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 325px) {
+  .tAndC-content .tAndC-info .medal tr:nth-child(2) {
+    font-size: 0.6rem;
+    word-break: break-all;
+  }
 }
 
 .tAndC-content .tAndC-info .medal tr:nth-child(n+3) {

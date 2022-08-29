@@ -7,7 +7,7 @@ import GiftList from "components/Shopping/GiftList"
 import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
 import CartList from "./CartList"
 import Order from "./CartOrder"
-import { imageUrl } from "config"
+import { imageUrl, siteInfo } from "config"
 import { useAppDispatch, useAppSelector } from "store"
 import Loading from "common/components/Loading"
 import { usePopBox } from "common/hooks"
@@ -21,7 +21,11 @@ import {
 	useCreateRedemptionMutation,
 	useSetShoppingCartMutation,
 } from "service/api/redemptionApi"
-import { selectedIsLogin, selectedProfile } from "service/slice/auth"
+import {
+	selectedIsLogin,
+	selectedLangId,
+	selectedProfile,
+} from "service/slice/auth"
 import {
 	selectedCartNumber,
 	selectedPointBalance,
@@ -54,6 +58,7 @@ const Cart = () => {
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const profile = useSelector(selectedProfile)
 	const isLogin = useSelector(selectedIsLogin)
+	const langId = useAppSelector(selectedLangId)
 	const { t, i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const route = useRouter()
@@ -344,7 +349,13 @@ const Cart = () => {
 			<div className="recommend row">
 				<div className="col-lg-5 col-xl-5">
 					<div className="affiliate-txt">
-						<div className="title">{t("AffiliatesProgram")}</div>
+						<a
+							href={`${siteInfo.affiliateLink}/?lang=${langId}`}
+							target="_blank"
+							rel="noreferrer"
+							className="title">
+							{t("AffiliatesProgram")}
+						</a>
 						{t("AffiliatesProgramTip")}
 					</div>
 					<div>
