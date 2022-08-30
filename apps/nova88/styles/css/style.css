@@ -2826,10 +2826,19 @@ input:-webkit-autofill:active {
       -ms-flex: 1;
           flex: 1;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.tAndC-content .btnGroup button.icon {
-  padding-right: .5rem;
+.tAndC-content .btnGroup button:before {
+  padding-right: .35rem;
 }
 
 .tAndC-content .btnGroup button::after {
