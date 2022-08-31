@@ -38,8 +38,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'ansible-playbook -i ${ansible_path}host.yml ${ansible_path}deploy.reward.yml --extra-vars "commitId=${commitHash} project=${project} host=${project} env=${env}"'
-            }
+                sh 'ansible-playbook -i ${ansible_path}host.yml ${ansible_path}deploy.reward.yml --extra-vars "commitId=${commitHash} project=${project} host=${project} env=${env} filename=${project}-${commitHash}"'
         }
     }
 }
