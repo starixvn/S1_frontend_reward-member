@@ -121,7 +121,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 			</div>
 			<div>
 				<img
-					onClick={() => setIsLarge(true)}
+					onClick={() => (window.innerWidth >= 768 ? setIsLarge(true) : null)}
 					src={`${imageUrl}${item.giftPictureUrl}`}
 					alt="any"
 				/>
