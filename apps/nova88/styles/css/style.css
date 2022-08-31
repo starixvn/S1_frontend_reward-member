@@ -1822,6 +1822,7 @@ input:-webkit-autofill:active {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  height: 26rem;
 }
 
 .myCoins-page .page-content .memberFile .myDocument .memberID, .myPurchase .page-content .memberFile .myDocument .memberID, .tAndC .page-content .memberFile .myDocument .memberID {

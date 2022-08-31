@@ -97,7 +97,7 @@ const Index = () => {
 	}
 
 	const handleGiftItemToggle = async giftItem => {
-		if (!giftItem.stock && giftItem.showStock) return
+		if (!giftItem.stock) return
 		if (isLogin) {
 			const item = realCartList?.find(item => item.giftId === giftItem.giftId)
 			if (item) {

@@ -67,7 +67,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 	useOnClickOutside(giftItemRef, handleClickOutside)
 	const handleItemBtnTextChange = giftItem => {
 		let text = ""
-		if (!giftItem.stock && giftItem.showStock) {
+		if (!giftItem.stock) {
 			text = t("SoldOut")
 		} else {
 			const cartItem = (isLogin ? realCartList : cartList)?.find(
@@ -85,14 +85,14 @@ const GiftItem: FC<IGiftItemProps> = ({
 		<button
 			onClick={() => onToggleCart(item)}
 			className={classNames("icon", "active", {
-				"icon-ban": !item.stock && item.showStock,
+				"icon-ban": !item.stock,
 				"icon-checkmark":
-					(item.stock || !item.showStock) &&
+					item.stock &&
 					(isLogin ? realCartList : cartList)?.find(
 						cartItem => cartItem.giftId === item.giftId
 					),
 				"icon-cart":
-					(item.stock || !item.showStock) &&
+					item.stock &&
 					!(isLogin ? realCartList : cartList)?.find(
 						cartItem => cartItem.giftId === item.giftId
 					),
@@ -104,7 +104,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 		<div
 			ref={giftItemRef}
 			className={classNames("product", {
-				empty: !item.stock && item.showStock,
+				empty: !item.stock,
 			})}>
 			<div className="iconGroup">
 				{item.tagList.map((tagItem, index) => (
