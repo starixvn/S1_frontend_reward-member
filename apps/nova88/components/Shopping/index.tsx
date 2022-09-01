@@ -118,13 +118,28 @@ const Shopping = () => {
 			})
 		}
 	}
+	const getAllCartList = async () => {
+		try {
+			await setShoppingCart({ giftIds: [], isAdd: 1 })
+				.unwrap()
+				.then(res => {
+					setRealCartList(prev => [...prev, ...res.data])
+					dispatch(setCartNumber(res.data.length))
+				})
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
 
 	const getCartList = async args => {
 		try {
 			await setShoppingCart(args)
 				.unwrap()
 				.then(res => {
-					setRealCartList(res.data)
+					setRealCartList(prev => [...prev, ...res.data])
 					dispatch(setCartNumber(res.data.length))
 				})
 		} catch (error) {
@@ -299,6 +314,9 @@ const Shopping = () => {
 			setActiveTabItem(giftTabList[0])
 		}
 		setCurrentLangId(i18n.language)
+		if (isLogin) {
+			getAllCartList()
+		}
 	}
 
 	const filterList = isFilterFavorite
@@ -319,7 +337,6 @@ const Shopping = () => {
 	useEffect(() => {
 		getGiftTabsList()
 		if (isLogin) {
-			getCartList({ giftIds: [], isAdd: 0 })
 			handleFilter({
 				...{
 					categoryIds: null,
@@ -330,6 +347,12 @@ const Shopping = () => {
 				},
 				langId: i18n.language,
 			})
+			const giftIdList = []
+			cartList.forEach(item => {
+				giftIdList.push(item.giftId)
+			})
+			getCartList({ giftIds: giftIdList, isAdd: 1 })
+			setCartList([])
 			setIsFilterFavorite(false)
 			if (giftTabList && giftTabList.length > 0) {
 				setActiveTabItem(giftTabList[0])
