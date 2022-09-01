@@ -21,14 +21,20 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 	const route = useRouter()
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
-
+	const onClickLogo = () => {
+		if (route.pathname === paths.home) {
+			route.reload()
+		} else {
+			route.push(paths.home)
+		}
+	}
 	const toggleSubmenu = () => setSubmenuOpen((prev: boolean) => !prev)
 
 	return (
 		<header id="header">
 			<div className="header">
 				<button className="icon icon-menu" onClick={toggleSubmenu} />
-				<div onClick={() => route.push(paths.home)} className="logo">
+				<div onClick={onClickLogo} className="logo">
 					<a>
 						<img src={`${imageUrl}/img/88logo.png`} alt="" />
 					</a>
@@ -62,9 +68,11 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 							<Link href={paths.about.sub.rewardfaq.root}>
 								{t("FAQ").toUpperCase()}
 							</Link>
-							<Link href={`/${langId}/${paths.appDownload}`}>
-								<a className="icon icon-mobile"></a>
-							</Link>
+							<a
+								target="_blank"
+								rel="noreferrer"
+								href={`/${langId}/${paths.appDownload}`}
+								className="icon icon-mobile"></a>
 						</div>
 					</div>
 				</div>

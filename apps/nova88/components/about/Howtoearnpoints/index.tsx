@@ -115,7 +115,7 @@ const HowToEarnPoints = () => {
 export default HowToEarnPoints
 
 const DepositPointInfo = ({ currency }) => {
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 
 	return (
 		<>
@@ -132,7 +132,8 @@ const DepositPointInfo = ({ currency }) => {
 					<tr>
 						<td>
 							<span>
-								{currency} {depositPointReward[currency]}
+								{t(currency)} {depositPointReward[currency]}{" "}
+								{i18n.language === "th" && t("THB2")}
 							</span>
 							<p>({t("AllDepositType")})</p>
 						</td>
@@ -147,7 +148,7 @@ const DepositPointInfo = ({ currency }) => {
 }
 
 const TurnoverPointInfo = ({ currency }) => {
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 
 	return (
 		<>
@@ -167,7 +168,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("SPORTS")}</td>
 						<td>{t("SABASportsEsports")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].sports}
+							{t(currency)} {turnoverPointReward[currency].sports}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>
@@ -175,7 +177,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("LIVE_CASINO")}</td>
 						<td>{t("AllProviders")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].liveCasino}
+							{t(currency)} {turnoverPointReward[currency].liveCasino}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>
@@ -183,7 +186,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("SLOT")}</td>
 						<td>{t("ExcludedMega888")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].slot}
+							{t(currency)} {turnoverPointReward[currency].slot}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>
@@ -191,7 +195,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("FISHING")}</td>
 						<td>{t("AllProviders")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].fishing}
+							{t(currency)} {turnoverPointReward[currency].fishing}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>
@@ -199,7 +204,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("TABLE_GAMES")}</td>
 						<td>{t("TableGamesProvider")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].tableGames}
+							{t(currency)} {turnoverPointReward[currency].tableGames}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>
@@ -207,7 +213,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("GAMES")}</td>
 						<td>{t("GamesProvider")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].games}
+							{t(currency)} {turnoverPointReward[currency].games}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>
@@ -215,7 +222,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("LOTTERY")}</td>
 						<td>{t("LotteryProvider")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].lottery}
+							{t(currency)} {turnoverPointReward[currency].lottery}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>
@@ -223,7 +231,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className="head">{t("VIRTUAL_SPORTS")}</td>
 						<td>{t("VirtualSportsProvider")}</td>
 						<td>
-							{currency} {turnoverPointReward[currency].virtualSports}
+							{t(currency)} {turnoverPointReward[currency].virtualSports}{" "}
+							{i18n.language === "th" && t("THB2")}
 						</td>
 						<td>1</td>
 					</tr>

@@ -5,18 +5,18 @@ export enum tabOption {
 export const DEFAULT_PAGE_SIZE_COUNT = 6
 
 export const monthObj = {
-	1: "JANUARY",
-	2: "FEBRUARY",
-	3: "MARCH",
-	4: "APRIL",
-	5: "MAY",
-	6: "JUNE",
-	7: "JULY",
-	8: "AUGUST",
-	9: "SEPTEMBER",
-	10: "OCTOBER",
-	11: "NOVEMBER",
-	12: "DECEMBER",
+	1: "January",
+	2: "February",
+	3: "March",
+	4: "April",
+	5: "May",
+	6: "June",
+	7: "July",
+	8: "August",
+	9: "September",
+	10: "October",
+	11: "November",
+	12: "December",
 }
 export const defDisplayPage = {
 	Home: 1,

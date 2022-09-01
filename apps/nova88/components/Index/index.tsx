@@ -50,7 +50,7 @@ const Index = () => {
 			await setShoppingCart(args)
 				.unwrap()
 				.then(res => {
-					setRealCartList(res.data)
+					setRealCartList(prev => [...prev, ...res.data])
 					dispatch(setCartNumber(res.data.length))
 				})
 		} catch (error) {
@@ -132,9 +132,36 @@ const Index = () => {
 
 	const month = monthObj[new Date().getMonth() + 1]
 
+	const getAllCartList = async () => {
+		try {
+			await setShoppingCart({ giftIds: [], isAdd: 1 })
+				.unwrap()
+				.then(res => {
+					setRealCartList(prev => [...prev, ...res.data])
+					dispatch(setCartNumber(res.data.length))
+				})
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
+
 	useEffect(() => {
 		if (isLogin) {
-			getCartList({ giftIds: [], isAdd: 0 })
+			getAllCartList()
+		}
+	}, [])
+
+	useEffect(() => {
+		if (isLogin) {
+			const giftIdList = []
+			cartList.forEach(item => {
+				giftIdList.push(item.giftId)
+			})
+			getCartList({ giftIds: giftIdList, isAdd: 1 })
+			setCartList([])
 			handleFilter({
 				...{
 					categoryIds: null,
@@ -253,7 +280,7 @@ const Index = () => {
 					<div className="products-menu">
 						<a className="active">
 							{t("HotPicksForTheMonthOf")}
-							<span>{month}</span>
+							<span>{t(month)}</span>
 						</a>
 						<button onClick={goToMore}>{t("More")}...</button>
 					</div>

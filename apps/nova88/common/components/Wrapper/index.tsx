@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useState } from "react"
+import { FC, ReactNode, useEffect } from "react"
 import { useRouter } from "next/router"
 import { useAppDispatch, useAppSelector } from "store"
 import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk"
@@ -6,8 +6,6 @@ import { selectedIsLogin } from "service/slice/auth"
 import { paths } from "common/constants"
 import { useInitI18nLanguageEffect } from "common/hooks/useInitI18nLanguageEffect"
 import { useLocalStorage } from "usehooks-ts"
-import { useSetShoppingCartMutation } from "service/api/redemptionApi"
-import { usePopBox } from "common/hooks"
 import { getPointBalanceAsync } from "service/slice/cart/thunk"
 
 interface IWrapperProps {
@@ -20,39 +18,7 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 	const route = useRouter()
 	const [cartList] = useLocalStorage("nova88Cart", [])
 	const isLogin = useAppSelector(selectedIsLogin)
-	const [setShoppingCart] = useSetShoppingCartMutation()
-	const { setPopBoxType } = usePopBox()
-	const [realCartList, setRealCartList] = useState([])
 	useInitI18nLanguageEffect()
-
-	const setCartList = async args => {
-		try {
-			await setShoppingCart(args)
-				.unwrap()
-				.then(res => {
-					setRealCartList(prev => [...prev, res.data])
-				})
-		} catch (error) {
-			setPopBoxType({
-				type: "warn",
-				props: { content: error.message },
-			})
-		}
-	}
-	const getAllCartList = async () => {
-		try {
-			await setShoppingCart({ giftIds: [], isAdd: 1 })
-				.unwrap()
-				.then(res => {
-					setRealCartList(prev => [...prev, res.data])
-				})
-		} catch (error) {
-			setPopBoxType({
-				type: "warn",
-				props: { content: error.message },
-			})
-		}
-	}
 
 	// * 當切換頁面的時候確認登入狀態
 	useEffect(() => {
@@ -68,9 +34,9 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 			cartList.forEach(item => {
 				giftIdList.push(item.giftId)
 			})
-			setCartList({ giftIds: giftIdList, isAdd: 1 }).then(() => {
-				getAllCartList()
-			})
+			// setCartList({ giftIds: giftIdList, isAdd: 1 }).then(() => {
+			// 	getAllCartList()
+			// })
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLogin])

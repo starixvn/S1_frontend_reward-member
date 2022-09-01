@@ -239,9 +239,30 @@ const Cart = () => {
 		}
 	}
 
+	const getAllCartList = async () => {
+		try {
+			await setShoppingCart({ giftIds: [], isAdd: 1 })
+				.unwrap()
+				.then(res => {
+					setRealCartList(prev => [...prev, ...res.data])
+					dispatch(setCartNumber(res.data.length))
+				})
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
+
 	useEffect(() => {
 		if (isLogin) {
-			getCartList({ giftIds: [], isAdd: 0 })
+			const giftIdList = []
+			cartList.forEach(item => {
+				giftIdList.push(item.giftId)
+			})
+			getCartList({ giftIds: giftIdList, isAdd: 1 })
+			setCartList([])
 			if (giftTabs && giftTabs.length > 0) {
 				const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
 				handleFilter({
@@ -277,6 +298,12 @@ const Cart = () => {
 	useEffect(() => {
 		setCartList(cartState)
 	}, [cartState])
+
+	useEffect(() => {
+		if (isLogin) {
+			getAllCartList()
+		}
+	}, [])
 
 	return (
 		<main className="cart-page container-xxl">
