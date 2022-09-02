@@ -132,6 +132,8 @@ const Index = () => {
 
 	const month = monthObj[new Date().getMonth() + 1]
 
+	const langEnList = ["en", "th_en", "id_en"]
+
 	const getAllCartList = async () => {
 		try {
 			await setShoppingCart({ giftIds: [], isAdd: 1 })
@@ -191,7 +193,7 @@ const Index = () => {
 	return (
 		<main
 			className={classNames({
-				"other-layout": i18n.language !== "en",
+				"other-layout": !langEnList.includes(i18n.language),
 			})}>
 			<GiftSwiper />
 			{!isLogin && (

@@ -77,7 +77,13 @@ const Cart = () => {
 	const [isShowTip, setIsShowTip] = useState(false)
 	const [noteInput, setNoteInput] = useState("")
 	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
-
+	const featuredNameList = [
+		"FEATURED",
+		"精选",
+		"FITUR",
+		"DILIHATKAN",
+		"จุดเด่น",
+	]
 	const handleGetPointBalance = async () => {
 		try {
 			const res: { data: { pointBalance: number } } = await getPointBalance(
@@ -264,7 +270,9 @@ const Cart = () => {
 			getCartList({ giftIds: giftIdList, isAdd: 1 })
 			setCartList([])
 			if (giftTabs && giftTabs.length > 0) {
-				const targetTab = giftTabs.find(obj => obj.tagName === t("FEATURED"))
+				const targetTab = giftTabs.find(obj =>
+					featuredNameList.includes(obj.tagName)
+				)
 				handleFilter({
 					...{
 						categoryIds: null,
@@ -273,7 +281,7 @@ const Cart = () => {
 						desc: false,
 						pageSize: DEFAULT_PAGE_SIZE_COUNT,
 					},
-					langId: i18n.language,
+					langId,
 				})
 			}
 		}
@@ -281,7 +289,9 @@ const Cart = () => {
 
 	useEffect(() => {
 		if (giftTabs && giftTabs.length > 0) {
-			const targetTab = giftTabs.find(obj => obj.tagName === t("FEATURED"))
+			const targetTab = giftTabs.find(obj =>
+				featuredNameList.includes(obj.tagName)
+			)
 			if (targetTab) {
 				handleFilter({
 					...{
@@ -291,7 +301,7 @@ const Cart = () => {
 						desc: false,
 						pageSize: DEFAULT_PAGE_SIZE_COUNT,
 					},
-					langId: i18n.language,
+					langId,
 				})
 			}
 		}
