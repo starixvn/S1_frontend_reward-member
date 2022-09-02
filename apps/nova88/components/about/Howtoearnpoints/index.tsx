@@ -12,6 +12,9 @@ import {
 } from "components/about/constants"
 import { paths } from "common/constants"
 import { langMapping } from "components/Index/constants"
+import { useSelector } from "react-redux"
+import { selectedIsLogin, selectedLangId } from "service/slice/auth"
+import { useAppSelector } from "store"
 
 const HowToEarnPoints = () => {
 	const { pathname } = useRouter()
@@ -19,7 +22,9 @@ const HowToEarnPoints = () => {
 	const [selectedTab, setSelectedTab] = useState(
 		defHowToEarnPointsTab[HowTabEnum.DEPOSIT_POINTS]
 	)
-	const currency = langMapping[i18n.language]
+	const isLogin = useSelector(selectedIsLogin)
+	const langId = useAppSelector(selectedLangId)
+	const currency = langMapping[isLogin ? langId : i18n.language]
 
 	return (
 		<main>
@@ -116,7 +121,15 @@ export default HowToEarnPoints
 
 const DepositPointInfo = ({ currency }) => {
 	const { t, i18n } = useTranslation()
-
+	const isLogin = useSelector(selectedIsLogin)
+	const langId = useAppSelector(selectedLangId)
+	const currencyShowJudge = () => {
+		if (isLogin) {
+			return langId === "th" ? t("THB2") : ""
+		} else {
+			return i18n.language === "th" ? t("THB2") : ""
+		}
+	}
 	return (
 		<>
 			<div>{t("DepositPointTitle1")}</div>
@@ -133,7 +146,7 @@ const DepositPointInfo = ({ currency }) => {
 						<td>
 							<span>
 								{t(currency)} {depositPointReward[currency]}{" "}
-								{i18n.language === "th" && t("THB2")}
+								{currencyShowJudge()}
 							</span>
 							<p>({t("AllDepositType")})</p>
 						</td>
@@ -149,7 +162,15 @@ const DepositPointInfo = ({ currency }) => {
 
 const TurnoverPointInfo = ({ currency }) => {
 	const { t, i18n } = useTranslation()
-
+	const isLogin = useSelector(selectedIsLogin)
+	const langId = useAppSelector(selectedLangId)
+	const currencyShowJudge = () => {
+		if (isLogin) {
+			return langId === "th" ? t("THB2") : ""
+		} else {
+			return i18n.language === "th" ? t("THB2") : ""
+		}
+	}
 	return (
 		<>
 			<div>{t("TurnoverPointTitle1")}</div>
@@ -169,7 +190,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("SABASportsEsports")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].sports}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
@@ -178,7 +199,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("AllProviders")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].liveCasino}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
@@ -187,7 +208,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("ExcludedMega888")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].slot}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
@@ -196,7 +217,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("AllProviders")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].fishing}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
@@ -205,7 +226,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("TableGamesProvider")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].tableGames}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
@@ -214,7 +235,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("GamesProvider")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].games}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
@@ -223,7 +244,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("LotteryProvider")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].lottery}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
@@ -232,7 +253,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td>{t("VirtualSportsProvider")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].virtualSports}{" "}
-							{i18n.language === "th" && t("THB2")}
+							{currencyShowJudge()}
 						</td>
 						<td>1</td>
 					</tr>
