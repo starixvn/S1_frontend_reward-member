@@ -31,6 +31,7 @@ import { useSetShoppingCartMutation } from "service/api/redemptionApi"
 const Shopping = () => {
 	const dispatch = useAppDispatch()
 	const isLogin = useSelector(selectedIsLogin)
+	const lang = useAppSelector(selectedLangId)
 	const { i18n, t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
@@ -70,9 +71,10 @@ const Shopping = () => {
 	] = useLazyGetGiftListQuery()
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
-	const getGiftTabsList = async () => {
+
+	const getGiftTabsList = async langId => {
 		try {
-			await getGiftTags({ langId: i18n.language }).unwrap()
+			await getGiftTags({ langId }).unwrap()
 		} catch (error) {
 			setPopBoxType({
 				type: "warn",
@@ -330,13 +332,16 @@ const Shopping = () => {
 		setSortFromList(sortFromList)
 	}
 
+	const langEnList = ["en", "th_en", "id_en"]
+
 	useEffect(() => {
 		init()
 	}, [])
 
 	useEffect(() => {
-		getGiftTabsList()
+		getGiftTabsList(i18n.language)
 		if (isLogin) {
+			getGiftTabsList(lang)
 			handleFilter({
 				...{
 					categoryIds: null,
@@ -345,7 +350,7 @@ const Shopping = () => {
 					desc: false,
 					pageSize: args.pageSize,
 				},
-				langId: i18n.language,
+				langId: lang,
 			})
 			const giftIdList = []
 			cartList.forEach(item => {
@@ -358,7 +363,7 @@ const Shopping = () => {
 				setActiveTabItem(giftTabList[0])
 			}
 		}
-	}, [isLogin, isGetGiftTabsLoading, i18n.language])
+	}, [isLogin, isGetGiftTabsLoading, i18n.language, lang])
 
 	useEffect(() => {
 		handleFilter({ ...args, langId: i18n.language })
@@ -392,7 +397,7 @@ const Shopping = () => {
 	return (
 		<main
 			className={classNames("shopping-page", {
-				"other-layout": i18n.language !== "en",
+				"other-layout": !langEnList.includes(i18n.language),
 			})}>
 			<GiftSwiper />
 			<div className="products-group container-xxl">
