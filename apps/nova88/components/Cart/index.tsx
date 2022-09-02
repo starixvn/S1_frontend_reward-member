@@ -64,7 +64,7 @@ const Cart = () => {
 	const route = useRouter()
 	const [cartState, setCartState] = useLocalStorage("nova88Cart", [])
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
-		useGetGiftTagsQuery(null)
+		useGetGiftTagsQuery({ langId })
 	const [getPointBalance] = useLazyGetPointBalanceQuery()
 	const [createRedemption] = useCreateRedemptionMutation()
 	const [setShoppingCart] = useSetShoppingCartMutation()
@@ -264,7 +264,7 @@ const Cart = () => {
 			getCartList({ giftIds: giftIdList, isAdd: 1 })
 			setCartList([])
 			if (giftTabs && giftTabs.length > 0) {
-				const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
+				const targetTab = giftTabs.find(obj => obj.tagName === t("FEATURED"))
 				handleFilter({
 					...{
 						categoryIds: null,
@@ -281,29 +281,25 @@ const Cart = () => {
 
 	useEffect(() => {
 		if (giftTabs && giftTabs.length > 0) {
-			const targetTab = giftTabs.find(obj => obj.tagName === "FEATURED")
-			handleFilter({
-				...{
-					categoryIds: null,
-					tags: [targetTab?.tagId],
-					orderByField: null,
-					desc: false,
-					pageSize: DEFAULT_PAGE_SIZE_COUNT,
-				},
-				langId: i18n.language,
-			})
+			const targetTab = giftTabs.find(obj => obj.tagName === t("FEATURED"))
+			if (targetTab) {
+				handleFilter({
+					...{
+						categoryIds: null,
+						tags: [targetTab?.tagId],
+						orderByField: null,
+						desc: false,
+						pageSize: DEFAULT_PAGE_SIZE_COUNT,
+					},
+					langId: i18n.language,
+				})
+			}
 		}
 	}, [isGetGiftTabsFetching, i18n.language])
 
 	useEffect(() => {
 		setCartList(cartState)
 	}, [cartState])
-
-	useEffect(() => {
-		if (isLogin) {
-			getAllCartList()
-		}
-	}, [])
 
 	return (
 		<main className="cart-page container-xxl">

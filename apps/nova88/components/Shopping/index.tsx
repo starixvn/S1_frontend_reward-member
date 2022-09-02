@@ -9,8 +9,8 @@ import GiftSelector from "./GiftSelector"
 import GiftList from "./GiftList"
 import Loading from "common/components/Loading"
 import { useInView, usePopBox } from "common/hooks"
-import { useAppDispatch } from "store"
-import { selectedIsLogin } from "service/slice/auth"
+import { useAppDispatch, useAppSelector } from "store"
+import { selectedIsLogin, selectedLangId } from "service/slice/auth"
 import { setCartNumber } from "service/slice/cart"
 import {
 	sortType,
@@ -72,7 +72,7 @@ const Shopping = () => {
 	const [setFavorite] = useSetFavoriteMutation()
 	const getGiftTabsList = async () => {
 		try {
-			await getGiftTags(null).unwrap()
+			await getGiftTags({ langId: i18n.language }).unwrap()
 		} catch (error) {
 			setPopBoxType({
 				type: "warn",
@@ -358,7 +358,7 @@ const Shopping = () => {
 				setActiveTabItem(giftTabList[0])
 			}
 		}
-	}, [isLogin, isGetGiftTabsLoading])
+	}, [isLogin, isGetGiftTabsLoading, i18n.language])
 
 	useEffect(() => {
 		handleFilter({ ...args, langId: i18n.language })

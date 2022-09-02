@@ -61,9 +61,9 @@ const storeApi = createApi({
 				},
 			}),
 		}),
-		getGiftTags: builder.query<IGetGiftTagsResponse, null>({
-			query: () => ({
-				url: `store/GetGiftTags/en`,
+		getGiftTags: builder.query<IGetGiftTagsResponse, { langId: string }>({
+			query: ({ langId }) => ({
+				url: `store/GetGiftTags/${langId}`,
 				method: "POST",
 				data: {},
 			}),
