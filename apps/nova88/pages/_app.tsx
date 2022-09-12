@@ -19,11 +19,6 @@ function CustomApp({ Component, pageProps }: AppProps) {
 		<>
 			<Head>
 				<title>Reward88</title>
-				<link
-					rel="shortcut icon"
-					href="styles/img/favicon.ico"
-					type="image/x-icon"
-				/>
 			</Head>
 			<I18nextProvider i18n={i18n}>
 				<Provider store={store}>
