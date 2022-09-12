@@ -1,10 +1,11 @@
+import { imageUrl } from "config"
 import { Html, Head, Main, NextScript } from "next/document"
 
 const Document = () => {
 	return (
 		<Html>
 			<Head>
-				<link rel="shortcut icon" href="/apps/nova88/static/favicon.ico" />
+				<link rel="shortcut icon" href={`${imageUrl}/img/favicon.ico`} />
 			</Head>
 
 			<body>
