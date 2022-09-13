@@ -545,6 +545,7 @@ input:-webkit-autofill:active {
   font-size: 2.5vw;
   color: #fff;
   font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 2000px) {
@@ -601,6 +602,12 @@ input:-webkit-autofill:active {
 @media (max-width: 767px) {
   .introduce .row > div .info:first-child > div, .introduce .row .dearMember .info:first-child > div {
     width: 75%;
+  }
+}
+
+@media (min-width: 2000px) {
+  .introduce .row > div .info:first-child > div, .introduce .row .dearMember .info:first-child > div {
+    width: 50%;
   }
 }
 
@@ -715,6 +722,12 @@ input:-webkit-autofill:active {
   position: relative;
 }
 
+@media (min-width: 2000px) {
+  .indexImg, .saleImg {
+    max-width: calc(1550px - 5rem);
+  }
+}
+
 .indexImg > div, .saleImg > div {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -770,9 +783,9 @@ input:-webkit-autofill:active {
   font-weight: bold;
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 1500px) {
   .indexImg .txt > div, .saleImg .txt > div {
-    font-size: 1.25vw;
+    font-size: 2.25rem;
   }
 }
 
@@ -781,9 +794,9 @@ input:-webkit-autofill:active {
   white-space: nowrap;
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 1500px) {
   .indexImg .txt > div p, .saleImg .txt > div p {
-    font-size: 3vw;
+    font-size: 4.85rem;
   }
 }
 
@@ -836,12 +849,24 @@ input:-webkit-autofill:active {
   font-size: 1vw;
 }
 
+@media (min-width: 2000px) {
+  .indexImg .txt > div:nth-child(3), .saleImg .txt > div:nth-child(3) {
+    font-size: 1.2rem;
+  }
+}
+
 .indexImg .txt > div button, .saleImg .txt > div button {
   background: #CDAE8E;
   font-size: 1vw;
   line-height: 1vw;
   font-weight: bold;
   padding: .5rem 2rem;
+}
+
+@media (min-width: 2000px) {
+  .indexImg .txt > div button, .saleImg .txt > div button {
+    font-size: 1.15rem;
+  }
 }
 
 .indexImg .txt > div button:hover, .saleImg .txt > div button:hover {
@@ -5314,5 +5339,11 @@ footer.mobile-footer a.active .circleAnimation + span, footer.mobile-footer butt
 .quickLinkNew4.active {
   -webkit-transform: translateX(-100%);
           transform: translateX(-100%);
+}
+
+@media (min-width: 2000px) {
+  .container-xxl {
+    max-width: 1470px;
+  }
 }
 /*# sourceMappingURL=style.css.map */
