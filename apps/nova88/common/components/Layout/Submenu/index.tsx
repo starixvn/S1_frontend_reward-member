@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
 import {
 	selectedIsLogin,
+	selectedLangId,
 	selectedProfile,
 	setIsLogin,
 } from "service/slice/auth"
@@ -29,6 +30,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 	const { setPopBoxType } = usePopBox()
 	const [isLangDropOpen, setLangDropOpen] = useState<boolean>(true)
 	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const toggleLangDrop = () => {
 		setLangDropOpen(prev => !prev)
@@ -143,13 +145,13 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 						</button>
 					</div>
 				)}
-				<div>
+				<a href={`/${langId}`} target="_blank" rel="noreferrer">
 					<img
 						className="novaLogo"
 						src={`${imageUrl}/img/novalogo.png`}
 						alt="nova88"
 					/>
-				</div>
+				</a>
 			</div>
 		</div>
 	)
