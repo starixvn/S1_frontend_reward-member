@@ -1,6 +1,6 @@
 // Site Url: {Domain}/rewards/
 const isDevelopment = process.env.NODE_ENV !== "production"
-const root = isDevelopment ? "/" : "/rewards/"
+const root = isDevelopment ? "/" : "/rewards"
 
 const paths = {
 	home: root,
