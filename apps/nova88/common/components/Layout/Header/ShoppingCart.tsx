@@ -14,7 +14,6 @@ const ShoppingCart = () => {
 	const cartData: null | any[] = useReadLocalStorage("nova88Cart")
 	const cartNumber = useAppSelector(selectedCartNumber)
 	const cartCount = cartData?.length ?? 0
-
 	return (
 		<div
 			onClick={() => {

@@ -245,22 +245,6 @@ const Cart = () => {
 		}
 	}
 
-	const getAllCartList = async () => {
-		try {
-			await setShoppingCart({ giftIds: [], isAdd: 1 })
-				.unwrap()
-				.then(res => {
-					setRealCartList(prev => [...prev, ...res.data])
-					dispatch(setCartNumber(res.data.length))
-				})
-		} catch (error) {
-			setPopBoxType({
-				type: "warn",
-				props: { content: error.message },
-			})
-		}
-	}
-
 	useEffect(() => {
 		if (isLogin) {
 			const giftIdList = []

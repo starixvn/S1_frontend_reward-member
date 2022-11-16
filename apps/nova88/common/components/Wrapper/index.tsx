@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from "react"
+import { FC, ReactNode, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { useAppDispatch, useAppSelector } from "store"
 import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk"
@@ -7,6 +7,10 @@ import { paths } from "common/constants"
 import { useInitI18nLanguageEffect } from "common/hooks/useInitI18nLanguageEffect"
 import { useLocalStorage } from "usehooks-ts"
 import { getPointBalanceAsync } from "service/slice/cart/thunk"
+import { useSetShoppingCartMutation } from "../../../service/api/redemptionApi"
+import { setCartNumber } from "../../../service/slice/cart"
+import { ISetShoppingCarData } from "../../../service/api/redemptionApi/type"
+import { usePopBox } from "../../hooks"
 
 interface IWrapperProps {
 	authRequired: boolean
@@ -18,7 +22,25 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 	const route = useRouter()
 	const [cartList] = useLocalStorage("nova88Cart", [])
 	const isLogin = useAppSelector(selectedIsLogin)
+	const [setShoppingCart] = useSetShoppingCartMutation()
+	const { setPopBoxType } = usePopBox()
+
 	useInitI18nLanguageEffect()
+
+	const getAllCartList = async () => {
+		try {
+			await setShoppingCart({ giftIds: [], isAdd: 1 })
+				.unwrap()
+				.then(res => {
+					dispatch(setCartNumber(res.data.length))
+				})
+		} catch (error) {
+			setPopBoxType({
+				type: "warn",
+				props: { content: error.message },
+			})
+		}
+	}
 
 	// * 當切換頁面的時候確認登入狀態
 	useEffect(() => {
@@ -34,6 +56,7 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 			cartList.forEach(item => {
 				giftIdList.push(item.giftId)
 			})
+			getAllCartList()
 			// setCartList({ giftIds: giftIdList, isAdd: 1 }).then(() => {
 			// 	getAllCartList()
 			// })
