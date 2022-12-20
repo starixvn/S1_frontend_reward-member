@@ -21,8 +21,8 @@ const nextConfig = {
 			fallback: isDevelopment
 				? [
 						{
-							source: "/:api*",
-							destination: `https://www.n88dev.com/:api*`,
+							source: "/api/:path*",
+							destination: "http://www.n88dev.com/api/:path*",
 						},
 				  ]
 				: [],
