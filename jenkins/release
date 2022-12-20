@@ -5,7 +5,7 @@ pipeline {
         node_modules_exists = fileExists 'node_modules'
         project = 'reward'
         env = 'release'
-        ansible_path = '/home/jenkins/ansible/frontend/release/'
+        ansible_path = '/var/jenkins_home/ansible/frontend/release/'
     }
     stages {
         stage('Install dependencies') {
