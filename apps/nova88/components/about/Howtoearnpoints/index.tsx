@@ -205,7 +205,7 @@ const TurnoverPointInfo = ({ currency }) => {
 					</tr>
 					<tr>
 						<td className="head">{t("SLOT")}</td>
-						<td>{t("ExcludedMega888")}</td>
+						<td>{t("ExcludedKiss918")}</td>
 						<td>
 							{t(currency)} {turnoverPointReward[currency].slot}{" "}
 							{currencyShowJudge()}
