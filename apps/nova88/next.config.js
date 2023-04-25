@@ -22,7 +22,7 @@ const nextConfig = {
 				? [
 						{
 							source: "/api/:path*",
-							destination: "http://www.n88dev.com/api/:path*",
+							destination: "https://www.n88dev.com/api/:path*",
 						},
 				  ]
 				: [],
