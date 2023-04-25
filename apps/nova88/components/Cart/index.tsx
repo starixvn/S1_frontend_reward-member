@@ -82,7 +82,7 @@ const Cart = () => {
 		"精选",
 		"FITUR",
 		"DILIHATKAN",
-		"จุดเด่น",
+		"สนใจเป็นพิเศษ",
 	]
 	const handleGetPointBalance = async () => {
 		try {
