@@ -138,10 +138,12 @@ const Cart = () => {
 	const filterList = getFilterGiftList()
 
 	const handleCheckBoxToggle = (e, item) => {
-		if (!item.number) {
-			item["number"] = 1
+		const result = { ...item }
+		if (!result.number) {
+			result["number"] = 1
 		}
-		setCheckedItem(item)
+
+		setCheckedItem(result)
 	}
 
 	const isShowOrderItem =
