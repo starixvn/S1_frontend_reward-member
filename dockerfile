@@ -15,7 +15,7 @@ WORKDIR /build
 ENV PATH /build/node_modules/.bin:$PATH
 COPY . .
 # copy env
-# COPY ./apps/${project_name}/.env.${env} ./apps/${project_name}/.env
+COPY ./apps/${project_name}/.env.${env} ./apps/${project_name}/.env
 
 # install
 RUN npm ci
