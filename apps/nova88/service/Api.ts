@@ -1,7 +1,8 @@
 import axios from "axios"
 import { IAxiosResponse } from "./axiosBaseQuery"
 
-export const baseUrl = "/api/"
+// 加入 basePath 之後，所有 url 要加入 rewards 前綴
+export const baseUrl = "/rewards/api/"
 
 export const baseAxios = axios.create({
 	withCredentials: true,

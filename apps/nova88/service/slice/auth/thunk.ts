@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { setCookie } from "common/utils/func"
 
 import { checkSignIn, getCustProfile, logout } from "./api"
 
