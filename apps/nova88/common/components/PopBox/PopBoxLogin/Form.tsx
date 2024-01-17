@@ -54,7 +54,7 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 					]}
 				/>
 
-				<Link href={`/${langId}/${paths.forgetPassword}`}>
+				<Link href={`${langId}/${paths.forgetPassword}`}>
 					{t("ForgetPassword")}
 				</Link>
 			</div>
@@ -63,7 +63,7 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 				<button
 					type="button"
 					className="btn-sign"
-					onClick={() => router.push(`/${langId}/${paths.join}`)}>
+					onClick={() => router.push(`${langId}/${paths.join}`)}>
 					{t("SIGN_UP")}
 				</button>
 				<button className="btn-login" type="submit">
