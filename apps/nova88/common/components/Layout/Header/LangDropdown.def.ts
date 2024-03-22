@@ -5,9 +5,7 @@ enum ILangEnum {
   en = "en",
   cs = "cs",
   my = "my",
-  th_en = "th_en",
   th = "th",
-  id_en = "id_en",
   id = "id",
 }
 
@@ -27,7 +25,7 @@ export const defLangOptions: ILangOption[] = [
     currencyId: Currencies.THB,
     flag: "th",
     lang: [
-      { displayText: "English", value: ILangEnum.th_en },
+      { displayText: "English", value: ILangEnum.en },
       { displayText: "ไทย", value: ILangEnum.th }
     ]
   },
@@ -36,7 +34,7 @@ export const defLangOptions: ILangOption[] = [
     currencyId: Currencies.IDR,
     flag: "id",
     lang: [
-      { displayText: "English", value: ILangEnum.id_en },
+      { displayText: "English", value: ILangEnum.en },
       { displayText: "Bhs Indonesia", value: ILangEnum.id }
     ]
   }
