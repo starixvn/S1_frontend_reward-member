@@ -159,9 +159,9 @@ const Order: FC<ICartOrderProps> = ({
 				</div>
 			) : (
 				<div>
-					<Link href={`/${profile?.langId}/${paths.profile}`}>
+					<a href={`/${paths.profile}`}>
 						<button className="btn-add">{t("ADD_ADDRESS")}</button>
-					</Link>
+					</a>
 				</div>
 			)}
 

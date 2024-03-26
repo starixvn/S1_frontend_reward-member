@@ -28,7 +28,7 @@ const paths = {
 	},
 	forgetPassword: "forget-password",
 	join: "join",
-	appDownload: "appDownload",
+	appDownload: "app-download",
 	profile: "profile",
 }
 
