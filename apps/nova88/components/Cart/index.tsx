@@ -226,7 +226,7 @@ const Cart = () => {
 						if (res.errorCode === 0) {
 							setPopBoxType({
 								type: "default",
-								props: { content: t("NoteTip") },
+								props: { content: t("SubmitTip") },
 							})
 							dispatch(setCartNumber(cartNumber - 1))
 						}
