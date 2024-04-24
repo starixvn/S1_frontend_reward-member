@@ -95,6 +95,7 @@
 	"AddToCart": "MASUKAN KERANJANG",
 	"AddedToCart": "DITAMBAHKAN KERANJANG",
 	"SoldOut": "TERJUAL HABIS",
+  "Label_OutOfStock" : "STOK HABIS",
 	"IsRequired": "{{key}} dibutuhkan",
 	"LoginUserNameInfo": "Demi keamanan, kami menyarankan agar Username anda berbeda dengan nama asli anda",
 	"LoginPasswordInfo": "Kata sandi harus 6-15 karakter, mengandung alfanumerik.",

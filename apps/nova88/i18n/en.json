@@ -98,6 +98,7 @@
 	"AddToCart": "ADD TO CART",
 	"AddedToCart": "ADDED TO CART",
 	"SoldOut": "SOLD OUT",
+  "Label_OutOfStock" : "OUT OF STOCK",
 	"Label_Sighup": "Sighup",
 	"IsRequired": "{{key}} is required",
 	"LoginUserNameInfo": "For security, we suggest that your username does not contain your real name.",
