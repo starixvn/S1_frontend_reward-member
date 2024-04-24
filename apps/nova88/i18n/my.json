@@ -96,6 +96,7 @@
 	"AddToCart": "TAMBAHKAN KE KARTA",
 	"AddedToCart": "DITAMBAH KE CARTA",
 	"SoldOut": "HABIS DIJUAL",
+  "Label_OutOfStock" : "KEHABISAN STOK",
 	"IsRequired": "{{key}} adalah diperlukan",
 	"LoginUserNameInfo": "Untuk keselamatan, kami mencadangkan bahawa nama pengguna anda tidak mengandungi nama sebenar anda.",
 	"LoginPasswordInfo": "Kata laluan mestilah 6-15 aksara yang mengandungi alfanumerik.",
