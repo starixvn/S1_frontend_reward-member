@@ -101,6 +101,7 @@
 	"AddToCart": "加入购物车",
 	"AddedToCart": "添加到购物车",
 	"SoldOut": "完售",
+  "Label_OutOfStock" : "缺货",
 	"IsRequired": "{{key}} 是必需的",
 	"LoginUserNameInfo": "为了安全起见，我们建议您的用户名不要包含您的真实姓名。",
 	"LoginPasswordInfo": "密码长度必须 6 至 15 个字符，包含字母数字。",
