@@ -58,11 +58,17 @@ const CartItem: FC<ICartItemProps> = ({
 	onRemove,
 }) => {
 	const { t } = useTranslation()
-	return (
-		<div
-			key={item.giftId}
-			className={classNames("cart-items", {
-				soldOut: !item.stock,
+  const stock = (() => {
+    const { stock, status } = item
+    if (!status) return <div className="sold-out active">{t("SoldOut")}</div>
+    if (!stock) return <div className="sold-out active">{t("Label_OutOfStock")}</div>
+    return null
+  })()
+  return (
+    <div
+      key={item.giftId}
+      className={classNames("cart-items", {
+				soldOut: !item.stock || !item.status,
 				// later: !item.stock && !item.showStock,
 			})}>
 			<div className="cart-check">
@@ -75,9 +81,7 @@ const CartItem: FC<ICartItemProps> = ({
 			<div className="cart-info">
 				<div>
 					<div>
-						{!item.stock && (
-							<div className="sold-out active">{t("SoldOut")}</div>
-						)}
+            {stock}
 						<img src={`${imageUrl}${item.pictureUrl}`} alt="any" />
 					</div>
 					<div>
