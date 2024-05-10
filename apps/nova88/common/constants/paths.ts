@@ -1,6 +1,7 @@
 // Site Url: {Domain}/rewards/
-const isDevelopment = process.env.NODE_ENV !== "production"
-const root = isDevelopment ? "/" : "/rewards"
+
+// nextjs 會處理 basePath, link 或 router.push 正常帶即可
+const root = "/"
 
 const paths = {
 	home: root,
@@ -25,9 +26,9 @@ const paths = {
 			},
 		},
 	},
-	forgetPassword: "forgetPassword",
+	forgetPassword: "forget-password",
 	join: "join",
-	appDownload: "appDownload",
+	appDownload: "app-download",
 	profile: "profile",
 }
 

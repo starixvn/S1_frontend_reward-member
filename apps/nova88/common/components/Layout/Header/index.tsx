@@ -71,7 +71,7 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 							<a
 								target="_blank"
 								rel="noreferrer"
-								href={`/${langId}/${paths.appDownload}`}
+								href={`/${paths.appDownload}`}
 								className="icon icon-mobile"></a>
 						</div>
 					</div>
