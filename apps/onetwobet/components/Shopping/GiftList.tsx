@@ -2,21 +2,22 @@ import Empty from './Empty'
 import GiftItem from './GiftItem'
 import { tabOption } from '@constants'
 import { FC } from 'react'
-import { IGiftData } from "@api"
+import { IGiftData, selectedIsLogin, useSetFavoriteMutation } from "@api"
+import { usePopBox } from '@operations'
+import { useSelector } from 'react-redux'
 
 interface IGiftListProps {
 	filterList: Array<IGiftData>
-	onToggleFavorite?: (giftItem: object) => void
 	activeTabItem?: { lang?: string; tagId?: number; tagName?: string }
 	isLargeImg?: boolean
 	onToggleLargeImg?: () => void
 }
 
-const GiftList: FC<IGiftListProps> = ({
+export const GiftList: FC<IGiftListProps> = ({
 	filterList,
-	onToggleFavorite,
 	activeTabItem,
 }) => {
+
 	return (
 		<>
 			{filterList && filterList.length > 0 ? (
@@ -25,7 +26,6 @@ const GiftList: FC<IGiftListProps> = ({
 						<GiftItem
 							key={item.giftId}
 							item={item}
-							onToggleFavorite={onToggleFavorite}
 						/>
 					))}
 				</div>
@@ -35,5 +35,3 @@ const GiftList: FC<IGiftListProps> = ({
 		</>
 	)
 }
-
-export default GiftList

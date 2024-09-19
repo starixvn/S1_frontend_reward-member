@@ -1,6 +1,6 @@
-import { selectedCartList, selectedIsLogin, setShoppingCartAsync } from '@api'
+import { selectedCartList, selectedIsLogin, setShoppingCartAsync, useSetFavoriteMutation } from '@api'
 import { numberFormat } from '@core'
-import { useAppDispatch, useAppSelector } from '@operations'
+import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
 import { FC, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,10 +26,9 @@ interface IGiftItemProps {
 		showStock: boolean
 		stock: number
 	}
-	onToggleFavorite: (giftItem: object) => void
 }
 
-const GiftItem: FC<IGiftItemProps> = ({ item, onToggleFavorite }) => {
+const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 	const dispatch = useAppDispatch()
 	const { t } = useTranslation()
 	const [isLarge, setIsLarge] = useState(false)
@@ -37,6 +36,27 @@ const GiftItem: FC<IGiftItemProps> = ({ item, onToggleFavorite }) => {
 	const isLogin = useAppSelector(selectedIsLogin)
 	const cartList = useAppSelector(selectedCartList)
 	const giftItemRef = useRef()
+	const [setFavorite] = useSetFavoriteMutation() // 設定喜愛
+  const { setPopBoxType } = usePopBox()
+  const handleFavoriteToggle = async item => {
+		if (isLogin) {
+			try {
+				await setFavorite({
+					giftId: item.giftId,
+					isFavorite: !item.isFavorite,
+				}).unwrap()
+			} catch (error) {
+				setPopBoxType({
+					type: 'warn',
+					props: { content: error.message },
+				})
+			}
+		} else {
+			setPopBoxType({
+				type: 'login',
+			})
+		}
+	}
 
 	const isInCart = giftItem => {
 		return isLogin
@@ -111,7 +131,7 @@ const GiftItem: FC<IGiftItemProps> = ({ item, onToggleFavorite }) => {
 			</div>
 			<div className='btn'>
 				<button
-					onClick={() => onToggleFavorite(item)}
+					onClick={() => handleFavoriteToggle(item)}
 					className={classNames('icon', 'icon-heart-fill', {
 						active: item.isFavorite,
 					})}

@@ -12,6 +12,7 @@ import classNames from 'classnames'
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import Loading from '../common/Loading';
 
 interface IGiftTabProps {
 	activeItem?: { lang?: string; tagId?: number; tagName?: string }
@@ -20,6 +21,7 @@ interface IGiftTabProps {
 export const GiftTab: FC<IGiftTabProps> = ({
 	activeItem
 }) => {
+  const tempabc = true;
   const [actItem,setActItem]=useState(activeItem)
 	const { i18n, t } = useTranslation()
   const isLogin = useSelector(selectedIsLogin)
@@ -134,7 +136,8 @@ export const GiftTab: FC<IGiftTabProps> = ({
 	}
 
 	return (
-		<div className='products-menu'>
+    <div className='row'>
+      { tempabc ? <Loading /> :  <div className='products-menu'>
 			{giftTabList?.map(item => (
 				<a
 					className={classNames({ active: actItem?.tagId === item.tagId })}
@@ -144,6 +147,8 @@ export const GiftTab: FC<IGiftTabProps> = ({
 					{t(item.tagName)}
 				</a>
 			))}
-		</div>
+		</div>}
+
+    </div>
 	)
 }

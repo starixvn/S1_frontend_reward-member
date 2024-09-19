@@ -21,50 +21,41 @@ import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import GiftList from './GiftList'
-import GiftSelector from './GiftSelector'
+import { GiftList } from './GiftList'
+import { GiftSelector } from './GiftSelector'
 import { GiftTab } from './GiftTab'
 import { GiftSwiper } from './GiftSwiper'
 
 const Shopping = () => {
-	const isLogin = useSelector(selectedIsLogin)
-	const langId = useAppSelector(selectedLangId)
-	const currencyId = useAppSelector(selectedCurrencyId)
-	const { i18n, t } = useTranslation()
+  const tempqqqr = true;
+	const isLogin = useSelector(selectedIsLogin) // 登入參數, 取得產品用
+	const langId = useAppSelector(selectedLangId) // 語言參數, 取得產品用
+	const currencyId = useAppSelector(selectedCurrencyId) // 貨幣參數, 取得產品用
+	const { i18n, t } = useTranslation() // 取得翻譯
 	const { setPopBoxType } = usePopBox()
-	const [inViewRef, isInView] = useInView()
+	const [inViewRef, isInView] = useInView() // lazyload用?
 	const [args, setArgs] = useState({
 		categoryIds: null,
 		tags: null,
 		orderByField: null,
 		desc: false,
 		pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-	})
-	const [categoryList, setCategoryList] = useState([])
-	const [activeTabItem, setActiveTabItem] = useState({})
-	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
-	const fromList = [
-		{ categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t('LowToHighCost') },
-		{ categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: t('HighToLowCost') },
-		{
-			categoryId: fromEnum.LOW_TO_HIGH_LETTER,
-			categoryName: t('LowToHighLetter'),
-		},
-		{
-			categoryId: fromEnum.HIGH_TO_LOW_LETTER,
-			categoryName: t('HighToLowLetter'),
-		},
-	]
+	}) // 顯示產品id, 分頁等資訊
+	const [categoryList, setCategoryList] = useState([]) // 取得tab list用
+	const [activeTabItem, setActiveTabItem] = useState({}) // active中的tab
+	const [isFilterFavorite, setIsFilterFavorite] = useState(false) // 是否在favorite list中
+
 	const [
 		getGiftTags,
 		{ data: { data: giftTabs = [] } = {}, isLoading: isGetGiftTabsLoading },
-	] = useLazyGetGiftTagsQuery()
+	] = useLazyGetGiftTagsQuery() // 取得產品tab
 	const [
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
-	] = useLazyGetGiftListQuery()
-	const [setFavorite] = useSetFavoriteMutation()
+	] = useLazyGetGiftListQuery() // 取得產品列表
+	const [setFavorite] = useSetFavoriteMutation() // 設定喜愛
 
+  // 取得gift tab list
 	const getGiftTabsList = async () => {
 		try {
 			await getGiftTags({ langId, currencyId }).unwrap()
@@ -76,6 +67,9 @@ const Shopping = () => {
 		}
 	}
 
+  // tab list obj, 預設加入all和favorite
+  // gift tab list不為空值時也會加入
+  // 最終顯示的gift tab list
 	const giftTabList =
 		giftTabs && giftTabs.length > 0
 			? [
@@ -103,6 +97,8 @@ const Shopping = () => {
 						tagName: 'FAVORITE',
 					},
 			  ]
+
+  // filter click handler
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
 			await getGiftList(args).unwrap()
@@ -110,47 +106,6 @@ const Shopping = () => {
 			setPopBoxType({
 				type: 'warn',
 				props: { content: error.message },
-			})
-		}
-	}
-
-	const getCategoryList = giftList => {
-		const tempList = []
-		const categoryList = [
-			{
-				categoryName: t('ALL'),
-				categoryId: null,
-			},
-		]
-		giftList?.forEach(obj => {
-			tempList.push({
-				categoryName: obj.categoryName,
-				categoryId: obj.categoryId,
-			})
-		})
-		tempList.forEach(item => {
-			const found = categoryList.find(obj => obj.categoryId === item.categoryId)
-			!found && categoryList.push(item)
-		})
-		return categoryList
-	}
-
-	const handleFavoriteToggle = async item => {
-		if (isLogin) {
-			try {
-				await setFavorite({
-					giftId: item.giftId,
-					isFavorite: !item.isFavorite,
-				}).unwrap()
-			} catch (error) {
-				setPopBoxType({
-					type: 'warn',
-					props: { content: error.message },
-				})
-			}
-		} else {
-			setPopBoxType({
-				type: 'login',
 			})
 		}
 	}
@@ -202,7 +157,11 @@ const Shopping = () => {
 	const handleTabChange = activeTab => {
 		setActiveTabItem(activeTab)
 		if (activeTab.tagId === tabOption.FAVORITE) {
-			handleFilter({ ...args, tags: null, langId, currencyId })
+			handleFilter({
+        ...args,
+        tags: null,
+        langId,
+        currencyId })
 			setArgs(prev => ({
 				...prev,
 				tags: null,
@@ -211,8 +170,8 @@ const Shopping = () => {
 			setIsFilterFavorite(true)
 		} else {
 			handleFilter({
-				...args,
-				tags: activeTab.tagId ? [activeTab.tagId] : null,
+        ...args,
+        tags: activeTab.tagId ? [activeTab.tagId] : null,
 				langId,
 				currencyId,
 			})
@@ -285,6 +244,7 @@ const Shopping = () => {
 			<GiftSwiper />
 			<div className='products-group container-xxl'>
 				<div className='row'>
+
 					{isGetGiftTabsLoading ? (
 						<Loading />
 					) : (
@@ -308,7 +268,6 @@ const Shopping = () => {
 					</div>
 					<GiftList
 						filterList={filterList}
-						onToggleFavorite={handleFavoriteToggle}
 						activeTabItem={activeTabItem}
 					/>
 				</div>
