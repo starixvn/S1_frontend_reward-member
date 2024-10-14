@@ -1,4 +1,4 @@
 include:
   - project: "sre/gitlab-ci-configs"
     ref: "main"
-    file: "/reward/.gitlab-ci.yaml"
+    file: "/frontend-reward/.gitlab-ci.yaml"
