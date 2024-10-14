@@ -59,6 +59,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 				<div className="memberFile">
 					<div className="vipAnimation">
 						<img
+              style={{zIndex: 1}}
 							src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
 							alt="vip"
 						/>
