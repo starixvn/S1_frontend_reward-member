@@ -3,37 +3,37 @@ import { useLocalStorage } from "usehooks-ts"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import { useTranslation } from "react-i18next"
-import GiftList from "components/Shopping/GiftList"
-import { DEFAULT_PAGE_SIZE_COUNT } from "components/Shopping/constants"
+import GiftList from "@apps/nova88/components/Shopping/GiftList"
+import { DEFAULT_PAGE_SIZE_COUNT } from "@apps/nova88/components/Shopping/constants"
 import CartList from "./CartList"
 import Order from "./CartOrder"
-import { imageUrl, siteInfo } from "config"
-import { useAppDispatch, useAppSelector } from "store"
-import Loading from "common/components/Loading"
-import { usePopBox } from "common/hooks"
-import { paths } from "common/constants"
+import { imageUrl, siteInfo } from "@apps/nova88/config"
+import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
+import Loading from "@apps/nova88/common/components/Loading"
+import { usePopBox } from "@apps/nova88/common/hooks"
+import { paths } from "@apps/nova88/common/constants"
 import {
 	useGetGiftTagsQuery,
 	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
-} from "service/api/storeApi"
+} from "@apps/nova88/service/api/storeApi"
 import {
 	useCreateRedemptionMutation,
 	useSetShoppingCartMutation,
-} from "service/api/redemptionApi"
+} from "@apps/nova88/service/api/redemptionApi"
 import {
 	selectedIsLogin,
 	selectedLangId,
 	selectedProfile,
-} from "service/slice/auth"
+} from "@apps/nova88/service/slice/auth"
 import {
 	selectedCartNumber,
 	selectedPointBalance,
 	setCartNumber,
 	setPointBalance,
-} from "service/slice/cart"
-import { IGetGiftListArgs } from "service/api/storeApi/type"
-import { ISetShoppingCarData } from "service/api/redemptionApi/type"
+} from "@apps/nova88/service/slice/cart"
+import { IGetGiftListArgs } from "@apps/nova88/service/api/storeApi/type"
+import { ISetShoppingCarData } from "@apps/nova88/service/api/redemptionApi/type"
 
 interface ICheckOutArgs {
 	categoryId?: number

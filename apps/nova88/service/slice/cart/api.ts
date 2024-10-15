@@ -1,4 +1,4 @@
-import Api from "service/Api"
+import Api from "@apps/nova88/service/Api"
 
 export const getPointBalance = async () => {
 	const response = await Api.post(`store/GetPointBalance`)

@@ -1,12 +1,15 @@
 import { FC, ReactNode, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { useAppDispatch, useAppSelector } from "store"
-import { checkSignInAsync, getCustProfileAsync } from "service/slice/auth/thunk"
-import { selectedIsLogin } from "service/slice/auth"
-import { paths } from "common/constants"
-import { useInitI18nLanguageEffect } from "common/hooks/useInitI18nLanguageEffect"
+import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
+import {
+	checkSignInAsync,
+	getCustProfileAsync,
+} from "@apps/nova88/service/slice/auth/thunk"
+import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
+import { paths } from "@apps/nova88/common/constants"
+import { useInitI18nLanguageEffect } from "@apps/nova88/common/hooks/useInitI18nLanguageEffect"
 import { useLocalStorage } from "usehooks-ts"
-import { getPointBalanceAsync } from "service/slice/cart/thunk"
+import { getPointBalanceAsync } from "@apps/nova88/service/slice/cart/thunk"
 import { useSetShoppingCartMutation } from "../../../service/api/redemptionApi"
 import { setCartNumber } from "../../../service/slice/cart"
 import { ISetShoppingCarData } from "../../../service/api/redemptionApi/type"

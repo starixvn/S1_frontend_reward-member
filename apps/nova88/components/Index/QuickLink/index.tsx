@@ -9,10 +9,10 @@ import {
 	langMapping,
 	sideBarIconName,
 } from "../constants"
-import { useGetSocialChannelMutation } from "service/api/siteApi"
+import { useGetSocialChannelMutation } from "@apps/nova88/service/api/siteApi"
 import QRCode from "qrcode.react"
-import { useGetAppLinkQuery } from "service/api/playerApi"
-import { usePopBox } from "common/hooks"
+import { useGetAppLinkQuery } from "@apps/nova88/service/api/playerApi"
+import { usePopBox } from "@apps/nova88/common/hooks"
 import { useAppSelector } from "../../../store"
 import { selectedIsLogin, selectedProfile } from "../../../service/slice/auth"
 import { useSelector } from "react-redux"

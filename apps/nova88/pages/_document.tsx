@@ -1,4 +1,4 @@
-import { imageUrl } from "config"
+import { imageUrl } from "@apps/nova88/config"
 import { Html, Head, Main, NextScript } from "next/document"
 
 const Document = () => {

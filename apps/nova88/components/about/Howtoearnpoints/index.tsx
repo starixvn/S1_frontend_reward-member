@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import Link from "next/link"
 import React, { useState } from "react"
-import LeftMenu from "components/about/components/LeftMenu"
+import LeftMenu from "@apps/nova88/components/about/components/LeftMenu"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
 import {
@@ -9,12 +9,15 @@ import {
 	HowTabEnum,
 	depositPointReward,
 	turnoverPointReward,
-} from "components/about/constants"
-import { paths } from "common/constants"
-import { langMapping } from "components/Index/constants"
+} from "@apps/nova88/components/about/constants"
+import { paths } from "@apps/nova88/common/constants"
+import { langMapping } from "@apps/nova88/components/Index/constants"
 import { useSelector } from "react-redux"
-import { selectedIsLogin, selectedLangId } from "service/slice/auth"
-import { useAppSelector } from "store"
+import {
+	selectedIsLogin,
+	selectedLangId,
+} from "@apps/nova88/service/slice/auth"
+import { useAppSelector } from "@apps/nova88/store"
 
 const HowToEarnPoints = () => {
 	const { pathname } = useRouter()

@@ -1,19 +1,23 @@
 import React, { useState, useRef } from "react"
 import classnames from "classnames"
 import Link from "next/link"
-import { useAppDispatch, useAppSelector } from "store"
+import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
 import { useSelector } from "react-redux"
 import { useLocalStorage, useOnClickOutside } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
-import { logoutAsync } from "service/slice/auth/thunk"
-import { selectedProfile, selectedLangId, setIsLogin } from "service/slice/auth"
-import { imageUrl, siteInfo } from "config"
+import { logoutAsync } from "@apps/nova88/service/slice/auth/thunk"
+import {
+	selectedProfile,
+	selectedLangId,
+	setIsLogin,
+} from "@apps/nova88/service/slice/auth"
+import { imageUrl, siteInfo } from "@apps/nova88/config"
 import LangDropdown from "./LangDropdown"
 import ShoppingCart from "./ShoppingCart"
-import { paths } from "common/constants"
-import { REWARD88_LANG } from "common/constants/localStorage"
-import { selectedPointBalance } from "service/slice/cart"
-import { numberFormat } from "common/utils/func"
+import { paths } from "@apps/nova88/common/constants"
+import { REWARD88_LANG } from "@apps/nova88/common/constants/localStorage"
+import { selectedPointBalance } from "@apps/nova88/service/slice/cart"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 
 const HeaderAfterLogin = () => {
 	const { t, i18n } = useTranslation()

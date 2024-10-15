@@ -1,8 +1,8 @@
 import React, { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { usePopBox } from "common/hooks"
-import { useAppSelector } from "store"
-import { selectedIsLogin } from "service/slice/auth"
+import { usePopBox } from "@apps/nova88/common/hooks"
+import { useAppSelector } from "@apps/nova88/store"
+import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
 
 interface IEmptyProps {
 	isFavorite: boolean

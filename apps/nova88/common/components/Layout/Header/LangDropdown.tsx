@@ -3,19 +3,19 @@ import { useOnClickOutside, useLocalStorage } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import classnames from "classnames"
-import { useAppDispatch, useAppSelector } from "store"
+import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
 import {
 	setLangId as setUserLangId,
 	selectedIsLogin,
 	selectedCurrencyId,
-} from "service/slice/auth"
+} from "@apps/nova88/service/slice/auth"
 import { defLangOptions } from "./LangDropdown.def"
 import some from "lodash/some"
 import { filter } from "lodash"
-import { REWARD88_LANG } from "common/constants/localStorage"
-import { setCookie } from "common/utils/func"
-import { useSetLanguageMutation } from "service/api/accountApi"
-import { usePopBox } from "common/hooks"
+import { REWARD88_LANG } from "@apps/nova88/common/constants/localStorage"
+import { setCookie } from "@apps/nova88/common/utils/func"
+import { useSetLanguageMutation } from "@apps/nova88/service/api/accountApi"
+import { usePopBox } from "@apps/nova88/common/hooks"
 
 const LangDropdown = () => {
 	const { i18n } = useTranslation()

@@ -1,18 +1,24 @@
 import { useRouter } from "next/router"
 import React, { useEffect } from "react"
-import LeftMenu from "components/about/components/LeftMenu"
+import LeftMenu from "@apps/nova88/components/about/components/LeftMenu"
 import { useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
-import PointRecord from "components/about/components/PointRecord"
-import Loading from "common/components/Loading"
-import { useLazyGetMyCoinQuery } from "service/api/storeApi"
-import { usePopBox } from "common/hooks"
-import { useAppSelector } from "store"
-import { selectedIsLogin, selectedProfile } from "service/slice/auth"
-import { imageUrl } from "config"
-import { getAvailablePoints, getUsedPoints } from "components/about/utils"
+import PointRecord from "@apps/nova88/components/about/components/PointRecord"
+import Loading from "@apps/nova88/common/components/Loading"
+import { useLazyGetMyCoinQuery } from "@apps/nova88/service/api/storeApi"
+import { usePopBox } from "@apps/nova88/common/hooks"
+import { useAppSelector } from "@apps/nova88/store"
+import {
+	selectedIsLogin,
+	selectedProfile,
+} from "@apps/nova88/service/slice/auth"
+import { imageUrl } from "@apps/nova88/config"
+import {
+	getAvailablePoints,
+	getUsedPoints,
+} from "@apps/nova88/components/about/utils"
 import { clubList } from "../constants"
-import { numberFormat } from "common/utils/func"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 
 const Points = () => {
 	const { pathname } = useRouter()

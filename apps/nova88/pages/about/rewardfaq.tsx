@@ -1,7 +1,7 @@
 import React from "react"
-import Wrapper from "common/components/Wrapper"
-import Layout from "common/components/Layout"
-import Faq from "components/about/Faq"
+import Wrapper from "@apps/nova88/common/components/Wrapper"
+import Layout from "@apps/nova88/common/components/Layout"
+import Faq from "@apps/nova88/components/about/Faq"
 
 const Page = () => {
 	return (

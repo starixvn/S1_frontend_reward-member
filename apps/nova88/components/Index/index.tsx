@@ -3,28 +3,31 @@ import QRCode from "qrcode.react"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
-import GiftSwiper from "components/Shopping/GiftSwiper"
+import GiftSwiper from "@apps/nova88/components/Shopping/GiftSwiper"
 import { monthObj } from "./constants"
-import GiftList from "components/Shopping/GiftList"
-import Loading from "common/components/Loading"
+import GiftList from "@apps/nova88/components/Shopping/GiftList"
+import Loading from "@apps/nova88/common/components/Loading"
 import { useLocalStorage } from "usehooks-ts"
-import { usePopBox } from "common/hooks"
+import { usePopBox } from "@apps/nova88/common/hooks"
 import {
 	useLazyGetGiftListQuery,
 	useSetFavoriteMutation,
-} from "service/api/storeApi"
-import { IGetGiftListArgs } from "service/api/storeApi/type"
+} from "@apps/nova88/service/api/storeApi"
+import { IGetGiftListArgs } from "@apps/nova88/service/api/storeApi/type"
 import { useSelector } from "react-redux"
-import { selectedIsLogin, selectedLangId } from "service/slice/auth"
-import { imageUrl, siteInfo } from "config"
+import {
+	selectedIsLogin,
+	selectedLangId,
+} from "@apps/nova88/service/slice/auth"
+import { imageUrl, siteInfo } from "@apps/nova88/config"
 import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
-import { paths } from "common/constants"
-import { useGetAppLinkQuery } from "service/api/playerApi"
-import { defAppType } from "service/api/playerApi/def"
-import { useSetShoppingCartMutation } from "service/api/redemptionApi"
-import { setCartNumber } from "service/slice/cart"
-import { useAppDispatch, useAppSelector } from "store"
-import { ISetShoppingCarData } from "service/api/redemptionApi/type"
+import { paths } from "@apps/nova88/common/constants"
+import { useGetAppLinkQuery } from "@apps/nova88/service/api/playerApi"
+import { defAppType } from "@apps/nova88/service/api/playerApi/def"
+import { useSetShoppingCartMutation } from "@apps/nova88/service/api/redemptionApi"
+import { setCartNumber } from "@apps/nova88/service/slice/cart"
+import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
+import { ISetShoppingCarData } from "@apps/nova88/service/api/redemptionApi/type"
 
 const Index = () => {
 	const dispatch = useAppDispatch()

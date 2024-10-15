@@ -5,11 +5,11 @@ import { useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
 import { useReadLocalStorage } from "usehooks-ts"
 import { useRouter } from "next/router"
-import { paths } from "common/constants"
-import { selectedIsLogin } from "service/slice/auth"
-import { usePopBox } from "common/hooks"
-import { useAppSelector } from "store"
-import { selectedCartNumber } from "service/slice/cart"
+import { paths } from "@apps/nova88/common/constants"
+import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
+import { usePopBox } from "@apps/nova88/common/hooks"
+import { useAppSelector } from "@apps/nova88/store"
+import { selectedCartNumber } from "@apps/nova88/service/slice/cart"
 
 const MobileFooter = () => {
 	const { t } = useTranslation()

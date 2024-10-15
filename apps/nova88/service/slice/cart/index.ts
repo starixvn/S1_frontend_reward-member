@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { RootState } from "store"
+import { RootState } from "@apps/nova88/store"
 import { getPointBalanceAsync } from "./thunk"
 
 // * 定義 state 的 interface

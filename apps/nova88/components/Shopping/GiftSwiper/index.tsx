@@ -1,7 +1,7 @@
 import React from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { useTranslation } from "react-i18next"
-import { imageUrl } from "config"
+import { imageUrl } from "@apps/nova88/config"
 
 const getSliderList = (langId: string) => [
 	{ id: 1, img: `${imageUrl}/img/banner_${langId}.jpg` },

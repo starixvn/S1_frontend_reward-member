@@ -1,11 +1,11 @@
 import React from "react"
 import { useRouter } from "next/router"
 import { useReadLocalStorage } from "usehooks-ts"
-import { paths } from "common/constants"
-import { useAppSelector } from "store"
-import { selectedIsLogin } from "service/slice/auth"
-import { usePopBox } from "common/hooks"
-import { selectedCartNumber } from "service/slice/cart"
+import { paths } from "@apps/nova88/common/constants"
+import { useAppSelector } from "@apps/nova88/store"
+import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
+import { usePopBox } from "@apps/nova88/common/hooks"
+import { selectedCartNumber } from "@apps/nova88/service/slice/cart"
 
 const ShoppingCart = () => {
 	const route = useRouter()

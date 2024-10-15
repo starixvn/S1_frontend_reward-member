@@ -1,10 +1,10 @@
 import { useRouter } from "next/router"
 import React, { useState } from "react"
 import Link from "next/link"
-import LeftMenu from "components/about/components/LeftMenu"
+import LeftMenu from "@apps/nova88/components/about/components/LeftMenu"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
-import { paths } from "common/constants"
+import { paths } from "@apps/nova88/common/constants"
 
 const Faq = () => {
 	const { pathname } = useRouter()

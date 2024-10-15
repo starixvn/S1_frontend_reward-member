@@ -1,16 +1,16 @@
-import React from "react";
-import Wrapper from "common/components/Wrapper";
-import Layout from "common/components/Layout";
-import Purchase from "components/about/Purchase";
+import React from "react"
+import Wrapper from "@apps/nova88/common/components/Wrapper"
+import Layout from "@apps/nova88/common/components/Layout"
+import Purchase from "@apps/nova88/components/about/Purchase"
 
 const Page = () => {
-  return (
-    <Wrapper authRequired>
-      <Layout>
-        <Purchase />
-      </Layout>
-    </Wrapper>
-  );
-};
+	return (
+		<Wrapper authRequired>
+			<Layout>
+				<Purchase />
+			</Layout>
+		</Wrapper>
+	)
+}
 
-export default Page;
+export default Page
