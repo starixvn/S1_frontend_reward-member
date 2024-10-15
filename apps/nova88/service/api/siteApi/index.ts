@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react"
-import { axiosBaseQuery } from "service/axiosBaseQuery"
-import { baseUrl } from "service/Api"
+import { axiosBaseQuery } from "@apps/nova88/service/axiosBaseQuery"
+import { baseUrl } from "@apps/nova88/service/Api"
 import { IGetSocialChannelResponse, IGetSocialChannelArgs } from "./type"
 
 const siteApi = createApi({

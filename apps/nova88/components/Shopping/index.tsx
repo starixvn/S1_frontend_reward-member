@@ -7,11 +7,14 @@ import GiftTab from "./GiftTab"
 import GiftSwiper from "./GiftSwiper"
 import GiftSelector from "./GiftSelector"
 import GiftList from "./GiftList"
-import Loading from "common/components/Loading"
-import { useInView, usePopBox } from "common/hooks"
-import { useAppDispatch, useAppSelector } from "store"
-import { selectedIsLogin, selectedLangId } from "service/slice/auth"
-import { setCartNumber } from "service/slice/cart"
+import Loading from "@apps/nova88/common/components/Loading"
+import { useInView, usePopBox } from "@apps/nova88/common/hooks"
+import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
+import {
+	selectedIsLogin,
+	selectedLangId,
+} from "@apps/nova88/service/slice/auth"
+import { setCartNumber } from "@apps/nova88/service/slice/cart"
 import {
 	sortType,
 	tabOption,
@@ -19,14 +22,14 @@ import {
 	DEFAULT_PAGE_SIZE_COUNT,
 	fromEnum,
 } from "./constants"
-import { IGetGiftListArgs } from "service/api/storeApi/type"
-import { ISetShoppingCarData } from "service/api/redemptionApi/type"
+import { IGetGiftListArgs } from "@apps/nova88/service/api/storeApi/type"
+import { ISetShoppingCarData } from "@apps/nova88/service/api/redemptionApi/type"
 import {
 	useLazyGetGiftListQuery,
 	useLazyGetGiftTagsQuery,
 	useSetFavoriteMutation,
-} from "service/api/storeApi"
-import { useSetShoppingCartMutation } from "service/api/redemptionApi"
+} from "@apps/nova88/service/api/storeApi"
+import { useSetShoppingCartMutation } from "@apps/nova88/service/api/redemptionApi"
 
 const Shopping = () => {
 	const dispatch = useAppDispatch()

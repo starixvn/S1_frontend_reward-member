@@ -2,8 +2,8 @@ import React, { FC } from "react"
 import Link from "next/link"
 import classnames from "classnames"
 import { useTranslation } from "react-i18next"
-import { paths } from "common/constants"
-import { numberFormat } from "common/utils/func"
+import { paths } from "@apps/nova88/common/constants"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 
 interface ICartOrderProps {
 	profile: {

@@ -1,9 +1,9 @@
 import { useRouter } from "next/router"
 import React, { useState } from "react"
-import LeftMenu from "components/about/components/LeftMenu"
-import PurchaseRecord from "components/about/components/PurchaseRecord"
+import LeftMenu from "@apps/nova88/components/about/components/LeftMenu"
+import PurchaseRecord from "@apps/nova88/components/about/components/PurchaseRecord"
 import { useTranslation } from "react-i18next"
-import { useGetMyPurchaseQuery } from "service/api/storeApi"
+import { useGetMyPurchaseQuery } from "@apps/nova88/service/api/storeApi"
 import classNames from "classnames"
 
 const Purchase = () => {

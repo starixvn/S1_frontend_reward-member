@@ -1,16 +1,16 @@
 import React, { FC } from "react"
 import { useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
-import { selectedIsLogin } from "service/slice/auth"
+import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
 import { useRouter } from "next/router"
 import Link from "next/link"
-import { useAppSelector } from "store"
-import { selectedLangId } from "service/slice/auth"
+import { useAppSelector } from "@apps/nova88/store"
+import { selectedLangId } from "@apps/nova88/service/slice/auth"
 import HeaderBeforeLogin from "./Header.BeforeLogin"
 import HeaderAfterLogin from "./Header.AfterLogin"
 import ShoppingCart from "./ShoppingCart"
-import { imageUrl } from "config"
-import { paths } from "common/constants"
+import { imageUrl } from "@apps/nova88/config"
+import { paths } from "@apps/nova88/common/constants"
 
 interface IHeaderProps {
 	setSubmenuOpen: (prev) => void

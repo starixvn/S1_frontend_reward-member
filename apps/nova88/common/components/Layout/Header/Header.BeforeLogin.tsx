@@ -1,11 +1,11 @@
 import React from "react"
 import { useTranslation } from "react-i18next"
-import { usePopBox } from "common/hooks"
-import { useAppSelector } from "store"
-import { selectedLangId } from "service/slice/auth"
+import { usePopBox } from "@apps/nova88/common/hooks"
+import { useAppSelector } from "@apps/nova88/store"
+import { selectedLangId } from "@apps/nova88/service/slice/auth"
 import LangDropdown from "./LangDropdown"
 import ShoppingCart from "./ShoppingCart"
-import { imageUrl } from "config"
+import { imageUrl } from "@apps/nova88/config"
 
 const HeaderBeforeLogin = () => {
 	const { t } = useTranslation()

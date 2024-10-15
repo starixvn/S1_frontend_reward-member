@@ -1,4 +1,4 @@
-import { paths } from "common/constants"
+import { paths } from "@apps/nova88/common/constants"
 
 export enum AboutTabEnum {
 	POINTS = 1,

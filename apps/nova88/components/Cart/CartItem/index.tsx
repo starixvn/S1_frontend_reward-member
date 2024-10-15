@@ -1,8 +1,8 @@
 import React, { FC } from "react"
 import classNames from "classnames"
-import { imageUrl } from "config"
+import { imageUrl } from "@apps/nova88/config"
 import { useTranslation } from "react-i18next"
-import { numberFormat } from "common/utils/func"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 
 interface ICartItemProps {
 	item: {
@@ -58,16 +58,17 @@ const CartItem: FC<ICartItemProps> = ({
 	onRemove,
 }) => {
 	const { t } = useTranslation()
-  const stock = (() => {
-    const { stock, status } = item
-    if (!status) return <div className="sold-out active">{t("SoldOut")}</div>
-    if (!stock) return <div className="sold-out active">{t("Label_OutOfStock")}</div>
-    return null
-  })()
-  return (
-    <div
-      key={item.giftId}
-      className={classNames("cart-items", {
+	const stock = (() => {
+		const { stock, status } = item
+		if (!status) return <div className="sold-out active">{t("SoldOut")}</div>
+		if (!stock)
+			return <div className="sold-out active">{t("Label_OutOfStock")}</div>
+		return null
+	})()
+	return (
+		<div
+			key={item.giftId}
+			className={classNames("cart-items", {
 				soldOut: !item.stock || !item.status,
 				// later: !item.stock && !item.showStock,
 			})}>
@@ -81,7 +82,7 @@ const CartItem: FC<ICartItemProps> = ({
 			<div className="cart-info">
 				<div>
 					<div>
-            {stock}
+						{stock}
 						<img src={`${imageUrl}${item.pictureUrl}`} alt="any" />
 					</div>
 					<div>

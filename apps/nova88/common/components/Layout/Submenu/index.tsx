@@ -8,16 +8,16 @@ import {
 	selectedLangId,
 	selectedProfile,
 	setIsLogin,
-} from "service/slice/auth"
-import { logoutAsync } from "service/slice/auth/thunk"
-import { useAppDispatch, useAppSelector } from "store"
-import { imageUrl } from "config"
-import { paths } from "common/constants"
-import { usePopBox } from "common/hooks"
+} from "@apps/nova88/service/slice/auth"
+import { logoutAsync } from "@apps/nova88/service/slice/auth/thunk"
+import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
+import { imageUrl } from "@apps/nova88/config"
+import { paths } from "@apps/nova88/common/constants"
+import { usePopBox } from "@apps/nova88/common/hooks"
 import LangDropdown from "../Header/LangDropdown"
 import { useLocalStorage } from "usehooks-ts"
-import { selectedPointBalance } from "service/slice/cart"
-import { numberFormat } from "common/utils/func"
+import { selectedPointBalance } from "@apps/nova88/service/slice/cart"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 interface ISubmenuProps {
 	isSubmenuOpen: boolean
 }
@@ -59,7 +59,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 				<div className="memberFile">
 					<div className="vipAnimation">
 						<img
-              style={{zIndex: 1}}
+							style={{ zIndex: 1 }}
 							src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
 							alt="vip"
 						/>

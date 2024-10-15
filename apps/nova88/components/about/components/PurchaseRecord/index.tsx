@@ -1,12 +1,12 @@
 import React, { FC } from "react"
-import Pagination from "common/components/Pagination"
+import Pagination from "@apps/nova88/common/components/Pagination"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
-import Empty from "components/about/components/Empty"
-import { selectedProfile } from "service/slice/auth"
+import Empty from "@apps/nova88/components/about/components/Empty"
+import { selectedProfile } from "@apps/nova88/service/slice/auth"
 import { useSelector } from "react-redux"
-import { Time_Zone_By_Currencies } from "common/constants"
-import { numberFormat } from "common/utils/func"
+import { Time_Zone_By_Currencies } from "@apps/nova88/common/constants"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 
 interface IPurchaseRecordProps {
 	purchaseList: {

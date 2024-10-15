@@ -1,10 +1,10 @@
 import React, { FC } from "react"
 import Link from "next/link"
 import { DeepRequired, FieldErrorsImpl, UseFormRegister } from "react-hook-form"
-import { paths } from "common/constants"
+import { paths } from "@apps/nova88/common/constants"
 import { useRouter } from "next/router"
 import { useTranslation } from "react-i18next"
-import { Input } from "common/components/Input"
+import { Input } from "@apps/nova88/common/components/Input"
 import { IFormValues } from "./type"
 
 interface IFormProps {
@@ -54,9 +54,7 @@ const Form: FC<IFormProps> = ({ onSubmit, register, errors, langId }) => {
 					]}
 				/>
 
-				<a href={`/${paths.forgetPassword}`}>
-					{t("ForgetPassword")}
-				</a>
+				<a href={`/${paths.forgetPassword}`}>{t("ForgetPassword")}</a>
 			</div>
 
 			<div className="btnGroup">

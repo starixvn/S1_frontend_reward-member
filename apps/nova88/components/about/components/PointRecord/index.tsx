@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { numberFormat } from "common/utils/func"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 
 interface IPointRecordProps {
 	coinList: {

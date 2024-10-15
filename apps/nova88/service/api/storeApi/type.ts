@@ -1,4 +1,4 @@
-import { IAxiosResponse } from "service/axiosBaseQuery"
+import { IAxiosResponse } from "@apps/nova88/service/axiosBaseQuery"
 
 export interface IGiftData {
 	giftId: number

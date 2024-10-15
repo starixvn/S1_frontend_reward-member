@@ -1,11 +1,11 @@
 import React, { FC } from "react"
 import classNames from "classnames"
 import { useTranslation } from "react-i18next"
-import { mineMenuList } from "components/about/constants"
+import { mineMenuList } from "@apps/nova88/components/about/constants"
 import { useRouter } from "next/router"
-import { useAppSelector } from "store"
-import { selectedIsLogin } from "service/slice/auth"
-import { usePopBox } from "common/hooks"
+import { useAppSelector } from "@apps/nova88/store"
+import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
+import { usePopBox } from "@apps/nova88/common/hooks"
 
 interface ILeftMenuProps {
 	activePath: string

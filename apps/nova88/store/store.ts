@@ -1,12 +1,12 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 
-import { authReducer } from "service/slice/auth"
-import { cartReducer } from "service/slice/cart"
-import index from "service/api/storeApi"
-import playerApi from "service/api/playerApi"
-import siteApi from "service/api/siteApi"
-import redemptionApi from "service/api/redemptionApi"
-import accountApi from "service/api/accountApi"
+import { authReducer } from "@apps/nova88/service/slice/auth"
+import { cartReducer } from "@apps/nova88/service/slice/cart"
+import index from "@apps/nova88/service/api/storeApi"
+import playerApi from "@apps/nova88/service/api/playerApi"
+import siteApi from "@apps/nova88/service/api/siteApi"
+import redemptionApi from "@apps/nova88/service/api/redemptionApi"
+import accountApi from "@apps/nova88/service/api/accountApi"
 
 const store = configureStore({
 	reducer: {

@@ -1,7 +1,7 @@
 import React, { FC } from "react"
-import GiftItem from "components/Shopping/GiftItem"
-import Empty from "components/Shopping/Empty"
-import { tabOption } from "components/Index/constants"
+import GiftItem from "@apps/nova88/components/Shopping/GiftItem"
+import Empty from "@apps/nova88/components/Shopping/Empty"
+import { tabOption } from "@apps/nova88/components/Index/constants"
 
 interface IGiftListProps {
 	filterList: {

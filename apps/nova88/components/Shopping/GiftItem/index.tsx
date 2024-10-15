@@ -1,11 +1,11 @@
 import React, { FC, useRef, useState } from "react"
-import { imageUrl } from "config"
+import { imageUrl } from "@apps/nova88/config"
 import classNames from "classnames"
 import { useLocalStorage, useOnClickOutside } from "usehooks-ts"
 import { useTranslation } from "react-i18next"
-import { useAppSelector } from "store"
-import { selectedIsLogin } from "service/slice/auth"
-import { numberFormat } from "common/utils/func"
+import { useAppSelector } from "@apps/nova88/store"
+import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
+import { numberFormat } from "@apps/nova88/common/utils/func"
 
 interface IGiftItemProps {
 	item: {

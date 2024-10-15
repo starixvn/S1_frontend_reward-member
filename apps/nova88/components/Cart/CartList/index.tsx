@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import CartItem from "components/Cart/CartItem"
+import CartItem from "@apps/nova88/components/Cart/CartItem"
 
 interface ICartListProps {
 	cartList: {

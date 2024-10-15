@@ -1,50 +1,50 @@
-import React, { FC, useMemo, useRef } from "react";
-import PopBoxWarn from "./PopBox.warn";
-import { usePopBox } from "common/hooks";
-import PopBoxLogin from "./PopBoxLogin";
-import { useOnClickOutside } from "usehooks-ts";
-import PopBoxDefault from "./PopBox.default";
+import React, { FC, useMemo, useRef } from "react"
+import PopBoxWarn from "./PopBox.warn"
+import { usePopBox } from "@apps/nova88/common/hooks"
+import PopBoxLogin from "./PopBoxLogin"
+import { useOnClickOutside } from "usehooks-ts"
+import PopBoxDefault from "./PopBox.default"
 
 const PopBox: FC = () => {
-  const ref = useRef(null);
-  const {
-    popBoxType: { type, props = {} },
-    closePopBox
-  } = usePopBox();
+	const ref = useRef(null)
+	const {
+		popBoxType: { type, props = {} },
+		closePopBox,
+	} = usePopBox()
 
-  const content = useMemo(() => {
-    let element = null;
+	const content = useMemo(() => {
+		let element = null
 
-    switch (type) {
-      case "login":
-        element = <PopBoxLogin {...props} />;
-        break;
-      case "warn":
-        element = <PopBoxWarn {...props} />;
-        break;
-      case "default":
-        element = <PopBoxDefault {...props} />;
-        break;
-      default:
-        element = null;
-        break;
-    }
-    return element;
-  }, [props, type]);
+		switch (type) {
+			case "login":
+				element = <PopBoxLogin {...props} />
+				break
+			case "warn":
+				element = <PopBoxWarn {...props} />
+				break
+			case "default":
+				element = <PopBoxDefault {...props} />
+				break
+			default:
+				element = null
+				break
+		}
+		return element
+	}, [props, type])
 
-  useOnClickOutside(ref, () => {
-    closePopBox();
-  });
+	useOnClickOutside(ref, () => {
+		closePopBox()
+	})
 
-  if (!type) {
-    return null;
-  }
+	if (!type) {
+		return null
+	}
 
-  return (
-    <div id="popup" className={type ? "active" : ""}>
-      <div ref={ref}>{content}</div>
-    </div>
-  );
-};
+	return (
+		<div id="popup" className={type ? "active" : ""}>
+			<div ref={ref}>{content}</div>
+		</div>
+	)
+}
 
-export default PopBox;
+export default PopBox
