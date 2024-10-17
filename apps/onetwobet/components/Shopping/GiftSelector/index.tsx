@@ -1,5 +1,5 @@
-import React, { FC } from "react"
-import { Dropdown } from "@apps/onetwobet/common/components/Dropdown"
+import { Dropdown } from '@apps/onetwobet/components/common/Dropdown'
+import { FC } from 'react'
 
 const { Option } = Dropdown
 

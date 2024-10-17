@@ -1,35 +1,33 @@
-import React, { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { useTranslation } from "react-i18next"
-import { useLocalStorage } from "usehooks-ts"
-import classNames from "classnames"
-import GiftTab from "./GiftTab"
-import GiftSwiper from "./GiftSwiper"
-import GiftSelector from "./GiftSelector"
-import GiftList from "./GiftList"
-import Loading from "@apps/onetwobet/common/components/Loading"
-import { useInView, usePopBox } from "@apps/onetwobet/common/hooks"
-import { useAppDispatch, useAppSelector } from "@apps/onetwobet/store"
 import {
+	IGetGiftListArgs,
+	ISetShoppingCarData,
 	selectedIsLogin,
 	selectedLangId,
-} from "@apps/onetwobet/service/slice/auth"
-import { setCartNumber } from "@apps/onetwobet/service/slice/cart"
-import {
-	sortType,
-	tabOption,
-	PAGE_SIZE_COUNT,
-	DEFAULT_PAGE_SIZE_COUNT,
-	fromEnum,
-} from "./constants"
-import { IGetGiftListArgs } from "@apps/onetwobet/service/api/storeApi/type"
-import { ISetShoppingCarData } from "@apps/onetwobet/service/api/redemptionApi/type"
-import {
+	setCartNumber,
 	useLazyGetGiftListQuery,
 	useLazyGetGiftTagsQuery,
 	useSetFavoriteMutation,
-} from "@apps/onetwobet/service/api/storeApi"
-import { useSetShoppingCartMutation } from "@apps/onetwobet/service/api/redemptionApi"
+	useSetShoppingCartMutation,
+} from '@api'
+import Loading from '@apps/onetwobet/components/common/Loading'
+import {
+	DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
+	fromEnum,
+	SHOPPING_PAGE_SIZE_COUNT,
+	sortType,
+	tabOption,
+} from '@constants'
+import { useInView } from '@core'
+import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
+import classNames from 'classnames'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { useLocalStorage } from 'usehooks-ts'
+import GiftList from './GiftList'
+import GiftSelector from './GiftSelector'
+import GiftSwiper from './GiftSwiper'
+import GiftTab from './GiftTab'
 
 const Shopping = () => {
 	const dispatch = useAppDispatch()
@@ -38,29 +36,29 @@ const Shopping = () => {
 	const { i18n, t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
-	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
 	const [args, setArgs] = useState({
 		categoryIds: null,
 		tags: null,
 		orderByField: null,
 		desc: false,
-		pageSize: DEFAULT_PAGE_SIZE_COUNT,
+		pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 	})
 	const [categoryList, setCategoryList] = useState([])
 	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
 	const [activeTabItem, setActiveTabItem] = useState({})
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
-	const [currentLangId, setCurrentLangId] = useState("")
+	const [currentLangId, setCurrentLangId] = useState('')
 	const fromList = [
-		{ categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t("LowToHighCost") },
-		{ categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: t("HighToLowCost") },
+		{ categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t('LowToHighCost') },
+		{ categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: t('HighToLowCost') },
 		{
 			categoryId: fromEnum.LOW_TO_HIGH_LETTER,
-			categoryName: t("LowToHighLetter"),
+			categoryName: t('LowToHighLetter'),
 		},
 		{
 			categoryId: fromEnum.HIGH_TO_LOW_LETTER,
-			categoryName: t("HighToLowLetter"),
+			categoryName: t('HighToLowLetter'),
 		},
 	]
 	const [sortFromList, setSortFromList] = useState(fromList)
@@ -80,7 +78,7 @@ const Shopping = () => {
 			await getGiftTags({ langId }).unwrap()
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -92,25 +90,25 @@ const Shopping = () => {
 					{
 						lang: giftTabs[0].lang,
 						tagId: 0,
-						tagName: "ALL",
+						tagName: 'ALL',
 					},
 					...giftTabs,
 					{
 						lang: giftTabs[0].lang,
 						tagId: 999,
-						tagName: "FAVORITE",
+						tagName: 'FAVORITE',
 					},
 			  ]
 			: [
 					{
 						lang: i18n.language,
 						tagId: 0,
-						tagName: "ALL",
+						tagName: 'ALL',
 					},
 					{
 						lang: i18n.language,
 						tagId: 999,
-						tagName: "FAVORITE",
+						tagName: 'FAVORITE',
 					},
 			  ]
 	const handleFilter = async (args: IGetGiftListArgs) => {
@@ -118,7 +116,7 @@ const Shopping = () => {
 			await getGiftList(args).unwrap()
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -134,7 +132,7 @@ const Shopping = () => {
 				})
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -144,7 +142,7 @@ const Shopping = () => {
 		const tempList = []
 		const categoryList = [
 			{
-				categoryName: t("ALL"),
+				categoryName: t('ALL'),
 				categoryId: null,
 			},
 		]
@@ -171,19 +169,19 @@ const Shopping = () => {
 				}).unwrap()
 			} catch (error) {
 				setPopBoxType({
-					type: "warn",
+					type: 'warn',
 					props: { content: error.message },
 				})
 			}
 		} else {
 			setPopBoxType({
-				type: "login",
+				type: 'login',
 			})
 		}
 	}
 
 	const handleSelectorItemChange = (selectorType, label) => {
-		if (selectorType === "category") {
+		if (selectorType === 'category') {
 			handleFilter({
 				...args,
 				categoryIds:
@@ -198,10 +196,10 @@ const Shopping = () => {
 					categoryList.find(e => e.categoryName === label).categoryId !== null
 						? [categoryList.find(e => e.categoryName === label).categoryId]
 						: null,
-				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 				langId: i18n.language,
 			}))
-		} else if (selectorType === "from") {
+		} else if (selectorType === 'from') {
 			const getOrderByFieldValue = () => {
 				const res = sortFromList.find(
 					e => t(e.categoryName) === label
@@ -224,7 +222,7 @@ const Shopping = () => {
 				...prev,
 				orderByField: getOrderByFieldValue(),
 				desc: getDescValue(),
-				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 				langId: i18n.language,
 			}))
 		}
@@ -269,7 +267,7 @@ const Shopping = () => {
 			setArgs(prev => ({
 				...prev,
 				tags: null,
-				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 				langId: i18n.language,
 			}))
 			setIsFilterFavorite(true)
@@ -282,7 +280,7 @@ const Shopping = () => {
 			setArgs(prev => ({
 				...prev,
 				tags: activeTab.tagId ? [activeTab.tagId] : null,
-				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 				langId: i18n.language,
 			}))
 			setIsFilterFavorite(false)
@@ -296,7 +294,7 @@ const Shopping = () => {
 			setCategoryList(getCategoryList(giftList))
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -317,7 +315,7 @@ const Shopping = () => {
 		setSortFromList(sortFromList)
 	}
 
-	const langEnList = ["en", "th_en", "id_en"]
+	const langEnList = ['en', 'th_en', 'id_en']
 
 	useEffect(() => {
 		init()
@@ -367,26 +365,27 @@ const Shopping = () => {
 	}, [isGetGiftListFetching])
 
 	useEffect(() => {
-		const isLast = args.pageSize > giftList.length + PAGE_SIZE_COUNT
+		const isLast = args.pageSize > giftList.length + SHOPPING_PAGE_SIZE_COUNT
 
 		if (isLast || isGetGiftListFetching) return
 
 		if (isInView) {
 			setArgs(({ pageSize, ...prev }) => ({
 				...prev,
-				pageSize: pageSize + PAGE_SIZE_COUNT,
+				pageSize: pageSize + SHOPPING_PAGE_SIZE_COUNT,
 			}))
 		}
 	}, [isInView])
 
 	return (
 		<main
-			className={classNames("shopping-page", {
-				"other-layout": !langEnList.includes(i18n.language),
-			})}>
+			className={classNames('shopping-page', {
+				'other-layout': !langEnList.includes(i18n.language),
+			})}
+		>
 			<GiftSwiper />
-			<div className="products-group container-xxl">
-				<div className="row">
+			<div className='products-group container-xxl'>
+				<div className='row'>
 					{isGetGiftTabsLoading ? (
 						<Loading />
 					) : (
@@ -397,17 +396,17 @@ const Shopping = () => {
 						/>
 					)}
 
-					<div className="select">
-						<div className="inputBox-null" />
+					<div className='select'>
+						<div className='inputBox-null' />
 						<GiftSelector
-							placeHolder={t("Category")}
+							placeHolder={t('Category')}
 							itemList={categoryList}
-							onChange={label => handleSelectorItemChange("category", label)}
+							onChange={label => handleSelectorItemChange('category', label)}
 						/>
 						<GiftSelector
-							placeHolder={t("From")}
+							placeHolder={t('From')}
 							itemList={sortFromList}
-							onChange={label => handleSelectorItemChange("from", label)}
+							onChange={label => handleSelectorItemChange('from', label)}
 						/>
 					</div>
 					<GiftList

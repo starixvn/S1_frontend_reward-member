@@ -1,0 +1,33 @@
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { checkSignIn, getCustProfile, logout } from './api'
+
+export const checkSignInAsync = createAsyncThunk(
+	'auth/checkSignIn',
+	async () => {
+		const isLogin = await checkSignIn()
+		return isLogin
+	}
+)
+
+export const getCustProfileAsync = createAsyncThunk(
+	'auth/getCustProfile',
+	async () => {
+		const profile = await getCustProfile()
+		return profile
+	}
+)
+
+export const logoutAsync = createAsyncThunk('auth/logout', async () => {
+	const success = await logout()
+	return success
+})
+
+// * 這邊是需要 body 的型態的範例
+// export const getGiftListAsync = createAsyncThunk(
+// 	"store/getGiftList",
+// 	async (body: IGetGiftListArgs) => {
+// 		const data = await getGiftList(body)
+//
+// 		return data
+// 	}
+// )

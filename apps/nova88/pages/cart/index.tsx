@@ -1,7 +1,6 @@
-import React from "react"
-import Wrapper from "@apps/nova88/common/components/Wrapper"
-import Layout from "@apps/nova88/common/components/Layout"
-import Cart from "@apps/nova88/components/Cart"
+import Cart from '@apps/nova88/components/Cart'
+import Layout from '@apps/nova88/components/common/Layout'
+import Wrapper from '@apps/nova88/components/common/Wrapper'
 
 const Index = () => {
 	return (

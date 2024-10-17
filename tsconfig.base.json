@@ -15,7 +15,12 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@apps/*": ["apps/*"]
+			"@apps/*": ["apps/*"],
+			"@api": ["libs/api-services/src/index.ts"],
+			"@constants": ["libs/constants/src/index.ts"],
+			"@constants/site/*": ["libs/constants/src/lib/site/*"],
+			"@core": ["libs/core/src/index.ts"],
+			"@operations": ["libs/operations/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

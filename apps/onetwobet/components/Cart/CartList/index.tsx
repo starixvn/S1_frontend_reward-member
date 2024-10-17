@@ -1,5 +1,5 @@
-import React, { FC } from "react"
-import CartItem from "@apps/onetwobet/components/Cart/CartItem"
+import CartItem from '@apps/onetwobet/components/Cart/CartItem'
+import React, { FC } from 'react'
 
 interface ICartListProps {
 	cartList: {
