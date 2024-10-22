@@ -1,12 +1,12 @@
-import React, { FC } from "react"
-import Pagination from "@apps/onetwobet/common/components/Pagination"
-import classNames from "classnames"
-import { useTranslation } from "react-i18next"
-import Empty from "@apps/onetwobet/components/about/components/Empty"
-import { selectedProfile } from "@apps/onetwobet/service/slice/auth"
-import { useSelector } from "react-redux"
-import { Time_Zone_By_Currencies } from "@apps/onetwobet/common/constants"
-import { numberFormat } from "@apps/onetwobet/common/utils/func"
+import { selectedProfile } from '@api'
+import Pagination from '@apps/onetwobet/components/common/Pagination'
+import Empty from '@apps/onetwobet/components/about/components/Empty'
+import { CURRENCY_TO_TIMEZONE } from '@constants'
+import { numberFormat } from '@core'
+import classNames from 'classnames'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 interface IPurchaseRecordProps {
 	purchaseList: {
@@ -41,44 +41,44 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 }) => {
 	const { t } = useTranslation()
 	const profile = useSelector(selectedProfile)
-	const timeZoneByCurrencyId = Time_Zone_By_Currencies[profile?.currencyId]
+	const timeZoneByCurrencyId = CURRENCY_TO_TIMEZONE[profile?.currencyId]
 
 	const handlePurchaseTime = time => {
-		const pos = time.indexOf("+")
+		const pos = time.indexOf('+')
 		const tempStr = time.substring(0, pos)
-		return tempStr.replace("T", " ")
+		return tempStr.replace('T', ' ')
 	}
 
 	return (
 		<>
-			<div className="coinRecord-group">
-				<div className="header">
-					<div onClick={() => onToggle()} className="time">
-						{`${t("Label_RedeemTime")}(GMT${timeZoneByCurrencyId})`}
+			<div className='coinRecord-group'>
+				<div className='header'>
+					<div onClick={() => onToggle()} className='time'>
+						{`${t('Label_RedeemTime')}(GMT${timeZoneByCurrencyId})`}
 
 						<i
-							className={classNames("icon", "icon-arrow_drop_down", {
+							className={classNames('icon', 'icon-arrow_drop_down', {
 								active: isForwardSort,
 							})}
 						/>
 					</div>
 
-					<div className="item">{t("ItemCode")}</div>
-					<div className="name">{t("Label_ProductName")}</div>
-					<div>{t("Label_PointsUsed")}</div>
-					<div>{t("Label_Status")}</div>
+					<div className='item'>{t('ItemCode')}</div>
+					<div className='name'>{t('Label_ProductName')}</div>
+					<div>{t('Label_PointsUsed')}</div>
+					<div>{t('Label_Status')}</div>
 				</div>
-				<div className="coinList">
+				<div className='coinList'>
 					{purchaseList && purchaseList.length > 0 ? (
 						purchaseList.map(item => (
-							<div key={item.transId} className="log">
-								<div className="time">
+							<div key={item.transId} className='log'>
+								<div className='time'>
 									{handlePurchaseTime(item.createTimeInCurrencyTimeZone)}
 								</div>
-								<div className="item">{item.giftId}</div>
-								<div className="name">{item.giftName}</div>
+								<div className='item'>{item.giftId}</div>
+								<div className='name'>{item.giftName}</div>
 								<div>{numberFormat(item.point, 0, true)}</div>
-								<div className="whiteBold">{item.statusName}</div>
+								<div className='whiteBold'>{item.statusName}</div>
 							</div>
 						))
 					) : (
@@ -91,40 +91,40 @@ const PurchaseRecord: FC<IPurchaseRecordProps> = ({
 					onChange={onChange}
 				/>
 			</div>
-			<div className="mobile-coinList">
+			<div className='mobile-coinList'>
 				{purchaseList && purchaseList.length > 0 ? (
 					purchaseList.map(item => (
-						<div key={item.transId} className="mobile-log">
+						<div key={item.transId} className='mobile-log'>
 							<ul>
 								<li>
 									<span>
-										{`${t("Label_RedeemTime")}(GMT${timeZoneByCurrencyId})`}
+										{`${t('Label_RedeemTime')}(GMT${timeZoneByCurrencyId})`}
 									</span>
 									{handlePurchaseTime(item.createTimeInCurrencyTimeZone)}
 								</li>
 								<li>
-									<span>{t("ItemCode")}</span>
+									<span>{t('ItemCode')}</span>
 									{item.giftId}
 								</li>
-								<li className="name">
-									<span>{t("Label_ProductName")}</span>
+								<li className='name'>
+									<span>{t('Label_ProductName')}</span>
 									{item.giftName}
 								</li>
 								<li>
-									<span>{t("Label_PointsUsed")}</span>
+									<span>{t('Label_PointsUsed')}</span>
 									{item.point}
 								</li>
 								<li>
-									<span>{t("Label_Status")}</span>
+									<span>{t('Label_Status')}</span>
 									{item.statusName}
 								</li>
 							</ul>
 						</div>
 					))
 				) : (
-					<div className="mobile-noData active">
-						<i className="icon icon-alarm" />
-						{t("NoData")}
+					<div className='mobile-noData active'>
+						<i className='icon icon-alarm' />
+						{t('NoData')}
 					</div>
 				)}
 			</div>

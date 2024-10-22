@@ -1,40 +1,39 @@
-import React, { useEffect, useState } from "react"
-import QRCode from "qrcode.react"
-import classNames from "classnames"
-import { useTranslation } from "react-i18next"
-import { useRouter } from "next/router"
-import GiftSwiper from "@apps/onetwobet/components/Shopping/GiftSwiper"
-import { monthObj } from "./constants"
-import GiftList from "@apps/onetwobet/components/Shopping/GiftList"
-import Loading from "@apps/onetwobet/common/components/Loading"
-import { useLocalStorage } from "usehooks-ts"
-import { usePopBox } from "@apps/onetwobet/common/hooks"
 import {
-	useLazyGetGiftListQuery,
-	useSetFavoriteMutation,
-} from "@apps/onetwobet/service/api/storeApi"
-import { IGetGiftListArgs } from "@apps/onetwobet/service/api/storeApi/type"
-import { useSelector } from "react-redux"
-import {
+	IGetGiftListArgs,
+	ISetShoppingCarData,
 	selectedIsLogin,
 	selectedLangId,
-} from "@apps/onetwobet/service/slice/auth"
-import { imageUrl, siteInfo } from "@apps/onetwobet/config"
-import { DEFAULT_PAGE_SIZE_COUNT } from "./constants"
-import { paths } from "@apps/onetwobet/common/constants"
-import { useGetAppLinkQuery } from "@apps/onetwobet/service/api/playerApi"
-import { defAppType } from "@apps/onetwobet/service/api/playerApi/def"
-import { useSetShoppingCartMutation } from "@apps/onetwobet/service/api/redemptionApi"
-import { setCartNumber } from "@apps/onetwobet/service/slice/cart"
-import { useAppDispatch, useAppSelector } from "@apps/onetwobet/store"
-import { ISetShoppingCarData } from "@apps/onetwobet/service/api/redemptionApi/type"
+	setCartNumber,
+	useGetAppLinkQuery,
+	useLazyGetGiftListQuery,
+	useSetFavoriteMutation,
+	useSetShoppingCartMutation,
+} from '@api'
+import Loading from '@apps/onetwobet/components/common/Loading'
+import GiftList from '@apps/onetwobet/components/Shopping/GiftList'
+import GiftSwiper from '@apps/onetwobet/components/Shopping/GiftSwiper'
+import { imageUrl, siteInfo } from '@apps/onetwobet/config'
+import {
+	appType,
+	DEFAULT_HOME_PAGE_SIZE_COUNT,
+	monthObj,
+	paths,
+} from '@constants'
+import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
+import classNames from 'classnames'
+import { useRouter } from 'next/router'
+import QRCode from 'qrcode.react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { useLocalStorage } from 'usehooks-ts'
 
 const Index = () => {
 	const dispatch = useAppDispatch()
 	const { i18n, t } = useTranslation()
 	const route = useRouter()
 	const { setPopBoxType } = usePopBox()
-	const [cartList, setCartList] = useLocalStorage("nova88Cart", [])
+	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
 	const [isShowAllText, setIsShowAllText] = useState(false)
@@ -58,7 +57,7 @@ const Index = () => {
 				})
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -72,7 +71,7 @@ const Index = () => {
 			await getGiftList(args).unwrap()
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -88,13 +87,13 @@ const Index = () => {
 				}).unwrap()
 			} catch (error) {
 				setPopBoxType({
-					type: "warn",
+					type: 'warn',
 					props: { content: error.message },
 				})
 			}
 		} else {
 			setPopBoxType({
-				type: "login",
+				type: 'login',
 			})
 		}
 	}
@@ -135,7 +134,7 @@ const Index = () => {
 
 	const month = monthObj[new Date().getMonth() + 1]
 
-	const langEnList = ["en", "th_en", "id_en"]
+	const langEnList = ['en', 'th_en', 'id_en']
 
 	useEffect(() => {
 		if (isLogin) {
@@ -151,7 +150,7 @@ const Index = () => {
 					tags: null,
 					orderByField: null,
 					desc: false,
-					pageSize: DEFAULT_PAGE_SIZE_COUNT,
+					pageSize: DEFAULT_HOME_PAGE_SIZE_COUNT,
 				},
 				langId: i18n.language,
 			})
@@ -165,7 +164,7 @@ const Index = () => {
 				tags: null,
 				orderByField: null,
 				desc: false,
-				pageSize: DEFAULT_PAGE_SIZE_COUNT,
+				pageSize: DEFAULT_HOME_PAGE_SIZE_COUNT,
 			},
 			langId: i18n.language,
 		})
@@ -174,98 +173,103 @@ const Index = () => {
 	return (
 		<main
 			className={classNames({
-				"other-layout": !langEnList.includes(i18n.language),
-			})}>
+				'other-layout': !langEnList.includes(i18n.language),
+			})}
+		>
 			<GiftSwiper />
 			{!isLogin && (
 				<div
 					onClick={() => {
 						setPopBoxType({
-							type: "login",
+							type: 'login',
 						})
 					}}
-					id="indexLogin"
-					className="btn-login">
-					{t("Login").toUpperCase()}
+					id='indexLogin'
+					className='btn-login'
+				>
+					{t('Login').toUpperCase()}
 				</div>
 			)}
-			<div className="introduce container-xxl">
-				<div className="row">
+			<div className='introduce container-xxl'>
+				<div className='row'>
 					<div
-						className={classNames("dearMember col-xl-7", {
+						className={classNames('dearMember col-xl-7', {
 							active: isShowAllText,
-						})}>
-						<div className="txt">
-							<p>{t("BannerTitle")}</p>
-							<div>{t("BannerAdText1")}</div>
+						})}
+					>
+						<div className='txt'>
+							<p>{t('BannerTitle')}</p>
+							<div>{t('BannerAdText1')}</div>
 							<button
 								onClick={() => setIsShowAllText(true)}
-								className="seeMore"
-								type="button">
-								{t("More")}
+								className='seeMore'
+								type='button'
+							>
+								{t('More')}
 							</button>
-							<div>{t("BannerAdText2")}</div>
-							<div>{t("BannerAdText3")}</div>
-							<div>{t("BannerAdText4")}</div>
+							<div>{t('BannerAdText2')}</div>
+							<div>{t('BannerAdText3')}</div>
+							<div>{t('BannerAdText4')}</div>
 							<button
 								onClick={() => setIsShowAllText(false)}
-								className="close"
-								type="button">
-								{t("Close")}..
+								className='close'
+								type='button'
+							>
+								{t('Close')}..
 							</button>
 						</div>
 
-						<img className="npc" src={`${imageUrl}/img/introduce.png`} alt="" />
+						<img className='npc' src={`${imageUrl}/img/introduce.png`} alt='' />
 					</div>
-					<div className="col-xl-5">
-						<div className="info">
-							<div>{t("imgAdText1")}</div>
+					<div className='col-xl-5'>
+						<div className='info'>
+							<div>{t('imgAdText1')}</div>
 							<img
 								onClick={() => {
 									route.push(paths.shopping)
 								}}
 								src={`${imageUrl}/img/rewardimg.jpg`}
-								alt=""
+								alt=''
 							/>
 						</div>
-						<div className="info">
-							<div>{t("imgAdText2")}</div>
-							<img src={`${imageUrl}/img/rewardimg-1.jpg`} alt="" />
+						<div className='info'>
+							<div>{t('imgAdText2')}</div>
+							<img src={`${imageUrl}/img/rewardimg-1.jpg`} alt='' />
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className="indexImg">
+			<div className='indexImg'>
 				<div>
-					<p>{t("BannerAdText5")}</p>
-					{t("BannerAdText6")}
+					<p>{t('BannerAdText5')}</p>
+					{t('BannerAdText6')}
 				</div>
-				<img src={`${imageUrl}/img/imgbg.jpg`} alt="" />
+				<img src={`${imageUrl}/img/imgbg.jpg`} alt='' />
 			</div>
-			<div className="saleImg">
-				<div className="txt">
+			<div className='saleImg'>
+				<div className='txt'>
 					<div>
-						{t("YourJourneyToRewards")}
-						<p>{t("StartsHere")}</p>
+						{t('YourJourneyToRewards')}
+						<p>{t('StartsHere')}</p>
 					</div>
-					<div>{t("PopularCategory")}</div>
+					<div>{t('PopularCategory')}</div>
 					<div>
-						{t("Computing&Phone")}
+						{t('Computing&Phone')}
 						<button onClick={() => route.push(paths.shopping)}>
-							{t("SHOP_NOW")}
+							{t('SHOP_NOW')}
 						</button>
 					</div>
 				</div>
-				<img src={`${imageUrl}/img/saleimgbg.jpg`} alt="" />
+				<img src={`${imageUrl}/img/saleimgbg.jpg`} alt='' />
 			</div>
-			<div className="products-group container-xxl">
-				<div className="row">
-					<div className="products-menu">
-						<a className="active">
-							{t("HotPicksForTheMonthOf")}
+			<div className='products-group container-xxl'>
+				<div className='row'>
+					<div className='products-menu'>
+						<a className='active'>
+							{t('HotPicksForTheMonthOf')}
 							<span>{t(month)}</span>
 						</a>
-						<button onClick={goToMore}>{t("More")}...</button>
+						<button onClick={goToMore}>{t('More')}...</button>
 					</div>
 					<GiftList
 						filterList={giftList}
@@ -277,72 +281,75 @@ const Index = () => {
 				{isGetGiftListFetching && <Loading />}
 			</div>
 
-			<button className="btn-more" onClick={goToMore}>
-				{t("More")}...
+			<button className='btn-more' onClick={goToMore}>
+				{t('More')}...
 			</button>
 
-			<div className="appDownload container-xxl">
-				<div className="row">
-					<div className="col-md-7 col-xl-7">
-						<div className="download-txt">
+			<div className='appDownload container-xxl'>
+				<div className='row'>
+					<div className='col-md-7 col-xl-7'>
+						<div className='download-txt'>
 							<img
-								className="logo"
+								className='logo'
 								src={`${imageUrl}/img/novalogo.png`}
-								alt=""
+								alt=''
 							/>
-							<div className="title">{t("ScanToDownload").toUpperCase()}</div>
-							{t("AppBannerText").toUpperCase()}
-							<div className="qr-group">
-								<div className="qrCode">
-									<div className="icon icon-android">
-										<span>{t("Android")}</span>
+							<div className='title'>{t('ScanToDownload').toUpperCase()}</div>
+							{t('AppBannerText').toUpperCase()}
+							<div className='qr-group'>
+								<div className='qrCode'>
+									<div className='icon icon-android'>
+										<span>{t('Android')}</span>
 									</div>
 									<QRCode
-										value={getAppLink(defAppType.Andriod)}
-										renderAs="svg"
+										value={getAppLink(appType.Andriod)}
+										renderAs='svg'
 										size={80}
 										includeMargin={true}
 									/>
 									<a
-										href={getAppLink(defAppType.Andriod)}
-										target="_blank"
-										rel="noreferrer noopener">
-										<button>{t("Download").toUpperCase()}</button>
+										href={getAppLink(appType.Andriod)}
+										target='_blank'
+										rel='noreferrer noopener'
+									>
+										<button>{t('Download').toUpperCase()}</button>
 									</a>
 								</div>
-								<div className="qrCode">
-									<div className="icon icon-appleinc">
-										<span>{t("IOS")}</span>
+								<div className='qrCode'>
+									<div className='icon icon-appleinc'>
+										<span>{t('IOS')}</span>
 									</div>
 									<QRCode
-										value={getAppLink(defAppType.IOS)}
-										renderAs="svg"
+										value={getAppLink(appType.IOS)}
+										renderAs='svg'
 										size={80}
 										includeMargin={true}
 									/>
 									<a
-										href={getAppLink(defAppType.IOS)}
-										target="_blank"
-										rel="noreferrer noopener">
-										<button>{t("Download").toUpperCase()}</button>
+										href={getAppLink(appType.IOS)}
+										target='_blank'
+										rel='noreferrer noopener'
+									>
+										<button>{t('Download').toUpperCase()}</button>
 									</a>
 								</div>
 							</div>
 						</div>
-						<img src={`${imageUrl}/img/appbg.jpg`} alt="" />
+						<img src={`${imageUrl}/img/appbg.jpg`} alt='' />
 					</div>
-					<div className="col-md-5 col-xl-5">
-						<div className="affiliate-txt">
+					<div className='col-md-5 col-xl-5'>
+						<div className='affiliate-txt'>
 							<a
 								href={`${siteInfo.affiliateLink}/?lang=${langId}`}
-								target="_blank"
-								rel="noreferrer"
-								className="title">
-								{t("DownloadBgText1")}
+								target='_blank'
+								rel='noreferrer'
+								className='title'
+							>
+								{t('DownloadBgText1')}
 							</a>
-							{t("DownloadBgText2")}
+							{t('DownloadBgText2')}
 						</div>
-						<img src={`${imageUrl}/img/affiliatebg.jpg`} alt="" />
+						<img src={`${imageUrl}/img/affiliatebg.jpg`} alt='' />
 					</div>
 				</div>
 			</div>

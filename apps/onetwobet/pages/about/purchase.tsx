@@ -1,7 +1,6 @@
-import React from "react"
-import Wrapper from "@apps/onetwobet/common/components/Wrapper"
-import Layout from "@apps/onetwobet/common/components/Layout"
-import Purchase from "@apps/onetwobet/components/about/Purchase"
+import Layout from '@apps/onetwobet/components/common/Layout'
+import Wrapper from '@apps/onetwobet/components/common/Wrapper'
+import Purchase from '@apps/onetwobet/components/about/Purchase'
 
 const Page = () => {
 	return (

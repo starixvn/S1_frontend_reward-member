@@ -1,0 +1,50 @@
+import { usePopBox } from '@operations'
+import { FC, useMemo, useRef } from 'react'
+import { useOnClickOutside } from 'usehooks-ts'
+import PopBoxDefault from './PopBox.default'
+import PopBoxWarn from './PopBox.warn'
+import PopBoxLogin from './PopBoxLogin'
+
+const PopBox: FC = () => {
+	const ref = useRef(null)
+	const {
+		popBoxType: { type, props = {} },
+		closePopBox,
+	} = usePopBox()
+
+	const content = useMemo(() => {
+		let element = null
+
+		switch (type) {
+			case 'login':
+				element = <PopBoxLogin {...props} />
+				break
+			case 'warn':
+				element = <PopBoxWarn {...props} />
+				break
+			case 'default':
+				element = <PopBoxDefault {...props} />
+				break
+			default:
+				element = null
+				break
+		}
+		return element
+	}, [props, type])
+
+	useOnClickOutside(ref, () => {
+		closePopBox()
+	})
+
+	if (!type) {
+		return null
+	}
+
+	return (
+		<div id='popup' className={type ? 'active' : ''}>
+			<div ref={ref}>{content}</div>
+		</div>
+	)
+}
+
+export default PopBox

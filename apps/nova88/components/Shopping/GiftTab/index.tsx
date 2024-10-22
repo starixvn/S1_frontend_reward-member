@@ -1,6 +1,6 @@
-import React, { FC } from "react"
-import classNames from "classnames"
-import { useTranslation } from "react-i18next"
+import classNames from 'classnames'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface IGiftTabProps {
 	tabList: { lang: string; tagId: number; tagName: string }[]
@@ -15,12 +15,13 @@ const GiftTab: FC<IGiftTabProps> = ({
 }) => {
 	const { t } = useTranslation()
 	return (
-		<div className="products-menu">
+		<div className='products-menu'>
 			{tabList?.map(item => (
 				<a
 					className={classNames({ active: activeItem?.tagId === item.tagId })}
 					onClick={() => onChange && onChange(item)}
-					key={item.tagId}>
+					key={item.tagId}
+				>
 					{t(item.tagName)}
 				</a>
 			))}

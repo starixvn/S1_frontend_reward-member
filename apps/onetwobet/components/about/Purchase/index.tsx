@@ -1,10 +1,10 @@
-import { useRouter } from "next/router"
-import React, { useState } from "react"
-import LeftMenu from "@apps/onetwobet/components/about/components/LeftMenu"
-import PurchaseRecord from "@apps/onetwobet/components/about/components/PurchaseRecord"
-import { useTranslation } from "react-i18next"
-import { useGetMyPurchaseQuery } from "@apps/onetwobet/service/api/storeApi"
-import classNames from "classnames"
+import { useGetMyPurchaseQuery } from '@api'
+import LeftMenu from '@apps/onetwobet/components/about/components/LeftMenu'
+import PurchaseRecord from '@apps/onetwobet/components/about/components/PurchaseRecord'
+import classNames from 'classnames'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const Purchase = () => {
 	const { pathname } = useRouter()
@@ -28,7 +28,7 @@ const Purchase = () => {
 	}
 	const handleSortList = () => {
 		if (!purchaseData?.datas) return
-		const purchaseArray = [...purchaseData["datas"]]
+		const purchaseArray = [...purchaseData['datas']]
 		return purchaseArray.sort((a, b) => {
 			if (isForwardSort) {
 				return a.createTimeInCurrencyTimeZone > b.createTimeInCurrencyTimeZone
@@ -44,21 +44,22 @@ const Purchase = () => {
 	const purchaseList = handleSortList()
 	return (
 		<main>
-			<div className="container-xxl myCoins-page">
-				<div className="row">
-					<div className="col col-lg-2 col-xl-3">
+			<div className='container-xxl myCoins-page'>
+				<div className='row'>
+					<div className='col col-lg-2 col-xl-3'>
 						<LeftMenu activePath={pathname} />
 					</div>
-					<div className="col col-lg-10 col-xl-9">
-						<div className="page-content">
-							<div className="title">
-								{t("MyPurchase")}
+					<div className='col col-lg-10 col-xl-9'>
+						<div className='page-content'>
+							<div className='title'>
+								{t('MyPurchase')}
 								<div
 									onClick={() => setIsForwardSort(!isForwardSort)}
-									className="time">
-									{t("Date")}
+									className='time'
+								>
+									{t('Date')}
 									<i
-										className={classNames("icon", "icon-arrow_drop_down", {
+										className={classNames('icon', 'icon-arrow_drop_down', {
 											active: isForwardSort,
 										})}
 									/>

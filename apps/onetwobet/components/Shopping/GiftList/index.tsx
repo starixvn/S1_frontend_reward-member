@@ -1,7 +1,7 @@
-import React, { FC } from "react"
-import GiftItem from "@apps/onetwobet/components/Shopping/GiftItem"
-import Empty from "@apps/onetwobet/components/Shopping/Empty"
-import { tabOption } from "@apps/onetwobet/components/Index/constants"
+import Empty from '@apps/onetwobet/components/Shopping/Empty'
+import GiftItem from '@apps/onetwobet/components/Shopping/GiftItem'
+import { tabOption } from '@constants'
+import { FC } from 'react'
 
 interface IGiftListProps {
 	filterList: {
@@ -59,7 +59,7 @@ const GiftList: FC<IGiftListProps> = ({
 	return (
 		<>
 			{filterList && filterList.length > 0 ? (
-				<div className="product-list">
+				<div className='product-list'>
 					{filterList.map(item => (
 						<GiftItem
 							key={item.giftId}

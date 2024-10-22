@@ -1,11 +1,11 @@
-import React, { FC, useRef, useState } from "react"
-import { imageUrl } from "@apps/nova88/config"
-import classNames from "classnames"
-import { useLocalStorage, useOnClickOutside } from "usehooks-ts"
-import { useTranslation } from "react-i18next"
-import { useAppSelector } from "@apps/nova88/store"
-import { selectedIsLogin } from "@apps/nova88/service/slice/auth"
-import { numberFormat } from "@apps/nova88/common/utils/func"
+import { selectedIsLogin } from '@api'
+import { imageUrl } from '@apps/nova88/config'
+import { numberFormat } from '@core'
+import { useAppSelector } from '@operations'
+import classNames from 'classnames'
+import { FC, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLocalStorage, useOnClickOutside } from 'usehooks-ts'
 
 interface IGiftItemProps {
 	item: {
@@ -58,7 +58,7 @@ const GiftItem: FC<IGiftItemProps> = ({
 }) => {
 	const { t } = useTranslation()
 	const [isLarge, setIsLarge] = useState(false)
-	const [cartList] = useLocalStorage("nova88Cart", [])
+	const [cartList] = useLocalStorage('nova88Cart', [])
 	const isLogin = useAppSelector(selectedIsLogin)
 	const giftItemRef = useRef()
 	const handleClickOutside = () => {
@@ -66,17 +66,17 @@ const GiftItem: FC<IGiftItemProps> = ({
 	}
 	useOnClickOutside(giftItemRef, handleClickOutside)
 	const handleItemBtnTextChange = giftItem => {
-		let text = ""
+		let text = ''
 		if (!giftItem.stock) {
-			text = t("SoldOut")
+			text = t('SoldOut')
 		} else {
 			const cartItem = (isLogin ? realCartList : cartList)?.find(
 				item => item.giftId === giftItem.giftId
 			)
 			if (cartItem) {
-				text = t("AddedToCart")
+				text = t('AddedToCart')
 			} else {
-				text = t("AddToCart")
+				text = t('AddToCart')
 			}
 		}
 		return text
@@ -84,38 +84,41 @@ const GiftItem: FC<IGiftItemProps> = ({
 	const showGiftItemBtn = () => (
 		<button
 			onClick={() => onToggleCart(item)}
-			className={classNames("icon", "active", {
-				"icon-ban": !item.stock,
-				"icon-checkmark":
+			className={classNames('icon', 'active', {
+				'icon-ban': !item.stock,
+				'icon-checkmark':
 					item.stock &&
 					(isLogin ? realCartList : cartList)?.find(
 						cartItem => cartItem.giftId === item.giftId
 					),
-				"icon-cart":
+				'icon-cart':
 					item.stock &&
 					!(isLogin ? realCartList : cartList)?.find(
 						cartItem => cartItem.giftId === item.giftId
 					),
-			})}>
+			})}
+		>
 			{handleItemBtnTextChange(item)}
 		</button>
 	)
 	return (
 		<div
 			ref={giftItemRef}
-			className={classNames("product", {
+			className={classNames('product', {
 				empty: !item.stock,
-			})}>
-			<div className="iconGroup">
+			})}
+		>
+			<div className='iconGroup'>
 				{item.tagList.map((tagItem, index) => (
 					<div
 						key={index}
-						className={classNames("active", "icon", {
-							"icon-fire": tagItem.tagName === "HOT",
-							"icon-shinyblack": tagItem.tagName === "NEW",
-							"icon-thumb": tagItem.tagName === "FEATURED",
-						})}>
-						{tagItem.tagName === "FEATURED" ? "FEA" : tagItem.tagName}
+						className={classNames('active', 'icon', {
+							'icon-fire': tagItem.tagName === 'HOT',
+							'icon-shinyblack': tagItem.tagName === 'NEW',
+							'icon-thumb': tagItem.tagName === 'FEATURED',
+						})}
+					>
+						{tagItem.tagName === 'FEATURED' ? 'FEA' : tagItem.tagName}
 					</div>
 				))}
 			</div>
@@ -123,28 +126,28 @@ const GiftItem: FC<IGiftItemProps> = ({
 				<img
 					onClick={() => (window.innerWidth >= 768 ? setIsLarge(true) : null)}
 					src={`${imageUrl}${item.giftPictureUrl}`}
-					alt="any"
+					alt='any'
 				/>
 			</div>
-			<div className="btn">
+			<div className='btn'>
 				<button
 					onClick={() => onToggleFavorite(item)}
-					className={classNames("icon", "icon-heart-fill", {
+					className={classNames('icon', 'icon-heart-fill', {
 						active: item.isFavorite,
 					})}
 				/>
 			</div>
-			<div className="product-name">{item.giftName ?? item.enGiftName}</div>
-			<div className="product-description">{item.giftDescription}</div>
-			<div className="icon icon-coin">
+			<div className='product-name'>{item.giftName ?? item.enGiftName}</div>
+			<div className='product-description'>{item.giftDescription}</div>
+			<div className='icon icon-coin'>
 				&nbsp;{numberFormat(item.point, 0, false)}
 			</div>
 
-			<div className="qty">{item.showStock && `${t("Qty")}:${item.stock}`}</div>
+			<div className='qty'>{item.showStock && `${t('Qty')}:${item.stock}`}</div>
 			{showGiftItemBtn()}
-			<div className={classNames("bigPup", { active: isLarge })}>
+			<div className={classNames('bigPup', { active: isLarge })}>
 				<div>
-					<img src={`${imageUrl}${item.giftPictureUrl}`} alt="any" />
+					<img src={`${imageUrl}${item.giftPictureUrl}`} alt='any' />
 				</div>
 				{showGiftItemBtn()}
 			</div>
