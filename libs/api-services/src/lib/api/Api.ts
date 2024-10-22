@@ -7,6 +7,7 @@ export const baseUrl = '/rewards/api/'
 export const baseAxios = axios.create({
 	withCredentials: true,
 	baseURL: baseUrl,
+  headers : {'ai-host': `${process.env['NEXT_PUBLIC_REFERER_HOST']}`,}
 })
 
 export default class Api {
