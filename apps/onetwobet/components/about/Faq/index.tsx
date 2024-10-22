@@ -16,7 +16,7 @@ const Faq = () => {
 
 	return (
 		<main>
-			<div className='container-xxl myCoins-page'>
+			<div className='tAndC container-xxl'>
 				<div className='row'>
 					<div className='col col-lg-2 col-xl-3'>
 						<LeftMenu activePath={pathname} />
@@ -57,10 +57,10 @@ const Faq = () => {
 											<li>{t('Question2_Content4')}</li>
 											<li>{t('Question2_Content5')}</li>
 										</ul>
-										{t('Refer')} <a className='blue'>{`'${t('Here')}'`}</a>{' '}
+										{t('Refer')} <a className='primary'>{`'${t('Here')}'`}</a>
 										{t('for_more_details')}
 										<Link href={paths.about.sub.howtoearnpoints.root}>
-											<a className='blue'>
+											<a className='primary'>
 												{t('How_to_earn_88_Rewards_points')}
 											</a>
 										</Link>
@@ -118,7 +118,7 @@ const Faq = () => {
 									<div className='faq-info'>
 										{t('Please_refer_to')}
 										<Link href={paths.shopping}>
-											<a className='blue'> {t('88_Rewards_Store')}.</a>
+											<a className='primary'> {t('88_Rewards_Store')}.</a>
 										</Link>
 									</div>
 								</div>
@@ -162,7 +162,7 @@ const Faq = () => {
 									<div className='faq-info'>
 										{t('Question7_Content')}
 										<Link href={paths.about.sub.howtoearnpoints.root}>
-											<a className='blue'>
+											<a className='primary'>
 												{t('How_to_earn_88_Rewards_points')}
 											</a>
 										</Link>
@@ -233,7 +233,7 @@ const Faq = () => {
 									</button>
 									<div className='faq-info'>
 										{t('Question12_Content1')}
-										<span className='orange'>{t('Question12_Content2')}</span>
+										<span className='primary'>{t('Question12_Content2')}</span>
 										{t('Question12_Content3')}
 									</div>
 								</div>

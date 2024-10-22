@@ -1,8 +1,7 @@
 @font-face {
-  font-family: 'icomoon';
+  font-family: "icomoon";
   src: url("../fonts/icomoon.woff?v=202003") format("woff");
 }
-
 .icon:before {
   font-family: "icomoon";
 }
@@ -33,13 +32,13 @@
 
 .icon-shiny .path1:before {
   content: "\e90d";
-  color: #e2c79e;
+  color: rgb(226, 199, 158);
   font-family: "icomoon";
 }
 
 .icon-shiny .path2:before {
   content: "\e90e";
-  color: white;
+  color: rgb(255, 255, 255);
   margin-left: -0.9453125em;
   font-family: "icomoon";
 }
@@ -686,5 +685,4 @@
 
 .icon-thumb:before {
   content: "\e915";
-}
-/*# sourceMappingURL=font.css.map */
+}/*# sourceMappingURL=font.css.map */
