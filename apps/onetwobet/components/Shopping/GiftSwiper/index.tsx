@@ -1,7 +1,6 @@
-import React from "react"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { useTranslation } from "react-i18next"
-import { imageUrl } from "@apps/onetwobet/config"
+import { imageUrl } from '@apps/onetwobet/config'
+import { useTranslation } from 'react-i18next'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 const getSliderList = (langId: string) => [
 	{ id: 1, img: `${imageUrl}/img/banner_${langId}.jpg` },
@@ -15,11 +14,11 @@ const GiftSwiper = () => {
 	const langId = i18n.language
 
 	return (
-		<div className="swiper-container">
-			<Swiper className="swiper-wrapper">
+		<div className='swiper-container'>
+			<Swiper className='swiper-wrapper'>
 				{getSliderList(langId).map(obj => (
-					<SwiperSlide key={obj.id} className="swiper-slide">
-						<img src={obj.img} alt="banner" />
+					<SwiperSlide key={obj.id} className='swiper-slide'>
+						<img src={obj.img} alt='banner' />
 					</SwiperSlide>
 				))}
 			</Swiper>

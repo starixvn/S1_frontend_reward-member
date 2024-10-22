@@ -1,5 +1,5 @@
-import React, { FC } from "react"
-import { Dropdown } from "@apps/nova88/common/components/Dropdown"
+import { Dropdown } from '@apps/nova88/components/common/Dropdown'
+import { FC } from 'react'
 
 const { Option } = Dropdown
 

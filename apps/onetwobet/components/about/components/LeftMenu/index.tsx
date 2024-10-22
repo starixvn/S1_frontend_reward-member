@@ -1,11 +1,10 @@
-import React, { FC } from "react"
-import classNames from "classnames"
-import { useTranslation } from "react-i18next"
-import { mineMenuList } from "@apps/onetwobet/components/about/constants"
-import { useRouter } from "next/router"
-import { useAppSelector } from "@apps/onetwobet/store"
-import { selectedIsLogin } from "@apps/onetwobet/service/slice/auth"
-import { usePopBox } from "@apps/onetwobet/common/hooks"
+import { selectedIsLogin } from '@api'
+import { mineMenuList } from '@constants'
+import { useAppSelector, usePopBox } from '@operations'
+import classNames from 'classnames'
+import { useRouter } from 'next/router'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface ILeftMenuProps {
 	activePath: string
@@ -18,23 +17,24 @@ const LeftMenu: FC<ILeftMenuProps> = ({ activePath }) => {
 	const { setPopBoxType } = usePopBox()
 
 	return (
-		<div className="leftMenu">
-			<div className="leftMenu">
+		<div className='leftMenu'>
+			<div className='leftMenu'>
 				{mineMenuList.map(item => (
 					<a
 						onClick={() => {
 							if (item.authRequired && !isLogin) {
 								setPopBoxType({
-									type: "login",
+									type: 'login',
 								})
 							} else {
 								route.push(item.path)
 							}
 						}}
 						key={item.id}
-						className={classNames("item", {
+						className={classNames('item', {
 							active: `/${activePath}` === item.path,
-						})}>
+						})}
+					>
 						<span>{t(item.displayKey).toUpperCase()}</span>
 					</a>
 				))}

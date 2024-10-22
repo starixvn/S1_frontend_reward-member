@@ -1,7 +1,6 @@
-import Wrapper from "@apps/onetwobet/common/components/Wrapper"
-import Layout from "@apps/onetwobet/common/components/Layout"
-import Home from "@apps/onetwobet/components/Index"
-import React from "react"
+import Layout from '@apps/onetwobet/components/common/Layout'
+import Wrapper from '@apps/onetwobet/components/common/Wrapper'
+import Home from '@apps/onetwobet/components/Index'
 
 export function Index() {
 	return (

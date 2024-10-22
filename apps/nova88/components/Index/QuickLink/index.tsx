@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
-import classNames from "classnames"
+import {
+	selectedIsLogin,
+	selectedProfile,
+	useGetAppLinkQuery,
+	useGetSocialChannelMutation,
+} from '@api'
 import {
 	buttonTypeList,
 	defCurrencyList,
@@ -8,14 +11,13 @@ import {
 	defLinkType,
 	langMapping,
 	sideBarIconName,
-} from "../constants"
-import { useGetSocialChannelMutation } from "@apps/nova88/service/api/siteApi"
-import QRCode from "qrcode.react"
-import { useGetAppLinkQuery } from "@apps/nova88/service/api/playerApi"
-import { usePopBox } from "@apps/nova88/common/hooks"
-import { useAppSelector } from "../../../store"
-import { selectedIsLogin, selectedProfile } from "../../../service/slice/auth"
-import { useSelector } from "react-redux"
+} from '@constants'
+import { useAppSelector, usePopBox } from '@operations'
+import classNames from 'classnames'
+import QRCode from 'qrcode.react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 const QuickLink = () => {
 	const { t, i18n } = useTranslation()
@@ -51,7 +53,7 @@ const QuickLink = () => {
 				.then(res => setSocialChannelList(res.data))
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -63,7 +65,7 @@ const QuickLink = () => {
 				{el.title}
 				<QRCode
 					value={el.link}
-					renderAs="svg"
+					renderAs='svg'
 					size={120}
 					includeMargin={true}
 				/>
@@ -76,12 +78,13 @@ const QuickLink = () => {
 					key={`sidebar-link-${idx}`}
 					onClick={() => el.onClick() ?? null}
 					className={`${sideBarIconName[el.channelName]}${
-						activeIcon === idx ? " active" : ""
+						activeIcon === idx ? ' active' : ''
 					}`}
 					onMouseOver={switchIconActive.bind(this, idx)}
 					onFocus={() => 0}
 					onMouseOut={removeIconActive.bind(this)}
-					onBlur={() => 0}>
+					onBlur={() => 0}
+				>
 					{qrCode}
 				</button>
 			)
@@ -91,15 +94,16 @@ const QuickLink = () => {
 			<a
 				key={`sidebar-link-${idx}`}
 				href={el.link}
-				target="_blank"
-				rel="noreferrer"
+				target='_blank'
+				rel='noreferrer'
 				className={`${sideBarIconName[el.channelName]}${
-					activeIcon === idx ? " active" : ""
+					activeIcon === idx ? ' active' : ''
 				}`}
 				onMouseOver={switchIconActive.bind(this, idx)}
 				onFocus={() => 0}
 				onMouseOut={removeIconActive.bind(this)}
-				onBlur={() => 0}>
+				onBlur={() => 0}
+			>
 				{qrCode}
 			</a>
 		)
@@ -111,20 +115,22 @@ const QuickLink = () => {
 					setTabStatus(prev => ({ ...prev, isOpenDownload: true }))
 					showContactList()
 				}}
-				className={classNames("quickLinkNew1", {
+				className={classNames('quickLinkNew1', {
 					active: tabStatus.isOpenDownload,
-				})}>
-				<i className="icon icon-arrow-left2"></i>
-				<div>{t("ContactUs")}</div>
+				})}
+			>
+				<i className='icon icon-arrow-left2'></i>
+				<div>{t('ContactUs')}</div>
 			</div>
 			<div
 				onMouseLeave={() =>
 					setTabStatus(prev => ({ ...prev, isOpenDownload: false }))
 				}
-				className={classNames("quickLinkNew2", {
+				className={classNames('quickLinkNew2', {
 					active: !tabStatus.isOpenDownload,
-				})}>
-				<i className="icon icon-arrow-right2"></i>
+				})}
+			>
+				<i className='icon icon-arrow-right2'></i>
 				{iconList}
 			</div>
 			<QuickdownloadLink t={t} />
@@ -155,12 +161,12 @@ export const QuickdownloadLink = ({ t }) => {
 		<>
 			<DownloadBar
 				t={t}
-				className={active ? "active" : ""}
+				className={active ? 'active' : ''}
 				onMouseOver={() => setActive(true)}
 			/>
 			<IconBar
 				t={t}
-				className={active ? "" : "active"}
+				className={active ? '' : 'active'}
 				appLinkDatas={appLinkDatas}
 				showQRcode={showQRcode}
 				onMouseLeave={() => setActive(false)}
@@ -174,9 +180,10 @@ export const DownloadBar = ({ t, className, onMouseOver }) => {
 		<div
 			className={`quickLinkNew3 ${className}`}
 			onMouseOver={onMouseOver}
-			onFocus={() => 0}>
-			<i className="icon icon-arrow-right2" />
-			<div>{t("Download")}</div>
+			onFocus={() => 0}
+		>
+			<i className='icon icon-arrow-right2' />
+			<div>{t('Download')}</div>
 		</div>
 	)
 }
@@ -188,21 +195,22 @@ export const IconBar = ({
 	appLinkDatas,
 	onMouseLeave,
 }) => {
-	const andriodDownLoadUrl = appLinkDatas?.Andriod?.downloadLink ?? ""
-	const IOSDownloadUrl = appLinkDatas?.IOS?.downloadLink ?? ""
+	const andriodDownLoadUrl = appLinkDatas?.Andriod?.downloadLink ?? ''
+	const IOSDownloadUrl = appLinkDatas?.IOS?.downloadLink ?? ''
 
 	return (
 		<div className={`quickLinkNew4 ${className}`} onMouseLeave={onMouseLeave}>
-			<i className="icon icon-arrow-left2" />
+			<i className='icon icon-arrow-left2' />
 			{IOSDownloadUrl && (
 				<button
-					className="icon icon-appleinc"
-					onClick={() => showQRcode(IOSDownloadUrl)}>
-					{t("IOS")?.toUpperCase()}
+					className='icon icon-appleinc'
+					onClick={() => showQRcode(IOSDownloadUrl)}
+				>
+					{t('IOS')?.toUpperCase()}
 					<div>
 						<QRCode
 							value={IOSDownloadUrl}
-							renderAs="svg"
+							renderAs='svg'
 							size={112}
 							includeMargin={true}
 						/>
@@ -212,13 +220,14 @@ export const IconBar = ({
 
 			{andriodDownLoadUrl && (
 				<button
-					className="icon icon-android"
-					onClick={() => showQRcode(andriodDownLoadUrl)}>
-					{t("Android")?.toUpperCase()}
+					className='icon icon-android'
+					onClick={() => showQRcode(andriodDownLoadUrl)}
+				>
+					{t('Android')?.toUpperCase()}
 					<div>
 						<QRCode
 							value={andriodDownLoadUrl}
-							renderAs="svg"
+							renderAs='svg'
 							size={112}
 							includeMargin={true}
 						/>

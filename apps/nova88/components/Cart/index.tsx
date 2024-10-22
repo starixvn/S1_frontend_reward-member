@@ -1,39 +1,31 @@
-import React, { useEffect, useMemo, useState } from "react"
-import { useLocalStorage } from "usehooks-ts"
-import { useSelector } from "react-redux"
-import { useRouter } from "next/router"
-import { useTranslation } from "react-i18next"
-import GiftList from "@apps/nova88/components/Shopping/GiftList"
-import { DEFAULT_PAGE_SIZE_COUNT } from "@apps/nova88/components/Shopping/constants"
-import CartList from "./CartList"
-import Order from "./CartOrder"
-import { imageUrl, siteInfo } from "@apps/nova88/config"
-import { useAppDispatch, useAppSelector } from "@apps/nova88/store"
-import Loading from "@apps/nova88/common/components/Loading"
-import { usePopBox } from "@apps/nova88/common/hooks"
-import { paths } from "@apps/nova88/common/constants"
 import {
+	IGetGiftListArgs,
+	ISetShoppingCarData,
+	selectedCartNumber,
+	selectedIsLogin,
+	selectedLangId,
+	selectedPointBalance,
+	selectedProfile,
+	setCartNumber,
+	setPointBalance,
+	useCreateRedemptionMutation,
 	useGetGiftTagsQuery,
 	useLazyGetGiftListQuery,
 	useLazyGetPointBalanceQuery,
-} from "@apps/nova88/service/api/storeApi"
-import {
-	useCreateRedemptionMutation,
 	useSetShoppingCartMutation,
-} from "@apps/nova88/service/api/redemptionApi"
-import {
-	selectedIsLogin,
-	selectedLangId,
-	selectedProfile,
-} from "@apps/nova88/service/slice/auth"
-import {
-	selectedCartNumber,
-	selectedPointBalance,
-	setCartNumber,
-	setPointBalance,
-} from "@apps/nova88/service/slice/cart"
-import { IGetGiftListArgs } from "@apps/nova88/service/api/storeApi/type"
-import { ISetShoppingCarData } from "@apps/nova88/service/api/redemptionApi/type"
+} from '@api'
+import Loading from '@apps/nova88/components/common/Loading'
+import GiftList from '@apps/nova88/components/Shopping/GiftList'
+import { imageUrl, siteInfo } from '@apps/nova88/config'
+import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, paths } from '@constants'
+import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
+import { useRouter } from 'next/router'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { useLocalStorage } from 'usehooks-ts'
+import CartList from './CartList'
+import Order from './CartOrder'
 
 interface ICheckOutArgs {
 	categoryId?: number
@@ -62,7 +54,7 @@ const Cart = () => {
 	const { t, i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const route = useRouter()
-	const [cartState, setCartState] = useLocalStorage("nova88Cart", [])
+	const [cartState, setCartState] = useLocalStorage('nova88Cart', [])
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
 		useGetGiftTagsQuery({ langId })
 	const [getPointBalance] = useLazyGetPointBalanceQuery()
@@ -75,14 +67,14 @@ const Cart = () => {
 	const [cartList, setCartList] = useState([])
 	const [checkedItem, setCheckedItem] = useState<ICheckOutArgs>({})
 	const [isShowTip, setIsShowTip] = useState(false)
-	const [noteInput, setNoteInput] = useState("")
+	const [noteInput, setNoteInput] = useState('')
 	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
 	const featuredNameList = [
-		"FEATURED",
-		"精选",
-		"FITUR",
-		"DILIHATKAN",
-		"สนใจเป็นพิเศษ",
+		'FEATURED',
+		'精选',
+		'FITUR',
+		'DILIHATKAN',
+		'สนใจเป็นพิเศษ',
 	]
 	const handleGetPointBalance = async () => {
 		try {
@@ -92,7 +84,7 @@ const Cart = () => {
 			dispatch(setPointBalance(res.data.pointBalance))
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -103,7 +95,7 @@ const Cart = () => {
 			await getGiftList(args).unwrap()
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -119,7 +111,7 @@ const Cart = () => {
 				})
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -140,7 +132,7 @@ const Cart = () => {
 	const handleCheckBoxToggle = (e, item) => {
 		const result = { ...item }
 		if (!result.number) {
-			result["number"] = 1
+			result['number'] = 1
 		}
 
 		setCheckedItem(result)
@@ -225,8 +217,8 @@ const Cart = () => {
 					.then(res => {
 						if (res.errorCode === 0) {
 							setPopBoxType({
-								type: "default",
-								props: { content: t("SubmitTip") },
+								type: 'default',
+								props: { content: t('SubmitTip') },
 							})
 							dispatch(setCartNumber(cartNumber - 1))
 						}
@@ -236,11 +228,11 @@ const Cart = () => {
 				})
 				isLogin ? setRealCartList(newList) : setCartState(newList)
 				setCheckedItem({})
-				setNoteInput("")
+				setNoteInput('')
 				handleGetPointBalance()
 			} catch (error) {
 				setPopBoxType({
-					type: "warn",
+					type: 'warn',
 					props: { content: error.message },
 				})
 			}
@@ -265,7 +257,7 @@ const Cart = () => {
 						tags: [targetTab?.tagId],
 						orderByField: null,
 						desc: false,
-						pageSize: DEFAULT_PAGE_SIZE_COUNT,
+						pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 					},
 					langId,
 				})
@@ -285,7 +277,7 @@ const Cart = () => {
 						tags: [targetTab?.tagId],
 						orderByField: null,
 						desc: false,
-						pageSize: DEFAULT_PAGE_SIZE_COUNT,
+						pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 					},
 					langId,
 				})
@@ -298,30 +290,30 @@ const Cart = () => {
 	}, [cartState])
 
 	return (
-		<main className="cart-page container-xxl">
-			<div className="row">
-				<div className="col-lg-8 col-lg-8">
-					<div className="cart-txt">
-						<i className="icon icon-cart"></i>
-						<div className="title">
-							{t("ShoppingCart")}
+		<main className='cart-page container-xxl'>
+			<div className='row'>
+				<div className='col-lg-8 col-lg-8'>
+					<div className='cart-txt'>
+						<i className='icon icon-cart'></i>
+						<div className='title'>
+							{t('ShoppingCart')}
 							<span>
-								{isLogin ? cartNumber : cartList.length} {t("Items1")}
+								{isLogin ? cartNumber : cartList.length} {t('Items1')}
 							</span>
 						</div>
-						<div>{t("ShoppingCartTip")}</div>
+						<div>{t('ShoppingCartTip')}</div>
 					</div>
-					<div className="cart-list">
-						<div className="cart-head">
-							<div className="cart-check">
-								<span>{t("CheckoutLater")}</span>
+					<div className='cart-list'>
+						<div className='cart-head'>
+							<div className='cart-check'>
+								<span>{t('CheckoutLater')}</span>
 							</div>
-							<div className="cart-info">
-								<div>{t("Items2")}</div>
-								<div>{t("Quantity")}</div>
-								<div>{t("Points")}</div>
+							<div className='cart-info'>
+								<div>{t('Items2')}</div>
+								<div>{t('Quantity')}</div>
+								<div>{t('Points')}</div>
 							</div>
-							<div className="cart-del"></div>
+							<div className='cart-del'></div>
 						</div>
 						{(isLogin ? realCartList : cartList)?.length > 0 ? (
 							<CartList
@@ -331,23 +323,24 @@ const Cart = () => {
 								onRemove={handleCartItemRemove}
 							/>
 						) : (
-							<div className={"cart-null active"}>
-								<i className="icon icon-cart"></i>
-								<div>{t("EmptyText1")}</div>
+							<div className={'cart-null active'}>
+								<i className='icon icon-cart'></i>
+								<div>{t('EmptyText1')}</div>
 								<button
 									onClick={() => {
 										route.push(paths.shopping)
-									}}>
-									{t("EmptyText2")}
+									}}
+								>
+									{t('EmptyText2')}
 								</button>
 							</div>
 						)}
 					</div>
 				</div>
-				<div className="col-lg-4 col-xl-4">
-					<div className="cart-txt">
-						<div className="title">{t("OrderSummary")}</div>
-						<div>{t("OrderSummaryTip")}</div>
+				<div className='col-lg-4 col-xl-4'>
+					<div className='cart-txt'>
+						<div className='title'>{t('OrderSummary')}</div>
+						<div>{t('OrderSummaryTip')}</div>
 					</div>
 					{/*購物Points明細*/}
 					<Order
@@ -365,31 +358,33 @@ const Cart = () => {
 					/>
 				</div>
 			</div>
-			<div className="recommend row">
-				<div className="col-lg-5 col-xl-5">
-					<div className="affiliate-txt">
+			<div className='recommend row'>
+				<div className='col-lg-5 col-xl-5'>
+					<div className='affiliate-txt'>
 						<a
 							href={`${siteInfo.affiliateLink}/?lang=${langId}`}
-							target="_blank"
-							rel="noreferrer"
-							className="title">
-							{t("AffiliatesProgram")}
+							target='_blank'
+							rel='noreferrer'
+							className='title'
+						>
+							{t('AffiliatesProgram')}
 						</a>
-						{t("AffiliatesProgramTip")}
+						{t('AffiliatesProgramTip')}
 					</div>
 					<div>
-						<img src={`${imageUrl}/img/affiliatebg-1.jpg`} alt="img" />
+						<img src={`${imageUrl}/img/affiliatebg-1.jpg`} alt='img' />
 					</div>
 				</div>
-				<div className="products-group col-lg-7 col-xl-7">
-					<div className="row">
-						<div className="products-menu">
-							<a>{t("FEATURED")}</a>
+				<div className='products-group col-lg-7 col-xl-7'>
+					<div className='row'>
+						<div className='products-menu'>
+							<a>{t('FEATURED')}</a>
 							<button
 								onClick={() => {
 									route.push(paths.shopping)
-								}}>
-								{t("More")}...
+								}}
+							>
+								{t('More')}...
 							</button>
 						</div>
 						<GiftList

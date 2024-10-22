@@ -1,9 +1,8 @@
-import React, { FC } from "react"
-import Link from "next/link"
-import classnames from "classnames"
-import { useTranslation } from "react-i18next"
-import { paths } from "@apps/nova88/common/constants"
-import { numberFormat } from "@apps/nova88/common/utils/func"
+import { paths } from '@constants'
+import { numberFormat } from '@core'
+import classnames from 'classnames'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface ICartOrderProps {
 	profile: {
@@ -79,15 +78,15 @@ const Order: FC<ICartOrderProps> = ({
 }) => {
 	const { t } = useTranslation()
 	return (
-		<div className="cart-oder">
+		<div className='cart-oder'>
 			<div>
 				<div>
-					<span>{t("Username")}</span>
+					<span>{t('Username')}</span>
 					<span>{profile?.userName}</span>
 				</div>
 				<div>
-					<span>{t("AvailablePoints").toUpperCase()}</span>
-					<span className="icon icon-coin">
+					<span>{t('AvailablePoints').toUpperCase()}</span>
+					<span className='icon icon-coin'>
 						{numberFormat(pointBalance, 0, false)}
 					</span>
 				</div>
@@ -96,7 +95,7 @@ const Order: FC<ICartOrderProps> = ({
 				{isShowOrderItem && (
 					<div>
 						<span>{checkedItem.giftName}</span>
-						<span className="icon icon-coin">
+						<span className='icon icon-coin'>
 							{numberFormat(
 								checkedItem.point *
 									(checkedItem.number ? checkedItem.number : 1),
@@ -107,19 +106,19 @@ const Order: FC<ICartOrderProps> = ({
 					</div>
 				)}
 				<div>
-					<span>{t("ShippingAndHandling")}</span>
-					<span>{t("Free").toUpperCase()}</span>
+					<span>{t('ShippingAndHandling')}</span>
+					<span>{t('Free').toUpperCase()}</span>
 				</div>
 				{/*+ insufficient 當points不夠時狀態*/}
-				<div className="wire"></div>
-				<div className="total null">
-					<span>{t("GRAND_TOTAL")}</span>
+				<div className='wire'></div>
+				<div className='total null'>
+					<span>{t('GRAND_TOTAL')}</span>
 
-					<span className={classnames("icon", "icon-coin")}>
+					<span className={classnames('icon', 'icon-coin')}>
 						{isNaN(
 							checkedItem.point * (checkedItem.number ? checkedItem.number : 1)
 						)
-							? "N/A"
+							? 'N/A'
 							: numberFormat(
 									checkedItem.point *
 										(checkedItem.number ? checkedItem.number : 1),
@@ -129,21 +128,22 @@ const Order: FC<ICartOrderProps> = ({
 					</span>
 				</div>
 				{totalCal < 0 && (
-					<div className="tip active">{t("InsufficientPointsTip")}</div>
+					<div className='tip active'>{t('InsufficientPointsTip')}</div>
 				)}
 			</div>
 			{profile?.addressCity ? (
 				<div>
-					<div className="cart-address">
-						<span>{t("SHIPPING_ADDRESS")}</span>
+					<div className='cart-address'>
+						<span>{t('SHIPPING_ADDRESS')}</span>
 						<a
 							onClick={() => setIsShowTip(!isShowTip)}
-							className="icon icon-information"></a>
-						<div className={classnames("cart-tip", { active: isShowTip })}>
-							{t("AddressUpdateTip")}
+							className='icon icon-information'
+						></a>
+						<div className={classnames('cart-tip', { active: isShowTip })}>
+							{t('AddressUpdateTip')}
 						</div>
 					</div>
-					<div className="address">
+					<div className='address'>
 						<p>
 							{profile.addressLineFirst}
 							{profile.addressLineSecond}
@@ -160,7 +160,7 @@ const Order: FC<ICartOrderProps> = ({
 			) : (
 				<div>
 					<a href={`/${paths.profile}`}>
-						<button className="btn-add">{t("ADD_ADDRESS")}</button>
+						<button className='btn-add'>{t('ADD_ADDRESS')}</button>
 					</a>
 				</div>
 			)}
@@ -168,16 +168,17 @@ const Order: FC<ICartOrderProps> = ({
 			<input
 				onChange={e => setNoteInput(e.target.value)}
 				value={noteInput}
-				type="text"
-				placeholder={t("Note")}
+				type='text'
+				placeholder={t('Note')}
 			/>
-			<div className="txt"></div>
+			<div className='txt'></div>
 			<button
 				onClick={onSubmit}
-				className={classnames("btn-checkout", {
+				className={classnames('btn-checkout', {
 					null: !isChecked,
-				})}>
-				{t("Checkout").toUpperCase()}
+				})}
+			>
+				{t('Checkout').toUpperCase()}
 			</button>
 		</div>
 	)
