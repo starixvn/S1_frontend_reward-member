@@ -21,7 +21,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "nova88:build",
-        "dev": true
+        "dev": true,
+        "port": 4200
       },
       "configurations": {
         "development": {
