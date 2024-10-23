@@ -57,11 +57,11 @@ const Faq = () => {
 											<li>{t('Question2_Content4')}</li>
 											<li>{t('Question2_Content5')}</li>
 										</ul>
-										{t('Refer')} <a className='primary'>{`'${t('Here')}'`}</a>
+										{t('Refer')} <a className='primary'>{`${t('Here')} `}</a>
 										{t('for_more_details')}
 										<Link href={paths.about.sub.howtoearnpoints.root}>
 											<a className='primary'>
-												{t('How_to_earn_88_Rewards_points')}
+												{t('How_to_earn_12_Rewards_points')}
 											</a>
 										</Link>
 									</div>
@@ -118,7 +118,7 @@ const Faq = () => {
 									<div className='faq-info'>
 										{t('Please_refer_to')}
 										<Link href={paths.shopping}>
-											<a className='primary'> {t('88_Rewards_Store')}.</a>
+											<a className='primary'> {t('12_Rewards_Store')}.</a>
 										</Link>
 									</div>
 								</div>
@@ -163,7 +163,7 @@ const Faq = () => {
 										{t('Question7_Content')}
 										<Link href={paths.about.sub.howtoearnpoints.root}>
 											<a className='primary'>
-												{t('How_to_earn_88_Rewards_points')}
+												{t('How_to_earn_12_Rewards_points')}
 											</a>
 										</Link>
 									</div>
