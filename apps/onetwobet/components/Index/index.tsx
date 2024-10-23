@@ -3,6 +3,7 @@ import {
 	ISetShoppingCarData,
 	selectedIsLogin,
 	selectedLangId,
+	selectUrlMethods,
 	setCartNumber,
 	useGetAppLinkQuery,
 	useLazyGetGiftListQuery,
@@ -29,6 +30,7 @@ import { useSelector } from 'react-redux'
 import { useLocalStorage } from 'usehooks-ts'
 
 const Index = () => {
+	const { getBannerUrl } = useSelector(selectUrlMethods)
 	const dispatch = useAppDispatch()
 	const { i18n, t } = useTranslation()
 	const route = useRouter()
@@ -219,7 +221,11 @@ const Index = () => {
 							</button>
 						</div>
 
-						<img className='npc' src={`${imageUrl}/img/introduce.png`} alt='' />
+						<img
+							className='npc'
+							src={getBannerUrl('/12reward/img/introduce.png')}
+							alt=''
+						/>
 					</div>
 					<div className='col-xl-5'>
 						<div className='info'>

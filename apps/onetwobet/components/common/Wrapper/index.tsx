@@ -2,7 +2,9 @@ import {
 	checkSignInAsync,
 	getCustProfileAsync,
 	getPointBalanceAsync,
+	getStaticFileDomainAsync,
 	selectedIsLogin,
+	selectUrlMethodInitialized,
 	setCartNumber,
 	useSetShoppingCartMutation,
 } from '@api'
@@ -19,10 +21,12 @@ interface IWrapperProps {
 }
 
 const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
-	const dispatch = useAppDispatch()
 	const route = useRouter()
-	const [cartList] = useLocalStorage('nova88Cart', [])
+	const dispatch = useAppDispatch()
 	const isLogin = useAppSelector(selectedIsLogin)
+	const isUrlMethodInitialized = useAppSelector(selectUrlMethodInitialized)
+
+	const [cartList] = useLocalStorage('nova88Cart', [])
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const { setPopBoxType } = usePopBox()
 
@@ -53,6 +57,7 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 		if (isLogin) {
 			dispatch(getCustProfileAsync())
 			dispatch(getPointBalanceAsync())
+
 			const giftIdList = []
 			cartList.forEach(item => {
 				giftIdList.push(item.giftId)
@@ -64,6 +69,12 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLogin])
+
+	useEffect(() => {
+		if (!isUrlMethodInitialized) {
+			dispatch(getStaticFileDomainAsync())
+		}
+	}, [isUrlMethodInitialized])
 
 	// * 如果 checkSignIn 尚未 return response
 	if (isLogin === null) {

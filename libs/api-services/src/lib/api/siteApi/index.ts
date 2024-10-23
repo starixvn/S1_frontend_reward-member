@@ -6,9 +6,9 @@ import { IGetSocialChannelArgs, IGetSocialChannelResponse } from './type'
 const siteApi = createApi({
 	reducerPath: 'siteApi',
 	baseQuery: axiosBaseQuery({ baseUrl }),
-	tagTypes: ['PostT'],
+
 	endpoints: builder => ({
-		getSocialChannel: builder.mutation<
+		getSocialChannel: builder.query<
 			IGetSocialChannelResponse,
 			IGetSocialChannelArgs
 		>({
@@ -21,11 +21,10 @@ const siteApi = createApi({
 					displayPage,
 				},
 			}),
-			invalidatesTags: ['PostT'],
 		}),
 	}),
 })
 
-export const { useGetSocialChannelMutation } = siteApi
+export const { useLazyGetSocialChannelQuery } = siteApi
 
 export default siteApi
