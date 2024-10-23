@@ -2,7 +2,7 @@ import {
 	selectedIsLogin,
 	selectedProfile,
 	useGetAppLinkQuery,
-	useGetSocialChannelMutation,
+	useLazyGetSocialChannelQuery,
 } from '@api'
 import {
 	buttonTypeList,
@@ -22,7 +22,7 @@ import { useSelector } from 'react-redux'
 const QuickLink = () => {
 	const { t, i18n } = useTranslation()
 	const profile = useSelector(selectedProfile)
-	const [getSocialChannelQuery] = useGetSocialChannelMutation()
+	const [getSocialChannelQuery] = useLazyGetSocialChannelQuery()
 	const [tabStatus, setTabStatus] = useState({
 		isOpenDownload: false,
 		isOpenContactUs: false,

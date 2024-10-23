@@ -5,6 +5,7 @@ import {
 	playerApi,
 	redemptionApi,
 	siteApi,
+	siteReducer,
 	storeApi,
 } from '@api'
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
@@ -13,6 +14,7 @@ const store = configureStore({
 	reducer: {
 		auth: authReducer,
 		cart: cartReducer,
+		site: siteReducer,
 		[storeApi.reducerPath]: storeApi.reducer,
 		[playerApi.reducerPath]: playerApi.reducer,
 		[siteApi.reducerPath]: siteApi.reducer,
