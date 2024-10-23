@@ -1,10 +1,10 @@
-import { selectedIsLogin, selectedLangId } from '@api'
+import { selectedCurrencyId, selectedIsLogin, selectedLangId } from '@api'
 import LeftMenu from '@apps/onetwobet/components/about/components/LeftMenu'
 import {
+	CURRENCY_ID_TO_NAME,
 	defHowToEarnPointsTab,
 	depositPointReward,
 	HowTabEnum,
-	langMapping,
 	paths,
 	turnoverPointReward,
 } from '@constants'
@@ -18,13 +18,11 @@ import { useSelector } from 'react-redux'
 
 const HowToEarnPoints = () => {
 	const { pathname } = useRouter()
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const [selectedTab, setSelectedTab] = useState(
 		defHowToEarnPointsTab[HowTabEnum.DEPOSIT_POINTS]
 	)
-	const isLogin = useSelector(selectedIsLogin)
-	const langId = useAppSelector(selectedLangId)
-	const currency = langMapping[isLogin ? langId : i18n.language]
+	const currencyName = CURRENCY_ID_TO_NAME[useAppSelector(selectedCurrencyId)]
 
 	return (
 		<main>
@@ -64,11 +62,11 @@ const HowToEarnPoints = () => {
 									<div className='info-title'>{t(selectedTab.displayKey)}</div>
 
 									{selectedTab.key === HowTabEnum.DEPOSIT_POINTS && (
-										<DepositPointInfo currency={currency} />
+										<DepositPointInfo currencyName={currencyName} />
 									)}
 
 									{selectedTab.key === HowTabEnum.TURNOVER_POINTS && (
-										<TurnoverPointInfo currency={currency} />
+										<TurnoverPointInfo currencyName={currencyName} />
 									)}
 
 									{selectedTab.key === HowTabEnum.VIP_REWARDS_POINTS && (
@@ -121,7 +119,7 @@ const HowToEarnPoints = () => {
 
 export default HowToEarnPoints
 
-const DepositPointInfo = ({ currency }) => {
+const DepositPointInfo = ({ currencyName }: { currencyName: string }) => {
 	const { t, i18n } = useTranslation()
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
@@ -147,7 +145,7 @@ const DepositPointInfo = ({ currency }) => {
 					<tr>
 						<td>
 							<span>
-								{t(currency)} {depositPointReward[currency]}{' '}
+								{t(currencyName)} {depositPointReward[currencyName]}{' '}
 								{currencyShowJudge()}
 							</span>
 							<p>({t('AllDepositType')})</p>
@@ -162,7 +160,7 @@ const DepositPointInfo = ({ currency }) => {
 	)
 }
 
-const TurnoverPointInfo = ({ currency }) => {
+const TurnoverPointInfo = ({ currencyName }: { currencyName: string }) => {
 	const { t, i18n } = useTranslation()
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
@@ -191,7 +189,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('SPORTS')}</td>
 						<td>{t('SABASportsEsports')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].sports}{' '}
+							{t(currencyName)} {turnoverPointReward[currencyName].sports}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>
@@ -200,7 +198,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('LIVE_CASINO')}</td>
 						<td>{t('AllProviders')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].liveCasino}{' '}
+							{t(currencyName)} {turnoverPointReward[currencyName].liveCasino}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>
@@ -209,7 +207,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('SLOT')}</td>
 						<td>{t('ExcludedKiss918')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].slot}{' '}
+							{t(currencyName)} {turnoverPointReward[currencyName].slot}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>
@@ -218,7 +216,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('FISHING')}</td>
 						<td>{t('AllProviders')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].fishing}{' '}
+							{t(currencyName)} {turnoverPointReward[currencyName].fishing}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>
@@ -227,7 +225,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('TABLE_GAMES')}</td>
 						<td>{t('TableGamesProvider')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].tableGames}{' '}
+							{t(currencyName)} {turnoverPointReward[currencyName].tableGames}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>
@@ -236,7 +234,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('GAMES')}</td>
 						<td>{t('GamesProvider')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].games}{' '}
+							{t(currencyName)} {turnoverPointReward[currencyName].games}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>
@@ -245,7 +243,7 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('LOTTERY')}</td>
 						<td>{t('LotteryProvider')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].lottery}{' '}
+							{t(currencyName)} {turnoverPointReward[currencyName].lottery}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>
@@ -254,7 +252,8 @@ const TurnoverPointInfo = ({ currency }) => {
 						<td className='head'>{t('VIRTUAL_SPORTS')}</td>
 						<td>{t('VirtualSportsProvider')}</td>
 						<td>
-							{t(currency)} {turnoverPointReward[currency].virtualSports}{' '}
+							{t(currencyName)}{' '}
+							{turnoverPointReward[currencyName].virtualSports}{' '}
 							{currencyShowJudge()}
 						</td>
 						<td>1</td>

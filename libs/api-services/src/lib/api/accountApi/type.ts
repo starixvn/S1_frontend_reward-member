@@ -1,7 +1,7 @@
 import { IAxiosResponse } from '../axiosBaseQuery'
 
 export interface ISetLanguageArgs {
-	langId: number
+	langId: string
 }
 
 export type ISetLanguageResponse = IAxiosResponse<null>

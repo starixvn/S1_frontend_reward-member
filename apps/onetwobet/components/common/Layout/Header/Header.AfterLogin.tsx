@@ -4,9 +4,10 @@ import {
 	selectedPointBalance,
 	selectedProfile,
 	setIsLogin,
+	setProfile,
 } from '@api'
-import { imageUrl, siteInfo } from '@apps/onetwobet/config'
-import { paths, REWARD88_LANG } from '@constants'
+import { imageUrl } from '@apps/onetwobet/config'
+import { paths } from '@constants'
 import { numberFormat } from '@core'
 import { useAppDispatch, useAppSelector } from '@operations'
 import classnames from 'classnames'
@@ -19,27 +20,26 @@ import LangDropdown from './LangDropdown'
 import ShoppingCart from './ShoppingCart'
 
 const HeaderAfterLogin = () => {
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const profile = useSelector(selectedProfile)
 	const dispatch = useAppDispatch()
-	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
+	const [, setCartList] = useLocalStorage('nova88Cart', [])
 	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
-		REWARD88_LANG,
-		null
-	)
 	const userMenuWrapper = useRef()
 	const [isUserMenuOpen, setUserMenuIsOpen] = useState<boolean>(false)
 
 	const handleLogout = async () => {
 		await dispatch(logoutAsync())
 		dispatch(setIsLogin(false))
+		dispatch(
+			setProfile({
+				userName: 'Guest',
+				langId: profile.langId,
+				currencyId: profile.currencyId,
+			})
+		)
 		setCartList([])
-		// * 登入及登出後重置語系
-		i18n.changeLanguage(siteInfo.defaultLang)
-		setLocalStorageLangId(null)
 	}
 
 	const toggleUserMenuDropdown = () => setUserMenuIsOpen(prev => !prev)

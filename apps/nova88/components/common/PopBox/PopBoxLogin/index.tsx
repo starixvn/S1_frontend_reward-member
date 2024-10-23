@@ -5,13 +5,11 @@ import {
 	selectedLangId,
 	setIsLogin,
 } from '@api'
-import { imageUrl, siteInfo } from '@apps/nova88/config'
-import { REWARD88_LANG } from '@constants'
+import { imageUrl } from '@apps/nova88/config'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useLocalStorage } from 'usehooks-ts'
 import Form from './Form'
 
 interface IFormValues {
@@ -24,11 +22,6 @@ const PopBoxLogin: FC = () => {
 	const { closePopBox, setPopBoxType } = usePopBox()
 	const dispatch = useAppDispatch()
 	const langId = useAppSelector(selectedLangId)
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
-		REWARD88_LANG,
-		null
-	)
 
 	const {
 		register,
@@ -54,10 +47,6 @@ const PopBoxLogin: FC = () => {
 				dispatch(setIsLogin(isLogin))
 				await dispatch(getPointBalanceAsync())
 				closePopBox()
-
-				// * 登入及登出後重置語系
-				i18n.changeLanguage(siteInfo.defaultLang)
-				setLocalStorageLangId(null)
 			} else if ([1101, 1001].includes(errorCode)) {
 				setError('password', { type: 'custom', message })
 			} else if ([1102, 9000].includes(errorCode)) {

@@ -7,7 +7,10 @@ import {
 	useSetShoppingCartMutation,
 } from '@api'
 import { paths } from '@constants'
-import { useInitI18nLanguageEffect } from '@core'
+import {
+	useSynchronizeCookiesEffect,
+	useSynchronizeI18nLanguageEffect,
+} from '@core'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import { useRouter } from 'next/router'
 import { FC, ReactNode, useEffect } from 'react'
@@ -25,8 +28,8 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 	const isLogin = useAppSelector(selectedIsLogin)
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const { setPopBoxType } = usePopBox()
-
-	useInitI18nLanguageEffect()
+	useSynchronizeI18nLanguageEffect()
+	useSynchronizeCookiesEffect()
 
 	const getAllCartList = async () => {
 		try {
