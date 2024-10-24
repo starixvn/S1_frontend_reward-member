@@ -11,8 +11,7 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"incremental": true,
-		"types": ["jest", "node"],
-		"baseUrl": "."
+		"types": ["jest", "node"]
 	},
 	"include": [
 		"**/*.ts",
@@ -20,7 +19,6 @@
 		"**/*.js",
 		"**/*.jsx",
 		"next-env.d.ts",
-		"common/components/Layout/header.jss"
 	],
 	"exclude": ["node_modules", "jest.config.ts"]
 }

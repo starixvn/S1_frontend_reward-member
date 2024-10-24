@@ -1,7 +1,6 @@
-import Wrapper from "common/components/Wrapper"
-import Layout from "common/components/Layout"
-import Home from "components/Index"
-import React from "react"
+import Layout from '@apps/nova88/components/common/Layout'
+import Wrapper from '@apps/nova88/components/common/Wrapper'
+import Home from '@apps/nova88/components/Index'
 
 export function Index() {
 	return (

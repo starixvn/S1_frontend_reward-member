@@ -1,8 +1,7 @@
-import React, { FC } from "react"
-import { useTranslation } from "react-i18next"
-import { usePopBox } from "common/hooks"
-import { useAppSelector } from "store"
-import { selectedIsLogin } from "service/slice/auth"
+import { selectedIsLogin } from '@api'
+import { useAppSelector, usePopBox } from '@operations'
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface IEmptyProps {
 	isFavorite: boolean
@@ -15,29 +14,30 @@ const Empty: FC<IEmptyProps> = ({ isFavorite }) => {
 	const judgeEmptyShow = () => {
 		if (isFavorite) {
 			return (
-				<div className="products-empty">
-					<div className="animation">
-						<i className="icon icon-heart-fill"></i>
+				<div className='products-empty'>
+					<div className='animation'>
+						<i className='icon icon-heart-fill'></i>
 					</div>
-					<div className="title">{t("MyFavoritesList")}</div>
+					<div className='title'>{t('MyFavoritesList')}</div>
 					{!isLogin && (
 						<button
 							onClick={() => {
 								setPopBoxType({
-									type: "login",
+									type: 'login',
 								})
 							}}
-							className="btn-login">
-							{t("LOGIN")}
+							className='btn-login'
+						>
+							{t('LOGIN')}
 						</button>
 					)}
 				</div>
 			)
 		} else {
 			return (
-				<div className="noData">
-					<i className="icon icon-alarm" />
-					{t("NoData")}
+				<div className='noData'>
+					<i className='icon icon-alarm' />
+					{t('NoData')}
 				</div>
 			)
 		}

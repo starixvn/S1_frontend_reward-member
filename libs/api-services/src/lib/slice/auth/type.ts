@@ -1,0 +1,31 @@
+export interface ICustProfile {
+	langId: string
+	userName: string
+	accountName?: string
+	actStatus?: number
+	addressCity?: string
+	addressCountry?: string
+	addressLineFirst?: string
+	addressLineSecond?: string
+	addressPostCode?: string
+	addressState?: string
+	areaCode?: string
+	birth_d?: string
+	birth_m?: string
+	country?: string
+	birth_y?: string
+	currencyId?: number
+	email?: string
+	emailReward?: number
+	emailVerified?: boolean
+	enablePromotion?: number
+	isLineBinding?: boolean
+	isResetPwd?: boolean
+	lastLogin?: string
+	perCountry?: string
+	phoneNo?: string
+	phoneReward?: number
+	phoneVerified?: boolean
+	regTime?: string
+	userLevel?: number
+}

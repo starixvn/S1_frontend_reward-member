@@ -1,18 +1,15 @@
-import { useRouter } from "next/router"
-import React, { useEffect } from "react"
-import LeftMenu from "components/about/components/LeftMenu"
-import { useSelector } from "react-redux"
-import { useTranslation } from "react-i18next"
-import PointRecord from "components/about/components/PointRecord"
-import Loading from "common/components/Loading"
-import { useLazyGetMyCoinQuery } from "service/api/storeApi"
-import { usePopBox } from "common/hooks"
-import { useAppSelector } from "store"
-import { selectedIsLogin, selectedProfile } from "service/slice/auth"
-import { imageUrl } from "config"
-import { getAvailablePoints, getUsedPoints } from "components/about/utils"
-import { clubList } from "../constants"
-import { numberFormat } from "common/utils/func"
+import { selectedIsLogin, selectedProfile, useLazyGetMyCoinQuery } from '@api'
+import LeftMenu from '@apps/nova88/components/about/components/LeftMenu'
+import PointRecord from '@apps/nova88/components/about/components/PointRecord'
+import Loading from '@apps/nova88/components/common/Loading'
+import { imageUrl } from '@apps/nova88/config'
+import { clubList } from '@constants'
+import { getAvailablePoints, getUsedPoints, numberFormat } from '@core'
+import { useAppSelector, usePopBox } from '@operations'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 const Points = () => {
 	const { pathname } = useRouter()
@@ -33,7 +30,7 @@ const Points = () => {
 			await getMyCoin(args).unwrap()
 		} catch (error) {
 			setPopBoxType({
-				type: "warn",
+				type: 'warn',
 				props: { content: error.message },
 			})
 		}
@@ -54,32 +51,32 @@ const Points = () => {
 
 	return (
 		<main>
-			<div className="container-xxl myCoins-page">
-				<div className="row">
-					<div className="col col-lg-2 col-xl-3">
+			<div className='container-xxl myCoins-page'>
+				<div className='row'>
+					<div className='col col-lg-2 col-xl-3'>
 						<LeftMenu activePath={pathname} />
 					</div>
-					<div className="col col-lg-10 col-xl-9">
-						<div className="page-content">
-							<div className="title">{t("MyPoints").toUpperCase()}</div>
+					<div className='col col-lg-10 col-xl-9'>
+						<div className='page-content'>
+							<div className='title'>{t('MyPoints').toUpperCase()}</div>
 							{!isGetMyCoinFetching ? (
-								<div className="memberFile">
-									<div className="myDocument">
-										<div className="memberID">
+								<div className='memberFile'>
+									<div className='myDocument'>
+										<div className='memberID'>
 											<i></i>
 											<i></i>
 											<span>{profile?.userName}</span>
 										</div>
-										<div className="vipAnimation">
-											<a href="">
+										<div className='vipAnimation'>
+											<a href=''>
 												<img
 													src={`${imageUrl}/img/vip0${profile?.userLevel}.png`}
-													alt=""
+													alt=''
 												/>
 											</a>
 										</div>
-										<div className="level">{t(clubText)}</div>
-										<div className="icon icon-coin">
+										<div className='level'>{t(clubText)}</div>
+										<div className='icon icon-coin'>
 											{numberFormat(balance, 0, true)}
 										</div>
 									</div>
