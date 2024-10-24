@@ -1,5 +1,5 @@
 import PopBox from '@apps/onetwobet/components/common/PopBox'
-import QuickLink from '@apps/onetwobet/components/Index/QuickLink'
+import QuickLink from '@apps/onetwobet/components/home/QuickLink'
 import { useState } from 'react'
 import Footer from './Footer'
 import Header from './Header'

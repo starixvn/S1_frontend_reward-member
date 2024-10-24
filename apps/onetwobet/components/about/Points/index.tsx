@@ -1,8 +1,7 @@
-import { selectedIsLogin, selectedProfile, useLazyGetMyCoinQuery } from '@api'
+import { selectedIsLogin, selectedProfile, selectUrlMethods, useLazyGetMyCoinQuery } from "@api"
 import Loading from '@apps/onetwobet/components/common/Loading'
 import LeftMenu from '@apps/onetwobet/components/about/components/LeftMenu'
 import PointRecord from '@apps/onetwobet/components/about/components/PointRecord'
-import { imageUrl } from '@apps/onetwobet/config'
 import { clubList } from '@constants'
 import { getAvailablePoints, getUsedPoints, numberFormat } from '@core'
 import { useAppSelector, usePopBox } from '@operations'
@@ -13,7 +12,8 @@ import { useSelector } from 'react-redux'
 
 const Points = () => {
 	const { pathname } = useRouter()
-	const profile = useSelector(selectedProfile)
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
+  const profile = useSelector(selectedProfile)
 	const { t } = useTranslation()
 	const [
 		getMyCoin,
@@ -70,8 +70,8 @@ const Points = () => {
 										<div className='vipAnimation'>
 											<a href=''>
 												<img
-													src={`${imageUrl}/img/vip0${profile?.userLevel}.png`}
-													alt=''
+													src={getStoreImgDomain(`/img/vip0${profile?.userLevel}.svg`)}
+													alt='userLevel'
 												/>
 											</a>
 										</div>
