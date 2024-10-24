@@ -3683,6 +3683,21 @@ input:-webkit-autofill:active {
 .flag.bd:before {
   background: url(../img/style-img/flag/bd.jpg) no-repeat top left/cover;
 }
+.flag.gb:before {
+  background: url(../img/style-img/flag/gb.jpg) no-repeat top left/cover;
+}
+.flag.kh:before {
+  background: url(../img/style-img/flag/kh.jpg) no-repeat top left/cover;
+}
+.flag.br:before {
+  background: url(../img/style-img/flag/br.jpg) no-repeat top left/cover;
+}
+.flag.ko:before {
+  background: url(../img/style-img/flag/ko.jpg) no-repeat top left/cover;
+}
+.flag.jp:before {
+  background: url(../img/style-img/flag/jp.jpg) no-repeat top left/cover;
+}
 
 .mobile-menu {
   width: 100%;
