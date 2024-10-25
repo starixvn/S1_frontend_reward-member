@@ -1,5 +1,4 @@
 import { selectedIsLogin } from '@api'
-import { imageUrl } from '@apps/nova88/config'
 import { numberFormat } from '@core'
 import { useAppSelector } from '@operations'
 import classNames from 'classnames'
