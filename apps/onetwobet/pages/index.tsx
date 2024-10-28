@@ -1,6 +1,6 @@
 import Layout from '@apps/onetwobet/components/common/Layout'
 import Wrapper from '@apps/onetwobet/components/common/Wrapper'
-import Home from '@apps/onetwobet/components/Index'
+import Home from 'apps/onetwobet/components/home'
 
 export function Index() {
 	return (

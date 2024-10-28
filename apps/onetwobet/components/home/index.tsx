@@ -13,7 +13,7 @@ import {
 import Loading from '@apps/onetwobet/components/common/Loading'
 import GiftList from '@apps/onetwobet/components/Shopping/GiftList'
 import GiftSwiper from '@apps/onetwobet/components/Shopping/GiftSwiper'
-import { imageUrl, siteInfo } from '@apps/onetwobet/config'
+import {  siteInfo } from '@apps/onetwobet/config'
 import {
 	appType,
 	DEFAULT_HOME_PAGE_SIZE_COUNT,
@@ -29,7 +29,7 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useLocalStorage } from 'usehooks-ts'
 
-const Index = () => {
+const Home = () => {
 	const { getBannerUrl } = useSelector(selectUrlMethods)
 	const dispatch = useAppDispatch()
 	const { i18n, t } = useTranslation()
@@ -224,7 +224,7 @@ const Index = () => {
 						<img
 							className='npc'
 							src={getBannerUrl('/12reward/img/introduce.png')}
-							alt=''
+							alt='introduce'
 						/>
 					</div>
 					<div className='col-xl-5'>
@@ -234,13 +234,15 @@ const Index = () => {
 								onClick={() => {
 									route.push(paths.shopping)
 								}}
-								src={`${imageUrl}/img/rewardimg.jpg`}
-								alt=''
+                src={getBannerUrl('/12reward/img/rewardimg.jpg')}
+								alt='reward'
 							/>
 						</div>
 						<div className='info'>
 							<div>{t('imgAdText2')}</div>
-							<img src={`${imageUrl}/img/rewardimg-1.jpg`} alt='' />
+							<img
+                  src={getBannerUrl('/12reward/img/rewardimg-1.jpg')
+              } alt='reward' />
 						</div>
 					</div>
 				</div>
@@ -250,7 +252,9 @@ const Index = () => {
 					<p>{t('BannerAdText5')}</p>
 					{t('BannerAdText6')}
 				</div>
-				<img src={`${imageUrl}/img/imgbg.jpg`} alt='' />
+				<img
+            src={getBannerUrl('/12reward/img/imgbg.jpg')
+        } alt='contents' />
 			</div>
 			<div className='saleImg'>
 				<div className='txt'>
@@ -266,7 +270,9 @@ const Index = () => {
 						</button>
 					</div>
 				</div>
-				<img src={`${imageUrl}/img/saleimgbg.jpg`} alt='' />
+				<img
+             src={getBannerUrl('/12reward/img/saleimgbg.jpg')
+        } alt='sale' />
 			</div>
 			<div className='products-group container-xxl'>
 				<div className='row'>
@@ -297,8 +303,8 @@ const Index = () => {
 						<div className='download-txt'>
 							<img
 								className='logo'
-								src={`${imageUrl}/img/novalogo.png`}
-								alt=''
+                 src={getBannerUrl('/12reward/img/12bet-logo.png')}
+								alt='logo'
 							/>
 							<div className='title'>{t('ScanToDownload').toUpperCase()}</div>
 							{t('AppBannerText').toUpperCase()}
@@ -341,7 +347,9 @@ const Index = () => {
 								</div>
 							</div>
 						</div>
-						<img src={`${imageUrl}/img/appbg.jpg`} alt='' />
+						<img
+               src={getBannerUrl('/12reward/img/appbg.jpg')}
+              alt='app' />
 					</div>
 					<div className='col-md-5 col-xl-5'>
 						<div className='affiliate-txt'>
@@ -355,7 +363,9 @@ const Index = () => {
 							</a>
 							{t('DownloadBgText2')}
 						</div>
-						<img src={`${imageUrl}/img/affiliatebg.jpg`} alt='' />
+						<img
+               src={getBannerUrl('/12reward/img/affiliatebg.jpg')}
+              alt='affiliate' />
 					</div>
 				</div>
 			</div>
@@ -363,4 +373,4 @@ const Index = () => {
 	)
 }
 
-export default Index
+export default Home
