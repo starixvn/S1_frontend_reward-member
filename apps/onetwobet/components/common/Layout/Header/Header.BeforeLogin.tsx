@@ -1,14 +1,16 @@
-import { selectedLangId } from '@api'
-import { imageUrl } from '@apps/onetwobet/config'
+import { selectedLangId, selectUrlMethods } from "@api"
 import { useAppSelector, usePopBox } from '@operations'
 import { useTranslation } from 'react-i18next'
 import LangDropdown from './LangDropdown'
 import ShoppingCart from './ShoppingCart'
+import { useSelector } from "react-redux"
 
 const HeaderBeforeLogin = () => {
 	const { t } = useTranslation()
 	const langId = useAppSelector(selectedLangId)
-	const { setPopBoxType } = usePopBox()
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
+
+  const { setPopBoxType } = usePopBox()
 
 	return (
 		<>
@@ -21,7 +23,7 @@ const HeaderBeforeLogin = () => {
 			<LangDropdown />
 			<ShoppingCart />
 			<a href={`/${langId}`} target='_blank' rel='noreferrer'>
-				<img className='novaLogo' src={`${imageUrl}/img/novalogo.png`} alt='' />
+				<img className='novaLogo' 	src={getStoreImgDomain('/img/12bet-logo.png')} alt='' />
 			</a>
 			<button
 				className='login'

@@ -1,11 +1,11 @@
 import {
-	logoutAsync,
-	selectedLangId,
-	selectedPointBalance,
-	selectedProfile,
-	setIsLogin,
-} from '@api'
-import { imageUrl, siteInfo } from '@apps/onetwobet/config'
+  logoutAsync,
+  selectedLangId,
+  selectedPointBalance,
+  selectedProfile, selectUrlMethods,
+  setIsLogin
+} from "@api"
+import {  siteInfo } from '@apps/onetwobet/config'
 import { paths, REWARD88_LANG } from '@constants'
 import { numberFormat } from '@core'
 import { useAppDispatch, useAppSelector } from '@operations'
@@ -21,8 +21,8 @@ import ShoppingCart from './ShoppingCart'
 const HeaderAfterLogin = () => {
 	const { t, i18n } = useTranslation()
 	const profile = useSelector(selectedProfile)
-	const dispatch = useAppDispatch()
-	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
+  const dispatch = useAppDispatch()
 	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,7 +36,6 @@ const HeaderAfterLogin = () => {
 	const handleLogout = async () => {
 		await dispatch(logoutAsync())
 		dispatch(setIsLogin(false))
-		setCartList([])
 		// * 登入及登出後重置語系
 		i18n.changeLanguage(siteInfo.defaultLang)
 		setLocalStorageLangId(null)
@@ -63,7 +62,7 @@ const HeaderAfterLogin = () => {
 					<div className='vipAnimation'>
 						<a>
 							<img
-								src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
+								src={getStoreImgDomain(`/img/vip0${profile.userLevel}.png`)}
 								alt='vip'
 							/>
 						</a>
@@ -89,8 +88,8 @@ const HeaderAfterLogin = () => {
 			<a href={`/${langId}`} target='_blank' rel='noreferrer'>
 				<img
 					className='novaLogo'
-					src={`${imageUrl}/img/novalogo.png`}
-					alt='any'
+					src={getStoreImgDomain('/img/12bet-logo.png')}
+					alt='logo'
 				/>
 			</a>
 		</>

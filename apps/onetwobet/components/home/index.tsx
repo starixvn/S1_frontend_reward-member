@@ -30,7 +30,7 @@ import { useSelector } from 'react-redux'
 import { useLocalStorage } from 'usehooks-ts'
 
 const Home = () => {
-	const { getBannerUrl } = useSelector(selectUrlMethods)
+	const { getStoreImgDomain } = useSelector(selectUrlMethods)
 	const dispatch = useAppDispatch()
 	const { i18n, t } = useTranslation()
 	const route = useRouter()
@@ -47,7 +47,7 @@ const Home = () => {
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
 	] = useLazyGetGiftListQuery()
 
-	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
+  const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
 
 	const getCartList = async args => {
 		try {
@@ -223,7 +223,7 @@ const Home = () => {
 
 						<img
 							className='npc'
-							src={getBannerUrl('/12reward/img/introduce.png')}
+							src={getStoreImgDomain('/12reward/img/introduce.png')}
 							alt='introduce'
 						/>
 					</div>
@@ -234,14 +234,14 @@ const Home = () => {
 								onClick={() => {
 									route.push(paths.shopping)
 								}}
-                src={getBannerUrl('/12reward/img/rewardimg.jpg')}
+                src={getStoreImgDomain('/12reward/img/rewardimg.jpg')}
 								alt='reward'
 							/>
 						</div>
 						<div className='info'>
 							<div>{t('imgAdText2')}</div>
 							<img
-                  src={getBannerUrl('/12reward/img/rewardimg-1.jpg')
+                  src={getStoreImgDomain('/12reward/img/rewardimg-1.jpg')
               } alt='reward' />
 						</div>
 					</div>
@@ -253,7 +253,7 @@ const Home = () => {
 					{t('BannerAdText6')}
 				</div>
 				<img
-            src={getBannerUrl('/12reward/img/imgbg.jpg')
+            src={getStoreImgDomain('/12reward/img/imgbg.jpg')
         } alt='contents' />
 			</div>
 			<div className='saleImg'>
@@ -271,7 +271,7 @@ const Home = () => {
 					</div>
 				</div>
 				<img
-             src={getBannerUrl('/12reward/img/saleimgbg.jpg')
+             src={getStoreImgDomain('/12reward/img/saleimgbg.jpg')
         } alt='sale' />
 			</div>
 			<div className='products-group container-xxl'>
@@ -303,7 +303,7 @@ const Home = () => {
 						<div className='download-txt'>
 							<img
 								className='logo'
-                 src={getBannerUrl('/12reward/img/12bet-logo.png')}
+                 src={getStoreImgDomain('/12reward/img/12bet-logo.png')}
 								alt='logo'
 							/>
 							<div className='title'>{t('ScanToDownload').toUpperCase()}</div>
@@ -348,7 +348,7 @@ const Home = () => {
 							</div>
 						</div>
 						<img
-               src={getBannerUrl('/12reward/img/appbg.jpg')}
+               src={getStoreImgDomain('/12reward/img/appbg.jpg')}
               alt='app' />
 					</div>
 					<div className='col-md-5 col-xl-5'>
@@ -364,7 +364,7 @@ const Home = () => {
 							{t('DownloadBgText2')}
 						</div>
 						<img
-               src={getBannerUrl('/12reward/img/affiliatebg.jpg')}
+               src={getStoreImgDomain('/img/affiliatebg-1.jpg')}
               alt='affiliate' />
 					</div>
 				</div>
