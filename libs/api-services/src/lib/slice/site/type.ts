@@ -3,4 +3,5 @@ export type TStaticFileDomainData = {
 	paymentDomain: string
 	imgDomain: string
 	sportImgDomain: string
+  storeImgDomain:string
 }

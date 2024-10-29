@@ -1,22 +1,22 @@
 import {
-	IGetGiftListArgs,
-	ISetShoppingCarData,
-	selectedCartNumber,
-	selectedIsLogin,
-	selectedLangId,
-	selectedPointBalance,
-	selectedProfile,
-	setCartNumber,
-	setPointBalance,
-	useCreateRedemptionMutation,
-	useGetGiftTagsQuery,
-	useLazyGetGiftListQuery,
-	useLazyGetPointBalanceQuery,
-	useSetShoppingCartMutation,
-} from '@api'
+  IGetGiftListArgs,
+  ISetShoppingCarData,
+  selectedCartNumber,
+  selectedIsLogin,
+  selectedLangId,
+  selectedPointBalance,
+  selectedProfile, selectUrlMethods,
+  setCartNumber,
+  setPointBalance,
+  useCreateRedemptionMutation,
+  useGetGiftTagsQuery,
+  useLazyGetGiftListQuery,
+  useLazyGetPointBalanceQuery,
+  useSetShoppingCartMutation
+} from "@api"
 import Loading from '@apps/onetwobet/components/common/Loading'
 import GiftList from '@apps/onetwobet/components/Shopping/GiftList'
-import { imageUrl, siteInfo } from '@apps/onetwobet/config'
+import {  siteInfo } from '@apps/onetwobet/config'
 import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, paths } from '@constants'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import { useRouter } from 'next/router'
@@ -49,9 +49,10 @@ const Cart = () => {
 	const cartNumber = useAppSelector(selectedCartNumber)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const profile = useSelector(selectedProfile)
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
-	const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const route = useRouter()
 	const [cartState, setCartState] = useLocalStorage('nova88Cart', [])
@@ -372,7 +373,7 @@ const Cart = () => {
 						{t('AffiliatesProgramTip')}
 					</div>
 					<div>
-						<img src={`${imageUrl}/img/affiliatebg-1.jpg`} alt='img' />
+						<img src={getStoreImgDomain('/img/affiliatebg-1.jpg')} alt='affiliate' />
 					</div>
 				</div>
 				<div className='products-group col-lg-7 col-xl-7'>
