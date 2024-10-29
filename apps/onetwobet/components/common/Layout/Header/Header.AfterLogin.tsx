@@ -1,12 +1,13 @@
 import {
-  logoutAsync,
-  selectedLangId,
-  selectedPointBalance,
-  selectedProfile, selectUrlMethods,
-  setIsLogin
-} from "@api"
-import {  siteInfo } from '@apps/onetwobet/config'
-import { paths, REWARD88_LANG } from '@constants'
+	logoutAsync,
+	selectedLangId,
+	selectedPointBalance,
+	selectedProfile,
+	selectUrlMethods,
+	setIsLogin,
+	setProfile,
+} from '@api'
+import { paths } from '@constants'
 import { numberFormat } from '@core'
 import { useAppDispatch, useAppSelector } from '@operations'
 import classnames from 'classnames'
@@ -14,31 +15,30 @@ import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useLocalStorage, useOnClickOutside } from 'usehooks-ts'
+import { useOnClickOutside } from 'usehooks-ts'
 import LangDropdown from './LangDropdown'
 import ShoppingCart from './ShoppingCart'
 
 const HeaderAfterLogin = () => {
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const profile = useSelector(selectedProfile)
-  const { getStoreImgDomain } = useSelector(selectUrlMethods)
-  const dispatch = useAppDispatch()
+	const { getStoreImgDomain } = useSelector(selectUrlMethods)
+	const dispatch = useAppDispatch()
 	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
-		REWARD88_LANG,
-		null
-	)
 	const userMenuWrapper = useRef()
 	const [isUserMenuOpen, setUserMenuIsOpen] = useState<boolean>(false)
 
 	const handleLogout = async () => {
 		await dispatch(logoutAsync())
 		dispatch(setIsLogin(false))
-		// * 登入及登出後重置語系
-		i18n.changeLanguage(siteInfo.defaultLang)
-		setLocalStorageLangId(null)
+		dispatch(
+			setProfile({
+				userName: 'Guest',
+				langId: profile.langId,
+				currencyId: profile.currencyId,
+			})
+		)
 	}
 
 	const toggleUserMenuDropdown = () => setUserMenuIsOpen(prev => !prev)

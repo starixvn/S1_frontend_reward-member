@@ -1,19 +1,17 @@
 import {
-  Api,
-  getCustProfileAsync,
-  getPointBalanceAsync,
-  selectedLangId, selectUrlMethods,
-  setIsLogin
-} from "@api"
-import {  siteInfo } from '@apps/onetwobet/config'
-import { REWARD88_LANG } from '@constants'
+	Api,
+	getCustProfileAsync,
+	getPointBalanceAsync,
+	selectedLangId,
+	selectUrlMethods,
+	setIsLogin,
+} from '@api'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useLocalStorage } from 'usehooks-ts'
+import { useSelector } from 'react-redux'
 import Form from './Form'
-import { useSelector } from "react-redux"
 
 interface IFormValues {
 	userName: string
@@ -25,13 +23,7 @@ const PopBoxLogin: FC = () => {
 	const { closePopBox, setPopBoxType } = usePopBox()
 	const dispatch = useAppDispatch()
 	const langId = useAppSelector(selectedLangId)
-  const { getStoreImgDomain } = useSelector(selectUrlMethods)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [localStorageLangId, setLocalStorageLangId] = useLocalStorage(
-		REWARD88_LANG,
-		null
-	)
+	const { getStoreImgDomain } = useSelector(selectUrlMethods)
 
 	const {
 		register,
@@ -57,10 +49,6 @@ const PopBoxLogin: FC = () => {
 				dispatch(setIsLogin(isLogin))
 				await dispatch(getPointBalanceAsync())
 				closePopBox()
-
-				// * 登入及登出後重置語系
-				i18n.changeLanguage(siteInfo.defaultLang)
-				setLocalStorageLangId(null)
 			} else if ([1101, 1001].includes(errorCode)) {
 				setError('password', { type: 'custom', message })
 			} else if ([1102, 9000].includes(errorCode)) {
@@ -79,7 +67,10 @@ const PopBoxLogin: FC = () => {
 			<div className='icon icon-close' onClick={closePopBox} />
 			<div className='loginModule'>
 				<div>
-					<img src={getStoreImgDomain(`/img/login_${i18n.language}.jpg`)} alt='' />
+					<img
+						src={getStoreImgDomain(`/img/login_${i18n.language}.jpg`)}
+						alt=''
+					/>
 				</div>
 				<div className='loginFunction'>
 					<img src={getStoreImgDomain('/img/88logo.png')} alt='' />

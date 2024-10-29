@@ -136,8 +136,6 @@ const Home = () => {
 
 	const month = monthObj[new Date().getMonth() + 1]
 
-	const langEnList = ['en', 'th_en', 'id_en']
-
 	useEffect(() => {
 		if (isLogin) {
 			const giftIdList = []
@@ -175,7 +173,7 @@ const Home = () => {
 	return (
 		<main
 			className={classNames({
-				'other-layout': !langEnList.includes(i18n.language),
+				'other-layout': !(i18n.language === 'en'),
 			})}
 		>
 			<GiftSwiper />

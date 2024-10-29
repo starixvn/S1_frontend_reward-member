@@ -1,6 +1,8 @@
 export interface ICustProfile {
 	langId: string
 	userName: string
+	currencyId: number
+	custId?: string
 	accountName?: string
 	actStatus?: number
 	addressCity?: string
@@ -14,7 +16,6 @@ export interface ICustProfile {
 	birth_m?: string
 	country?: string
 	birth_y?: string
-	currencyId?: number
 	email?: string
 	emailReward?: number
 	emailVerified?: boolean

@@ -315,8 +315,6 @@ const Shopping = () => {
 		setSortFromList(sortFromList)
 	}
 
-	const langEnList = ['en', 'th_en', 'id_en']
-
 	useEffect(() => {
 		init()
 	}, [])
@@ -380,7 +378,7 @@ const Shopping = () => {
 	return (
 		<main
 			className={classNames('shopping-page', {
-				'other-layout': !langEnList.includes(i18n.language),
+				'other-layout': !(i18n.language === 'en'),
 			})}
 		>
 			<GiftSwiper />

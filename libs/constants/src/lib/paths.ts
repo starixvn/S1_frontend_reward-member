@@ -5,24 +5,24 @@ const root = '/'
 
 export const paths = {
 	home: root,
-	shopping: `${root}/shopping`,
-	cart: `${root}/cart`,
+	shopping: `${root}shopping`,
+	cart: `${root}cart`,
 	about: {
-		root: `${root}/about`,
+		root: `${root}about`,
 		sub: {
 			points: {
-				root: `${root}/about/points`,
+				root: `${root}about/points`,
 				authRequired: true,
 			},
 			purchase: {
-				root: `${root}/about/purchase`,
+				root: `${root}about/purchase`,
 				authRequired: true,
 			},
 			howtoearnpoints: {
-				root: `${root}/about/howtoearnpoints`,
+				root: `${root}about/howtoearnpoints`,
 			},
 			rewardfaq: {
-				root: `${root}/about/rewardfaq`,
+				root: `${root}about/rewardfaq`,
 			},
 		},
 	},

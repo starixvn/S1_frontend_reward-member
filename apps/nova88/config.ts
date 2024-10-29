@@ -11,7 +11,20 @@ const getAffiliate = () => {
 
 export const siteInfo = {
 	defaultLang: 'en',
-	defaultLangList: ['en', 'cs', 'my', 'th', 'th_en', 'id', 'id_en'],
+	defaultLangList: [
+		'en',
+		'cs',
+		'my',
+		'th',
+		'id',
+		'bd',
+		'hi',
+		'kh',
+		'vn',
+		'jp',
+		'ko',
+		'br',
+	],
 	affiliateLink: getAffiliate(),
 }
 

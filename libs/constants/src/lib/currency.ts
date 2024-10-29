@@ -24,7 +24,7 @@ export enum CurrenciesEnum {
 	KHM = 72,
 	BDT = 74,
 	BRL = 82,
-	USDT = 96,
+	// USDT = 96, // rewards不需要
 }
 
 export const CURRENCY_TO_TIMEZONE: { [key: number]: string } = {
@@ -42,20 +42,34 @@ export const CURRENCY_TO_TIMEZONE: { [key: number]: string } = {
 	32: '+09:00',
 }
 
-export const langMapping = {
-	en: 'MYR',
-	cs: 'MYR',
-	my: 'MYR',
-	id: 'IDR',
-	id_en: 'IDR',
-	th: 'THB',
-	th_en: 'THB',
+export const CURRENCY_ID_TO_NAME: {
+	[key: number]: string
+} = {
+	[CurrenciesEnum.MYR]: 'MYR',
+	[CurrenciesEnum.USD]: 'USD',
+	[CurrenciesEnum.THB]: 'THB',
+	[CurrenciesEnum.CNY]: 'CNY',
+	[CurrenciesEnum.IDR]: 'IDR',
+	[CurrenciesEnum.KRW]: 'KRW',
+	[CurrenciesEnum.VND]: 'VND',
+	[CurrenciesEnum.INR]: 'INR',
+	[CurrenciesEnum.KHM]: 'KHM',
+	[CurrenciesEnum.BDT]: 'BDT',
+	[CurrenciesEnum.BRL]: 'BRL',
 }
 
-export const defCurrencyList = {
-	MYR: 2,
-	THB: 4,
-	CNY: 13,
-	IDR: 15,
-	INR: 61,
+export const CURRENCY_TO_LANG_KEY: {
+	[key: number]: string
+} = {
+	[CurrenciesEnum.MYR]: 'ch',
+	[CurrenciesEnum.USD]: 'gb',
+	[CurrenciesEnum.THB]: 'th',
+	[CurrenciesEnum.CNY]: 'cs',
+	[CurrenciesEnum.IDR]: 'id',
+	[CurrenciesEnum.KRW]: 'ko',
+	[CurrenciesEnum.VND]: 'vn',
+	[CurrenciesEnum.INR]: 'in',
+	[CurrenciesEnum.KHM]: 'kh',
+	[CurrenciesEnum.BDT]: 'bd',
+	[CurrenciesEnum.BRL]: 'br',
 }
