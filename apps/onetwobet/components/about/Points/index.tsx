@@ -70,7 +70,7 @@ const Points = () => {
 										<div className='vipAnimation'>
 											<a href=''>
 												<img
-													src={getStoreImgDomain(`/img/vip0${profile?.userLevel}.png`)}
+													src={getStoreImgDomain(`/img/vip0${profile?.userLevel}.svg`)}
 													alt='userLevel'
 												/>
 											</a>

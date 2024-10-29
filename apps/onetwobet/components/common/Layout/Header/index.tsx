@@ -33,7 +33,7 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 				<button className='icon icon-menu' onClick={toggleSubmenu} />
 				<div onClick={onClickLogo} className='logo'>
 					<a>
-						<img src={getStoreImgDomain('/img/12bet-logo.png')} alt='logo' />
+						<img src={getStoreImgDomain('/img/88logo.png')} alt='logo' />
 					</a>
 				</div>
 				<ShoppingCart />

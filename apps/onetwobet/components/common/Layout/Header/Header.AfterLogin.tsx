@@ -62,7 +62,7 @@ const HeaderAfterLogin = () => {
 					<div className='vipAnimation'>
 						<a>
 							<img
-								src={getStoreImgDomain(`/img/vip0${profile.userLevel}.png`)}
+								src={getStoreImgDomain(`/img/vip0${profile.userLevel}.svg`)}
 								alt='vip'
 							/>
 						</a>
