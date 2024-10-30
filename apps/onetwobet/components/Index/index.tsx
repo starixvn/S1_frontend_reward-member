@@ -1,6 +1,7 @@
 import {
 	IGetGiftListArgs,
 	ISetShoppingCarData,
+	selectedCurrencyId,
 	selectedIsLogin,
 	selectedLangId,
 	selectUrlMethods,
@@ -38,6 +39,7 @@ const Index = () => {
 	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
+	const currencyId = useAppSelector(selectedCurrencyId)
 	const [isShowAllText, setIsShowAllText] = useState(false)
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
@@ -83,7 +85,6 @@ const Index = () => {
 		if (isLogin) {
 			try {
 				await setFavorite({
-					langId: i18n.language,
 					giftId: item.giftId,
 					isFavorite: !item.isFavorite,
 				}).unwrap()
@@ -144,31 +145,20 @@ const Index = () => {
 			})
 			getCartList({ giftIds: giftIdList, isAdd: 1 })
 			setCartList([])
-			handleFilter({
-				...{
-					categoryIds: null,
-					tags: null,
-					orderByField: null,
-					desc: false,
-					pageSize: DEFAULT_HOME_PAGE_SIZE_COUNT,
-				},
-				langId: i18n.language,
-			})
 		}
 	}, [isLogin])
 
 	useEffect(() => {
 		handleFilter({
-			...{
-				categoryIds: null,
-				tags: null,
-				orderByField: null,
-				desc: false,
-				pageSize: DEFAULT_HOME_PAGE_SIZE_COUNT,
-			},
-			langId: i18n.language,
+			langId,
+			currencyId,
+			categoryIds: null,
+			tags: null,
+			orderByField: null,
+			desc: false,
+			pageSize: DEFAULT_HOME_PAGE_SIZE_COUNT,
 		})
-	}, [i18n.language])
+	}, [langId, currencyId])
 
 	return (
 		<main
