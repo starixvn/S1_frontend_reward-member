@@ -1,6 +1,7 @@
 import {
 	IGetGiftListArgs,
 	ISetShoppingCarData,
+	selectedCurrencyId,
 	selectedIsLogin,
 	selectedLangId,
 	setCartNumber,
@@ -32,7 +33,8 @@ import GiftTab from './GiftTab'
 const Shopping = () => {
 	const dispatch = useAppDispatch()
 	const isLogin = useSelector(selectedIsLogin)
-	const lang = useAppSelector(selectedLangId)
+	const langId = useAppSelector(selectedLangId)
+	const currencyId = useAppSelector(selectedCurrencyId)
 	const { i18n, t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
@@ -48,7 +50,6 @@ const Shopping = () => {
 	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
 	const [activeTabItem, setActiveTabItem] = useState({})
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
-	const [currentLangId, setCurrentLangId] = useState('')
 	const fromList = [
 		{ categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t('LowToHighCost') },
 		{ categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: t('HighToLowCost') },
@@ -61,7 +62,6 @@ const Shopping = () => {
 			categoryName: t('HighToLowLetter'),
 		},
 	]
-	const [sortFromList, setSortFromList] = useState(fromList)
 	const [
 		getGiftTags,
 		{ data: { data: giftTabs = [] } = {}, isLoading: isGetGiftTabsLoading },
@@ -73,9 +73,9 @@ const Shopping = () => {
 	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
 
-	const getGiftTabsList = async langId => {
+	const getGiftTabsList = async () => {
 		try {
-			await getGiftTags({ langId }).unwrap()
+			await getGiftTags({ langId, currencyId }).unwrap()
 		} catch (error) {
 			setPopBoxType({
 				type: 'warn',
@@ -163,7 +163,6 @@ const Shopping = () => {
 		if (isLogin) {
 			try {
 				await setFavorite({
-					langId: i18n.language,
 					giftId: item.giftId,
 					isFavorite: !item.isFavorite,
 				}).unwrap()
@@ -188,7 +187,8 @@ const Shopping = () => {
 					categoryList.find(e => e.categoryName === label).categoryId !== null
 						? [categoryList.find(e => e.categoryName === label).categoryId]
 						: null,
-				langId: i18n.language,
+				langId,
+				currencyId,
 			})
 			setArgs(prev => ({
 				...prev,
@@ -197,33 +197,28 @@ const Shopping = () => {
 						? [categoryList.find(e => e.categoryName === label).categoryId]
 						: null,
 				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-				langId: i18n.language,
 			}))
 		} else if (selectorType === 'from') {
 			const getOrderByFieldValue = () => {
-				const res = sortFromList.find(
-					e => t(e.categoryName) === label
-				).categoryId
+				const res = fromList.find(e => e.categoryName === label).categoryId
 				return sortType[res - 1].orderByField
 			}
 			const getDescValue = () => {
-				const res = sortFromList.find(
-					e => t(e.categoryName) === label
-				).categoryId
+				const res = fromList.find(e => e.categoryName === label).categoryId
 				return sortType[res - 1].desc
 			}
 			handleFilter({
 				...args,
 				orderByField: getOrderByFieldValue(),
 				desc: getDescValue(),
-				langId: i18n.language,
+				langId,
+				currencyId,
 			})
 			setArgs(prev => ({
 				...prev,
 				orderByField: getOrderByFieldValue(),
 				desc: getDescValue(),
 				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-				langId: i18n.language,
 			}))
 		}
 	}
@@ -263,25 +258,24 @@ const Shopping = () => {
 	const handleTabChange = activeTab => {
 		setActiveTabItem(activeTab)
 		if (activeTab.tagId === tabOption.FAVORITE) {
-			handleFilter({ ...args, tags: null, langId: i18n.language })
+			handleFilter({ ...args, tags: null, langId, currencyId })
 			setArgs(prev => ({
 				...prev,
 				tags: null,
 				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-				langId: i18n.language,
 			}))
 			setIsFilterFavorite(true)
 		} else {
 			handleFilter({
 				...args,
 				tags: activeTab.tagId ? [activeTab.tagId] : null,
-				langId: i18n.language,
+				langId,
+				currencyId,
 			})
 			setArgs(prev => ({
 				...prev,
 				tags: activeTab.tagId ? [activeTab.tagId] : null,
 				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-				langId: i18n.language,
 			}))
 			setIsFilterFavorite(false)
 		}
@@ -289,7 +283,7 @@ const Shopping = () => {
 
 	const init = async () => {
 		try {
-			const data = await getGiftList({ ...args, langId: i18n.language })
+			const data = await getGiftList({ ...args, langId, currencyId })
 			const giftList = data.data.data
 			setCategoryList(getCategoryList(giftList))
 		} catch (error) {
@@ -301,40 +295,19 @@ const Shopping = () => {
 		if (giftTabList && giftTabList.length > 0) {
 			setActiveTabItem(giftTabList[0])
 		}
-		setCurrentLangId(i18n.language)
 	}
 
 	const filterList = isFilterFavorite
 		? giftList.filter(obj => obj.isFavorite === true)
 		: giftList
 
-	const handleFromList = () => {
-		for (let i = 0; i < sortFromList.length; i++) {
-			sortFromList[i].categoryName = t(fromList[i].categoryName)
-		}
-		setSortFromList(sortFromList)
-	}
-
-	const langEnList = ['en', 'th_en', 'id_en']
-
 	useEffect(() => {
 		init()
 	}, [])
 
 	useEffect(() => {
-		getGiftTabsList(i18n.language)
+		getGiftTabsList()
 		if (isLogin) {
-			getGiftTabsList(lang)
-			handleFilter({
-				...{
-					categoryIds: null,
-					tags: null,
-					orderByField: null,
-					desc: false,
-					pageSize: args.pageSize,
-				},
-				langId: lang,
-			})
 			const giftIdList = []
 			cartList.forEach(item => {
 				giftIdList.push(item.giftId)
@@ -346,23 +319,11 @@ const Shopping = () => {
 				setActiveTabItem(giftTabList[0])
 			}
 		}
-	}, [isLogin, isGetGiftTabsLoading, i18n.language, lang])
+	}, [isLogin, isGetGiftTabsLoading])
 
 	useEffect(() => {
-		handleFilter({ ...args, langId: i18n.language })
-	}, [i18n.language, args])
-
-	useEffect(() => {
-		if (currentLangId !== i18n.language) {
-			handleFilter({ ...args, langId: i18n.language, categoryIds: null }).then(
-				() => {
-					setCategoryList(getCategoryList(giftList))
-					setCurrentLangId(i18n.language)
-					handleFromList()
-				}
-			)
-		}
-	}, [isGetGiftListFetching])
+		handleFilter({ ...args, langId, currencyId })
+	}, [args, langId, currencyId])
 
 	useEffect(() => {
 		const isLast = args.pageSize > giftList.length + SHOPPING_PAGE_SIZE_COUNT
@@ -380,7 +341,7 @@ const Shopping = () => {
 	return (
 		<main
 			className={classNames('shopping-page', {
-				'other-layout': !langEnList.includes(i18n.language),
+				'other-layout': !(i18n.language === 'en'),
 			})}
 		>
 			<GiftSwiper />
@@ -405,7 +366,7 @@ const Shopping = () => {
 						/>
 						<GiftSelector
 							placeHolder={t('From')}
-							itemList={sortFromList}
+							itemList={fromList}
 							onChange={label => handleSelectorItemChange('from', label)}
 						/>
 					</div>
