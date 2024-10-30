@@ -4,46 +4,33 @@ import {
 	selectedCurrencyId,
 	selectedIsLogin,
 	selectedLangId,
-	selectUrlMethods,
 	setCartNumber,
-	useGetAppLinkQuery,
 	useLazyGetGiftListQuery,
-	useSetFavoriteMutation,
 	useSetShoppingCartMutation,
 } from '@api'
-import Loading from '@apps/onetwobet/components/common/Loading'
-import GiftList from '@apps/onetwobet/components/Shopping/GiftList'
 import GiftSwiper from '@apps/onetwobet/components/Shopping/GiftSwiper'
-import {  siteInfo } from '@apps/onetwobet/config'
 import {
-	appType,
 	DEFAULT_HOME_PAGE_SIZE_COUNT,
-	monthObj,
-	paths,
 } from '@constants'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
-import { useRouter } from 'next/router'
-import QRCode from 'qrcode.react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useLocalStorage } from 'usehooks-ts'
+import Products from "./Products"
+import TopIntroduce from "./TopIntroduce"
+import AppDownload from "./AppDownload"
 
 const Home = () => {
-	const { getStoreImgDomain } = useSelector(selectUrlMethods)
 	const dispatch = useAppDispatch()
 	const { i18n, t } = useTranslation()
-	const route = useRouter()
 	const { setPopBoxType } = usePopBox()
 	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
 	const currencyId = useAppSelector(selectedCurrencyId)
-	const [isShowAllText, setIsShowAllText] = useState(false)
 	const [setShoppingCart] = useSetShoppingCartMutation()
-	const [setFavorite] = useSetFavoriteMutation()
-	const { data: { data: appLinks } = {} } = useGetAppLinkQuery(null)
 	const [
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
@@ -67,9 +54,6 @@ const Home = () => {
 		}
 	}
 
-	const getAppLink = (type: number) =>
-		appLinks?.find(el => el.appType === type)?.downloadLink
-
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
 			await getGiftList(args).unwrap()
@@ -80,62 +64,6 @@ const Home = () => {
 			})
 		}
 	}
-
-	const handleFavoriteToggle = async item => {
-		if (isLogin) {
-			try {
-				await setFavorite({
-					giftId: item.giftId,
-					isFavorite: !item.isFavorite,
-				}).unwrap()
-			} catch (error) {
-				setPopBoxType({
-					type: 'warn',
-					props: { content: error.message },
-				})
-			}
-		} else {
-			setPopBoxType({
-				type: 'login',
-			})
-		}
-	}
-
-	const handleGiftItemToggle = async giftItem => {
-		if (!giftItem.stock) return
-		if (isLogin) {
-			const item = realCartList?.find(item => item.giftId === giftItem.giftId)
-			if (item) {
-				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 0 })
-					.unwrap()
-					.then(res => {
-						setRealCartList(res.data)
-						dispatch(setCartNumber(res.data.length))
-					})
-			} else {
-				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 1 })
-					.unwrap()
-					.then(res => {
-						setRealCartList(res.data)
-						dispatch(setCartNumber(res.data.length))
-					})
-			}
-		} else {
-			const item = cartList.find(item => item.giftId === giftItem.giftId)
-			if (item) {
-				let tempList = []
-				tempList = cartList.filter(item => item.giftId !== giftItem.giftId)
-				setCartList(tempList)
-			} else {
-				cartList.push(giftItem)
-				setCartList(cartList)
-			}
-		}
-	}
-
-	const goToMore = () => route.push(paths.shopping)
-
-	const month = monthObj[new Date().getMonth() + 1]
 
 	useEffect(() => {
 		if (isLogin) {
@@ -180,183 +108,13 @@ const Home = () => {
 					{t('Login').toUpperCase()}
 				</div>
 			)}
-			<div className='introduce container-xxl'>
-				<div className='row'>
-					<div
-						className={classNames('dearMember col-xl-7', {
-							active: isShowAllText,
-						})}
-					>
-						<div className='txt'>
-							<p>{t('BannerTitle')}</p>
-							<div>{t('BannerAdText1')}</div>
-							<button
-								onClick={() => setIsShowAllText(true)}
-								className='seeMore'
-								type='button'
-							>
-								{t('More')}
-							</button>
-							<div>{t('BannerAdText2')}</div>
-							<div>{t('BannerAdText3')}</div>
-							<div>{t('BannerAdText4')}</div>
-							<button
-								onClick={() => setIsShowAllText(false)}
-								className='close'
-								type='button'
-							>
-								{t('Close')}..
-							</button>
-						</div>
 
-						<img
-							className='npc'
-							src={getStoreImgDomain('/img/introduce.png')}
-							alt='introduce'
-						/>
-					</div>
-					<div className='col-xl-5'>
-						<div className='info'>
-							<div>{t('imgAdText1')}</div>
-							<img
-								onClick={() => {
-									route.push(paths.shopping)
-								}}
-                src={getStoreImgDomain('/img/rewardimg.jpg')}
-								alt='reward'
-							/>
-						</div>
-						<div className='info'>
-							<div>{t('imgAdText2')}</div>
-							<img
-                  src={getStoreImgDomain('/img/rewardimg-1.jpg')
-              } alt='reward' />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className='indexImg'>
-				<div>
-					<p>{t('BannerAdText5')}</p>
-					{t('BannerAdText6')}
-				</div>
-				<img
-            src={getStoreImgDomain('/img/imgbg.jpg')
-        } alt='contents' />
-			</div>
-			<div className='saleImg'>
-				<div className='txt'>
-					<div>
-						{t('YourJourneyToRewards')}
-						<p>{t('StartsHere')}</p>
-					</div>
-					<div>{t('PopularCategory')}</div>
-					<div>
-						{t('Computing&Phone')}
-						<button onClick={() => route.push(paths.shopping)}>
-							{t('SHOP_NOW')}
-						</button>
-					</div>
-				</div>
-				<img
-             src={getStoreImgDomain('/img/saleimgbg.jpg')
-        } alt='sale' />
-			</div>
-			<div className='products-group container-xxl'>
-				<div className='row'>
-					<div className='products-menu'>
-						<a className='active'>
-							{t('HotPicksForTheMonthOf')}
-							<span>{t(month)}</span>
-						</a>
-						<button onClick={goToMore}>{t('More')}...</button>
-					</div>
-					<GiftList
-						filterList={giftList}
-						onToggleCart={handleGiftItemToggle}
-						onToggleFavorite={handleFavoriteToggle}
-						realCartList={realCartList}
-					/>
-				</div>
-				{isGetGiftListFetching && <Loading />}
-			</div>
+      <TopIntroduce />
 
-			<button className='btn-more' onClick={goToMore}>
-				{t('More')}...
-			</button>
+      <Products giftList={giftList} realCartList={realCartList} setRealCartList={setRealCartList} isLoading={isGetGiftListFetching} />
 
-			<div className='appDownload container-xxl'>
-				<div className='row'>
-					<div className='col-md-7 col-xl-7'>
-						<div className='download-txt'>
-							<img
-								className='logo'
-                 src={getStoreImgDomain('/img/12bet-logo.png')}
-								alt='logo'
-							/>
-							<div className='title'>{t('ScanToDownload').toUpperCase()}</div>
-							{t('AppBannerText').toUpperCase()}
-							<div className='qr-group'>
-								<div className='qrCode'>
-									<div className='icon icon-android'>
-										<span>{t('Android')}</span>
-									</div>
-									<QRCode
-										value={getAppLink(appType.Andriod)}
-										renderAs='svg'
-										size={80}
-										includeMargin={true}
-									/>
-									<a
-										href={getAppLink(appType.Andriod)}
-										target='_blank'
-										rel='noreferrer noopener'
-									>
-										<button>{t('Download').toUpperCase()}</button>
-									</a>
-								</div>
-								<div className='qrCode'>
-									<div className='icon icon-appleinc'>
-										<span>{t('IOS')}</span>
-									</div>
-									<QRCode
-										value={getAppLink(appType.IOS)}
-										renderAs='svg'
-										size={80}
-										includeMargin={true}
-									/>
-									<a
-										href={getAppLink(appType.IOS)}
-										target='_blank'
-										rel='noreferrer noopener'
-									>
-										<button>{t('Download').toUpperCase()}</button>
-									</a>
-								</div>
-							</div>
-						</div>
-						<img
-               src={getStoreImgDomain('/img/appbg.jpg')}
-              alt='app' />
-					</div>
-					<div className='col-md-5 col-xl-5'>
-						<div className='affiliate-txt'>
-							<a
-								href={`${siteInfo.affiliateLink}/?lang=${langId}`}
-								target='_blank'
-								rel='noreferrer'
-								className='title'
-							>
-								{t('DownloadBgText1')}
-							</a>
-							{t('DownloadBgText2')}
-						</div>
-						<img
-               src={getStoreImgDomain('/img/affiliatebg-1.jpg')}
-              alt='affiliate' />
-					</div>
-				</div>
-			</div>
+      <AppDownload />
+
 		</main>
 	)
 }

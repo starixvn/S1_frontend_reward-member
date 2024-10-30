@@ -1,12 +1,11 @@
 import {
-	logoutAsync,
-	selectedLangId,
-	selectedPointBalance,
-	selectedProfile,
-	selectUrlMethods,
-	setIsLogin,
-	setProfile,
-} from '@api'
+  logoutAsync,
+  selectedLangId,
+  selectedPointBalance,
+  selectedProfile, selectUrlMethods,
+  setIsLogin,
+  setProfile
+} from "@api"
 import { paths } from '@constants'
 import { numberFormat } from '@core'
 import { useAppDispatch, useAppSelector } from '@operations'
@@ -15,15 +14,16 @@ import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useOnClickOutside } from 'usehooks-ts'
+import { useLocalStorage, useOnClickOutside } from 'usehooks-ts'
 import LangDropdown from './LangDropdown'
 import ShoppingCart from './ShoppingCart'
 
 const HeaderAfterLogin = () => {
 	const { t } = useTranslation()
 	const profile = useSelector(selectedProfile)
-	const { getStoreImgDomain } = useSelector(selectUrlMethods)
-	const dispatch = useAppDispatch()
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
+  const dispatch = useAppDispatch()
+	const [, setCartList] = useLocalStorage('nova88Cart', [])
 	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const userMenuWrapper = useRef()
@@ -39,6 +39,7 @@ const HeaderAfterLogin = () => {
 				currencyId: profile.currencyId,
 			})
 		)
+		setCartList([])
 	}
 
 	const toggleUserMenuDropdown = () => setUserMenuIsOpen(prev => !prev)
