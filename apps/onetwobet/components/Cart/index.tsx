@@ -3,7 +3,6 @@ import {
 	ISetShoppingCarData,
 	selectedCartNumber,
 	selectedIsLogin,
-	selectedLangId,
 	selectedPointBalance,
 	selectedProfile,
 	setCartNumber,
@@ -50,13 +49,13 @@ const Cart = () => {
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const profile = useSelector(selectedProfile)
 	const isLogin = useSelector(selectedIsLogin)
-	const langId = useAppSelector(selectedLangId)
-	const { t, i18n } = useTranslation()
+	const { langId, currencyId } = profile
+	const { t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const route = useRouter()
 	const [cartState, setCartState] = useLocalStorage('nova88Cart', [])
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
-		useGetGiftTagsQuery({ langId })
+		useGetGiftTagsQuery({ langId, currencyId })
 	const [getPointBalance] = useLazyGetPointBalanceQuery()
 	const [createRedemption] = useCreateRedemptionMutation()
 	const [setShoppingCart] = useSetShoppingCartMutation()
@@ -247,21 +246,6 @@ const Cart = () => {
 			})
 			getCartList({ giftIds: giftIdList, isAdd: 1 })
 			setCartList([])
-			if (giftTabs && giftTabs.length > 0) {
-				const targetTab = giftTabs.find(obj =>
-					featuredNameList.includes(obj.tagName)
-				)
-				handleFilter({
-					...{
-						categoryIds: null,
-						tags: [targetTab?.tagId],
-						orderByField: null,
-						desc: false,
-						pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-					},
-					langId,
-				})
-			}
 		}
 	}, [isLogin])
 
@@ -270,20 +254,17 @@ const Cart = () => {
 			const targetTab = giftTabs.find(obj =>
 				featuredNameList.includes(obj.tagName)
 			)
-			if (targetTab) {
-				handleFilter({
-					...{
-						categoryIds: null,
-						tags: [targetTab?.tagId],
-						orderByField: null,
-						desc: false,
-						pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-					},
-					langId,
-				})
-			}
+			handleFilter({
+				langId,
+				currencyId,
+				categoryIds: null,
+				tags: [targetTab?.tagId],
+				orderByField: null,
+				desc: false,
+				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
+			})
 		}
-	}, [isGetGiftTabsFetching, i18n.language])
+	}, [isGetGiftTabsFetching, langId, currencyId])
 
 	useEffect(() => {
 		setCartList(cartState)

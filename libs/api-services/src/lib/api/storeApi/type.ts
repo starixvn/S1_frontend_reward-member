@@ -22,6 +22,7 @@ export interface IGiftData {
 
 export interface IGetGiftListArgs {
 	langId: string
+	currencyId: number
 	categoryIds?: null | number[]
 	tags?: null | number[]
 	orderByField?: any
@@ -30,7 +31,6 @@ export interface IGetGiftListArgs {
 }
 
 export interface ISetFavoriteArgs {
-	langId: string
 	giftId: null | number
 	isFavorite: boolean
 }
@@ -38,6 +38,11 @@ export interface ISetFavoriteArgs {
 export interface IGetMyPurchesArgs {
 	PageNumber: number
 	PageSize: number
+}
+
+export interface IGetGiftTagsArgs {
+	langId: string
+	currencyId: number
 }
 
 export interface IMyCoinDetailData {
