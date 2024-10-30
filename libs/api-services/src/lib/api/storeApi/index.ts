@@ -4,6 +4,7 @@ import { axiosBaseQuery } from '../axiosBaseQuery'
 import {
 	IGetGiftListArgs,
 	IGetGiftListResponse,
+	IGetGiftTagsArgs,
 	IGetGiftTagsResponse,
 	IGetMyCoinResponse,
 	IGetMyPurchesArgs,
@@ -19,8 +20,8 @@ const storeApi = createApi({
 	tagTypes: ['Post'],
 	endpoints: builder => ({
 		getGiftList: builder.query<IGetGiftListResponse, IGetGiftListArgs>({
-			query: ({ langId, ...data }) => ({
-				url: `store/GetGiftList/${langId}`,
+			query: data => ({
+				url: `store/GetGiftList`,
 				method: 'POST',
 				data,
 			}),
@@ -34,8 +35,8 @@ const storeApi = createApi({
 			}),
 		}),
 		SetFavorite: builder.mutation<ISetFavoriteResponse, ISetFavoriteArgs>({
-			query: ({ langId, giftId, isFavorite }) => ({
-				url: `store/SetFavorite/${langId}`,
+			query: ({ giftId, isFavorite }) => ({
+				url: `store/SetFavorite`,
 				method: 'POST',
 				data: {
 					giftId,
@@ -61,11 +62,11 @@ const storeApi = createApi({
 				},
 			}),
 		}),
-		getGiftTags: builder.query<IGetGiftTagsResponse, { langId: string }>({
-			query: ({ langId }) => ({
-				url: `store/GetGiftTags/${langId}`,
+		getGiftTags: builder.query<IGetGiftTagsResponse, IGetGiftTagsArgs>({
+			query: data => ({
+				url: `store/GetGiftTags`,
 				method: 'POST',
-				data: {},
+				data,
 			}),
 		}),
 	}),

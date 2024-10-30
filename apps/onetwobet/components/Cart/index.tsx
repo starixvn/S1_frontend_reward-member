@@ -1,22 +1,22 @@
 import {
-  IGetGiftListArgs,
-  ISetShoppingCarData,
-  selectedCartNumber,
-  selectedIsLogin,
-  selectedLangId,
-  selectedPointBalance,
-  selectedProfile, selectUrlMethods,
-  setCartNumber,
-  setPointBalance,
-  useCreateRedemptionMutation,
-  useGetGiftTagsQuery,
-  useLazyGetGiftListQuery,
-  useLazyGetPointBalanceQuery,
-  useSetShoppingCartMutation
-} from "@api"
+	IGetGiftListArgs,
+	ISetShoppingCarData,
+	selectedCartNumber,
+	selectedIsLogin,
+	selectedPointBalance,
+	selectedProfile,
+	selectUrlMethods,
+	setCartNumber,
+	setPointBalance,
+	useCreateRedemptionMutation,
+	useGetGiftTagsQuery,
+	useLazyGetGiftListQuery,
+	useLazyGetPointBalanceQuery,
+	useSetShoppingCartMutation,
+} from '@api'
 import Loading from '@apps/onetwobet/components/common/Loading'
 import GiftList from '@apps/onetwobet/components/Shopping/GiftList'
-import {  siteInfo } from '@apps/onetwobet/config'
+import { siteInfo } from '@apps/onetwobet/config'
 import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, paths } from '@constants'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import { useRouter } from 'next/router'
@@ -49,15 +49,15 @@ const Cart = () => {
 	const cartNumber = useAppSelector(selectedCartNumber)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const profile = useSelector(selectedProfile)
-  const { getStoreImgDomain } = useSelector(selectUrlMethods)
+	const { getStoreImgDomain } = useSelector(selectUrlMethods)
 	const isLogin = useSelector(selectedIsLogin)
-	const langId = useAppSelector(selectedLangId)
-  const { t, i18n } = useTranslation()
+	const { langId, currencyId } = profile
+	const { t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const route = useRouter()
 	const [cartState, setCartState] = useLocalStorage('nova88Cart', [])
 	const { data: { data: giftTabs } = {}, isFetching: isGetGiftTabsFetching } =
-		useGetGiftTagsQuery({ langId })
+		useGetGiftTagsQuery({ langId, currencyId })
 	const [getPointBalance] = useLazyGetPointBalanceQuery()
 	const [createRedemption] = useCreateRedemptionMutation()
 	const [setShoppingCart] = useSetShoppingCartMutation()
@@ -248,21 +248,6 @@ const Cart = () => {
 			})
 			getCartList({ giftIds: giftIdList, isAdd: 1 })
 			setCartList([])
-			if (giftTabs && giftTabs.length > 0) {
-				const targetTab = giftTabs.find(obj =>
-					featuredNameList.includes(obj.tagName)
-				)
-				handleFilter({
-					...{
-						categoryIds: null,
-						tags: [targetTab?.tagId],
-						orderByField: null,
-						desc: false,
-						pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-					},
-					langId,
-				})
-			}
 		}
 	}, [isLogin])
 
@@ -271,20 +256,17 @@ const Cart = () => {
 			const targetTab = giftTabs.find(obj =>
 				featuredNameList.includes(obj.tagName)
 			)
-			if (targetTab) {
-				handleFilter({
-					...{
-						categoryIds: null,
-						tags: [targetTab?.tagId],
-						orderByField: null,
-						desc: false,
-						pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-					},
-					langId,
-				})
-			}
+			handleFilter({
+				langId,
+				currencyId,
+				categoryIds: null,
+				tags: [targetTab?.tagId],
+				orderByField: null,
+				desc: false,
+				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
+			})
 		}
-	}, [isGetGiftTabsFetching, i18n.language])
+	}, [isGetGiftTabsFetching, langId, currencyId])
 
 	useEffect(() => {
 		setCartList(cartState)
@@ -373,7 +355,10 @@ const Cart = () => {
 						{t('AffiliatesProgramTip')}
 					</div>
 					<div>
-						<img src={getStoreImgDomain('/img/affiliatebg-1.jpg')} alt='affiliate' />
+						<img
+							src={getStoreImgDomain('/img/affiliatebg-1.jpg')}
+							alt='affiliate'
+						/>
 					</div>
 				</div>
 				<div className='products-group col-lg-7 col-xl-7'>
