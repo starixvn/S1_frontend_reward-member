@@ -28,7 +28,7 @@ const HowToEarnPoints = () => {
 
 	return (
 		<main>
-			<div className='container-xxl myCoins-page'>
+			<div className='container-xxl tAndC'>
 				<div className='row'>
 					<div className='col col-lg-2 col-xl-3'>
 						<LeftMenu activePath={pathname} />
@@ -78,7 +78,7 @@ const HowToEarnPoints = () => {
 									<div>{t('DEPOSIT_TEXT3')}</div>
 									<div>
 										{t('VIP_REWARDS_TEXT')}
-										<span className='orange'>{t('88_Rewards')}</span>
+										<span className='primary'>{t('12_Rewards')}</span>
 										{t('account')}
 									</div>
 									<div>
@@ -90,18 +90,18 @@ const HowToEarnPoints = () => {
 									</div>
 									<div>
 										{t('Cal_Text_4')}
-										<span className='orange'> 6,988 </span>
+										<span className='primary'> 6,988 </span>
 										{t('Cal_Text_5')}
 									</div>
 									<div className='info-title'>{t('Any_question')}</div>
 									<div>
 										{t('Please_check')}
 										<Link href={paths.about.sub.rewardfaq.root}>
-											<a className='blue'> {t('FAQ')} </a>
+											<a className='primary'> {t('FAQ')} </a>
 										</Link>
-										{t('here_or_contact_our')}{' '}
+										{t('here_or_contact_our')}
 										<a
-											className='blue'
+											className='primary'
 											target='_blank'
 											href='https://direct.lc.chat/11638088/'
 											rel='noreferrer'
