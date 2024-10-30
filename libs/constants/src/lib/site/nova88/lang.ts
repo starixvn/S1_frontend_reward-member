@@ -1,47 +1,154 @@
 import { CurrenciesEnum } from '../../currency'
+import { IStaticLangGroups } from '../../lang'
 
-interface ILangOption {
-	countryName: string
-	currencyId: number
-	flag: string
-	lang: { displayText: string; value: string }[]
+export const LANG_GROUPS: IStaticLangGroups = {
+	ch: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.MYR,
+			mainLanguage: true,
+		},
+		{
+			displayText: '简体中文',
+			value: 'cs',
+			currencyId: CurrenciesEnum.MYR,
+		},
+		{
+			displayText: 'Malay',
+			value: 'my',
+			currencyId: CurrenciesEnum.MYR,
+		},
+	],
+	th: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.THB,
+		},
+		{
+			displayText: 'ภาษาไทย',
+			value: 'th',
+			currencyId: CurrenciesEnum.THB,
+			mainLanguage: true,
+		},
+	],
+	id: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.IDR,
+		},
+		{
+			displayText: 'Indonesian',
+			value: 'id',
+			currencyId: CurrenciesEnum.IDR,
+			mainLanguage: true,
+		},
+	],
+	in: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.INR,
+		},
+		{
+			displayText: 'हिंदी',
+			value: 'hi',
+			currencyId: CurrenciesEnum.INR,
+			mainLanguage: true,
+		},
+	],
+	vn: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.VND,
+		},
+		{
+			displayText: 'Tiếng Việt',
+			value: 'vn',
+			currencyId: CurrenciesEnum.VND,
+			mainLanguage: true,
+		},
+	],
+	gb: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.USD,
+			mainLanguage: true,
+		},
+		{
+			displayText: '简体中文',
+			value: 'cs',
+			currencyId: CurrenciesEnum.USD,
+		},
+	],
+	bd: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.BDT,
+		},
+		{
+			displayText: 'বাংলা',
+			value: 'bd',
+			currencyId: CurrenciesEnum.BDT,
+			mainLanguage: true,
+		},
+	],
+	cs: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.CNY,
+		},
+		{
+			displayText: '简体中文',
+			value: 'cs',
+			currencyId: CurrenciesEnum.CNY,
+			mainLanguage: true,
+		},
+	],
+	kh: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.KHM,
+		},
+		{
+			displayText: 'ខ្មែរ',
+			value: 'kh',
+			currencyId: CurrenciesEnum.KHM,
+			mainLanguage: true,
+		},
+	],
+	br: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.BRL,
+		},
+		{
+			displayText: 'Portugese',
+			value: 'br',
+			currencyId: CurrenciesEnum.BRL,
+			mainLanguage: true,
+		},
+	],
+	// 日本語位置
+	ko: [
+		{
+			displayText: 'English',
+			value: 'en',
+			currencyId: CurrenciesEnum.KRW,
+		},
+		{
+			displayText: '한국어',
+			value: 'ko',
+			currencyId: CurrenciesEnum.KRW,
+			mainLanguage: true,
+		},
+	],
 }
-
-enum ILangEnum {
-	en = 'en',
-	cs = 'cs',
-	my = 'my',
-	th = 'th',
-	id = 'id',
-}
-
-export const defLangOptions: ILangOption[] = [
-	{
-		countryName: 'Malaysia',
-		currencyId: CurrenciesEnum.MYR,
-		flag: 'ch',
-		lang: [
-			{ displayText: 'English', value: ILangEnum.en },
-			{ displayText: '简体中文', value: ILangEnum.cs },
-			{ displayText: 'Malay', value: ILangEnum.my },
-		],
-	},
-	{
-		countryName: 'Thailand',
-		currencyId: CurrenciesEnum.THB,
-		flag: 'th',
-		lang: [
-			{ displayText: 'English', value: ILangEnum.en },
-			{ displayText: 'ไทย', value: ILangEnum.th },
-		],
-	},
-	{
-		countryName: 'Indonesia',
-		currencyId: CurrenciesEnum.IDR,
-		flag: 'id',
-		lang: [
-			{ displayText: 'English', value: ILangEnum.en },
-			{ displayText: 'Bhs Indonesia', value: ILangEnum.id },
-		],
-	},
-]

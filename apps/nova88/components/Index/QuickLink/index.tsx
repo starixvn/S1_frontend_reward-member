@@ -1,18 +1,16 @@
 import {
-	selectedIsLogin,
-	selectedProfile,
+	selectedCurrencyId,
+	selectedLangId,
 	useGetAppLinkQuery,
 	useLazyGetSocialChannelQuery,
 } from '@api'
 import {
 	buttonTypeList,
-	defCurrencyList,
 	defDisplayPage,
 	defLinkType,
-	langMapping,
 	sideBarIconName,
 } from '@constants'
-import { useAppSelector, usePopBox } from '@operations'
+import { usePopBox } from '@operations'
 import classNames from 'classnames'
 import QRCode from 'qrcode.react'
 import { useEffect, useState } from 'react'
@@ -20,8 +18,9 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
 const QuickLink = () => {
-	const { t, i18n } = useTranslation()
-	const profile = useSelector(selectedProfile)
+	const { t } = useTranslation()
+	const langId = useSelector(selectedLangId)
+	const currencyId = useSelector(selectedCurrencyId)
 	const [getSocialChannelQuery] = useLazyGetSocialChannelQuery()
 	const [tabStatus, setTabStatus] = useState({
 		isOpenDownload: false,
@@ -29,7 +28,6 @@ const QuickLink = () => {
 	})
 	const [socialChannelList, setSocialChannelList] = useState([])
 	const [activeIcon, setActiveIcon] = useState(null)
-	const isLogin = useAppSelector(selectedIsLogin)
 	const { setPopBoxType } = usePopBox()
 
 	const switchIconActive = _mouseOverIcon => {
@@ -43,10 +41,8 @@ const QuickLink = () => {
 	const showContactList = async () => {
 		try {
 			await getSocialChannelQuery({
-				langId: isLogin ? profile.langId : i18n.language,
-				currencyId: isLogin
-					? profile.currencyId
-					: defCurrencyList[langMapping[i18n.language]],
+				langId,
+				currencyId,
 				displayPage: defDisplayPage.ContactUs,
 			})
 				.unwrap()
