@@ -1,5 +1,7 @@
+import { CurrenciesEnum, ENV_COOKIE_NAMES } from '@constants'
 import { RootState } from '@operations'
 import { createSlice } from '@reduxjs/toolkit'
+import { getCookie } from 'cookies-next'
 import { checkSignInAsync, getCustProfileAsync, logoutAsync } from './thunk'
 import { ICustProfile } from './type'
 
@@ -9,11 +11,17 @@ interface IStateProps {
 	profile: ICustProfile
 }
 
+const cookieLangId = getCookie(ENV_COOKIE_NAMES.LangId)
+const cookieCurrencyId = getCookie(ENV_COOKIE_NAMES.CurrencyId)
+
 const initialState: IStateProps = {
 	isLogin: null,
 	profile: {
-		langId: 'en',
 		userName: 'Guest',
+		langId: cookieLangId ? String(cookieLangId) : 'en',
+		currencyId: cookieCurrencyId
+			? Number(cookieCurrencyId)
+			: CurrenciesEnum.MYR,
 	},
 }
 
@@ -26,6 +34,12 @@ const authSlice = createSlice({
 		},
 		setLangId: (state, action) => {
 			state.profile.langId = action.payload
+		},
+		setCurrencyId: (state, action) => {
+			state.profile.currencyId = action.payload
+		},
+		setProfile: (state, action) => {
+			state.profile = action.payload
 		},
 	},
 	extraReducers: build =>
@@ -55,5 +69,6 @@ export const selectedCurrencyId = ({ auth }: RootState) =>
 export const selectedUserName = ({ auth }: RootState) => auth.profile?.userName
 export const selectedLangId = ({ auth }: RootState) => auth.profile?.langId
 
-export const { setIsLogin, setLangId } = authSlice.actions
+export const { setIsLogin, setLangId, setCurrencyId, setProfile } =
+	authSlice.actions
 export const authReducer = authSlice.reducer

@@ -9,12 +9,10 @@ const accountApi = createApi({
 	tagTypes: ['Post'],
 	endpoints: builder => ({
 		setLanguage: builder.mutation<ISetLanguageResponse, ISetLanguageArgs>({
-			query: ({ langId }) => ({
+			query: data => ({
 				url: `account/SetLanguage`,
 				method: 'POST',
-				data: {
-					LangId: langId,
-				},
+				data,
 			}),
 			invalidatesTags: ['Post'],
 		}),
