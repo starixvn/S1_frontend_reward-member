@@ -23,7 +23,7 @@ export const siteInfo = {
 		'vn',
 		// 'jp',
 		'ko',
-		'br',
+		// 'br',
 		// 'zh_TW',
 	],
 	affiliateLink: getAffiliate(),
