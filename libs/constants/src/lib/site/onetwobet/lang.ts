@@ -124,19 +124,19 @@ export const LANG_GROUPS: IStaticLangGroups = {
 			mainLanguage: true,
 		},
 	],
-	br: [
-		{
-			displayText: 'English',
-			value: 'en',
-			currencyId: CurrenciesEnum.BRL,
-		},
-		{
-			displayText: 'Portugese',
-			value: 'br',
-			currencyId: CurrenciesEnum.BRL,
-			mainLanguage: true,
-		},
-	],
+	// br: [
+	// 	{
+	// 		displayText: 'English',
+	// 		value: 'en',
+	// 		currencyId: CurrenciesEnum.BRL,
+	// 	},
+	// 	{
+	// 		displayText: 'Portugese',
+	// 		value: 'br',
+	// 		currencyId: CurrenciesEnum.BRL,
+	// 		mainLanguage: true,
+	// 	},
+	// ],
 	// 日本語位置
 	ko: [
 		{
