@@ -1,12 +1,14 @@
-FROM node:16.20.0-alpine AS builder
+FROM hub.lumigame.com/base/node:18-16-alpine-24h1.1 AS dependencies
+WORKDIR /app
+ENV NPM_CACHE_FOLDER=/root/.npm
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,target=$NPM_CACHE_FOLDER \
+    npm ci
 
-# alpine 輕量化 Image 不包含必要的 python 資源，需另外加載才可正確執行 npm 安裝指令
-RUN apk add --no-cache libc6-compat python3 make g++
+FROM hub.nexdev.net/nexent/nx-app-alpine AS builder
+ENV TEMPLATE_NAME nova88
+ARG TRANSFORM_CONFIG
 
-ARG project_name
-ARG env
-
-# 設定工作目錄
 WORKDIR /build
 
 # bind node_modules to bin/PATH
@@ -15,40 +17,30 @@ WORKDIR /build
 ENV PATH /build/node_modules/.bin:$PATH
 COPY . .
 # copy env
-COPY ./apps/${project_name}/.env.${env} ./apps/${project_name}/.env
+COPY ./apps/${TEMPLATE_NAME}/.env.${TRANSFORM_CONFIG} ./apps/${TEMPLATE_NAME}/.env
+COPY --from=dependencies /app/node_modules ./node_modules
 
-# install
-RUN npm ci
-RUN nx clear-cache
-RUN npm run build $project_name
+RUN app=${TEMPLATE_NAME} npm run build
 
-FROM node:16.20.0-alpine AS serve-step
+FROM hub.lumigame.com/base/node:18-16-alpine-24h1.1 AS serve-step
 
-ARG project_name
-ARG port
-
-# 設定工作目錄
-WORKDIR /app 
-
+WORKDIR /app
+ENV TEMPLATE_NAME nova88-desktop
 # 指定 group 和使用者
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # 將檔案綁定至 group 與使用者
-COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/${project_name}/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/${project_name}/.next/static ./dist/apps/${project_name}/.next/static
-COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/${project_name}/public ./apps/${project_name}/public
+COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/nova88/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/nova88/.next/static ./dist/apps/nova88/.next/static
+COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/nova88/public ./apps/nova88/public
 
-# 設定 user 和 group 以用作目前階段剩餘部分的預設使用者和群組。
-# USER nextjs
+USER nextjs
 
 # server.js 運行路徑
-ENV APP_PATH=apps/${project_name}/server.js
-
-# 通知Docker容器在執行時監聽指定的PORT號
-EXPOSE ${port}
-
-ENV PORT ${port}
-
-# 為執行容器提供預設值
+ENV APP_PATH=apps/${TEMPLATE_NAME}/server.js
+EXPOSE 5000
+ENV PORT 5000
 CMD node $APP_PATH
+
+
