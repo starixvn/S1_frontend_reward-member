@@ -1,4 +1,4 @@
-import { IAxiosResponse } from '../axiosBaseQuery'
+import { IGiftTagsData } from './../storeApi/type'
 
 export interface ICreateRedemptionArgs {
 	giftId: number
@@ -11,24 +11,21 @@ export interface ISetShoppingCartArgs {
 }
 
 export interface ISetShoppingCarData {
-	giftId?: number
-	giftName?: string
-	enGiftName?: string
-	categoryId?: number
-	categoryName?: string
-	giftDescription?: string
-	giftPictureUrl?: string
-	isFavorite?: boolean
-	tagList?: {
-		tagId: number
-		tagName: string
-		lang: string
-	}[]
-	point?: number
-	priceWorth?: number
-	showStock?: boolean
-	stock?: number
+	giftId: number
+	giftName: string
+	siteId: number
+	siteName: string
+	currencyId: number
+	isoCode: string
+	categoryId: number
+	lang: string
+	description: string
+	pictureUrl: string
+	status: number
+	tags?: IGiftTagsData[]
+	point: number
+	priceWorth: number
+	showStock: boolean
+	stock: number
+	sort: number
 }
-
-export type ICreateRedemptionResponse = IAxiosResponse<null>
-export type ISetShoppingCartResponse = IAxiosResponse<ISetShoppingCarData[]>
