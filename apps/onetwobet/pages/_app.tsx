@@ -17,7 +17,8 @@ function CustomApp({ Component, pageProps }: AppProps) {
 		<>
 			<Head>
 				<title>Reward88</title>
-			</Head>
+				<link rel='shortcut icon' href='/rewards/favicon.ico' /></Head>
+
 			<I18nextProvider i18n={i18n}>
 				<Provider store={store}>
 					<PopBoxProvider>

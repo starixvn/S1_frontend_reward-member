@@ -2,27 +2,10 @@ import Empty from '@apps/onetwobet/components/Shopping/Empty'
 import GiftItem from '@apps/onetwobet/components/Shopping/GiftItem'
 import { tabOption } from '@constants'
 import { FC } from 'react'
+import { IGiftData } from "@api"
 
 interface IGiftListProps {
-	filterList: {
-		giftId: number
-		giftName: string
-		enGiftName: string
-		categoryId: number
-		categoryName: string
-		giftDescription: string
-		giftPictureUrl: string
-		isFavorite: boolean
-		tagList: {
-			tagId: number
-			tagName: string
-			lang: string
-		}[]
-		point: number
-		priceWorth: number
-		showStock: boolean
-		stock: number
-	}[]
+	filterList: Array<IGiftData>
 	onToggleCart: (giftItem: object) => void
 	onToggleFavorite?: (giftItem: object) => void
 	activeTabItem?: { lang?: string; tagId?: number; tagName?: string }

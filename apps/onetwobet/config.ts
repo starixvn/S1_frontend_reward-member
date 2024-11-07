@@ -29,4 +29,3 @@ export const siteInfo = {
 	affiliateLink: getAffiliate(),
 }
 
-export const imageUrl = 'https://store.0814media.net'

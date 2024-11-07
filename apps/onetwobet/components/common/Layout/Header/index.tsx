@@ -1,7 +1,5 @@
-import { selectedIsLogin, selectedLangId } from '@api'
-import { imageUrl } from '@apps/onetwobet/config'
+import { selectedIsLogin, selectUrlMethods } from "@api"
 import { paths } from '@constants'
-import { useAppSelector } from '@operations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
@@ -19,7 +17,7 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 	const { t } = useTranslation()
 	const route = useRouter()
 	const isLogin = useSelector(selectedIsLogin)
-	const langId = useAppSelector(selectedLangId)
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
 	const onClickLogo = () => {
 		if (route.pathname === paths.home) {
 			route.reload()
@@ -35,7 +33,7 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 				<button className='icon icon-menu' onClick={toggleSubmenu} />
 				<div onClick={onClickLogo} className='logo'>
 					<a>
-						<img src={`${imageUrl}/img/88logo.png`} alt='' />
+						<img src={getStoreImgDomain('/img/88logo.png')} alt='logo' />
 					</a>
 				</div>
 				<ShoppingCart />

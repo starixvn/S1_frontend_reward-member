@@ -7,6 +7,7 @@ type TSiteState = {
 	getImageUrl: (url: string) => string
 	getPaymentUrl: (url: string) => string
 	getSportImageUrl: (url: string) => string
+  getStoreImgDomain:(url:string) => string
 }
 
 const initialState: TSiteState = {
@@ -15,6 +16,7 @@ const initialState: TSiteState = {
 	getImageUrl: url => url,
 	getSportImageUrl: url => url,
 	getPaymentUrl: url => url,
+  getStoreImgDomain:url => url
 }
 
 const siteSlice = createSlice({
@@ -28,6 +30,7 @@ const siteSlice = createSlice({
 				imgDomain = '',
 				paymentDomain = '',
 				sportImgDomain = '',
+        storeImgDomain = ''
 			} = action.payload
 			state.isInitialized = true
 			state.getBannerUrl = (url: string) => {
@@ -42,15 +45,19 @@ const siteSlice = createSlice({
 			state.getSportImageUrl = (url: string) => {
 				return sportImgDomain ? `https://${sportImgDomain}${url}` : url
 			}
+      state.getStoreImgDomain = (url: string) => {
+        return storeImgDomain ? `https://${storeImgDomain}${url}` : url
+      }
 		}),
 })
 
-// 統一 return 4 個 url function
+// 統一 return 5 個 url function
 export const selectUrlMethods = ({ site }: { site: TSiteState }) => ({
 	getBannerUrl: site.getBannerUrl,
 	getImageUrl: site.getImageUrl,
 	getPaymentUrl: site.getPaymentUrl,
 	getSportImageUrl: site.getSportImageUrl,
+  getStoreImgDomain:site.getStoreImgDomain
 })
 
 export const selectUrlMethodInitialized = ({ site }: { site: TSiteState }) =>

@@ -1,4 +1,3 @@
-import { imageUrl } from '@apps/onetwobet/config'
 import { numberFormat } from '@core'
 import classNames from 'classnames'
 import React, { FC } from 'react'
@@ -84,7 +83,7 @@ const CartItem: FC<ICartItemProps> = ({
 				<div>
 					<div>
 						{stock}
-						<img src={`${imageUrl}${item.pictureUrl}`} alt='any' />
+						<img src={item.pictureUrl} alt='cartItem' />
 					</div>
 					<div>
 						<ul>
