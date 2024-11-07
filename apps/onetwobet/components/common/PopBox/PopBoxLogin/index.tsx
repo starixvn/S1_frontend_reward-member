@@ -3,14 +3,15 @@ import {
 	getCustProfileAsync,
 	getPointBalanceAsync,
 	selectedLangId,
+  selectUrlMethods,
 	setIsLogin,
 } from '@api'
-import { imageUrl } from '@apps/onetwobet/config'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import Form from './Form'
+import { useSelector } from "react-redux"
 
 interface IFormValues {
 	userName: string
@@ -22,6 +23,8 @@ const PopBoxLogin: FC = () => {
 	const { closePopBox, setPopBoxType } = usePopBox()
 	const dispatch = useAppDispatch()
 	const langId = useAppSelector(selectedLangId)
+    const { getStoreImgDomain } = useSelector(selectUrlMethods)
+
 
 	const {
 		register,
@@ -65,10 +68,10 @@ const PopBoxLogin: FC = () => {
 			<div className='icon icon-close' onClick={closePopBox} />
 			<div className='loginModule'>
 				<div>
-					<img src={`${imageUrl}/img/login_${i18n.language}.jpg`} alt='' />
+					<img src={getStoreImgDomain(`/img/login_${i18n.language}.jpg`)} alt='' />
 				</div>
 				<div className='loginFunction'>
-					<img src={`${imageUrl}/img/88logo.png`} alt='' />
+					<img src={getStoreImgDomain('/img/88logo.png')} alt='' />
 					<div className='title'>{t('Login')}</div>
 
 					<Form

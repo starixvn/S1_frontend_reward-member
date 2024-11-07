@@ -1,12 +1,11 @@
 import {
-	logoutAsync,
-	selectedIsLogin,
-	selectedLangId,
-	selectedPointBalance,
-	selectedProfile,
-	setIsLogin,
-} from '@api'
-import { imageUrl } from '@apps/onetwobet/config'
+  logoutAsync,
+  selectedIsLogin,
+  selectedLangId,
+  selectedPointBalance,
+  selectedProfile, selectUrlMethods,
+  setIsLogin
+} from "@api"
 import { paths } from '@constants'
 import { numberFormat } from '@core'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
@@ -15,7 +14,6 @@ import Link from 'next/link'
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useLocalStorage } from 'usehooks-ts'
 import LangDropdown from '../Header/LangDropdown'
 interface ISubmenuProps {
 	isSubmenuOpen: boolean
@@ -25,10 +23,10 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 	const { t } = useTranslation()
 	const isLogin = useSelector(selectedIsLogin)
 	const profile = useSelector(selectedProfile)
-	const dispatch = useAppDispatch()
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
+  const dispatch = useAppDispatch()
 	const { setPopBoxType } = usePopBox()
 	const [isLangDropOpen, setLangDropOpen] = useState<boolean>(true)
-	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
 	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const toggleLangDrop = () => {
@@ -38,7 +36,6 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 	const handleLogout = async () => {
 		await dispatch(logoutAsync())
 		dispatch(setIsLogin(false))
-		setCartList([])
 	}
 
 	return (
@@ -60,7 +57,7 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 					<div className='vipAnimation'>
 						<img
 							style={{ zIndex: 1 }}
-							src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
+							src={getStoreImgDomain(`/img/vip0${profile.userLevel}.svg`)}
 							alt='vip'
 						/>
 					</div>
@@ -151,8 +148,8 @@ const Submenu: FC<ISubmenuProps> = ({ isSubmenuOpen }) => {
 				<a href={`/${langId}`} target='_blank' rel='noreferrer'>
 					<img
 						className='novaLogo'
-						src={`${imageUrl}/img/novalogo.png`}
-						alt='nova88'
+						src={getStoreImgDomain('12bet-logo.png')}
+						alt='logo'
 					/>
 				</a>
 			</div>

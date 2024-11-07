@@ -5,6 +5,7 @@ import {
 	selectedIsLogin,
 	selectedPointBalance,
 	selectedProfile,
+  selectUrlMethods,
 	setCartNumber,
 	setPointBalance,
 	useCreateRedemptionMutation,
@@ -15,7 +16,7 @@ import {
 } from '@api'
 import Loading from '@apps/onetwobet/components/common/Loading'
 import GiftList from '@apps/onetwobet/components/Shopping/GiftList'
-import { imageUrl, siteInfo } from '@apps/onetwobet/config'
+import {  siteInfo } from '@apps/onetwobet/config'
 import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, paths } from '@constants'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import { useRouter } from 'next/router'
@@ -48,6 +49,7 @@ const Cart = () => {
 	const cartNumber = useAppSelector(selectedCartNumber)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const profile = useSelector(selectedProfile)
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
 	const isLogin = useSelector(selectedIsLogin)
 	const { langId, currencyId } = profile
 	const { t } = useTranslation()
@@ -353,7 +355,7 @@ const Cart = () => {
 						{t('AffiliatesProgramTip')}
 					</div>
 					<div>
-						<img src={`${imageUrl}/img/affiliatebg-1.jpg`} alt='img' />
+						<img src={getStoreImgDomain('/img/affiliatebg-1.jpg')} alt='affiliate' />
 					</div>
 				</div>
 				<div className='products-group col-lg-7 col-xl-7'>

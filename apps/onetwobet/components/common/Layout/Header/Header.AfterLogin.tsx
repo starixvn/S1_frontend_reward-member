@@ -1,12 +1,11 @@
 import {
-	logoutAsync,
-	selectedLangId,
-	selectedPointBalance,
-	selectedProfile,
-	setIsLogin,
-	setProfile,
-} from '@api'
-import { imageUrl } from '@apps/onetwobet/config'
+  logoutAsync,
+  selectedLangId,
+  selectedPointBalance,
+  selectedProfile, selectUrlMethods,
+  setIsLogin,
+  setProfile
+} from "@api"
 import { paths } from '@constants'
 import { numberFormat } from '@core'
 import { useAppDispatch, useAppSelector } from '@operations'
@@ -22,7 +21,8 @@ import ShoppingCart from './ShoppingCart'
 const HeaderAfterLogin = () => {
 	const { t } = useTranslation()
 	const profile = useSelector(selectedProfile)
-	const dispatch = useAppDispatch()
+  const { getStoreImgDomain } = useSelector(selectUrlMethods)
+  const dispatch = useAppDispatch()
 	const [, setCartList] = useLocalStorage('nova88Cart', [])
 	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
@@ -63,7 +63,7 @@ const HeaderAfterLogin = () => {
 					<div className='vipAnimation'>
 						<a>
 							<img
-								src={`${imageUrl}/img/vip0${profile.userLevel}.png`}
+								src={getStoreImgDomain(`/img/vip0${profile.userLevel}.svg`)}
 								alt='vip'
 							/>
 						</a>
@@ -89,8 +89,8 @@ const HeaderAfterLogin = () => {
 			<a href={`/${langId}`} target='_blank' rel='noreferrer'>
 				<img
 					className='novaLogo'
-					src={`${imageUrl}/img/novalogo.png`}
-					alt='any'
+					src={getStoreImgDomain('/img/12bet-logo.png')}
+					alt='logo'
 				/>
 			</a>
 		</>
