@@ -38,7 +38,7 @@ COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/nova88/public ./apps/
 USER nextjs
 
 # server.js 運行路徑
-ENV APP_PATH=apps/${TEMPLATE_NAME}/server.js
+ENV APP_PATH=${TEMPLATE_NAME}/server.js
 EXPOSE 5000
 ENV PORT 5000
 CMD node $APP_PATH
