@@ -20,27 +20,26 @@ COPY . .
 COPY ./apps/${TEMPLATE_NAME}/.env.${TRANSFORM_CONFIG} ./apps/${TEMPLATE_NAME}/.env
 COPY --from=dependencies /app/node_modules ./node_modules
 
-RUN app=${TEMPLATE_NAME} npm run build
+RUN npm run build ${TEMPLATE_NAME}
 
 FROM hub.lumigame.com/base/node:18-16-alpine-24h1.1 AS serve-step
 
 WORKDIR /app
-ENV TEMPLATE_NAME nova88-desktop
+ENV TEMPLATE_NAME nova88
 # 指定 group 和使用者
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # 將檔案綁定至 group 與使用者
-COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/nova88/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/nova88/.next/static ./dist/apps/nova88/.next/static
-COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/nova88/public ./apps/nova88/public
+COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/${TEMPLATE_NAME}/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/${TEMPLATE_NAME}/.next/static ./dist/apps/${TEMPLATE_NAME}/.next/static
+COPY --from=builder --chown=nextjs:nodejs /build/dist/apps/${TEMPLATE_NAME}/public ./apps/${TEMPLATE_NAME}/public
 
 USER nextjs
 
 # server.js 運行路徑
-ENV APP_PATH=${TEMPLATE_NAME}/server.js
+ENV APP_PATH=apps/${TEMPLATE_NAME}/server.js
 EXPOSE 5000
-ENV PORT 5000
 CMD node $APP_PATH
 
 

@@ -68,11 +68,12 @@ const Header: FC<IHeaderProps> = ({ setSubmenuOpen }) => {
 							<Link href={paths.about.sub.rewardfaq.root}>
 								{t("FAQ").toUpperCase()}
 							</Link>
-							<a
+							{/* TODO: Hide in phase 1 */}
+							{/* <a
 								target="_blank"
 								rel="noreferrer"
 								href={`/${paths.appDownload}`}
-								className="icon icon-mobile"></a>
+								className="icon icon-mobile"></a> */}
 						</div>
 					</div>
 				</div>
