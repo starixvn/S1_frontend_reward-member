@@ -2,7 +2,7 @@ import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import { siteInfo } from '../config'
 import bd from './bd.json'
-import br from './br.json'
+// import br from './br.json'
 import cs from './cs.json'
 import en from './en.json'
 // import hi from './hi.json'
@@ -29,7 +29,7 @@ const resources = {
 	vn: { translations: vn },
 	// jp: { translations: jp },
 	ko: { translations: ko },
-	br: { translations: br },
+	// br: { translations: br },
 	// zh_TW: { translations: zh_TW },
 }
 
