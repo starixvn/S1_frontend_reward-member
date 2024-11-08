@@ -1,6 +1,6 @@
-import { selectedIsLogin } from '@api'
+import { selectedCartList, selectedIsLogin, setShoppingCartAsync } from '@api'
 import { numberFormat } from '@core'
-import { useAppSelector } from '@operations'
+import { useAppDispatch, useAppSelector } from '@operations'
 import classNames from 'classnames'
 import { FC, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,78 +26,59 @@ interface IGiftItemProps {
 		showStock: boolean
 		stock: number
 	}
-	onToggleCart: (giftItem: object) => void
 	onToggleFavorite: (giftItem: object) => void
-	realCartList?: {
-		giftId?: number
-		giftName?: string
-		enGiftName?: string
-		categoryId?: number
-		categoryName?: string
-		giftDescription?: string
-		giftPictureUrl?: string
-		isFavorite?: boolean
-		tagList?: {
-			tagId: number
-			tagName: string
-			lang: string
-		}[]
-		point?: number
-		priceWorth?: number
-		showStock?: boolean
-		stock?: number
-	}[]
 }
 
-const GiftItem: FC<IGiftItemProps> = ({
-	item,
-	onToggleCart,
-	onToggleFavorite,
-	realCartList,
-}) => {
+const GiftItem: FC<IGiftItemProps> = ({ item, onToggleFavorite }) => {
+	const dispatch = useAppDispatch()
 	const { t } = useTranslation()
 	const [isLarge, setIsLarge] = useState(false)
-	const [cartList] = useLocalStorage('nova88Cart', [])
+	const [LSCartList, setLSCartList] = useLocalStorage('onetwobetCart', [])
 	const isLogin = useAppSelector(selectedIsLogin)
+	const cartList = useAppSelector(selectedCartList)
 	const giftItemRef = useRef()
+
+	const isInCart = giftItem => {
+		return isLogin
+			? cartList.some(o => o.giftId === giftItem.giftId)
+			: LSCartList.some(o => o.giftId === giftItem.giftId)
+	}
+
 	const handleClickOutside = () => {
 		setIsLarge(false)
 	}
 	useOnClickOutside(giftItemRef, handleClickOutside)
-	const handleItemBtnTextChange = giftItem => {
-		let text = ''
-		if (!giftItem.stock) {
-			text = t('SoldOut')
-		} else {
-			const cartItem = (isLogin ? realCartList : cartList)?.find(
-				item => item.giftId === giftItem.giftId
+
+	const onToggle = async giftItem => {
+		if (!giftItem.stock) return
+		if (isLogin) {
+			dispatch(
+				setShoppingCartAsync({
+					giftIds: [giftItem.giftId],
+					isAdd: cartList.some(o => o.giftId === giftItem.giftId) ? 0 : 1,
+				})
 			)
-			if (cartItem) {
-				text = t('AddedToCart')
-			} else {
-				text = t('AddToCart')
-			}
+		} else {
+			setLSCartList(
+				LSCartList.some(o => o.giftId === giftItem.giftId)
+					? LSCartList.filter(o => o.giftId !== giftItem.giftId)
+					: [...LSCartList, giftItem]
+			)
 		}
-		return text
 	}
+
 	const showGiftItemBtn = () => (
 		<button
-			onClick={() => onToggleCart(item)}
+			onClick={() => onToggle(item)}
 			className={classNames('icon', 'active', {
 				'icon-ban': !item.stock,
-				'icon-checkmark':
-					item.stock &&
-					(isLogin ? realCartList : cartList)?.find(
-						cartItem => cartItem.giftId === item.giftId
-					),
-				'icon-cart':
-					item.stock &&
-					!(isLogin ? realCartList : cartList)?.find(
-						cartItem => cartItem.giftId === item.giftId
-					),
+				'icon-checkmark': item.stock && isInCart(item),
+				'icon-cart': item.stock && !isInCart(item),
 			})}
 		>
-			{handleItemBtnTextChange(item)}
+			{t(
+				!item.stock ? 'SoldOut' : isInCart(item) ? 'AddedToCart' : 'AddToCart'
+			)}
 		</button>
 	)
 	return (

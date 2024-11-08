@@ -1,14 +1,11 @@
 import {
 	IGetGiftListArgs,
-	ISetShoppingCarData,
 	selectedCurrencyId,
 	selectedIsLogin,
 	selectedLangId,
-	setCartNumber,
 	useLazyGetGiftListQuery,
 	useLazyGetGiftTagsQuery,
 	useSetFavoriteMutation,
-	useSetShoppingCartMutation,
 } from '@api'
 import Loading from '@apps/onetwobet/components/common/Loading'
 import {
@@ -19,26 +16,23 @@ import {
 	tabOption,
 } from '@constants'
 import { useInView } from '@core'
-import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
+import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useLocalStorage } from 'usehooks-ts'
 import GiftList from './GiftList'
 import GiftSelector from './GiftSelector'
 import GiftSwiper from './GiftSwiper'
 import GiftTab from './GiftTab'
 
 const Shopping = () => {
-	const dispatch = useAppDispatch()
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
 	const currencyId = useAppSelector(selectedCurrencyId)
 	const { i18n, t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
 	const [inViewRef, isInView] = useInView()
-	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
 	const [args, setArgs] = useState({
 		categoryIds: null,
 		tags: null,
@@ -47,7 +41,6 @@ const Shopping = () => {
 		pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 	})
 	const [categoryList, setCategoryList] = useState([])
-	const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
 	const [activeTabItem, setActiveTabItem] = useState({})
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
 	const fromList = [
@@ -70,7 +63,6 @@ const Shopping = () => {
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
 	] = useLazyGetGiftListQuery()
-	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [setFavorite] = useSetFavoriteMutation()
 
 	const getGiftTabsList = async () => {
@@ -114,22 +106,6 @@ const Shopping = () => {
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
 			await getGiftList(args).unwrap()
-		} catch (error) {
-			setPopBoxType({
-				type: 'warn',
-				props: { content: error.message },
-			})
-		}
-	}
-
-	const getCartList = async args => {
-		try {
-			await setShoppingCart(args)
-				.unwrap()
-				.then(res => {
-					setRealCartList(prev => [...prev, ...res.data])
-					dispatch(setCartNumber(res.data.length))
-				})
 		} catch (error) {
 			setPopBoxType({
 				type: 'warn',
@@ -223,38 +199,6 @@ const Shopping = () => {
 		}
 	}
 
-	const handleGiftItemToggle = async giftItem => {
-		if (!giftItem.stock) return
-		if (isLogin) {
-			const item = realCartList?.find(item => item.giftId === giftItem.giftId)
-			if (item) {
-				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 0 })
-					.unwrap()
-					.then(res => {
-						setRealCartList(res.data)
-						dispatch(setCartNumber(res.data.length))
-					})
-			} else {
-				await setShoppingCart({ giftIds: [giftItem.giftId], isAdd: 1 })
-					.unwrap()
-					.then(res => {
-						setRealCartList(res.data)
-						dispatch(setCartNumber(res.data.length))
-					})
-			}
-		} else {
-			const item = cartList.find(item => item.giftId === giftItem.giftId)
-			if (item) {
-				let tempList = []
-				tempList = cartList.filter(item => item.giftId !== giftItem.giftId)
-				setCartList(tempList)
-			} else {
-				cartList.push(giftItem)
-				setCartList(cartList)
-			}
-		}
-	}
-
 	const handleTabChange = activeTab => {
 		setActiveTabItem(activeTab)
 		if (activeTab.tagId === tabOption.FAVORITE) {
@@ -308,12 +252,6 @@ const Shopping = () => {
 	useEffect(() => {
 		getGiftTabsList()
 		if (isLogin) {
-			const giftIdList = []
-			cartList.forEach(item => {
-				giftIdList.push(item.giftId)
-			})
-			getCartList({ giftIds: giftIdList, isAdd: 1 })
-			setCartList([])
 			setIsFilterFavorite(false)
 			if (giftTabList && giftTabList.length > 0) {
 				setActiveTabItem(giftTabList[0])
@@ -372,10 +310,8 @@ const Shopping = () => {
 					</div>
 					<GiftList
 						filterList={filterList}
-						onToggleCart={handleGiftItemToggle}
 						onToggleFavorite={handleFavoriteToggle}
 						activeTabItem={activeTabItem}
-						realCartList={realCartList}
 					/>
 				</div>
 				<div ref={inViewRef} />

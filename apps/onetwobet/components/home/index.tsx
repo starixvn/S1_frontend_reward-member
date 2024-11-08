@@ -1,58 +1,31 @@
 import {
 	IGetGiftListArgs,
-	ISetShoppingCarData,
 	selectedCurrencyId,
 	selectedIsLogin,
 	selectedLangId,
-	setCartNumber,
 	useLazyGetGiftListQuery,
-	useSetShoppingCartMutation,
 } from '@api'
 import GiftSwiper from '@apps/onetwobet/components/Shopping/GiftSwiper'
-import {
-	DEFAULT_HOME_PAGE_SIZE_COUNT,
-} from '@constants'
-import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
+import { DEFAULT_HOME_PAGE_SIZE_COUNT } from '@constants'
+import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useLocalStorage } from 'usehooks-ts'
-import Products from "./Products"
-import TopIntroduce from "./TopIntroduce"
-import AppDownload from "./AppDownload"
+import AppDownload from './AppDownload'
+import Products from './Products'
+import TopIntroduce from './TopIntroduce'
 
 const Home = () => {
-	const dispatch = useAppDispatch()
 	const { i18n, t } = useTranslation()
 	const { setPopBoxType } = usePopBox()
-	const [cartList, setCartList] = useLocalStorage('nova88Cart', [])
 	const isLogin = useSelector(selectedIsLogin)
 	const langId = useAppSelector(selectedLangId)
 	const currencyId = useAppSelector(selectedCurrencyId)
-	const [setShoppingCart] = useSetShoppingCartMutation()
 	const [
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
 	] = useLazyGetGiftListQuery()
-
-  const [realCartList, setRealCartList] = useState<ISetShoppingCarData[]>([])
-
-	const getCartList = async args => {
-		try {
-			await setShoppingCart(args)
-				.unwrap()
-				.then(res => {
-					setRealCartList(prev => [...prev, ...res.data])
-					dispatch(setCartNumber(res.data.length))
-				})
-		} catch (error) {
-			setPopBoxType({
-				type: 'warn',
-				props: { content: error.message },
-			})
-		}
-	}
 
 	const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
@@ -64,17 +37,6 @@ const Home = () => {
 			})
 		}
 	}
-
-	useEffect(() => {
-		if (isLogin) {
-			const giftIdList = []
-			cartList.forEach(item => {
-				giftIdList.push(item.giftId)
-			})
-			getCartList({ giftIds: giftIdList, isAdd: 1 })
-			setCartList([])
-		}
-	}, [isLogin])
 
 	useEffect(() => {
 		handleFilter({
@@ -109,12 +71,11 @@ const Home = () => {
 				</div>
 			)}
 
-      <TopIntroduce />
+			<TopIntroduce />
 
-      <Products giftList={giftList} realCartList={realCartList} setRealCartList={setRealCartList} isLoading={isGetGiftListFetching} />
+			<Products giftList={giftList} isLoading={isGetGiftListFetching} />
 
-      <AppDownload />
-
+			<AppDownload />
 		</main>
 	)
 }

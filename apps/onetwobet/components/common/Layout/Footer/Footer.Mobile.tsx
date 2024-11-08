@@ -1,4 +1,4 @@
-import { selectedCartNumber, selectedIsLogin } from '@api'
+import { selectedCartList, selectedIsLogin } from '@api'
 import { paths } from '@constants'
 import { useAppSelector, usePopBox } from '@operations'
 import classnames from 'classnames'
@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { useReadLocalStorage } from 'usehooks-ts'
+import { useLocalStorage } from 'usehooks-ts'
 
 const MobileFooter = () => {
 	const { t } = useTranslation()
@@ -14,9 +14,9 @@ const MobileFooter = () => {
 	const { setPopBoxType } = usePopBox()
 	const router = useRouter()
 	const { asPath } = router
-	const cartData: null | any[] = useReadLocalStorage('nova88Cart')
-	const cartNumber = useAppSelector(selectedCartNumber)
-	const cartCount = cartData?.length ?? 0
+	const [LSCartList] = useLocalStorage('onetwobetCart', [])
+	const cartList = useAppSelector(selectedCartList)
+	const cartCount = isLogin ? cartList.length : LSCartList.length
 
 	const clickCartBtn = () => {
 		if (!isLogin) {
@@ -77,9 +77,7 @@ const MobileFooter = () => {
 						active: asPath === paths.cart,
 					})}
 				>
-					<div className='qty'>
-						{cartCount > 99 ? '99+' : `${isLogin ? cartNumber : cartCount}`}
-					</div>
+					<div className='qty'>{cartCount > 99 ? '99+' : `${cartCount}`}</div>
 					<div className='circleAnimation'></div>
 					<span>{t('ShoppingCart_Short')}</span>
 				</a>

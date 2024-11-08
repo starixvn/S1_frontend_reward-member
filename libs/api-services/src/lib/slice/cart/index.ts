@@ -1,16 +1,19 @@
+import { ISetShoppingCarData } from '@api'
 import { RootState } from '@operations'
 import { createSlice } from '@reduxjs/toolkit'
-import { getPointBalanceAsync } from './thunk'
+import { getPointBalanceAsync, setShoppingCartAsync } from './thunk'
 
 // * 定義 state 的 interface
 interface IStateProps {
 	cartNumber: number
 	pointBalance: number
+	cartList: ISetShoppingCarData[]
 }
 
 const initialState: IStateProps = {
 	cartNumber: 0,
 	pointBalance: 0,
+	cartList: [],
 }
 
 const cartSlice = createSlice({
@@ -25,16 +28,19 @@ const cartSlice = createSlice({
 		},
 	},
 	extraReducers: build =>
-		build.addCase(getPointBalanceAsync.fulfilled, (state, action) => {
-			const pointBalance = action.payload
-			state.pointBalance = pointBalance
-		}),
+		build
+			.addCase(getPointBalanceAsync.fulfilled, (state, action) => {
+				state.pointBalance = action.payload.data.pointBalance
+			})
+			.addCase(setShoppingCartAsync.fulfilled, (state, action) => {
+				state.cartList = action.payload.data
+			}),
 })
 
 // * RootState 可以讓我們知道 state 的 interface
 export const selectedCartNumber = ({ cart }: RootState) => cart.cartNumber
+export const selectedCartList = ({ cart }: RootState) => cart.cartList
 export const selectedPointBalance = ({ cart }: RootState) => cart.pointBalance
 
-export const { setCartNumber } = cartSlice.actions
-export const { setPointBalance } = cartSlice.actions
 export const cartReducer = cartSlice.reducer
+export const { setCartNumber, setPointBalance } = cartSlice.actions
