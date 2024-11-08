@@ -5,8 +5,7 @@ import {
 	getStaticFileDomainAsync,
 	selectedIsLogin,
 	selectUrlMethodInitialized,
-	setCartNumber,
-	useSetShoppingCartMutation,
+	setShoppingCartAsync,
 } from '@api'
 import { paths } from '@constants'
 import {
@@ -28,28 +27,11 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 	const dispatch = useAppDispatch()
 	const isLogin = useAppSelector(selectedIsLogin)
 	const isUrlMethodInitialized = useAppSelector(selectUrlMethodInitialized)
-
-	const [cartList] = useLocalStorage('nova88Cart', [])
-	const [setShoppingCart] = useSetShoppingCartMutation()
 	const { setPopBoxType } = usePopBox()
+	const [LSCartList, setLSCartList] = useLocalStorage('onetwobetCart', [])
 
 	useSynchronizeI18nLanguageEffect()
 	useSynchronizeCookiesEffect()
-
-	const getAllCartList = async () => {
-		try {
-			await setShoppingCart({ giftIds: [], isAdd: 1 })
-				.unwrap()
-				.then(res => {
-					dispatch(setCartNumber(res.data.length))
-				})
-		} catch (error) {
-			setPopBoxType({
-				type: 'warn',
-				props: { content: error.message },
-			})
-		}
-	}
 
 	// * 當切換頁面的時候確認登入狀態
 	useEffect(() => {
@@ -61,15 +43,12 @@ const Wrapper: FC<IWrapperProps> = ({ authRequired, children }) => {
 		if (isLogin) {
 			dispatch(getCustProfileAsync())
 			dispatch(getPointBalanceAsync())
-
-			const giftIdList = []
-			cartList.forEach(item => {
-				giftIdList.push(item.giftId)
-			})
-			getAllCartList()
-			// setCartList({ giftIds: giftIdList, isAdd: 1 }).then(() => {
-			// 	getAllCartList()
-			// })
+			dispatch(setShoppingCartAsync({ giftIds: LSCartList.map(o=> o.giftId), isAdd: 1 }))
+				.unwrap()
+				.then(() => setLSCartList([]))
+				.catch(err =>
+					setPopBoxType({ type: 'warn', props: { content: err.message } })
+				)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isLogin])

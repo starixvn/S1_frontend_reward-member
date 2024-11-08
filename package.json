@@ -35,7 +35,6 @@
 		"@nrwl/cli": "14.4.0",
 		"@nrwl/cypress": "14.4.0",
 		"@nrwl/eslint-plugin-nx": "14.4.0",
-		"@nrwl/gatsby": "^14.0.0",
 		"@nrwl/jest": "14.4.0",
 		"@nrwl/linter": "14.4.0",
 		"@nrwl/nx-cloud": "latest",

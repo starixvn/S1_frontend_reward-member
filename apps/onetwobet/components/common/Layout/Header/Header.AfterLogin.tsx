@@ -23,7 +23,7 @@ const HeaderAfterLogin = () => {
 	const profile = useSelector(selectedProfile)
   const { getStoreImgDomain } = useSelector(selectUrlMethods)
   const dispatch = useAppDispatch()
-	const [, setCartList] = useLocalStorage('nova88Cart', [])
+	const [, setCartList] = useLocalStorage('onetwobetCart', [])
 	const langId = useAppSelector(selectedLangId)
 	const pointBalance = useAppSelector(selectedPointBalance)
 	const userMenuWrapper = useRef()

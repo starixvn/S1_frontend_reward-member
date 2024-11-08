@@ -6,38 +6,16 @@ import { IGiftData } from "@api"
 
 interface IGiftListProps {
 	filterList: Array<IGiftData>
-	onToggleCart: (giftItem: object) => void
 	onToggleFavorite?: (giftItem: object) => void
 	activeTabItem?: { lang?: string; tagId?: number; tagName?: string }
-	realCartList?: {
-		giftId?: number
-		giftName?: string
-		enGiftName?: string
-		categoryId?: number
-		categoryName?: string
-		giftDescription?: string
-		giftPictureUrl?: string
-		isFavorite?: boolean
-		tagList?: {
-			tagId: number
-			tagName: string
-			lang: string
-		}[]
-		point?: number
-		priceWorth?: number
-		showStock?: boolean
-		stock?: number
-	}[]
 	isLargeImg?: boolean
 	onToggleLargeImg?: () => void
 }
 
 const GiftList: FC<IGiftListProps> = ({
 	filterList,
-	onToggleCart,
 	onToggleFavorite,
 	activeTabItem,
-	realCartList,
 }) => {
 	return (
 		<>
@@ -47,9 +25,7 @@ const GiftList: FC<IGiftListProps> = ({
 						<GiftItem
 							key={item.giftId}
 							item={item}
-							onToggleCart={onToggleCart}
 							onToggleFavorite={onToggleFavorite}
-							realCartList={realCartList}
 						/>
 					))}
 				</div>

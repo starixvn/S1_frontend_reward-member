@@ -1,16 +1,16 @@
-import { selectedCartNumber, selectedIsLogin } from '@api'
+import { selectedCartList, selectedIsLogin } from '@api'
 import { paths } from '@constants'
 import { useAppSelector, usePopBox } from '@operations'
 import { useRouter } from 'next/router'
-import { useReadLocalStorage } from 'usehooks-ts'
+import { useLocalStorage } from 'usehooks-ts'
 
 const ShoppingCart = () => {
 	const route = useRouter()
 	const isLogin = useAppSelector(selectedIsLogin)
 	const { setPopBoxType } = usePopBox()
-	const cartData: null | any[] = useReadLocalStorage('nova88Cart')
-	const cartNumber = useAppSelector(selectedCartNumber)
-	const cartCount = cartData?.length ?? 0
+	const [LSCartList] = useLocalStorage('onetwobetCart', [])
+	const cartList = useAppSelector(selectedCartList)
+	const cartCount = isLogin ? cartList.length : LSCartList.length
 	return (
 		<div
 			onClick={() => {
@@ -25,9 +25,7 @@ const ShoppingCart = () => {
 			className='shoppingCar'
 		>
 			<div className='icon icon-cart' />
-			<span>
-				{cartCount > 99 ? '99+' : `+${isLogin ? cartNumber : cartCount}`}
-			</span>
+			<span>{cartCount > 99 ? '99+' : `+${cartCount}`}</span>
 		</div>
 	)
 }

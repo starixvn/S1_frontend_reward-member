@@ -1,11 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/dist/query/react'
 import { baseUrl } from '../Api'
-import { axiosBaseQuery } from '../axiosBaseQuery'
+import { axiosBaseQuery, IAxiosResponse } from '../axiosBaseQuery'
 import {
 	ICreateRedemptionArgs,
-	ICreateRedemptionResponse,
+	ISetShoppingCarData,
 	ISetShoppingCartArgs,
-	ISetShoppingCartResponse,
 } from './type'
 
 const redemptionApi = createApi({
@@ -13,10 +12,7 @@ const redemptionApi = createApi({
 	baseQuery: axiosBaseQuery({ baseUrl }),
 	tagTypes: ['Post'],
 	endpoints: builder => ({
-		createRedemption: builder.mutation<
-			ICreateRedemptionResponse,
-			ICreateRedemptionArgs
-		>({
+		createRedemption: builder.mutation<IAxiosResponse, ICreateRedemptionArgs>({
 			query: ({ giftId, point }) => ({
 				url: `redemption/CreateRedemption`,
 				method: 'POST',
@@ -28,7 +24,7 @@ const redemptionApi = createApi({
 			invalidatesTags: ['Post'],
 		}),
 		setShoppingCart: builder.mutation<
-			ISetShoppingCartResponse,
+			IAxiosResponse<ISetShoppingCarData[]>,
 			ISetShoppingCartArgs
 		>({
 			query: ({ giftIds, isAdd }) => ({

@@ -1,7 +1,7 @@
 import { BaseQueryFn } from '@reduxjs/toolkit/query'
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 
-export interface IAxiosResponse<T> {
+export interface IAxiosResponse<T = void> {
 	data: T
 	totalPages?: number
 	pageNumber?: number
