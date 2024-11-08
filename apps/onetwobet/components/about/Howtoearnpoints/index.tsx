@@ -1,12 +1,10 @@
-import { selectedCurrencyId, selectedIsLogin, selectedLangId } from '@api'
+import { selectedCurrencyId } from '@api'
 import LeftMenu from '@apps/onetwobet/components/about/components/LeftMenu'
 import {
 	CURRENCY_ID_TO_NAME,
 	defHowToEarnPointsTab,
-	depositPointReward,
 	HowTabEnum,
 	paths,
-	turnoverPointReward,
 } from '@constants'
 import { useAppSelector } from '@operations'
 import classNames from 'classnames'
@@ -14,7 +12,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import DepositPointInfo from './DepositPointInfo'
+import TurnoverPointInfo from './TurnoverPointInfo'
+import VIPRewardsPointInfo from './VIPRewardsPointInfo'
 
 const HowToEarnPoints = () => {
 	const { pathname } = useRouter()
@@ -118,204 +118,3 @@ const HowToEarnPoints = () => {
 }
 
 export default HowToEarnPoints
-
-const DepositPointInfo = ({ currencyName }: { currencyName: string }) => {
-	const { t, i18n } = useTranslation()
-	const isLogin = useSelector(selectedIsLogin)
-	const langId = useAppSelector(selectedLangId)
-	const currencyShowJudge = () => {
-		if (isLogin) {
-			return langId === 'th' ? t('THB2') : ''
-		} else {
-			return i18n.language === 'th' ? t('THB2') : ''
-		}
-	}
-	return (
-		<>
-			<div>{t('DepositPointTitle1')}</div>
-			<table className='medal'>
-				<tbody>
-					<tr>
-						<td colSpan={2}>{t('HowToEarnDepositPoint')}</td>
-					</tr>
-					<tr>
-						<td>{t('DepositAmount')}</td>
-						<td>{t('PointsEarned')}</td>
-					</tr>
-					<tr>
-						<td>
-							<span>
-								{t(currencyName)} {depositPointReward[currencyName]}{' '}
-								{currencyShowJudge()}
-							</span>
-							<p>({t('AllDepositType')})</p>
-						</td>
-						<td>x 1.0</td>
-					</tr>
-				</tbody>
-			</table>
-			<div>{t('DepositPointContent1')}</div>
-			<div>{t('DepositPointContent2')}</div>
-		</>
-	)
-}
-
-const TurnoverPointInfo = ({ currencyName }: { currencyName: string }) => {
-	const { t, i18n } = useTranslation()
-	const isLogin = useSelector(selectedIsLogin)
-	const langId = useAppSelector(selectedLangId)
-	const currencyShowJudge = () => {
-		if (isLogin) {
-			return langId === 'th' ? t('THB2') : ''
-		} else {
-			return i18n.language === 'th' ? t('THB2') : ''
-		}
-	}
-	return (
-		<>
-			<div>{t('TurnoverPointTitle1')}</div>
-			<table className='medal'>
-				<tbody>
-					<tr>
-						<td colSpan={4}>{t('HowToEarnTurnoverRewardsPoints')}</td>
-					</tr>
-					<tr>
-						<td>{t('PRODUCTS')}</td>
-						<td>{t('PROVIDER')}</td>
-						<td>{t('VALID_TURNOVER')}</td>
-						<td>{t('POINTS')}</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('SPORTS')}</td>
-						<td>{t('SABASportsEsports')}</td>
-						<td>
-							{t(currencyName)} {turnoverPointReward[currencyName].sports}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('LIVE_CASINO')}</td>
-						<td>{t('AllProviders')}</td>
-						<td>
-							{t(currencyName)} {turnoverPointReward[currencyName].liveCasino}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('SLOT')}</td>
-						<td>{t('ExcludedKiss918')}</td>
-						<td>
-							{t(currencyName)} {turnoverPointReward[currencyName].slot}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('FISHING')}</td>
-						<td>{t('AllProviders')}</td>
-						<td>
-							{t(currencyName)} {turnoverPointReward[currencyName].fishing}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('TABLE_GAMES')}</td>
-						<td>{t('TableGamesProvider')}</td>
-						<td>
-							{t(currencyName)} {turnoverPointReward[currencyName].tableGames}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('GAMES')}</td>
-						<td>{t('GamesProvider')}</td>
-						<td>
-							{t(currencyName)} {turnoverPointReward[currencyName].games}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('LOTTERY')}</td>
-						<td>{t('LotteryProvider')}</td>
-						<td>
-							{t(currencyName)} {turnoverPointReward[currencyName].lottery}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('VIRTUAL_SPORTS')}</td>
-						<td>{t('VirtualSportsProvider')}</td>
-						<td>
-							{t(currencyName)}{' '}
-							{turnoverPointReward[currencyName].virtualSports}{' '}
-							{currencyShowJudge()}
-						</td>
-						<td>1</td>
-					</tr>
-				</tbody>
-			</table>
-			<div>{t('TurnoverPointContent1')}</div>
-			<div>{t('TurnoverPointContent2')}</div>
-		</>
-	)
-}
-
-const VIPRewardsPointInfo = () => {
-	const { t } = useTranslation()
-
-	return (
-		<>
-			<div>{t('VIPRewardsPointTitle1')}</div>
-			<div>{t('VIPRewardsPointTitle2')}</div>
-			<table className='medal'>
-				<tbody>
-					<tr>
-						<td colSpan={3}>{t('HOW_TO_EARN_VIP_REWARDS_POINTS')}</td>
-					</tr>
-					<tr>
-						<td>{t('VIP_TIER')}</td>
-						<td>{t('VIP_TIER_UPGRADE')}</td>
-						<td>{t('BIRTHDAY_REWARDS')}</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('VINTAGE_CLUB')}</td>
-						<td>{t('N/A')}</td>
-						<td>88 {t('Points')}</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('SILVER_CLUB')}</td>
-						<td>500 {t('Points')}</td>
-						<td>188 {t('Points')}</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('GOLD_CLUB')}</td>
-						<td>800 {t('Points')}</td>
-						<td>288 {t('Points')}</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('TITANIUM_CLUB')}</td>
-						<td>1,000 {t('Points')}</td>
-						<td>388 {t('Points')}</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('DIAMOND_CLUB')}</td>
-						<td>1,500 {t('Points')}</td>
-						<td>688 {t('Points')}</td>
-					</tr>
-					<tr>
-						<td className='head'>{t('NOVA_CLUB')}</td>
-						<td>2,000 {t('Points')}</td>
-						<td>888 {t('Points')}</td>
-					</tr>
-				</tbody>
-			</table>
-			<div>{t('VIPRewardsPointContent1')}</div>
-		</>
-	)
-}
