@@ -1,7 +1,7 @@
 // Site Url: {Domain}/rewards/
 
 // nextjs 會處理 basePath, link 或 router.push 正常帶即可
-const root = "/"
+const root = "/rewards"
 
 const paths = {
 	home: root,
