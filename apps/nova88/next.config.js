@@ -8,6 +8,7 @@ const path = require("path")
 
 const nextConfig = {
 	// basePath 設定會預設在所有 pages / router / api 底下加上一層 subPath 以符合後端需要的結構
+	assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
 	nx: {
 		// Set this to true if you would like to to use SVGR
 		// See: https://github.com/gregberge/svgr
