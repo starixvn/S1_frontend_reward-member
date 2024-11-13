@@ -1,5 +1,5 @@
-import Empty from '@apps/onetwobet/components/Shopping/Empty'
-import GiftItem from '@apps/onetwobet/components/Shopping/GiftItem'
+import Empty from './Empty'
+import GiftItem from './GiftItem'
 import { tabOption } from '@constants'
 import { FC } from 'react'
 import { IGiftData } from "@api"
