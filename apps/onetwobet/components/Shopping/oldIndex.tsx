@@ -23,8 +23,8 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import GiftList from './GiftList'
 import GiftSelector from './GiftSelector'
-import GiftSwiper from './GiftSwiper'
-import GiftTab from './GiftTab'
+import { GiftTab } from './GiftTab'
+import { GiftSwiper } from './GiftSwiper'
 
 const Shopping = () => {
 	const isLogin = useSelector(selectedIsLogin)
@@ -289,9 +289,7 @@ const Shopping = () => {
 						<Loading />
 					) : (
 						<GiftTab
-							tabList={giftTabList}
 							activeItem={activeTabItem}
-							onChange={handleTabChange}
 						/>
 					)}
 
