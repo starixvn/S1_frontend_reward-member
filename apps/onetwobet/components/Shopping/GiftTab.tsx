@@ -17,26 +17,22 @@ import Loading from '../common/Loading';
 interface IGiftTabProps {
 	activeItem?: { lang?: string; tagId?: number; tagName?: string }
   setActiveItem: React.Dispatch<React.SetStateAction<{ lang?: string; tagId?: number; tagName?: string }>>;
+  args:IGetGiftListArgs;
+  setArgs: React.Dispatch<React.SetStateAction<IGetGiftListArgs>>;
 }
 
 export const GiftTab: FC<IGiftTabProps> = ({
 	activeItem,
-  setActiveItem
+  setActiveItem,
+  args,
+  setArgs
 }) => {
-  const tempabc = true;
   const [actItem,setActItem]=useState(activeItem)
 	const { i18n, t } = useTranslation()
   const isLogin = useSelector(selectedIsLogin)
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
   const { setPopBoxType } = usePopBox()
   const langId = useAppSelector(selectedLangId)
-  const [args, setArgs] = useState({
-		categoryIds: null,
-		tags: null,
-		orderByField: null,
-		desc: false,
-		pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-	})
   const [
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
@@ -138,7 +134,7 @@ export const GiftTab: FC<IGiftTabProps> = ({
 
 	return (
     <div className='row'>
-      { tempabc ? <Loading /> :  <div className='products-menu'>
+      { isGetGiftTabsLoading ? <Loading /> :  <div className='products-menu'>
 			{giftTabList?.map(item => (
 				<a
 					className={classNames({ active: actItem?.tagId === item.tagId })}

@@ -1,6 +1,7 @@
+import { IGiftData } from '@api'
 import { Dropdown } from '@apps/onetwobet/components/common/Dropdown'
 import { fromEnum } from '@constants'
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const { Option } = Dropdown
@@ -8,6 +9,7 @@ const { Option } = Dropdown
 interface IGiftSelectorProps {
 	type: string
 	onChange: (id: number) => void
+  giftList?:Array<IGiftData>
 }
 
 // const handleFilter = async (args: IGetGiftListArgs) => {
@@ -67,11 +69,11 @@ interface IGiftSelectorProps {
 
 export const GiftSelector: FC<IGiftSelectorProps> = ({
 	type,
+  giftList,
 	onChange,
 }) => {
-  const { i18n, t } = useTranslation()
+  const { t } = useTranslation()
   const [categoryList, setCategoryList] = useState([])
-  const [itemList, setItemList] = useState<{ categoryId: number; categoryName: string }[] | string[]>([]);
 
   const fromList = [
     { categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t('LowToHighCost') },
@@ -86,23 +88,32 @@ export const GiftSelector: FC<IGiftSelectorProps> = ({
     },
   ] // selector中的選項
 
-  const init = (type:string) => {
-    if (type === 'category') {
-      setItemList(fromList)
+  const getCategoryList = giftList => {
+    console.log("!!!!!!!");
+		const categoryList = [
+			{
+				categoryName: t('ALL'),
+				categoryId: null,
+			},
+		]
+    if( Array.isArray(giftList) && giftList.length > 0){
+      giftList?.forEach(obj => {
+        categoryList.push({
+          categoryName: obj.categoryName,
+          categoryId: obj.categoryId,
+        })
+      })
     }
-    else if (type === 'from')  {
-      setItemList(fromList)
-    }
-  }
 
+		return categoryList
+	}
 
-useEffect(() => {
-  init('from')
-}, [])
+  const abclist = type === 'Category' ? getCategoryList(giftList) : fromList
+
 
 	return (
 		<Dropdown placeholder={type} onChange={e => onChange(e)}>
-			{itemList.map(obj => (
+			{abclist.map(obj => (
 				<Option key={obj.categoryId} value={obj.categoryName}>
 					{obj.categoryName}
 				</Option>

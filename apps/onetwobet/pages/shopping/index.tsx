@@ -41,7 +41,7 @@ const Index = () => {
 		orderByField: null,
 		desc: false,
 		pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-	}) // 顯示產品id, 分頁等資訊
+	}) // 用來取得產品資訊的query object
 
   const [
 		getGiftList,
@@ -50,8 +50,9 @@ const Index = () => {
 
   useEffect(() => {
     // 重新取得item資料
-    handleFilter(args);
-  }, [args])
+    // 當query參數或lang,currency被改變時觸發
+    handleFilter({...args, langId, currencyId});
+  }, [args, langId, currencyId])
 
   const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
@@ -78,43 +79,22 @@ const Index = () => {
     },
   ] // selector中的選項
 
-  // 取得categoryList
-  // 預設值的all, 加上giftList foreach加入的結果
-  // revision
-  const getCategoryList = giftList => {
-		const categoryList = [
-			{
-				categoryName: t('ALL'),
-				categoryId: null,
-			},
-		]
-		giftList?.forEach(obj => {
-			const found = categoryList.find(obj => obj.categoryId === obj.categoryId)
-      !found && categoryList.push({
-				categoryName: obj.categoryName,
-				categoryId: obj.categoryId,
-			})
-		})
-		return categoryList
-	}
-
+  // 根據下拉選單內容修改args
   const handleSelectorItemChange = (selectorType, label) => {
+    console.log('a:'+label);
+    console.log('b:'+categoryList);
 		if (selectorType === 'category') {
-			handleFilter({
-				...args,
-				categoryIds:
-					categoryList.find(e => e.categoryName === label).categoryId !== null
-						? [categoryList.find(e => e.categoryName === label).categoryId]
-						: null,
-				langId,
-				currencyId,
-			})
+      const categoryIds = categoryList.find(e => e.categoryName === label)
+      console.log(categoryIds);
+			// handleFilter({
+			// 	...args,
+			// 	categoryIds: categoryList.length > 0 ? [categoryIds.categoryId] : null,
+			// 	langId,
+			// 	currencyId,
+			// })
 			setArgs(prev => ({
 				...prev,
-				categoryIds:
-					categoryList.find(e => e.categoryName === label).categoryId !== null
-						? [categoryList.find(e => e.categoryName === label).categoryId]
-						: null,
+				categoryIds: categoryList.length > 0 ? [categoryIds.categoryId] : null,
 				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 			}))
 		} else if (selectorType === 'from') {
@@ -138,6 +118,11 @@ const Index = () => {
 		}
 	}
 
+  const ttt = ()=>{
+    getGiftList({...args,langId : 'cs',currencyId:2})
+    console.log(giftList)
+  }
+
 	return (
 		<Wrapper authRequired={false}>
 			<Layout>
@@ -147,11 +132,16 @@ const Index = () => {
 				>
 					<GiftSwiper />
 					<div className='products-group container-xxl'>
-            <GiftTab activeItem={{}} setActiveItem={setActiveTabItem}/>
+            <GiftTab
+            activeItem={{}}
+            setActiveItem={setActiveTabItem}
+            args={args}
+            setArgs={setArgs}/>
             <div className='select'>
 						<div className='inputBox-null' />
 						<GiftSelector
 							type={t('Category')}
+              giftList={giftList}
 							onChange={label => handleSelectorItemChange('category', label)}
 						/>
 						<GiftSelector
@@ -165,6 +155,7 @@ const Index = () => {
 					/>
             <div ref={inViewRef} />
             <br />
+            <button onClick={ttt}>abc</button>
 					</div>
 				</main>
 			</Layout>
