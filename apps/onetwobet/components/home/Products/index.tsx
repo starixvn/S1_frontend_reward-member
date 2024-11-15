@@ -1,6 +1,6 @@
 import { IGiftData, selectedIsLogin, useSetFavoriteMutation } from '@api'
 import Loading from '@apps/onetwobet/components/common/Loading'
-import GiftList from '@apps/onetwobet/components/Shopping/GiftList'
+import { GiftList } from '@apps/onetwobet/components/Shopping/GiftList'
 import { monthObj, paths } from '@constants'
 import { usePopBox } from '@operations'
 import { useRouter } from 'next/router'
@@ -56,7 +56,7 @@ const Products = ({ giftList, isLoading }: IProducts) => {
 					</div>
 					<GiftList
 						filterList={giftList}
-						onToggleFavorite={handleFavoriteToggle}
+            isFavoriteTab={false}
 					/>
 				</div>
 				{isLoading && <Loading />}

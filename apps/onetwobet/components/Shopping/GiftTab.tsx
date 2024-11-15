@@ -16,17 +16,18 @@ import Loading from '../common/Loading';
 
 interface IGiftTabProps {
 	activeItem?: { lang?: string; tagId?: number; tagName?: string }
+  setActiveItem: React.Dispatch<React.SetStateAction<{ lang?: string; tagId?: number; tagName?: string }>>;
 }
 
 export const GiftTab: FC<IGiftTabProps> = ({
-	activeItem
+	activeItem,
+  setActiveItem
 }) => {
   const tempabc = true;
   const [actItem,setActItem]=useState(activeItem)
 	const { i18n, t } = useTranslation()
   const isLogin = useSelector(selectedIsLogin)
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
-  const [activeTabItem, setActiveTabItem] = useState({})
   const { setPopBoxType } = usePopBox()
   const langId = useAppSelector(selectedLangId)
   const [args, setArgs] = useState({
@@ -90,7 +91,7 @@ export const GiftTab: FC<IGiftTabProps> = ({
     if (isLogin) {
       setIsFilterFavorite(false)
       if (giftTabList && giftTabList.length > 0) {
-        setActiveTabItem(giftTabList[0])
+        setActiveItem(giftTabList[0])
       }
     }
   }, [isLogin, isGetGiftTabsLoading])
@@ -110,7 +111,7 @@ export const GiftTab: FC<IGiftTabProps> = ({
     console.log("handleTabChange");
     console.log(activeTab)
     setActItem(activeTab)
-		setActiveTabItem(activeTab)
+		setActiveItem(activeTab)
 		if (activeTab.tagId === tabOption.FAVORITE) {
 			handleFilter({ ...args, tags: null, langId, currencyId })
 			setArgs(prev => ({

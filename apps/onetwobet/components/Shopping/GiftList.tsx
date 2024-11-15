@@ -8,14 +8,14 @@ import { useSelector } from 'react-redux'
 
 interface IGiftListProps {
 	filterList: Array<IGiftData>
-	activeTabItem?: { lang?: string; tagId?: number; tagName?: string }
+  isFavoriteTab: boolean
 	isLargeImg?: boolean
 	onToggleLargeImg?: () => void
 }
 
 export const GiftList: FC<IGiftListProps> = ({
 	filterList,
-	activeTabItem,
+  isFavoriteTab
 }) => {
 
 	return (
@@ -30,7 +30,7 @@ export const GiftList: FC<IGiftListProps> = ({
 					))}
 				</div>
 			) : (
-				<Empty isFavorite={activeTabItem?.tagId === tabOption.FAVORITE} />
+				<Empty isFavorite={isFavoriteTab} />
 			)}
 		</>
 	)

@@ -2,8 +2,8 @@ import { IGetGiftListArgs, selectedCurrencyId, selectedIsLogin, selectedLangId, 
 import Layout from '@apps/onetwobet/components/common/Layout'
 import Wrapper from '@apps/onetwobet/components/common/Wrapper'
 import { GiftList, GiftSelector, GiftSwiper, GiftTab } from '@apps/onetwobet/components/Shopping'
-import Shopping from '@apps/onetwobet/components/Shopping/oldIndex'
-import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, sortType } from '@constants'
+import Empty from '@apps/onetwobet/components/Shopping/Empty'
+import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, fromEnum, sortType, tabOption } from '@constants'
 import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
 import { useInView } from 'libs/core/src/lib/hooks/useInView'
@@ -17,14 +17,21 @@ import { useSelector } from 'react-redux'
 
 // 點擊tab / filter時都需要重新getItemList from api
 
+interface TabItem {
+  lang?: string;
+  tagId?: number;
+  tagName?: string;
+};
+
 const Index = () => {
-  const useNewVersion = true; // 測試用 記得移除
   const isLogin = useSelector(selectedIsLogin) // 登入參數, 取得產品用
 	const langId = useAppSelector(selectedLangId) // 語言參數, 取得產品用
 	const currencyId = useAppSelector(selectedCurrencyId) // 貨幣參數, 取得產品用
 	const { i18n, t } = useTranslation()
   const [inViewRef, isInView] = useInView()
   const [categoryList, setCategoryList] = useState([]) // 取得tab list用
+	const [activeTabItem, setActiveTabItem] = useState<TabItem>({}) // active中的tab
+
   const { setPopBoxType } = usePopBox()
   const [args, setArgs] = useState<IGetGiftListArgs>({
     langId:'',
@@ -56,6 +63,20 @@ const Index = () => {
 			})
 		}
 	}
+
+  // 應該移除
+  const fromList = [
+    { categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t('LowToHighCost') },
+    { categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: t('HighToLowCost') },
+    {
+      categoryId: fromEnum.LOW_TO_HIGH_LETTER,
+      categoryName: t('LowToHighLetter'),
+    },
+    {
+      categoryId: fromEnum.HIGH_TO_LOW_LETTER,
+      categoryName: t('HighToLowLetter'),
+    },
+  ] // selector中的選項
 
   // 取得categoryList
   // 預設值的all, 加上giftList foreach加入的結果
@@ -120,20 +141,17 @@ const Index = () => {
 	return (
 		<Wrapper authRequired={false}>
 			<Layout>
-{ useNewVersion ?
-
 <main className={classNames('shopping-page', {
 						'other-layout': !(i18n.language === 'en'),
 					})}
 				>
 					<GiftSwiper />
 					<div className='products-group container-xxl'>
-            <GiftTab activeItem={{}}/>
+            <GiftTab activeItem={{}} setActiveItem={setActiveTabItem}/>
             <div className='select'>
 						<div className='inputBox-null' />
 						<GiftSelector
 							type={t('Category')}
-							itemList={categoryList}
 							onChange={label => handleSelectorItemChange('category', label)}
 						/>
 						<GiftSelector
@@ -142,14 +160,13 @@ const Index = () => {
 						/>
             </div>
 					<GiftList
-						filterList={filterList}
-						activeTabItem={activeTabItem}
+						filterList={giftList}
+            isFavoriteTab={activeTabItem.tagId === tabOption.FAVORITE}
 					/>
             <div ref={inViewRef} />
             <br />
 					</div>
-				</main> :
-        <Shopping />}
+				</main>
 			</Layout>
 		</Wrapper>
 	)
