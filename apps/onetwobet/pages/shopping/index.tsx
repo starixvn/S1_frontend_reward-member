@@ -21,7 +21,7 @@ import {
 } from '@constants'
 import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
-import { useInView } from 'libs/core/src/lib/hooks/useInView'
+import { useInView } from '@core'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -185,14 +185,14 @@ const Index = () => {
 							<div className='select'>
 								<div className='inputBox-null' />
 								<GiftSelector
-									type={t('Category')}
+									placeHolder={t('Category')}
 									itemList={categoryList}
 									onChange={label =>
 										handleSelectorItemChange('category', label)
 									}
 								/>
 								<GiftSelector
-									type={t('From')}
+									placeHolder={t('From')}
 									itemList={fromList}
 									onChange={label => handleSelectorItemChange('from', label)}
 								/>
