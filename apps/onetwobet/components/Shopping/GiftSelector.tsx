@@ -9,7 +9,7 @@ interface IGiftSelectorProps {
 	onChange: (id: number) => void
 }
 
-const GiftSelector: FC<IGiftSelectorProps> = ({
+export const GiftSelector: FC<IGiftSelectorProps> = ({
 	placeHolder,
 	itemList,
 	onChange,
@@ -24,5 +24,3 @@ const GiftSelector: FC<IGiftSelectorProps> = ({
 		</Dropdown>
 	)
 }
-
-export default GiftSelector
