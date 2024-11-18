@@ -1,14 +1,13 @@
-import { IGetGiftListArgs, selectedCurrencyId, selectedIsLogin, selectedLangId, useLazyGetGiftListQuery } from '@api'
+import { IGetGiftListArgs, selectedCurrencyId, selectedLangId, useLazyGetGiftListQuery } from '@api'
 import Layout from '@apps/onetwobet/components/common/Layout'
 import Wrapper from '@apps/onetwobet/components/common/Wrapper'
 import { GiftList, GiftSelector, GiftSwiper, GiftTab } from '@apps/onetwobet/components/Shopping'
-import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, fromEnum, sortType, tabOption } from '@constants'
+import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, fromEnum, SHOPPING_PAGE_SIZE_COUNT, sortType, tabOption } from '@constants'
 import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
 import { useInView } from 'libs/core/src/lib/hooks/useInView'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 
 // 可以將多個子元件需要的共通item從這個父元件取得再傳入給子元件
 // 也能用useContext只讓部分元件使用, 但這個project統一使用redux而非useContext, 所以不建議這樣改
@@ -23,13 +22,14 @@ interface TabItem {
 };
 
 const Index = () => {
-  const isLogin = useSelector(selectedIsLogin) // 登入參數, 取得產品用
 	const langId = useAppSelector(selectedLangId) // 語言參數, 取得產品用
 	const currencyId = useAppSelector(selectedCurrencyId) // 貨幣參數, 取得產品用
 	const { i18n, t } = useTranslation()
   const [inViewRef, isInView] = useInView()
   const [categoryList, setCategoryList] = useState([]) // 取得tab list用
 	const [activeTabItem, setActiveTabItem] = useState<TabItem>({}) // active中的tab
+	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
+
 
   const { setPopBoxType } = usePopBox()
   const [args, setArgs] = useState<IGetGiftListArgs>({
@@ -96,6 +96,10 @@ const Index = () => {
       return categoryList
 	}
 
+	const filterList = isFilterFavorite
+		? giftList.filter(obj => obj.isFavorite === true)
+		: giftList
+
   // 根據下拉選單內容修改args
   const handleSelectorItemChange = (selectorType, label) => {
 		if (selectorType === 'category') {
@@ -126,11 +130,6 @@ const Index = () => {
 		}
 	}
 
-  const test = ()=>{
-    getGiftList({...args,langId : 'cs',currencyId:2})
-    console.log(giftList)
-  }
-
   const init = async () => {
 		try {
 			const data = await getGiftList({ ...args, langId, currencyId })
@@ -148,6 +147,19 @@ const Index = () => {
 		init()
 	}, [])
 
+  useEffect(() => {
+		const isLast = args.pageSize > giftList.length + SHOPPING_PAGE_SIZE_COUNT
+
+		if (isLast || isGetGiftListFetching) return
+
+		if (isInView) {
+			setArgs(({ pageSize, ...prev }) => ({
+				...prev,
+				pageSize: pageSize + SHOPPING_PAGE_SIZE_COUNT,
+			}))
+		}
+	}, [isInView])
+
 	return (
 		<Wrapper authRequired={false}>
 			<Layout>
@@ -160,8 +172,8 @@ const Index = () => {
             <GiftTab
             activeItem={activeTabItem}
             setActiveItem={setActiveTabItem}
-            args={args}
-            setArgs={setArgs}/>
+            setArgs={setArgs}
+            setIsFilterFavorite={setIsFilterFavorite}/>
             <div className='select'>
 						<div className='inputBox-null' />
 						<GiftSelector
@@ -176,12 +188,11 @@ const Index = () => {
 						/>
             </div>
 					<GiftList
-						filterList={giftList}
+						filterList={filterList}
             isFavoriteTab={activeTabItem.tagId === tabOption.FAVORITE}
-					/>
+            />
             <div ref={inViewRef} />
             <br />
-            <button onClick={test}>abc</button>
 					</div>
 				</main>
 			</Layout>

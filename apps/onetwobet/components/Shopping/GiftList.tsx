@@ -1,10 +1,7 @@
 import Empty from './Empty'
 import GiftItem from './GiftItem'
-import { tabOption } from '@constants'
 import { FC } from 'react'
-import { IGiftData, selectedIsLogin, useSetFavoriteMutation } from "@api"
-import { usePopBox } from '@operations'
-import { useSelector } from 'react-redux'
+import { IGiftData} from "@api"
 
 interface IGiftListProps {
 	filterList: Array<IGiftData>
