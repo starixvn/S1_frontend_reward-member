@@ -41,7 +41,7 @@ export const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 	const isLogin = useAppSelector(selectedIsLogin)
 	const cartList = useAppSelector(selectedCartList)
 	const giftItemRef = useRef()
-	const [setFavorite] = useSetFavoriteMutation() // 設定喜愛
+	const [setFavorite] = useSetFavoriteMutation()
 	const { setPopBoxType } = usePopBox()
 	const handleFavoriteToggle = async item => {
 		if (isLogin) {

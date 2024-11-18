@@ -25,12 +25,6 @@ import { useInView } from 'libs/core/src/lib/hooks/useInView'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-// 可以將多個子元件需要的共通item從這個父元件取得再傳入給子元件
-// 也能用useContext只讓部分元件使用, 但這個project統一使用redux而非useContext, 所以不建議這樣改
-// 共通item如果沒有多個compoment都需要的話也不建議搬至redux中
-
-// 點擊tab / filter時都需要重新getItemList from api
-
 interface TabItem {
 	lang?: string
 	tagId?: number
@@ -38,12 +32,12 @@ interface TabItem {
 }
 
 const Index = () => {
-	const langId = useAppSelector(selectedLangId) // 語言參數, 取得產品用
-	const currencyId = useAppSelector(selectedCurrencyId) // 貨幣參數, 取得產品用
+	const langId = useAppSelector(selectedLangId)
+	const currencyId = useAppSelector(selectedCurrencyId)
 	const { i18n, t } = useTranslation()
 	const [inViewRef, isInView] = useInView()
-	const [categoryList, setCategoryList] = useState([]) // 取得tab list用
-	const [activeTabItem, setActiveTabItem] = useState<TabItem>({}) // active中的tab
+	const [categoryList, setCategoryList] = useState([])
+	const [activeTabItem, setActiveTabItem] = useState<TabItem>({})
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
 
 	const { setPopBoxType } = usePopBox()
@@ -55,16 +49,14 @@ const Index = () => {
 		orderByField: null,
 		desc: false,
 		pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
-	}) // 用來取得產品資訊的query object
+	})
 
 	const [
 		getGiftList,
 		{ data: { data: giftList = [] } = {}, isFetching: isGetGiftListFetching },
-	] = useLazyGetGiftListQuery() // 取得產品列表
+	] = useLazyGetGiftListQuery()
 
 	useEffect(() => {
-		// 重新取得item資料
-		// 當query參數或lang,currency被改變時觸發
 		handleFilter({ ...args, langId, currencyId })
 	}, [args, langId, currencyId])
 
@@ -79,7 +71,6 @@ const Index = () => {
 		}
 	}
 
-	// 應該移除
 	const fromList = [
 		{ categoryId: fromEnum.LOW_TO_HIGH_COST, categoryName: t('LowToHighCost') },
 		{ categoryId: fromEnum.HIGH_TO_LOW_COST, categoryName: t('HighToLowCost') },
@@ -91,7 +82,7 @@ const Index = () => {
 			categoryId: fromEnum.HIGH_TO_LOW_LETTER,
 			categoryName: t('HighToLowLetter'),
 		},
-	] // selector中的選項
+	]
 
 	const getCategoryList = giftList => {
 		const categoryList = [
@@ -115,7 +106,6 @@ const Index = () => {
 		? giftList.filter(obj => obj.isFavorite === true)
 		: giftList
 
-	// 根據下拉選單內容修改args
 	const handleSelectorItemChange = (selectorType, label) => {
 		if (selectorType === 'category') {
 			const categoryIds = categoryList.find(e => e.categoryName === label)
@@ -134,7 +124,6 @@ const Index = () => {
 				const res = fromList.find(e => e.categoryName === label).categoryId
 				return sortType[res - 1].desc
 			}
-			// 修改arg以觸發useState, 更新itemList
 			setArgs(prev => ({
 				...prev,
 				orderByField: getOrderByFieldValue(),
