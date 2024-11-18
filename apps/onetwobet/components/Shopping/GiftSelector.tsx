@@ -5,13 +5,13 @@ const { Option } = Dropdown
 
 interface IGiftSelectorProps {
 	type: string
-  itemList: { categoryId: number; categoryName: string }[] | string[]
+	itemList: { categoryId: number; categoryName: string }[] | string[]
 	onChange: (id: number) => void
 }
 
 export const GiftSelector: FC<IGiftSelectorProps> = ({
 	type,
-  itemList,
+	itemList,
 	onChange,
 }) => {
 	return (

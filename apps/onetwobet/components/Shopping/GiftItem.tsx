@@ -1,4 +1,9 @@
-import { selectedCartList, selectedIsLogin, setShoppingCartAsync, useSetFavoriteMutation } from '@api'
+import {
+	selectedCartList,
+	selectedIsLogin,
+	setShoppingCartAsync,
+	useSetFavoriteMutation,
+} from '@api'
 import { numberFormat } from '@core'
 import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
@@ -28,7 +33,7 @@ interface IGiftItemProps {
 	}
 }
 
-const GiftItem: FC<IGiftItemProps> = ({ item }) => {
+export const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 	const dispatch = useAppDispatch()
 	const { t } = useTranslation()
 	const [isLarge, setIsLarge] = useState(false)
@@ -37,8 +42,8 @@ const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 	const cartList = useAppSelector(selectedCartList)
 	const giftItemRef = useRef()
 	const [setFavorite] = useSetFavoriteMutation() // 設定喜愛
-  const { setPopBoxType } = usePopBox()
-  const handleFavoriteToggle = async item => {
+	const { setPopBoxType } = usePopBox()
+	const handleFavoriteToggle = async item => {
 		if (isLogin) {
 			try {
 				await setFavorite({
@@ -154,5 +159,3 @@ const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 		</div>
 	)
 }
-
-export default GiftItem
