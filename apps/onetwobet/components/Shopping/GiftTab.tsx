@@ -27,7 +27,6 @@ export const GiftTab: FC<IGiftTabProps> = ({
   args,
   setArgs
 }) => {
-  const [actItem,setActItem]=useState(activeItem)
 	const { i18n, t } = useTranslation()
   const isLogin = useSelector(selectedIsLogin)
 	const [isFilterFavorite, setIsFilterFavorite] = useState(false)
@@ -82,6 +81,12 @@ export const GiftTab: FC<IGiftTabProps> = ({
       }
     }
 
+  useEffect(()=>{
+    if (giftTabList && giftTabList.length > 0) {
+      setActiveItem(giftTabList[0])
+    }
+  },[])
+
   useEffect(() => {
     getGiftTabsList()
     if (isLogin) {
@@ -94,6 +99,7 @@ export const GiftTab: FC<IGiftTabProps> = ({
 
   const handleFilter = async (args: IGetGiftListArgs) => {
 		try {
+      console.log('123')
 			await getGiftList(args).unwrap()
 		} catch (error) {
 			setPopBoxType({
@@ -104,9 +110,6 @@ export const GiftTab: FC<IGiftTabProps> = ({
 	}
 
   const handleTabChange = activeTab => {
-    console.log("handleTabChange");
-    console.log(activeTab)
-    setActItem(activeTab)
 		setActiveItem(activeTab)
 		if (activeTab.tagId === tabOption.FAVORITE) {
 			handleFilter({ ...args, tags: null, langId, currencyId })
@@ -137,7 +140,7 @@ export const GiftTab: FC<IGiftTabProps> = ({
       { isGetGiftTabsLoading ? <Loading /> :  <div className='products-menu'>
 			{giftTabList?.map(item => (
 				<a
-					className={classNames({ active: actItem?.tagId === item.tagId })}
+					className={classNames({ active: activeItem?.tagId === item.tagId })}
 					onClick={() => handleTabChange && handleTabChange(item)}
 					key={item.tagId}
 				>
@@ -145,7 +148,6 @@ export const GiftTab: FC<IGiftTabProps> = ({
 				</a>
 			))}
 		</div>}
-
     </div>
 	)
 }

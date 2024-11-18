@@ -2,7 +2,6 @@ import { IGetGiftListArgs, selectedCurrencyId, selectedIsLogin, selectedLangId, 
 import Layout from '@apps/onetwobet/components/common/Layout'
 import Wrapper from '@apps/onetwobet/components/common/Wrapper'
 import { GiftList, GiftSelector, GiftSwiper, GiftTab } from '@apps/onetwobet/components/Shopping'
-import Empty from '@apps/onetwobet/components/Shopping/Empty'
 import { DEFAULT_SHOPPING_PAGE_SIZE_COUNT, fromEnum, sortType, tabOption } from '@constants'
 import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
@@ -79,22 +78,31 @@ const Index = () => {
     },
   ] // selector中的選項
 
+  const getCategoryList = giftList => {
+      const categoryList = [
+        {
+          categoryName: t('ALL'),
+          categoryId: null,
+        },
+      ]
+      if( Array.isArray(giftList) && giftList.length > 0){
+        giftList?.forEach(obj => {
+          categoryList.push({
+            categoryName: obj.categoryName,
+            categoryId: obj.categoryId,
+          })
+        })
+      }
+      return categoryList
+	}
+
   // 根據下拉選單內容修改args
   const handleSelectorItemChange = (selectorType, label) => {
-    console.log('a:'+label);
-    console.log('b:'+categoryList);
 		if (selectorType === 'category') {
       const categoryIds = categoryList.find(e => e.categoryName === label)
-      console.log(categoryIds);
-			// handleFilter({
-			// 	...args,
-			// 	categoryIds: categoryList.length > 0 ? [categoryIds.categoryId] : null,
-			// 	langId,
-			// 	currencyId,
-			// })
 			setArgs(prev => ({
 				...prev,
-				categoryIds: categoryList.length > 0 ? [categoryIds.categoryId] : null,
+				categoryIds: categoryIds.categoryId !=null ? [categoryIds.categoryId] : null,
 				pageSize: DEFAULT_SHOPPING_PAGE_SIZE_COUNT,
 			}))
 		} else if (selectorType === 'from') {
@@ -118,10 +126,27 @@ const Index = () => {
 		}
 	}
 
-  const ttt = ()=>{
+  const test = ()=>{
     getGiftList({...args,langId : 'cs',currencyId:2})
     console.log(giftList)
   }
+
+  const init = async () => {
+		try {
+			const data = await getGiftList({ ...args, langId, currencyId })
+			const giftList = data.data.data
+			setCategoryList(getCategoryList(giftList))
+		} catch (error) {
+			setPopBoxType({
+				type: 'warn',
+				props: { content: error.message },
+			})
+		}
+	}
+
+  useEffect(() => {
+		init()
+	}, [])
 
 	return (
 		<Wrapper authRequired={false}>
@@ -133,7 +158,7 @@ const Index = () => {
 					<GiftSwiper />
 					<div className='products-group container-xxl'>
             <GiftTab
-            activeItem={{}}
+            activeItem={activeTabItem}
             setActiveItem={setActiveTabItem}
             args={args}
             setArgs={setArgs}/>
@@ -141,12 +166,13 @@ const Index = () => {
 						<div className='inputBox-null' />
 						<GiftSelector
 							type={t('Category')}
-              giftList={giftList}
+              itemList={categoryList}
 							onChange={label => handleSelectorItemChange('category', label)}
 						/>
 						<GiftSelector
 							type={t('From')}
-							onChange={label => handleSelectorItemChange('from', label)}
+              itemList={fromList}
+              onChange={label => handleSelectorItemChange('from', label)}
 						/>
             </div>
 					<GiftList
@@ -155,7 +181,7 @@ const Index = () => {
 					/>
             <div ref={inViewRef} />
             <br />
-            <button onClick={ttt}>abc</button>
+            <button onClick={test}>abc</button>
 					</div>
 				</main>
 			</Layout>
