@@ -1,6 +1,7 @@
 import {
 	selectedCartList,
 	selectedIsLogin,
+	selectUrlMethods,
 	setShoppingCartAsync,
 	useSetFavoriteMutation,
 } from '@api'
@@ -9,6 +10,7 @@ import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
 import { FC, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import { useLocalStorage, useOnClickOutside } from 'usehooks-ts'
 
 interface IGiftItemProps {
@@ -40,6 +42,7 @@ export const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 	const [LSCartList, setLSCartList] = useLocalStorage('onetwobetCart', [])
 	const isLogin = useAppSelector(selectedIsLogin)
 	const cartList = useAppSelector(selectedCartList)
+	const { getStoreImgDomain } = useSelector(selectUrlMethods)
 	const giftItemRef = useRef()
 	const [setFavorite] = useSetFavoriteMutation()
 	const { setPopBoxType } = usePopBox()
@@ -152,7 +155,7 @@ export const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 			{showGiftItemBtn()}
 			<div className={classNames('bigPup', { active: isLarge })}>
 				<div>
-					<img src={item.giftPictureUrl} alt='gift' />
+					<img src={getStoreImgDomain(item.giftPictureUrl)} alt='gift' />
 				</div>
 				{showGiftItemBtn()}
 			</div>
