@@ -1,8 +1,7 @@
+import { selectUrlMethods } from '@api'
+import { useAppSelector } from '@operations'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { useSelector } from "react-redux"
-import { selectUrlMethods } from "@api"
-
 
 const getSliderList = (langId: string) => [
 	{ id: 1, img: `/img/banner_${langId}.jpg` },
@@ -12,8 +11,8 @@ const getSliderList = (langId: string) => [
 
 export const GiftSwiper = () => {
 	const { i18n } = useTranslation()
-  const { getStoreImgDomain } = useSelector(selectUrlMethods)
-  const langId = i18n.language
+	const { getStoreImgDomain } = useAppSelector(selectUrlMethods)
+	const langId = i18n.language
 
 	return (
 		<div className='swiper-container'>

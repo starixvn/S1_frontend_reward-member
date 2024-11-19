@@ -10,7 +10,6 @@ import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import Loading from '../common/Loading'
 
 interface IGiftTabProps {
@@ -29,7 +28,7 @@ export const GiftTab: FC<IGiftTabProps> = ({
 	setIsFilterFavorite,
 }) => {
 	const { i18n, t } = useTranslation()
-	const isLogin = useSelector(selectedIsLogin)
+	const isLogin = useAppSelector(selectedIsLogin)
 	const { setPopBoxType } = usePopBox()
 	const langId = useAppSelector(selectedLangId)
 	const currencyId = useAppSelector(selectedCurrencyId)

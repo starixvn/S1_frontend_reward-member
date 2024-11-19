@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
 import { FC, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import { useLocalStorage, useOnClickOutside } from 'usehooks-ts'
 
 interface IGiftItemProps {
@@ -42,7 +41,7 @@ export const GiftItem: FC<IGiftItemProps> = ({ item }) => {
 	const [LSCartList, setLSCartList] = useLocalStorage('onetwobetCart', [])
 	const isLogin = useAppSelector(selectedIsLogin)
 	const cartList = useAppSelector(selectedCartList)
-	const { getStoreImgDomain } = useSelector(selectUrlMethods)
+	const { getStoreImgDomain } = useAppSelector(selectUrlMethods)
 	const giftItemRef = useRef()
 	const [setFavorite] = useSetFavoriteMutation()
 	const { setPopBoxType } = usePopBox()
