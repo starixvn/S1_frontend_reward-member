@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Loading from '../common/Loading'
-import GiftList from '../Shopping/GiftList'
+import { GiftList } from '../Shopping/GiftList'
 
 export const CartFeatured = () => {
 	const route = useRouter()
@@ -65,7 +65,7 @@ export const CartFeatured = () => {
 						{t('More')}...
 					</button>
 				</div>
-				<GiftList filterList={giftList} />
+				<GiftList filterList={giftList} isFavoriteTab={false} />
 				{isGetGiftListFetching && <Loading />}
 			</div>
 		</div>

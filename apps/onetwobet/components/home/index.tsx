@@ -5,7 +5,6 @@ import {
 	selectedLangId,
 	useLazyGetGiftListQuery,
 } from '@api'
-import GiftSwiper from '@apps/onetwobet/components/Shopping/GiftSwiper'
 import { DEFAULT_HOME_PAGE_SIZE_COUNT } from '@constants'
 import { useAppSelector, usePopBox } from '@operations'
 import classNames from 'classnames'
@@ -15,6 +14,7 @@ import { useSelector } from 'react-redux'
 import AppDownload from './AppDownload'
 import Products from './Products'
 import TopIntroduce from './TopIntroduce'
+import { GiftSwiper } from '../Shopping/GiftSwiper'
 
 const Home = () => {
 	const { i18n, t } = useTranslation()
